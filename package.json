@@ -8,6 +8,7 @@
     "@ant-design/pro-layout": "^7.13.3",
     "@ant-design/pro-table": "^3.6.9",
     "@craco/craco": "^7.1.0",
+    "@storybook/addon-toolbars": "^7.0.10",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -25,9 +26,9 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -73,6 +74,7 @@
     "babel-plugin-named-exports-order": "0.0.2",
     "prop-types": "15.8.1",
     "storybook": "7.0.10",
+    "storybook-dark-mode": "^3.0.0",
     "webpack": "5.82.0"
   }
 }
