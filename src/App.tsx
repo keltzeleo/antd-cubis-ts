@@ -18,7 +18,6 @@ const App: React.FC = () => {
   return (
     <div>
       <ProLayout
-        hasSider
         token={{
           colorBgAppListIconHover: "#00a991",
           colorTextAppListIconHover: "rgba(255,255,255,0.95)",
@@ -95,7 +94,7 @@ const App: React.FC = () => {
           fixedHeader
           style={{ top: 20 }}
           header={{
-            title: "页面标题",
+            title: "Page Title",
             breadcrumb: {},
           }}
           avatar={{
