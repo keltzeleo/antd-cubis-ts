@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+.header-essentials {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  margin: -10px;
+  background: #f3f6f9;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.steady-alignment {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ant-pro-footer-bar {
+  padding: 10px;
+}
