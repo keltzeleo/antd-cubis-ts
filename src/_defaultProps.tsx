@@ -26,7 +26,7 @@ const defaultProps = {
           {
             path: "/admin/sub-page1",
             name: "一级页面",
-            icon: "https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg",
+            icon: "https://res.cloudinary.com/tyappreg/image/upload/v1682262063/logoCUBIS_muwyol.svg",
             component: "./Welcome",
           },
           {

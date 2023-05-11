@@ -1,9 +1,3 @@
-@font-face {
-  font-family: "Mulish";
-  src: url("https://res.cloudinary.com/tyappreg/raw/upload/v1683824723/Mulish-Regular_o9bqi3.ttf")
-    format("truetype");
-}
-
 .App {
   text-align: center;
 }
