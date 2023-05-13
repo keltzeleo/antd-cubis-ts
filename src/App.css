@@ -1,3 +1,7 @@
+html {
+  font-family: 'Mulish', sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -6,6 +10,9 @@
   height: 40vmin;
   pointer-events: none;
 }
+
+
+@import url('https://fonts.cdnfonts.com/css/mulish');                                            
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
