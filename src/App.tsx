@@ -1,17 +1,22 @@
-import React from "react";
-import { PageContainer, ProCard, ProLayout } from "@ant-design/pro-components";
-import { Avatar, Dropdown, Input, Menu, Button, Badge } from "antd";
 import {
-  SearchOutlined,
   BellOutlined,
-  LogoutOutlined,
   GlobalOutlined,
+  LogoutOutlined,
+  QuestionCircleOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
-import defaultProps from "./_defaultProps";
-import { FloatButton } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { PageContainer, ProCard, ProLayout } from "@ant-design/pro-components";
+import {
+  Avatar,
+  Badge,
+  Button,
+  Dropdown,
+  FloatButton,
+  Input,
+  Menu,
+} from "antd";
 import "./App.css";
-
+import defaultProps from "./_defaultProps";
 
 const { Item } = Menu;
 
@@ -32,13 +37,13 @@ const App: React.FC = () => {
             colorBgMenuItemCollapsedElevated: "rgba(0,0,0,0.85)",
             colorMenuItemDivider: "rgba(255,255,255,0.15)",
             colorBgMenuItemHover: "#00a991",
-            colorBgMenuItemSelected: "rgba(0,0,0,0.15)",
+            colorBgMenuItemSelected: "#00a991",
             colorTextMenuSelected: "#fff",
             colorTextMenuItemHover: "rgba(255,255,255,0.75)",
             colorTextMenu: "rgba(255,255,255,0.75)",
             colorTextMenuSecondary: "rgba(255,255,255,0.65)",
             colorTextMenuTitle: "rgba(255,255,255,0.95)",
-            colorTextMenuActive: "rgba(255,255,255,0.95)",
+            colorTextMenuActive: "#00a991",
             colorTextSubMenuSelected: "#fff",
           },
         }}
@@ -50,7 +55,9 @@ const App: React.FC = () => {
               size={32}
               src="https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg"
             />
-            <span>Good Morning 🌞John Huang. Usaha Tangga Kejayaan 🎉</span>
+            <span style={{ paddingLeft: 10 }}>
+              Good Morning 🌞John Huang. Usaha Tangga Kejayaan 🎉
+            </span>
           </div>
           <Menu
             className="steady-alignment"
@@ -93,9 +100,9 @@ const App: React.FC = () => {
 
         <PageContainer
           fixedHeader
-          style={{ top: 20 }}
+          style={{ top: 20, zIndex: 1 }}
           header={{
-            title: "Page Title",
+            title: "NEW APPLICATION REQUEST",
             breadcrumb: {},
           }}
           avatar={{
