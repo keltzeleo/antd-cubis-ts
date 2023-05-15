@@ -1,4 +1,3 @@
-import React from "react";
 import {
   ChromeFilled,
   CrownFilled,
@@ -11,10 +10,10 @@ const defaultProps = {
     path: "/",
     routes: [
       {
-        path: "/welcome",
+        path: "/src/pages",
         name: "欢迎",
         icon: <SmileFilled />,
-        component: "./Welcome",
+        component: "./pages/Welcome",
       },
       {
         path: "/admin",
