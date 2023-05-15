@@ -6,6 +6,9 @@ import {
 } from "@ant-design/icons";
 
 const defaultProps = {
+  title: "CUBIS by powercomp",
+  logo: "https://res.cloudinary.com/tyappreg/image/upload/v1682262063/logoCUBIS_muwyol.svg",
+
   route: {
     path: "/",
     routes: [

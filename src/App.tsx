@@ -55,7 +55,7 @@ const App: React.FC = () => {
               size={32}
               src="https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg"
             />
-            <span style={{ paddingLeft: 10 }}>
+            <span style={{ paddingLeft: 10 }} className="font-Mulish">
               Good Morning 🌞John Huang. Usaha Tangga Kejayaan 🎉
             </span>
           </div>
@@ -101,6 +101,7 @@ const App: React.FC = () => {
         <PageContainer
           fixedHeader
           style={{ top: 20, zIndex: 1 }}
+          className="font-play"
           header={{
             title: "NEW APPLICATION REQUEST",
             breadcrumb: {},
