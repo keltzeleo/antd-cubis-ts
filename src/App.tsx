@@ -1,6 +1,7 @@
 import {
   BellOutlined,
   GlobalOutlined,
+  GoldOutlined,
   LogoutOutlined,
   QuestionCircleOutlined,
   SearchOutlined,
@@ -104,7 +105,18 @@ const App: React.FC = () => {
           className="font-play"
           header={{
             title: "NEW APPLICATION REQUEST",
-            breadcrumb: {},
+            breadcrumb: {
+              items: [
+                {
+                  path: "",
+                  title: <GoldOutlined />,
+                },
+                {
+                  path: "",
+                  title: "New Request",
+                },
+              ],
+            },
           }}
           avatar={{
             src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
