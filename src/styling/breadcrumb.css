@@ -1,0 +1,23 @@
+.breadcrumb-item {
+  display: table-cell;
+  vertical-align: middle;
+  justify-content: center;
+  border: 2px dashed grey;
+  padding-bottom: 4px;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+  border: 2px dashed grey;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+.breadcrumb-item:hover {
+  border: 2px dashed;
+  border-color: #00a991;
+}
+
+.breadcrumb-item:focus {
+  border: 2px dashed;
+  border-color: #00a991;
+  background-color: white;
+}

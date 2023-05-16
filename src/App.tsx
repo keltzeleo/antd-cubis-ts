@@ -20,6 +20,7 @@ import {
 import { useState } from "react";
 import "./App.css";
 import defaultProps from "./_defaultProps";
+import "./styling/breadcrumb.css";
 
 const { Item } = Menu;
 
@@ -134,18 +135,22 @@ const App: React.FC = () => {
                 {
                   path: "",
                   title: <GoldOutlined />,
+                  className: "breadcrumb-item",
                 },
                 {
                   path: "",
-                  title: "New Request",
+                  title: " New Request ",
+                  className: "breadcrumb-item",
                 },
                 {
                   path: "",
-                  title: "Appointments Updates",
+                  title: " Appointments Updates ",
+                  className: "breadcrumb-item",
                 },
                 {
                   path: "",
-                  title: "Appointments Updates",
+                  title: " Appointments Updates ",
+                  className: "breadcrumb-item",
                 },
               ],
             },
