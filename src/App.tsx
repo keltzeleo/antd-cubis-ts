@@ -115,6 +115,10 @@ const App: React.FC = () => {
                   path: "",
                   title: "New Request",
                 },
+                {
+                  path: "",
+                  title: "Plumber",
+                },
               ],
             },
           }}
