@@ -15,13 +15,25 @@ import {
   FloatButton,
   Input,
   Menu,
+  Tag,
 } from "antd";
+import { useState } from "react";
 import "./App.css";
 import defaultProps from "./_defaultProps";
 
 const { Item } = Menu;
 
 const App: React.FC = () => {
+  const [tagColor, setTagColor] = useState("blue"); // Dynamic tag color
+  const [tagIndication, setTagIndication] = useState("Indication"); // Dynamic tag indication
+
+  // Function to handle an event and update the tag color and indication
+  const handleEvent = () => {
+    // Example: On event occurrence, update the tag color and indication
+    setTagColor("red");
+    setTagIndication("New Indication");
+  };
+
   return (
     <div>
       <ProLayout
@@ -102,9 +114,13 @@ const App: React.FC = () => {
         <PageContainer
           fixedHeader
           style={{ top: 20, zIndex: 1 }}
-          className="font-play"
           header={{
-            title: "NEW APPLICATION REQUEST",
+            title: (
+              <>
+                <span className="font-play">"NEW APPLICATION REQUEST"</span>
+                <Tag color={tagColor}>{tagIndication}</Tag>
+              </>
+            ),
             breadcrumb: {
               items: [
                 {
@@ -117,7 +133,11 @@ const App: React.FC = () => {
                 },
                 {
                   path: "",
-                  title: "Plumber",
+                  title: "Appointments Updates",
+                },
+                {
+                  path: "",
+                  title: "Appointments Updates",
                 },
               ],
             },
