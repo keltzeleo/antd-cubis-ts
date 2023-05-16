@@ -25,7 +25,9 @@ const { Item } = Menu;
 
 const App: React.FC = () => {
   const [tagColor, setTagColor] = useState("blue"); // Dynamic tag color
-  const [tagIndication, setTagIndication] = useState("Indication"); // Dynamic tag indication
+  const [tagIndication, setTagIndication] = useState(
+    "indicator for requester group"
+  ); // Dynamic tag indication
 
   // Function to handle an event and update the tag color and indication
   const handleEvent = () => {
@@ -117,8 +119,14 @@ const App: React.FC = () => {
           header={{
             title: (
               <>
-                <span className="font-play">"NEW APPLICATION REQUEST"</span>
-                <Tag color={tagColor}>{tagIndication}</Tag>
+                <span className="font-play">NEW APPLICATION REQUEST</span>
+                <Tag
+                  className="font-Mulish"
+                  style={{ marginLeft: "8px" }}
+                  color={tagColor}
+                >
+                  {tagIndication}
+                </Tag>
               </>
             ),
             breadcrumb: {
