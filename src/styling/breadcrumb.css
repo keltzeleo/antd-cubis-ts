@@ -29,9 +29,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 4px;
-  border-radius: 4px;
-  transition: border-color 0.3s;
   border-radius: 8px;
   transition: border-color 0.3s;
   background-color: white;
@@ -42,6 +39,7 @@
   border: 0.5px dashed;
   border-color: #00a991;
   position: relative;
+  border-radius: 8px;
   display: flex;
   align-items: center;
 }
@@ -49,6 +47,7 @@
 .breadcrumb-item:focus {
   font-family: "Mulish", sans-serif;
   border: 2px dashed;
+  border-radius: 8px;
   border-color: #00a991;
   background-color: white;
 }
