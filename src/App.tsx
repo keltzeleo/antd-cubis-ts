@@ -7,11 +7,18 @@ import {
   SearchOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { PageContainer, ProCard, ProLayout } from "@ant-design/pro-components";
+import {
+  FooterToolbar,
+  PageContainer,
+  ProCard,
+  ProLayout,
+} from "@ant-design/pro-components";
+import { ProForm, ProFormText } from "@ant-design/pro-form";
 import {
   Avatar,
   Badge,
   Button,
+  Card,
   Dropdown,
   FloatButton,
   Input,
@@ -45,6 +52,7 @@ const App: React.FC = () => {
   return (
     <div>
       <ProLayout
+        hasSider
         token={{
           colorBgAppListIconHover: "#00a991",
           colorTextAppListIconHover: "rgba(255,255,255,0.95)",
@@ -70,7 +78,7 @@ const App: React.FC = () => {
         }}
         {...defaultProps}
       >
-        <div className="header-essentials">
+        <div style={{ background: "#fff" }} className="header-essentials">
           <div className="steady-alignment">
             <Avatar
               size={32}
@@ -177,68 +185,77 @@ const App: React.FC = () => {
             alt: "Avatar",
           }}
           extraContent={[]}
-          footer={[
+          /* Kel:- the below footer is being disabled because of component ProForm below has already used
+          FooterToolbar to replace it*/
+          /*  footer={[
             <Button key="3">Clear</Button>,
             <Button key="2" type="primary">
               Submit
             </Button>,
-          ]}
+          ]}*/
         >
           <>
-            <Space direction="vertical" className="space-wrapper">
-              This is Space
-              <Segmented
-                className="font-Mulish"
-                options={[
-                  {
-                    label: (
-                      <div style={{ padding: 4 }}>
-                        <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
-                        <div>New Water Supply</div>
-                      </div>
-                    ),
-                    value: "newWaterSupply",
-                  },
-                  {
-                    label: (
-                      <div style={{ padding: 4 }} className="space-wrapper">
-                        <Avatar style={{ backgroundColor: "#f99ba5" }}>
-                          AT
-                        </Avatar>
-                        <div>Account Transfer</div>
-                      </div>
-                    ),
-                    value: "accountTransfer",
-                  },
-                  {
-                    label: (
-                      <div
-                        style={{ padding: "4px 4px" }}
-                        className="space-wrapper"
-                      >
-                        <Avatar
-                          style={{ backgroundColor: "#76b2c6" }}
-                          icon={<UserOutlined />}
-                        />
-                        <div>Temporary Supply</div>
-                      </div>
-                    ),
-                    value: "tempSup",
-                  },
-                  {
-                    label: (
-                      <div style={{ padding: 4 }} className="space-wrapper">
-                        <Avatar style={{ backgroundColor: "#ffc99d" }}>
-                          CT
-                        </Avatar>
-                        <div>Change of Tenancy</div>
-                      </div>
-                    ),
-                    value: "cof",
-                  },
-                ]}
-              />
-            </Space>
+            <div className="component-wrapper">
+              <div className="label font-Mulish">New Request Type:</div>
+              <div className="segmented-wrapper">
+                <Space
+                  direction="vertical"
+                  className="font-Mulish space-wrapper"
+                >
+                  <Segmented
+                    className="font-Mulish"
+                    options={[
+                      {
+                        label: (
+                          <div style={{ padding: 4 }}>
+                            <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
+                            <div>New Water Supply</div>
+                          </div>
+                        ),
+                        value: "newWaterSupply",
+                      },
+                      {
+                        label: (
+                          <div style={{ padding: 4 }} className="space-wrapper">
+                            <Avatar style={{ backgroundColor: "#f99ba5" }}>
+                              AT
+                            </Avatar>
+                            <div>Account Transfer</div>
+                          </div>
+                        ),
+                        value: "accountTransfer",
+                      },
+                      {
+                        label: (
+                          <div
+                            style={{ padding: "4px 4px" }}
+                            className="space-wrapper"
+                          >
+                            <Avatar
+                              style={{ backgroundColor: "#76b2c6" }}
+                              icon={<UserOutlined />}
+                            />
+                            <div>Temporary Supply</div>
+                          </div>
+                        ),
+                        value: "tempSup",
+                      },
+                      {
+                        label: (
+                          <div style={{ padding: 4 }} className="space-wrapper">
+                            <Avatar style={{ backgroundColor: "#ffc99d" }}>
+                              CT
+                            </Avatar>
+                            <div>Change of Tenancy</div>
+                          </div>
+                        ),
+                        value: "cof",
+                      },
+                    ]}
+                  />
+                </Space>
+              </div>
+            </div>
           </>
           <>
             <FloatButton.Group
@@ -256,6 +273,53 @@ const App: React.FC = () => {
           >
             This is ProCard: For Customer who wants to apply water supply in new
             location, document and plumber enquiries.
+          </ProCard>
+          <Card style={{}}>
+            <ProForm
+              submitter={{
+                render: (_, dom) => <FooterToolbar>{dom}</FooterToolbar>,
+              }}
+              onFinish={async (values) => console.log(values)}
+            >
+              <ProForm layout="vertical">
+                <ProCard split="vertical">
+                  <ProCard colSpan="50%">
+                    <ProCard title="Personal Information">
+                      <ProForm.Item label="Name" name="name">
+                        <ProFormText />
+                      </ProForm.Item>
+                      <ProForm.Item label="ID Number" name="idNumber">
+                        <ProFormText />
+                      </ProForm.Item>
+                      <ProForm.Item label="Mobile Number" name="mobileNumber">
+                        <ProFormText />
+                      </ProForm.Item>
+                    </ProCard>
+                  </ProCard>
+                  <ProCard colSpan="50%">
+                    <ProCard title="Address">
+                      <ProForm.Item label="Postcode" name="postcode">
+                        <ProFormText />
+                      </ProForm.Item>
+                      <ProForm.Item label="City" name="city">
+                        <ProFormText />
+                      </ProForm.Item>
+                      <ProForm.Item label="State" name="state">
+                        <ProFormText />
+                      </ProForm.Item>
+                    </ProCard>
+                  </ProCard>
+                </ProCard>
+              </ProForm>
+            </ProForm>
+          </Card>
+          <ProCard style={{ marginBlockStart: 8 }} gutter={8} ghost>
+            <ProCard bordered layout="center">
+              Auto
+            </ProCard>
+            <ProCard colSpan="50%" bordered>
+              colSpan - 50%
+            </ProCard>
           </ProCard>
           <ProCard direction="column" ghost gutter={[0, 16]}>
             <ProCard style={{ height: 200 }} />
