@@ -185,7 +185,7 @@ const App: React.FC = () => {
           ]}
         >
           <>
-            <Space direction="vertical">
+            <Space direction="vertical" className="space-wrapper">
               This is Space
               <Segmented
                 className="font-Mulish"
@@ -201,7 +201,7 @@ const App: React.FC = () => {
                   },
                   {
                     label: (
-                      <div style={{ padding: 4 }}>
+                      <div style={{ padding: 4 }} className="space-wrapper">
                         <Avatar style={{ backgroundColor: "#f99ba5" }}>
                           AT
                         </Avatar>
@@ -212,7 +212,10 @@ const App: React.FC = () => {
                   },
                   {
                     label: (
-                      <div style={{ padding: "4px 4px" }}>
+                      <div
+                        style={{ padding: "4px 4px" }}
+                        className="space-wrapper"
+                      >
                         <Avatar
                           style={{ backgroundColor: "#76b2c6" }}
                           icon={<UserOutlined />}
@@ -224,7 +227,7 @@ const App: React.FC = () => {
                   },
                   {
                     label: (
-                      <div style={{ padding: 4 }}>
+                      <div style={{ padding: 4 }} className="space-wrapper">
                         <Avatar style={{ backgroundColor: "#ffc99d" }}>
                           CT
                         </Avatar>

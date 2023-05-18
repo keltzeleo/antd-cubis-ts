@@ -33,6 +33,10 @@
   font-size: 18px;
 }
 
+.space-wrapper {
+  margin-right: 10px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
