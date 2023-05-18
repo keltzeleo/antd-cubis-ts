@@ -217,7 +217,9 @@ const App: React.FC = () => {
                             <Avatar
                               style={{ backgroundColor: "#76b2c6" }}
                               src="./icons/icon_IndividualApplication.png"
-                            />
+                            >
+                              NW
+                            </Avatar>
                             <div>New Water Supply</div>
                           </div>
                         ),
@@ -226,7 +228,10 @@ const App: React.FC = () => {
                       {
                         label: (
                           <div style={{ padding: 4 }} className="space-wrapper">
-                            <Avatar style={{ backgroundColor: "#f99ba5" }}>
+                            <Avatar
+                              style={{ backgroundColor: "#5ec9ba" }}
+                              src="./icons/icon_accountTransfer.png"
+                            >
                               AT
                             </Avatar>
                             <div>Account Transfer</div>
@@ -241,7 +246,7 @@ const App: React.FC = () => {
                             className="space-wrapper"
                           >
                             <Avatar
-                              style={{ backgroundColor: "#76b2c6" }}
+                              style={{ backgroundColor: "#d5b7c7" }}
                               icon={<UserOutlined />}
                             />
                             <div>Temporary Supply</div>
@@ -252,7 +257,10 @@ const App: React.FC = () => {
                       {
                         label: (
                           <div style={{ padding: 4 }} className="space-wrapper">
-                            <Avatar style={{ backgroundColor: "#ffc99d" }}>
+                            <Avatar
+                              style={{ backgroundColor: "#ffc99d" }}
+                              src="./icons/icon_changeOfTenancy.png"
+                            >
                               CT
                             </Avatar>
                             <div>Change of Tenancy</div>
