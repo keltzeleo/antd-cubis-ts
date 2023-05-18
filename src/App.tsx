@@ -19,6 +19,7 @@ import {
   Segmented,
   Space,
   Tag,
+  Typography,
 } from "antd";
 import { useState } from "react";
 import "./App.css";
@@ -26,6 +27,7 @@ import defaultProps from "./_defaultProps";
 import "./styling/breadcrumb.css";
 
 const { Item } = Menu;
+const { Title } = Typography;
 
 const App: React.FC = () => {
   const [tagColor, setTagColor] = useState("blue"); // Dynamic tag color
@@ -245,7 +247,13 @@ const App: React.FC = () => {
               <FloatButton.BackTop visibilityHeight={0} />
             </FloatButton.Group>
           </>
-          <ProCard style={{ background: "#00a991" }}>This is ProCard</ProCard>
+          <ProCard
+            className="font-Mulish"
+            style={{ background: "#00a991", color: "#fff" }}
+          >
+            This is ProCard: For Customer who wants to apply water supply in new
+            location, document and plumber enquiries.
+          </ProCard>
           <ProCard direction="column" ghost gutter={[0, 16]}>
             <ProCard style={{ height: 200 }} />
             <ProCard gutter={16} ghost>
