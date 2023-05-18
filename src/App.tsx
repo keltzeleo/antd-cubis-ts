@@ -181,7 +181,13 @@ const App: React.FC = () => {
             },
           }}
           avatar={{
-            src: "https://xsgames.co/randomusers/avatar.php?g=pixel",
+            style: {
+              backgroundColor: "#00a991",
+              width: "48px",
+              height: "48px",
+              padding: "4px",
+            },
+            src: "./icons/icon_NewSupplyManagement.png",
             alt: "Avatar",
           }}
           extraContent={[]}
@@ -208,7 +214,10 @@ const App: React.FC = () => {
                       {
                         label: (
                           <div style={{ padding: 4 }}>
-                            <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
+                            <Avatar
+                              style={{ backgroundColor: "#76b2c6" }}
+                              src="./icons/icon_IndividualApplication.png"
+                            />
                             <div>New Water Supply</div>
                           </div>
                         ),
