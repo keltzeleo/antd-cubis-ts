@@ -5,6 +5,7 @@ import {
   LogoutOutlined,
   QuestionCircleOutlined,
   SearchOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { PageContainer, ProCard, ProLayout } from "@ant-design/pro-components";
 import {
@@ -15,6 +16,8 @@ import {
   FloatButton,
   Input,
   Menu,
+  Segmented,
+  Space,
   Tag,
 } from "antd";
 import { useState } from "react";
@@ -55,7 +58,7 @@ const App: React.FC = () => {
             colorBgMenuItemHover: "#00a991",
             colorBgMenuItemSelected: "#00a991",
             colorTextMenuSelected: "#fff",
-            colorTextMenuItemHover: "rgba(255,255,255,0.75)",
+            colorTextMenuItemHover: "#00a991",
             colorTextMenu: "rgba(255,255,255,0.75)",
             colorTextMenuSecondary: "rgba(255,255,255,0.65)",
             colorTextMenuTitle: "rgba(255,255,255,0.95)",
@@ -116,7 +119,7 @@ const App: React.FC = () => {
 
         <PageContainer
           fixedHeader
-          style={{ top: 20, zIndex: 1 }}
+          style={{ top: 20, zIndex: 1, background: "" }}
           header={{
             title: (
               <>
@@ -133,7 +136,7 @@ const App: React.FC = () => {
                 <span
                   className="font-play-header02"
                   style={{
-                    background: "#cbece8",
+                    background: "#d1e8e1",
                     padding: "4px 16px",
                     borderRadius: "4px",
                   }}
@@ -168,7 +171,7 @@ const App: React.FC = () => {
             },
           }}
           avatar={{
-            src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
+            src: "https://xsgames.co/randomusers/avatar.php?g=pixel",
             alt: "Avatar",
           }}
           extraContent={[]}
@@ -180,6 +183,59 @@ const App: React.FC = () => {
           ]}
         >
           <>
+            <Space direction="vertical">
+              This is Space
+              <Segmented
+                className="font-Mulish"
+                options={[
+                  {
+                    label: (
+                      <div style={{ padding: 4 }}>
+                        <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
+                        <div>New Water Supply</div>
+                      </div>
+                    ),
+                    value: "newWaterSupply",
+                  },
+                  {
+                    label: (
+                      <div style={{ padding: 4 }}>
+                        <Avatar style={{ backgroundColor: "#f99ba5" }}>
+                          AT
+                        </Avatar>
+                        <div>Account Transfer</div>
+                      </div>
+                    ),
+                    value: "accountTransfer",
+                  },
+                  {
+                    label: (
+                      <div style={{ padding: "4px 4px" }}>
+                        <Avatar
+                          style={{ backgroundColor: "#76b2c6" }}
+                          icon={<UserOutlined />}
+                        />
+                        <div>Temporary Supply</div>
+                      </div>
+                    ),
+                    value: "tempSup",
+                  },
+                  {
+                    label: (
+                      <div style={{ padding: 4 }}>
+                        <Avatar style={{ backgroundColor: "#ffc99d" }}>
+                          CT
+                        </Avatar>
+                        <div>Change of Tenancy</div>
+                      </div>
+                    ),
+                    value: "cof",
+                  },
+                ]}
+              />
+            </Space>
+          </>
+          <>
             <FloatButton.Group
               shape="circle"
               style={{ right: 24, bottom: 100 }}
@@ -189,8 +245,7 @@ const App: React.FC = () => {
               <FloatButton.BackTop visibilityHeight={0} />
             </FloatButton.Group>
           </>
-
-          <ProCard style={{ background: "#00a991" }}>aaa</ProCard>
+          <ProCard style={{ background: "#00a991" }}>This is ProCard</ProCard>
           <ProCard direction="column" ghost gutter={[0, 16]}>
             <ProCard style={{ height: 200 }} />
             <ProCard gutter={16} ghost>
