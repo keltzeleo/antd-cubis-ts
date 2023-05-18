@@ -217,6 +217,7 @@ const App: React.FC = () => {
                             <Avatar
                               style={{ backgroundColor: "#76b2c6" }}
                               src="./icons/icon_IndividualApplication.png"
+                              /*Kel:- the icon folder is placed under public folder as I was having error while placing icons folder under src folder*/
                             >
                               NW
                             </Avatar>
