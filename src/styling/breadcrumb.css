@@ -1,22 +1,53 @@
+@font-face {
+  font-family: "Mulish";
+  src: url("../fonts/Mulish-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Play";
+  src: url("../fonts/Play-Regular.ttf") format("truetype");
+}
+
+.App {
+  text-align: center;
+  font-family: --apple-system, BlinkMacSystemFont, "Mulish", "Play", "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+}
+
+.font-mulish {
+  font-family: "Mulish", sans-serif;
+}
+
+.font-play {
+  font-family: "Play", sans-serif;
+}
+
 .breadcrumb-item {
-  display: table-cell;
-  vertical-align: middle;
+  font-family: "Mulish", sans-serif;
+  position: relative;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  border: 2px dashed grey;
   padding-bottom: 4px;
   border-radius: 4px;
   transition: border-color 0.3s;
-  border: 2px dashed grey;
   border-radius: 8px;
   transition: border-color 0.3s;
+  background-color: white;
 }
 
 .breadcrumb-item:hover {
-  border: 2px dashed;
+  font-family: "Mulish", sans-serif;
+  border: 0.5px dashed;
   border-color: #00a991;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .breadcrumb-item:focus {
+  font-family: "Mulish", sans-serif;
   border: 2px dashed;
   border-color: #00a991;
   background-color: white;

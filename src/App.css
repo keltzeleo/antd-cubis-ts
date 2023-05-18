@@ -23,6 +23,16 @@
   font-family: "Play", sans-serif;
 }
 
+.font-play-header {
+  font-family: "Play", sans-serif;
+  font-size: 28px;
+}
+
+.font-play-header02 {
+  font-family: "Play", sans-serif;
+  font-size: 18px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

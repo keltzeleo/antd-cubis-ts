@@ -120,7 +120,8 @@ const App: React.FC = () => {
           header={{
             title: (
               <>
-                <span className="font-play">NEW APPLICATION REQUEST</span>
+                <span className="font-play-header">NEW APPLICATION SYSTEM</span>
+
                 <Tag
                   className="font-Mulish"
                   style={{ marginLeft: "8px" }}
@@ -128,6 +129,17 @@ const App: React.FC = () => {
                 >
                   {tagIndication}
                 </Tag>
+                <br />
+                <span
+                  className="font-play-header02"
+                  style={{
+                    background: "#cbece8",
+                    padding: "4px 16px",
+                    borderRadius: "4px",
+                  }}
+                >
+                  New Request • NEW WATER SUPPLY
+                </span>
               </>
             ),
             breadcrumb: {
@@ -159,21 +171,7 @@ const App: React.FC = () => {
             src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
             alt: "Avatar",
           }}
-          tabList={[
-            {
-              tab: "已选择",
-              key: "1",
-            },
-            {
-              tab: "可点击",
-              key: "2",
-            },
-            {
-              tab: "禁用",
-              key: "3",
-              disabled: true,
-            },
-          ]}
+          extraContent={[]}
           footer={[
             <Button key="3">Clear</Button>,
             <Button key="2" type="primary">
@@ -191,6 +189,8 @@ const App: React.FC = () => {
               <FloatButton.BackTop visibilityHeight={0} />
             </FloatButton.Group>
           </>
+
+          <ProCard style={{ background: "#00a991" }}>aaa</ProCard>
           <ProCard direction="column" ghost gutter={[0, 16]}>
             <ProCard style={{ height: 200 }} />
             <ProCard gutter={16} ghost>
