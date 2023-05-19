@@ -1,4 +1,4 @@
-import { UserOutlined } from "@ant-design/icons";
+import { CheckCircleTwoTone } from "@ant-design/icons";
 import {
   Avatar,
   Button,
@@ -110,17 +110,22 @@ const MyForm: React.FC = () => {
         <Space>
           <Button
             style={{
-              paddingBottom: "24px",
-              paddingTop: "24px",
-              margin: "8px 10px",
-              display: "wrapper",
+              margin: "10px 10px",
+              display: "flex", // Use flex display
               justifyContent: "center",
+              flexDirection: "column", // Arrange children vertically
               alignItems: "center",
+              width: "auto", // Allow the button to adjust its width based on content
+              height: "auto",
             }}
             shape="default"
             icon={
               <Avatar
-                style={{ backgroundColor: "#76b2c6" }}
+                style={{
+                  backgroundColor: "#fff",
+                  marginTop: "2px",
+                  marginBottom: "-4px",
+                }}
                 src="./icons/icon_IndividualApplication.png"
               />
             }
@@ -130,44 +135,78 @@ const MyForm: React.FC = () => {
               selectedItem === "newWaterSupply" ? "selected" : ""
             }`}
           >
-            {" "}
-            <Avatar
-              style={{ backgroundColor: "#76b2c6" }}
-              src="./icons/icon_IndividualApplication.png"
-            />
             <div style={{ padding: "8px" }}>New Water Supply</div>
           </Button>
           <Button
+            style={{
+              margin: "10px 10px",
+              display: "flex", // Use flex display
+              justifyContent: "center",
+              flexDirection: "column", // Arrange children vertically
+              alignItems: "center",
+              width: "auto", // Allow the button to adjust its width based on content
+              height: "auto",
+            }}
+            shape="default"
+            icon={
+              <Avatar
+                style={{
+                  backgroundColor: "#fff",
+                  marginTop: "2px",
+                  marginBottom: "-4px",
+                }}
+                src="./icons/icon_accountTransfer.png"
+              />
+            }
             type={selectedItem === "accountTransfer" ? "primary" : "default"}
             onClick={() => handleButtonClick("accountTransfer")}
             className={`segmented-button ${
               selectedItem === "accountTransfer" ? "selected" : ""
             }`}
           >
-            <div className="avatar-wrapper">
-              <Avatar
-                style={{ backgroundColor: "#5ec9ba" }}
-                src="./icons/icon_accountTransfer.png"
-              />
-              <div className="button-label">Account Transfer</div>
+            <div>
+              <div style={{ padding: "8px" }}>Account Transfer</div>
             </div>
           </Button>
+
           <Button
+            style={{
+              margin: "10px 10px",
+              display: "flex", // Use flex display
+              justifyContent: "center",
+              flexDirection: "column", // Arrange children vertically
+              alignItems: "center",
+              width: "auto", // Allow the button to adjust its width based on content
+              height: "auto",
+            }}
             type={selectedItem === "tempSup" ? "primary" : "default"}
             onClick={() => handleButtonClick("tempSup")}
             className={`segmented-button ${
               selectedItem === "tempSup" ? "selected" : ""
             }`}
           >
-            <div className="avatar-wrapper">
+            <div>
               <Avatar
-                style={{ backgroundColor: "#d5b7c7" }}
-                icon={<UserOutlined />}
+                style={{
+                  backgroundColor: "#fff",
+                  marginTop: "2px",
+                  marginBottom: "-4px",
+                }}
+                icon={<CheckCircleTwoTone twoToneColor="#52c41a" />}
               />
-              <div className="button-label">Temporary Supply</div>
+              <div style={{ padding: "8px" }}>Temporary Supply</div>
             </div>
           </Button>
           <Button
+            style={{
+              margin: "10px 10px",
+              display: "flex", // Use flex display
+              justifyContent: "center",
+              flexDirection: "column", // Arrange children vertically
+              alignItems: "center",
+              width: "auto", // Allow the button to adjust its width based on content
+              height: "auto",
+            }}
             type={selectedItem === "cof" ? "primary" : "default"}
             onClick={() => handleButtonClick("cof")}
             className={`segmented-button ${
@@ -176,10 +215,10 @@ const MyForm: React.FC = () => {
           >
             <div className="avatar-wrapper">
               <Avatar
-                style={{ backgroundColor: "#ffc99d" }}
+                style={{ backgroundColor: "#fff" }}
                 src="./icons/icon_changeOfTenancy.png"
               />
-              <div className="button-label">Change of Tenancy</div>
+              <div style={{ padding: "8px" }}>Change of Tenancy</div>
             </div>
           </Button>
         </Space>
