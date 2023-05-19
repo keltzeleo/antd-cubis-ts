@@ -8625,7 +8625,7 @@ fetch-retry@^5.0.2:
 
 figma-tokens-transformer@^1.1.3:
   version "1.1.3"
-  resolved "https://registry.npmjs.org/figma-tokens-transformer/-/figma-tokens-transformer-1.1.3.tgz"
+  resolved "https://registry.yarnpkg.com/figma-tokens-transformer/-/figma-tokens-transformer-1.1.3.tgz#ff218fd8c8851878df72980c3049cb7cfc3c360b"
   integrity sha512-eVeBLJ1tRDFklDKATlJjKSTiiFqzAAnN6sYQXvJAUqhPFzcqsjy5PG+UCDbwuBlaExQ58JP2DWc078PGFKt+XA==
   dependencies:
     adm-zip "^0.5.9"
