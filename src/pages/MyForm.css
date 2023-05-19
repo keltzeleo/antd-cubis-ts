@@ -1,0 +1,12 @@
+.custom-radio-group {
+  .ant-radio-wrapper {
+  }
+
+  .ant-radio-wrapper:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.segmented-button {
+  margin-right: 8px; /* Add spacing between the buttons */
+}

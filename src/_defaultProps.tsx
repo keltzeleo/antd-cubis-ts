@@ -13,10 +13,10 @@ const defaultProps = {
     path: "/",
     routes: [
       {
-        path: "/src/pages",
+        path: "/welcome",
         name: "欢迎",
         icon: <SmileFilled />,
-        component: "./pages/Welcome",
+        component: "./Welcome",
       },
       {
         path: "/admin",
