@@ -10,3 +10,22 @@
 .segmented-button {
   margin-right: 8px; /* Add spacing between the buttons */
 }
+
+.font-mulish {
+  font-family: "Mulish", sans-serif;
+}
+
+.font-play {
+  font-family: "Play", sans-serif;
+}
+
+.font-play-header {
+  font-family: "Play", sans-serif;
+  font-size: 28px;
+}
+
+.two-column-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
