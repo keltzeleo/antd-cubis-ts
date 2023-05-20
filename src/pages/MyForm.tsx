@@ -25,6 +25,7 @@ interface FormFields {
   phoneNumber?: string;
   website?: string;
   favoriteColor?: string;
+  postcode?: number;
 }
 
 const MyForm: React.FC = () => {
@@ -79,8 +80,14 @@ const MyForm: React.FC = () => {
                     placeholder="House No./Apt Name, Block No."
                     style={{ width: "20vh", marginBottom: 8 }}
                   />
-                  <Input style={{ marginBottom: 8 }} />
-                  <Input style={{ marginBottom: 8 }} />
+                  <Input
+                    placeholder="Street No. / Name"
+                    style={{ marginBottom: 8 }}
+                  />
+                  <Input
+                    placeholder="Location, Area"
+                    style={{ marginBottom: 8 }}
+                  />
                   <div style={{ display: "flex", gap: 8 }}>
                     <ProFormText
                       fieldProps={{
@@ -90,15 +97,12 @@ const MyForm: React.FC = () => {
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
-                        },
-                        type: "number",
-                        inputMode: "numeric", // Disable adjustment of the number in the input field
+                        }, // Disable adjustment of the number in the input field
                       }}
                       rules={[
                         {
                           pattern: /^\d+$/, // Use a regular expression pattern to enforce numeric input
-                          message:
-                            "Please enter a valid postcode (numbers only).",
+                          message: "🔢 numbers only ya... ",
                         },
                       ]}
                       width="xl"
