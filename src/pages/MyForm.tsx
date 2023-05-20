@@ -6,6 +6,7 @@ import {
   ConfigProvider,
   Form,
   Input,
+  Select,
   Space,
 } from "antd";
 
@@ -16,7 +17,7 @@ import light from "../../src/tokens/light.json";
 
 interface FormFields {
   name?: string;
-  userId?: string;
+  idNumber?: number;
   address?: string;
   nickname?: string;
   sendEmail?: boolean;
@@ -28,7 +29,61 @@ interface FormFields {
   postcode?: number;
 }
 
+const { Option } = Select;
+
 const MyForm: React.FC = () => {
+  const [selectedOption, setSelectedOption] = useState("MyKad");
+
+  const handleOptionChange = (value: string) => {
+    switch (value) {
+      case "MyKad":
+        // Handle MyKad option
+        break;
+      case "MyTentera":
+        // Handle MyTentera option
+        break;
+      case "MyPR":
+        // Handle MyPR option
+        break;
+      case "MyKAS":
+        // Handle MyKAS option
+        break;
+      default:
+        // Handle other options if needed
+        break;
+    }
+    setSelectedOption(value);
+  };
+
+  const selectBefore = (
+    <Select
+      value={selectedOption}
+      onChange={handleOptionChange}
+      className={
+        selectedOption === "MyKad"
+          ? "myKad-select"
+          : selectedOption === "MyTentera"
+          ? "myTentera-select"
+          : selectedOption === "MyPR"
+          ? "myPR-select"
+          : "myKAS-select"
+      }
+    >
+      <Option value="MyKad" className="myKad-option">
+        MyKad
+      </Option>
+      <Option value="MyTentera" className="myTentera-option">
+        MyTentera
+      </Option>
+      <Option value="MyPR" className="myPR-option">
+        MyPR
+      </Option>
+      <Option value="MyKAS" className="myKAS-option">
+        MyKAS
+      </Option>
+    </Select>
+  );
+
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const handleButtonClick = (value: string) => {
@@ -52,12 +107,12 @@ const MyForm: React.FC = () => {
                 minWidth: "330px",
               }}
             >
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <div>
                 <label style={{ marginBottom: "4px" }}>Name</label>
                 <ProFormText
                   fieldProps={{
                     style: {
-                      width: "20vh", // Set the width to 300px
+                      width: "30vh", // Set the width to 300px
                       minWidth: "300px", // Ensure a minimum width of 300px
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -67,21 +122,34 @@ const MyForm: React.FC = () => {
                   name="name"
                   placeholder="Full Name as shown in ID"
                 />
+                <div>
+                  <label style={{ marginBottom: "4px" }}>ID Number</label>
+
+                  <Form.Item name="idNumber">
+                    <Input
+                      style={{
+                        width: "", // not seeting any value for having same wieth with "name"
+                        minWidth: "", // not seeting any value for having same wieth with "name"
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                      addonBefore={selectBefore}
+                      placeholder="12-digit number on ID Card"
+                      className="custom-hover"
+                    />
+                  </Form.Item>
+                </div>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
+              <div>
                 <label style={{ marginBottom: 8 }}>Address</label>
                 <Form.Item style={{ marginBottom: 8 }} name="address">
                   <Input
-                    placeholder="House No./Apt Name, Block No."
+                    placeholder="House No./Block No. , Apt Name."
                     style={{ width: "20vh", marginBottom: 8 }}
                   />
                   <Input
-                    placeholder="Street No. / Name"
+                    placeholder="Street No. , Name"
                     style={{ marginBottom: 8 }}
                   />
                   <Input
@@ -143,11 +211,6 @@ const MyForm: React.FC = () => {
               </div>
             </ProForm.Group>
 
-            <Form.Item label="User ID" name="userId">
-              <Input />
-              <Input />
-              <Input />
-            </Form.Item>
             <Form.Item label="Address" name="address">
               <Input />
             </Form.Item>
