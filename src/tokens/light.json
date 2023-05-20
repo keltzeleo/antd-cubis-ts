@@ -163,7 +163,7 @@
   "colorFillSecondary": "#0d0c0d0f",
   "colorFillTertiary": "#0d0c0d0a",
   "colorFillQuaternary": "#0d0c0d05",
-  "colorBgContainer": "#f9f9f9",
+  "colorBgContainer": "#fff",
   "colorBgLayout": "#f5f5f5",
   "colorBgElevated": "#f3f6f9",
   "colorBgSpotlight": "#0d0c0dd9",

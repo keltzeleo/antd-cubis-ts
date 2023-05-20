@@ -151,6 +151,13 @@ const MyForm: React.FC = () => {
             <Form.Item label="Address" name="address">
               <Input />
             </Form.Item>
+            <ProFormText
+              name="project"
+              width="md"
+              disabled
+              label="项目名称"
+              initialValue="xxxx项目"
+            />
           </>
         );
       case "accountTransfer":
