@@ -1,3 +1,4 @@
+import { ProForm, ProFormText } from "@ant-design/pro-form";
 import {
   Avatar,
   Button,
@@ -7,6 +8,7 @@ import {
   Input,
   Space,
 } from "antd";
+
 import { useState } from "react";
 import "./MyForm.css";
 
@@ -42,10 +44,104 @@ const MyForm: React.FC = () => {
       case "newWaterSupply":
         return (
           <>
-            <Form.Item label="Name" name="name">
-              <Input />
-            </Form.Item>
+            <ProForm.Group
+              style={{
+                marginTop: 12,
+                marginLeft: 44,
+                minWidth: "330px",
+              }}
+            >
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <label style={{ marginBottom: "4px" }}>Name</label>
+                <ProFormText
+                  fieldProps={{
+                    style: {
+                      width: "20vh", // Set the width to 300px
+                      minWidth: "300px", // Ensure a minimum width of 300px
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    },
+                  }}
+                  name="name"
+                  placeholder="Full Name as shown in ID"
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <label style={{ marginBottom: 8 }}>Address</label>
+                <Form.Item style={{ marginBottom: 8 }} name="address">
+                  <Input
+                    placeholder="House No./Apt Name, Block No."
+                    style={{ width: "20vh", marginBottom: 8 }}
+                  />
+                  <Input style={{ marginBottom: 8 }} />
+                  <Input style={{ marginBottom: 8 }} />
+                  <div style={{ display: "flex", gap: 8 }}>
+                    <ProFormText
+                      fieldProps={{
+                        style: {
+                          width: "10vh",
+                          minWidth: "120px", // Adjust the maximum width as needed
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        },
+                        type: "number",
+                        inputMode: "numeric", // Disable adjustment of the number in the input field
+                      }}
+                      rules={[
+                        {
+                          pattern: /^\d+$/, // Use a regular expression pattern to enforce numeric input
+                          message:
+                            "Please enter a valid postcode (numbers only).",
+                        },
+                      ]}
+                      width="xl"
+                      name="postcode"
+                      label="Postcode"
+                      placeholder="Postcode"
+                    />
+                    <ProFormText
+                      fieldProps={{
+                        style: {
+                          minWidth: "120px", // Adjust the maximum width as needed
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        },
+                      }}
+                      width="md"
+                      name="city"
+                      label="City"
+                      placeholder="City"
+                    />
+                    <ProFormText
+                      fieldProps={{
+                        style: {
+                          minWidth: "120px", // Adjust the maximum width as needed
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        },
+                      }}
+                      width="md"
+                      name="state"
+                      label="State"
+                      placeholder="State"
+                    />
+                  </div>
+                </Form.Item>
+              </div>
+            </ProForm.Group>
+
             <Form.Item label="User ID" name="userId">
+              <Input />
+              <Input />
               <Input />
             </Form.Item>
             <Form.Item label="Address" name="address">
