@@ -8,6 +8,7 @@ import {
   Input,
   Select,
   Space,
+  Tooltip,
 } from "antd";
 
 import { useState } from "react";
@@ -33,69 +34,22 @@ const { Option } = Select;
 
 const MyForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
+  const [selectedItem, setSelectedItem] = useState("newWaterSupply");
 
   const handleOptionChange = (value: string) => {
-    switch (value) {
-      case "MyKad":
-        // Handle MyKad option
-        break;
-      case "MyTentera":
-        // Handle MyTentera option
-        break;
-      case "MyPR":
-        // Handle MyPR option
-        break;
-      case "MyKAS":
-        // Handle MyKAS option
-        break;
-      default:
-        // Handle other options if needed
-        break;
-    }
     setSelectedOption(value);
   };
-
-  const selectBefore = (
-    <Select
-      value={selectedOption}
-      onChange={handleOptionChange}
-      className={
-        selectedOption === "MyKad"
-          ? "myKad-select"
-          : selectedOption === "MyTentera"
-          ? "myTentera-select"
-          : selectedOption === "MyPR"
-          ? "myPR-select"
-          : "myKAS-select"
-      }
-    >
-      <Option value="MyKad" className="myKad-option">
-        MyKad
-      </Option>
-      <Option value="MyTentera" className="myTentera-option">
-        MyTentera
-      </Option>
-      <Option value="MyPR" className="myPR-option">
-        MyPR
-      </Option>
-      <Option value="MyKAS" className="myKAS-option">
-        MyKAS
-      </Option>
-    </Select>
-  );
-
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
 
   const handleButtonClick = (value: string) => {
     setSelectedItem(value);
   };
 
-  const handleSubmit = (values: FormFields) => {
+  const handleSubmit = (values: FormFields): Promise<boolean | void> => {
     console.log("Form values:", values);
+    return Promise.resolve(); // Return a resolved promise to satisfy the ProForm's onFinish requirement
   };
 
   const renderFormFields = () => {
-    // Render form fields based on the selected item
     switch (selectedItem) {
       case "newWaterSupply":
         return (
@@ -126,18 +80,19 @@ const MyForm: React.FC = () => {
                   <label style={{ marginBottom: "4px" }}>ID Number</label>
 
                   <Form.Item name="idNumber">
-                    <Input
-                      style={{
-                        width: "", // not seeting any value for having same wieth with "name"
-                        minWidth: "", // not seeting any value for having same wieth with "name"
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                      addonBefore={selectBefore}
-                      placeholder="12-digit number on ID Card"
-                      className="custom-hover"
-                    />
+                    <Tooltip title="Tooltip Text">
+                      <Input
+                        style={{
+                          width: "", // not setting any value for having the same width as "name"
+                          minWidth: "", // not setting any value for having the same width as "name"
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                        addonBefore={selectBefore}
+                        placeholder="12-digit number on ID Card"
+                      />
+                    </Tooltip>
                   </Form.Item>
                 </div>
               </div>
@@ -165,12 +120,12 @@ const MyForm: React.FC = () => {
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
-                        }, // Disable adjustment of the number in the input field
+                        },
                       }}
                       rules={[
                         {
                           pattern: /^\d+$/, // Use a regular expression pattern to enforce numeric input
-                          message: "🔢 numbers only ya... ",
+                          message: "🔢 numbers only ya...",
                         },
                       ]}
                       width="xl"
@@ -273,6 +228,35 @@ const MyForm: React.FC = () => {
     }
   };
 
+  const selectBefore = (
+    <Select
+      value={selectedOption}
+      onChange={handleOptionChange}
+      className={
+        selectedOption === "MyKad"
+          ? "myKad-select"
+          : selectedOption === "MyTentera"
+          ? "myTentera-select"
+          : selectedOption === "MyPR"
+          ? "myPR-select"
+          : "myKAS-select"
+      }
+    >
+      <Option value="MyKad" className="myKad-option">
+        MyKad
+      </Option>
+      <Option value="MyTentera" className="myTentera-option">
+        MyTentera
+      </Option>
+      <Option value="MyPR" className="myPR-option">
+        MyPR
+      </Option>
+      <Option value="MyKAS" className="myKAS-option">
+        MyKAS
+      </Option>
+    </Select>
+  );
+
   return (
     <ConfigProvider theme={{ token: light }}>
       <Space direction="vertical" className="font-Mulish space-wrapper">
@@ -280,11 +264,11 @@ const MyForm: React.FC = () => {
           <Button
             style={{
               margin: "10px 10px",
-              display: "flex", // Use flex display
+              display: "flex",
               justifyContent: "center",
-              flexDirection: "column", // Arrange children vertically
+              flexDirection: "column",
               alignItems: "center",
-              width: "auto", // Allow the button to adjust its width based on content
+              width: "auto",
               height: "auto",
             }}
             shape="default"
@@ -309,11 +293,11 @@ const MyForm: React.FC = () => {
           <Button
             style={{
               margin: "10px 10px",
-              display: "flex", // Use flex display
+              display: "flex",
               justifyContent: "center",
-              flexDirection: "column", // Arrange children vertically
+              flexDirection: "column",
               alignItems: "center",
-              width: "auto", // Allow the button to adjust its width based on content
+              width: "auto",
               height: "auto",
             }}
             shape="default"
@@ -341,11 +325,11 @@ const MyForm: React.FC = () => {
           <Button
             style={{
               margin: "10px 10px",
-              display: "flex", // Use flex display
+              display: "flex",
               justifyContent: "center",
-              flexDirection: "column", // Arrange children vertically
+              flexDirection: "column",
               alignItems: "center",
-              width: "auto", // Allow the button to adjust its width based on content
+              width: "auto",
               height: "auto",
             }}
             type={selectedItem === "tempSup" ? "primary" : "default"}
@@ -369,11 +353,11 @@ const MyForm: React.FC = () => {
           <Button
             style={{
               margin: "10px 10px",
-              display: "flex", // Use flex display
+              display: "flex",
               justifyContent: "center",
-              flexDirection: "column", // Arrange children vertically
+              flexDirection: "column",
               alignItems: "center",
-              width: "auto", // Allow the button to adjust its width based on content
+              width: "auto",
               height: "auto",
             }}
             type={selectedItem === "cof" ? "primary" : "default"}
@@ -391,14 +375,14 @@ const MyForm: React.FC = () => {
             </div>
           </Button>
         </Space>
-        <Form onFinish={handleSubmit}>
+        <ProForm onFinish={handleSubmit}>
           {renderFormFields()}
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>
-        </Form>
+        </ProForm>
       </Space>
     </ConfigProvider>
   );
