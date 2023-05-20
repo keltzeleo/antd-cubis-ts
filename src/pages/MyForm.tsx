@@ -1,4 +1,3 @@
-import { CheckCircleTwoTone } from "@ant-design/icons";
 import {
   Avatar,
   Button,
@@ -192,7 +191,7 @@ const MyForm: React.FC = () => {
                   marginTop: "2px",
                   marginBottom: "-4px",
                 }}
-                icon={<CheckCircleTwoTone twoToneColor="#52c41a" />}
+                src="./icons/icon_temporarySupply.png"
               />
               <div style={{ padding: "8px" }}>Temporary Supply</div>
             </div>
