@@ -1,3 +1,4 @@
+import { FooterToolbar } from "@ant-design/pro-components";
 import { ProForm, ProFormText } from "@ant-design/pro-form";
 import {
   Avatar,
@@ -72,7 +73,7 @@ const MyForm: React.FC = () => {
             <ProForm.Group
               style={{
                 marginTop: 16,
-                marginLeft: 16,
+                marginLeft: 64,
                 minWidth: "330px",
               }}
             >
@@ -80,7 +81,7 @@ const MyForm: React.FC = () => {
                 <ProFormText
                   fieldProps={{
                     style: {
-                      width: "30vh", //
+                      width: "35vh", //
                       minWidth: "300px", // Ensure a minimum width of 300px
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -150,6 +151,7 @@ const MyForm: React.FC = () => {
                   </Form.Item>
                 </div>
               </div>
+
               <div>
                 <Form.Item
                   style={{}}
@@ -160,8 +162,8 @@ const MyForm: React.FC = () => {
                   <ProFormText
                     fieldProps={{
                       style: {
-                        width: "25vh", //
-                        minWidth: "150px", // Ensure a minimum width of 300px
+                        width: "35vh", //
+                        minWidth: "300px", // Ensure a minimum width of 300px
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
@@ -169,25 +171,44 @@ const MyForm: React.FC = () => {
                     }}
                     name="house-apt-number"
                     placeholder="House No. / Apt No. , Apt Name, Block"
-                    style={{ width: "20vh", marginBottom: 12 }}
+                    style={{ marginBottom: 12 }}
                   />
                   <ProFormText
+                    fieldProps={{
+                      style: {
+                        width: "35vh", //
+                        minWidth: "300px", // Ensure a minimum width of 300px
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      },
+                    }}
                     label=":- Street"
                     name="street-number-name"
                     placeholder="Street No. , Name"
                     style={{ marginBottom: 12 }}
                   />
                   <ProFormText
+                    fieldProps={{
+                      style: {
+                        width: "35vh", //
+                        minWidth: "300px", // Ensure a minimum width of 300px
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      },
+                    }}
                     label=":- Venue"
                     name="location-area"
                     placeholder="Location, Area"
                     style={{ marginBottom: 12 }}
                   />
+
                   <div style={{ display: "flex", gap: 8 }}>
                     <ProFormText
                       fieldProps={{
                         style: {
-                          width: "10vh",
+                          width: "8vh",
                           minWidth: "120px", // Adjust the maximum width as needed
                           overflow: "hidden",
                           textOverflow: "ellipsis",
@@ -208,6 +229,7 @@ const MyForm: React.FC = () => {
                     <ProFormText
                       fieldProps={{
                         style: {
+                          width: "12vh",
                           minWidth: "120px", // Adjust the maximum width as needed
                           overflow: "hidden",
                           textOverflow: "ellipsis",
@@ -222,6 +244,7 @@ const MyForm: React.FC = () => {
                     <ProFormText
                       fieldProps={{
                         style: {
+                          width: "13vh",
                           minWidth: "120px", // Adjust the maximum width as needed
                           overflow: "hidden",
                           textOverflow: "ellipsis",
@@ -237,95 +260,99 @@ const MyForm: React.FC = () => {
                 </Form.Item>
               </div>
             </ProForm.Group>
-            <div>
-              <Form.Item>
-                <Checkbox.Group>
-                  <Space direction="horizontal">
-                    <div
-                      style={{
-                        maxWidth: "30vh",
-                        padding: 8,
-                        margin: 16,
-                        background: sendViaEmailSMS ? light["cyan.2"] : "#fff",
-                        border: "1px solid #e3e6e9",
-                        borderRadius: 8,
-                        transition: "background 0.3s ease-in-out",
-                      }}
-                    >
-                      <Checkbox
-                        value="sendViaEmail"
-                        checked={sendViaEmailSMS}
-                        onChange={(e) =>
-                          handleEmailCheckboxChange(e.target.checked)
-                        }
+
+            <>
+              <div>
+                <Form.Item>
+                  <Checkbox.Group>
+                    <Space direction="horizontal">
+                      <div
+                        style={{
+                          minWidth: "35vh",
+                          padding: 8,
+                          marginLeft: 64,
+                          background: sendViaEmailSMS
+                            ? light["cyan.2"]
+                            : "#fff",
+                          border: "1px solid #e3e6e9",
+                          borderRadius: 8,
+                          transition: "background 0.3s ease-in-out",
+                        }}
                       >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            borderRadius: "8px",
-                            maxWidth: "30vh",
-                            flexWrap: "wrap",
-                          }}
+                        <Checkbox
+                          value="sendViaEmail"
+                          checked={sendViaEmailSMS}
+                          onChange={(e) =>
+                            handleEmailCheckboxChange(e.target.checked)
+                          }
                         >
-                          <Avatar
-                            src="./icons/SVG/viaMail.svg"
+                          <div
                             style={{
-                              marginRight: "16px",
-                              width: "40px",
-                              height: "40px",
+                              display: "flex",
+                              alignItems: "center",
+                              borderRadius: "8px",
+                              maxWidth: "30vh",
+                              flexWrap: "wrap",
                             }}
-                          />
-                          <span style={{ flex: 1 }}>
-                            <b>Send</b> Forms, Checklists, Instructions, Plumber
-                            List to Applicant Via <b>SMS & Email.</b>
-                          </span>
-                        </div>
-                      </Checkbox>
-                    </div>
-                    <div
-                      style={{
-                        maxWidth: "30vh",
-                        padding: 8,
-                        margin: 16,
-                        background: printForm ? light["cyan.2"] : "#fff",
-                        border: "1px solid #e3e6e9",
-                        borderRadius: 8,
-                        transition: "background 0.3s ease-in-out",
-                      }}
-                    >
-                      <Checkbox
-                        value="printForm"
-                        checked={printForm}
-                        onChange={(e) =>
-                          handlePrintCheckboxChange(e.target.checked)
-                        }
+                          >
+                            <Avatar
+                              src="./icons/SVG/viaMail.svg"
+                              style={{
+                                marginRight: "16px",
+                                width: "40px",
+                                height: "40px",
+                              }}
+                            />
+                            <span style={{ flex: 1 }}>
+                              <b>Send</b> Forms, Checklists, Instructions,
+                              Plumber List to Applicant Via <b>SMS & Email.</b>
+                            </span>
+                          </div>
+                        </Checkbox>
+                      </div>
+                      <div
+                        style={{
+                          minWidth: "35vh",
+                          padding: 8,
+                          marginLeft: 24,
+                          background: printForm ? light["cyan.2"] : "#fff",
+                          border: "1px solid #e3e6e9",
+                          borderRadius: 8,
+                          transition: "background 0.3s ease-in-out",
+                        }}
                       >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            borderRadius: "8px",
-                            maxWidth: "30vh",
-                            flexWrap: "wrap",
-                          }}
+                        <Checkbox
+                          value="printForm"
+                          checked={printForm}
+                          onChange={(e) =>
+                            handlePrintCheckboxChange(e.target.checked)
+                          }
                         >
-                          <Avatar
-                            src="./icons/SVG/printDoc.svg"
-                            style={{ marginRight: "8px" }}
-                          />
-                          <span style={{ flex: 1 }}>
-                            <b>Print out</b> Forms, Checklists, Instructions,
-                            Plumber List to Applicant
-                          </span>
-                        </div>
-                      </Checkbox>
-                    </div>
-                  </Space>
-                </Checkbox.Group>
-              </Form.Item>
-            </div>
-            <>{/* Existing form fields */}</>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              borderRadius: "8px",
+                              maxWidth: "30vh",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <Avatar
+                              src="./icons/SVG/printDoc.svg"
+                              style={{ marginRight: "8px" }}
+                            />
+                            <span style={{ flex: 1 }}>
+                              <b>Print out</b> Forms, Checklists, Instructions,
+                              Plumber List to Applicant
+                            </span>
+                          </div>
+                        </Checkbox>
+                      </div>
+                    </Space>
+                  </Checkbox.Group>
+                </Form.Item>
+              </div>
+            </>
           </>
         );
       case "accountTransfer":
@@ -411,7 +438,8 @@ const MyForm: React.FC = () => {
     <ConfigProvider theme={{ token: light }}>
       <Space direction="vertical" className="font-Mulish space-wrapper">
         <Space>
-          <span>New Request Type:- </span>
+          <span></span>
+
           <div
             style={{
               background: "#e3e6e9",
@@ -535,13 +563,13 @@ const MyForm: React.FC = () => {
             </Button>
           </div>
         </Space>
-        <ProForm onFinish={handleSubmit}>
+        <ProForm
+          submitter={{
+            render: (_, dom) => <FooterToolbar>{dom}</FooterToolbar>,
+          }}
+          onFinish={handleSubmit}
+        >
           {renderFormFields()}
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
         </ProForm>
       </Space>
     </ConfigProvider>

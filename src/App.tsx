@@ -5,27 +5,17 @@ import {
   LogoutOutlined,
   QuestionCircleOutlined,
   SearchOutlined,
-  UserOutlined,
 } from "@ant-design/icons";
-import {
-  FooterToolbar,
-  PageContainer,
-  ProCard,
-  ProLayout,
-} from "@ant-design/pro-components";
-import { ProForm, ProFormText } from "@ant-design/pro-form";
+import { PageContainer, ProCard, ProLayout } from "@ant-design/pro-components";
 import {
   Avatar,
   Badge,
   Button,
-  Card,
   ConfigProvider,
   Dropdown,
   FloatButton,
   Input,
   Menu,
-  Segmented,
-  Space,
   Tag,
   Typography,
 } from "antd";
@@ -208,97 +198,15 @@ const App: React.FC = () => {
             </Button>,
           ]}*/
           >
-            <>
-              <div className="component-wrapper">
-                <div className="label font-Mulish">New Request Type:</div>
-                <div className="segmented-wrapper">
-                  <Space
-                    direction="vertical"
-                    className="font-Mulish space-wrapper"
-                  >
-                    <Segmented
-                      className="font-Mulish"
-                      options={[
-                        {
-                          label: (
-                            <div style={{ padding: 4 }}>
-                              <Avatar
-                                style={{ backgroundColor: "#76b2c6" }}
-                                src="./icons/icon_IndividualApplication.png"
-                                /*Kel:- the icon folder is placed under public folder as I was having error while placing icons folder under src folder*/
-                              >
-                                NW
-                              </Avatar>
-                              <div>New Water Supply</div>
-                            </div>
-                          ),
-                          value: "newWaterSupply",
-                        },
-                        {
-                          label: (
-                            <div
-                              style={{ padding: 4 }}
-                              className="space-wrapper"
-                            >
-                              <Avatar
-                                style={{ backgroundColor: "#5ec9ba" }}
-                                src="./icons/icon_accountTransfer.png"
-                              >
-                                AT
-                              </Avatar>
-                              <div>Account Transfer</div>
-                            </div>
-                          ),
-                          value: "accountTransfer",
-                        },
-                        {
-                          label: (
-                            <div
-                              style={{ padding: "4px 4px" }}
-                              className="space-wrapper"
-                            >
-                              <Avatar
-                                style={{ backgroundColor: "#d5b7c7" }}
-                                icon={<UserOutlined />}
-                              />
-                              <div>Temporary Supply</div>
-                            </div>
-                          ),
-                          value: "tempSup",
-                        },
-                        {
-                          label: (
-                            <div
-                              style={{ padding: 4 }}
-                              className="space-wrapper"
-                            >
-                              <Avatar
-                                style={{ backgroundColor: "#ffc99d" }}
-                                src="./icons/icon_changeOfTenancy.png"
-                              >
-                                CT
-                              </Avatar>
-                              <div>Change of Tenancy</div>
-                            </div>
-                          ),
-                          value: "cof",
-                        },
-                      ]}
-                    />
-                  </Space>
-                </div>
-              </div>
-            </>
-            <>
-              <FloatButton.Group
-                shape="circle"
-                style={{ right: 24, bottom: 100 }}
-              >
-                <FloatButton icon={<QuestionCircleOutlined />} />
-                <FloatButton icon={<SearchOutlined />} />
-                <FloatButton.BackTop visibilityHeight={0} />
-              </FloatButton.Group>
-            </>
+            <FloatButton.Group
+              shape="circle"
+              style={{ right: 24, bottom: 100 }}
+            >
+              <FloatButton icon={<QuestionCircleOutlined />} />
+              <FloatButton icon={<SearchOutlined />} />
+              <FloatButton.BackTop visibilityHeight={0} />
+            </FloatButton.Group>
+
             <ProCard
               className="font-Mulish"
               style={{ background: "#00a991", color: "#fff" }}
@@ -306,65 +214,8 @@ const App: React.FC = () => {
               This is ProCard: For Customer who wants to apply water supply in
               new location, document and plumber enquiries.
             </ProCard>
+            <div style={{ marginTop: "32px" }} />
             <MyForm />
-            <Card style={{}}>
-              <ProForm
-                submitter={{
-                  render: (_, dom) => <FooterToolbar>{dom}</FooterToolbar>,
-                }}
-                onFinish={async (values) => console.log(values)}
-              >
-                <ProForm layout="vertical">
-                  <ProCard split="vertical">
-                    <ProCard colSpan="50%">
-                      <ProCard title="Personal Information">
-                        <ProForm.Item label="Name" name="name">
-                          <ProFormText />
-                        </ProForm.Item>
-                        <ProForm.Item label="ID Number" name="idNumber">
-                          <ProFormText />
-                        </ProForm.Item>
-                        <ProForm.Item label="Mobile Number" name="mobileNumber">
-                          <ProFormText />
-                        </ProForm.Item>
-                      </ProCard>
-                    </ProCard>
-                    <ProCard colSpan="50%">
-                      <ProCard title="Address">
-                        <ProForm.Item label="Postcode" name="postcode">
-                          <ProFormText />
-                        </ProForm.Item>
-                        <ProForm.Item label="City" name="city">
-                          <ProFormText />
-                        </ProForm.Item>
-                        <ProForm.Item label="State" name="state">
-                          <ProFormText />
-                        </ProForm.Item>
-                      </ProCard>
-                    </ProCard>
-                  </ProCard>
-                </ProForm>
-              </ProForm>
-            </Card>
-            <ProCard style={{ marginBlockStart: 8 }} gutter={8} ghost>
-              <ProCard bordered layout="center">
-                Auto
-              </ProCard>
-              <ProCard colSpan="50%" bordered>
-                colSpan - 50%
-              </ProCard>
-            </ProCard>
-            <ProCard direction="column" ghost gutter={[0, 16]}>
-              <ProCard style={{ height: 200 }} />
-              <ProCard gutter={16} ghost>
-                <ProCard colSpan={16} style={{ height: 800 }} />
-                <ProCard colSpan={8} style={{ height: 200 }} />
-              </ProCard>
-              <ProCard gutter={16} ghost>
-                <ProCard colSpan={8} style={{ height: 200 }} />
-                <ProCard colSpan={16} style={{ height: 200 }} />
-              </ProCard>
-            </ProCard>
           </PageContainer>
         </ProLayout>
       </div>
