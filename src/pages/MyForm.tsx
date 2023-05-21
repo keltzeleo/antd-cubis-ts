@@ -246,10 +246,10 @@ const MyForm: React.FC = () => {
                   <Space direction="horizontal">
                     <div
                       style={{
-                        width: "30vh",
+                        maxWidth: "30vh",
                         padding: 8,
                         margin: 16,
-                        background: sendViaEmail ? light.colorPrimary : "#fff",
+                        background: sendViaEmail ? light["green.3"] : "#fff",
                         border: "1px solid #e3e6e9",
                         borderRadius: 8,
                         transition: "background 0.3s ease-in-out",
@@ -267,13 +267,19 @@ const MyForm: React.FC = () => {
                             display: "flex",
                             alignItems: "center",
                             borderRadius: "8px",
+                            maxWidth: "30vh",
+                            flexWrap: "wrap",
                           }}
                         >
                           <Avatar
                             src="./icons/SVG/viaMail.svg"
-                            style={{ marginRight: "8px" }}
+                            style={{
+                              marginRight: "16px",
+                              width: "40px",
+                              height: "40px",
+                            }}
                           />
-                          <span>
+                          <span style={{ flex: 1 }}>
                             Send Forms, Checklists, Instructions, Plumber List
                             to Applicant Via SMS and Email.
                           </span>
