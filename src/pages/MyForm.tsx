@@ -324,10 +324,9 @@ const MyForm: React.FC = () => {
           <span>New Request Type:- </span>
           <div
             style={{
-              background: "#e8e8e8",
+              background: "#e3e6e9",
               margin: 8,
               display: "flex",
-              gap: 8,
               borderRadius: "8px",
             }}
           >
