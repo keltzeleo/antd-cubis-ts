@@ -34,6 +34,7 @@ import "./App.css";
 import defaultProps from "./_defaultProps";
 import "./styling/breadcrumb.css";
 
+import MyForm from "./pages/MyForm";
 import light from "./tokens/light.json";
 
 const { Item } = Menu;
@@ -304,6 +305,7 @@ const App: React.FC = () => {
               This is ProCard: For Customer who wants to apply water supply in
               new location, document and plumber enquiries.
             </ProCard>
+            <MyForm />
             <Card style={{}}>
               <ProForm
                 submitter={{

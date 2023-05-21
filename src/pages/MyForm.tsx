@@ -23,7 +23,7 @@ interface FormFields {
   sendEmail?: boolean;
   sendSms?: boolean;
   favColors?: string[];
-  phoneNumber?: string;
+  phoneNumber?: number;
   website?: string;
   favoriteColor?: string;
   postcode?: number;
@@ -68,7 +68,7 @@ const MyForm: React.FC = () => {
                 <ProFormText
                   fieldProps={{
                     style: {
-                      width: "25vh", //
+                      width: "30vh", //
                       minWidth: "300px", // Ensure a minimum width of 300px
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -160,13 +160,13 @@ const MyForm: React.FC = () => {
                     style={{ width: "20vh", marginBottom: 12 }}
                   />
                   <ProFormText
-                    label="Street"
+                    label=":- Street"
                     name="street-number-name"
                     placeholder="Street No. , Name"
                     style={{ marginBottom: 12 }}
                   />
                   <ProFormText
-                    label="Vanue"
+                    label=":- Venue"
                     name="location-area"
                     placeholder="Location, Area"
                     style={{ marginBottom: 12 }}
@@ -190,7 +190,7 @@ const MyForm: React.FC = () => {
                       ]}
                       width="xl"
                       name="postcode"
-                      label="Postcode"
+                      label=":- Postcode"
                       placeholder="Postcode"
                     />
                     <ProFormText
@@ -204,7 +204,7 @@ const MyForm: React.FC = () => {
                       }}
                       width="md"
                       name="city"
-                      label="City"
+                      label=":- City"
                       placeholder="City"
                     />
                     <ProFormText
@@ -218,7 +218,7 @@ const MyForm: React.FC = () => {
                       }}
                       width="md"
                       name="state"
-                      label="State"
+                      label=":- State"
                       placeholder="State"
                     />
                   </div>
@@ -321,119 +321,130 @@ const MyForm: React.FC = () => {
     <ConfigProvider theme={{ token: light }}>
       <Space direction="vertical" className="font-Mulish space-wrapper">
         <Space>
-          <Button
+          <span>New Request Type:- </span>
+          <div
             style={{
-              margin: "10px 10px",
+              background: "#e8e8e8",
+              margin: 8,
               display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              alignItems: "center",
-              width: "auto",
-              height: "auto",
+              gap: 8,
+              borderRadius: "8px",
             }}
-            shape="default"
-            icon={
-              <Avatar
-                style={{
-                  backgroundColor: "#fff",
-                  marginTop: "2px",
-                  marginBottom: "-4px",
-                }}
-                src="./icons/icon_IndividualApplication.png"
-              />
-            }
-            type={selectedItem === "newWaterSupply" ? "primary" : "default"}
-            onClick={() => handleButtonClick("newWaterSupply")}
-            className={`segmented-button ${
-              selectedItem === "newWaterSupply" ? "selected" : ""
-            }`}
           >
-            <div style={{ padding: "8px" }}>New Water Supply</div>
-          </Button>
-          <Button
-            style={{
-              margin: "10px 10px",
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              alignItems: "center",
-              width: "auto",
-              height: "auto",
-            }}
-            shape="default"
-            icon={
-              <Avatar
-                style={{
-                  backgroundColor: "#fff",
-                  marginTop: "2px",
-                  marginBottom: "-4px",
-                }}
-                src="./icons/icon_accountTransfer.png"
-              />
-            }
-            type={selectedItem === "accountTransfer" ? "primary" : "default"}
-            onClick={() => handleButtonClick("accountTransfer")}
-            className={`segmented-button ${
-              selectedItem === "accountTransfer" ? "selected" : ""
-            }`}
-          >
-            <div>
-              <div style={{ padding: "8px" }}>Account Transfer</div>
-            </div>
-          </Button>
+            <Button
+              style={{
+                margin: "10px 10px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "auto",
+                height: "auto",
+              }}
+              shape="default"
+              icon={
+                <Avatar
+                  style={{
+                    backgroundColor: "#fff",
+                    marginTop: "2px",
+                    marginBottom: "-4px",
+                  }}
+                  src="./icons/icon_IndividualApplication.png"
+                />
+              }
+              type={selectedItem === "newWaterSupply" ? "primary" : "default"}
+              onClick={() => handleButtonClick("newWaterSupply")}
+              className={`segmented-button ${
+                selectedItem === "newWaterSupply" ? "selected" : ""
+              }`}
+            >
+              <div style={{ padding: "8px" }}>New Water Supply</div>
+            </Button>
+            <Button
+              style={{
+                margin: "10px 10px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "auto",
+                height: "auto",
+              }}
+              shape="default"
+              icon={
+                <Avatar
+                  style={{
+                    backgroundColor: "#fff",
+                    marginTop: "2px",
+                    marginBottom: "-4px",
+                  }}
+                  src="./icons/icon_accountTransfer.png"
+                />
+              }
+              type={selectedItem === "accountTransfer" ? "primary" : "default"}
+              onClick={() => handleButtonClick("accountTransfer")}
+              className={`segmented-button ${
+                selectedItem === "accountTransfer" ? "selected" : ""
+              }`}
+            >
+              <div>
+                <div style={{ padding: "8px" }}>Account Transfer</div>
+              </div>
+            </Button>
 
-          <Button
-            style={{
-              margin: "10px 10px",
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              alignItems: "center",
-              width: "auto",
-              height: "auto",
-            }}
-            type={selectedItem === "tempSup" ? "primary" : "default"}
-            onClick={() => handleButtonClick("tempSup")}
-            className={`segmented-button ${
-              selectedItem === "tempSup" ? "selected" : ""
-            }`}
-          >
-            <div>
-              <Avatar
-                style={{
-                  backgroundColor: "#fff",
-                  marginTop: "2px",
-                  marginBottom: "-4px",
-                }}
-                src="./icons/icon_temporarySupply.png"
-              />
-              <div style={{ padding: "8px" }}>Temporary Supply</div>
-            </div>
-          </Button>
-          <Button
-            style={{
-              margin: "10px 10px",
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              alignItems: "center",
-              width: "auto",
-              height: "auto",
-            }}
-            type={selectedItem === "cof" ? "primary" : "default"}
-            onClick={() => handleButtonClick("cof")}
-            className={`segmented-button ${
-              selectedItem === "cof" ? "selected" : ""
-            }`}
-          >
-            <div className="avatar-wrapper">
-              <Avatar
-                style={{ backgroundColor: "#fff" }}
-                src="./icons/icon_changeOfTenancy.png"
-              />
-              <div style={{ padding: "8px" }}>Change of Tenancy</div>
-            </div>
-          </Button>
+            <Button
+              style={{
+                margin: "10px 10px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "auto",
+                height: "auto",
+              }}
+              type={selectedItem === "tempSup" ? "primary" : "default"}
+              onClick={() => handleButtonClick("tempSup")}
+              className={`segmented-button ${
+                selectedItem === "tempSup" ? "selected" : ""
+              }`}
+            >
+              <div>
+                <Avatar
+                  style={{
+                    backgroundColor: "#fff",
+                    marginTop: "2px",
+                    marginBottom: "-4px",
+                  }}
+                  src="./icons/icon_temporarySupply.png"
+                />
+                <div style={{ padding: "8px" }}>Temporary Supply</div>
+              </div>
+            </Button>
+            <Button
+              style={{
+                margin: "10px 10px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "auto",
+                height: "auto",
+              }}
+              type={selectedItem === "cof" ? "primary" : "default"}
+              onClick={() => handleButtonClick("cof")}
+              className={`segmented-button ${
+                selectedItem === "cof" ? "selected" : ""
+              }`}
+            >
+              <div className="avatar-wrapper">
+                <Avatar
+                  style={{ backgroundColor: "#fff" }}
+                  src="./icons/icon_changeOfTenancy.png"
+                />
+                <div style={{ padding: "8px" }}>Change of Tenancy</div>
+              </div>
+            </Button>
+          </div>
         </Space>
         <ProForm onFinish={handleSubmit}>
           {renderFormFields()}
