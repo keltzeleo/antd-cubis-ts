@@ -57,6 +57,7 @@ const App: React.FC = () => {
     <ConfigProvider theme={{ token: light }}>
       <div>
         <ProLayout
+          siderWidth={264}
           hasSider
           token={{
             colorBgAppListIconHover: "#00a991",

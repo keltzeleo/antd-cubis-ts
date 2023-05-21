@@ -34,8 +34,7 @@ const { Option } = Select;
 const MyForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
   const [selectedItem, setSelectedItem] = useState("newWaterSupply");
-  const [sendViaEmail, setSendViaEmail] = useState(false);
-  const [sendViaSms, setSendViaSms] = useState(false);
+  const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
 
   const handleOptionChange = (value: string) => {
@@ -44,14 +43,12 @@ const MyForm: React.FC = () => {
 
   const handleButtonClick = (value: string) => {
     setSelectedItem(value);
+    setPrintForm(false);
+    setSendViaEmailSMS(false);
   };
 
   const handleEmailCheckboxChange = (checked: boolean) => {
-    setSendViaEmail(checked);
-  };
-
-  const handleSmsCheckboxChange = (checked: boolean) => {
-    setSendViaSms(checked);
+    setSendViaEmailSMS(checked);
   };
 
   const handlePrintCheckboxChange = (checked: boolean) => {
@@ -249,7 +246,7 @@ const MyForm: React.FC = () => {
                         maxWidth: "30vh",
                         padding: 8,
                         margin: 16,
-                        background: sendViaEmail ? light["cyan.2"] : "#fff",
+                        background: sendViaEmailSMS ? light["cyan.2"] : "#fff",
                         border: "1px solid #e3e6e9",
                         borderRadius: 8,
                         transition: "background 0.3s ease-in-out",
@@ -257,7 +254,7 @@ const MyForm: React.FC = () => {
                     >
                       <Checkbox
                         value="sendViaEmail"
-                        checked={sendViaEmail}
+                        checked={sendViaEmailSMS}
                         onChange={(e) =>
                           handleEmailCheckboxChange(e.target.checked)
                         }
