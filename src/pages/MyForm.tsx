@@ -60,7 +60,7 @@ const MyForm: React.FC = () => {
             <ProForm.Group
               style={{
                 marginTop: 16,
-                marginLeft: 40,
+                marginLeft: 16,
                 minWidth: "330px",
               }}
             >
