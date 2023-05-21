@@ -8,7 +8,6 @@ import {
   Input,
   Select,
   Space,
-  Tooltip,
 } from "antd";
 
 import { useState } from "react";
@@ -56,49 +55,42 @@ const MyForm: React.FC = () => {
           <>
             <ProForm.Group
               style={{
-                marginTop: 12,
+                marginTop: 16,
                 marginLeft: 44,
                 minWidth: "330px",
               }}
             >
               <div>
-                <label style={{ marginBottom: "4px" }}>Name</label>
                 <ProFormText
                   fieldProps={{
                     style: {
-                      width: "30vh", // Set the width to 300px
+                      width: "25vh", // Set the width to 300px
                       minWidth: "300px", // Ensure a minimum width of 300px
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
                     },
                   }}
+                  label="Name"
                   name="name"
                   placeholder="Full Name as shown in ID"
                 />
                 <div>
-                  <label style={{ marginBottom: "4px" }}>ID Number</label>
-
-                  <Form.Item name="idNumber">
-                    <Tooltip title="Tooltip Text">
-                      <Input
-                        style={{
-                          width: "", // not setting any value for having the same width as "name"
-                          minWidth: "", // not setting any value for having the same width as "name"
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                        addonBefore={selectBefore}
-                        placeholder="12-digit number on ID Card"
-                      />
-                    </Tooltip>
-                  </Form.Item>
+                  <ProFormText
+                    label="Email Address"
+                    name="emailAddress"
+                    placeholder="id@emailDomain.com"
+                    tooltip="valid & contactable email add."
+                  />
                 </div>
               </div>
+
               <div>
-                <label style={{ marginBottom: 8 }}>Address</label>
-                <Form.Item style={{ marginBottom: 8 }} name="address">
+                <Form.Item
+                  label="Address"
+                  style={{ marginBottom: 8 }}
+                  name="address"
+                >
                   <Input
                     placeholder="House No./Block No. , Apt Name."
                     style={{ width: "20vh", marginBottom: 8 }}
