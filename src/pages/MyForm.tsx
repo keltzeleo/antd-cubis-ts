@@ -34,6 +34,9 @@ const { Option } = Select;
 const MyForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
   const [selectedItem, setSelectedItem] = useState("newWaterSupply");
+  const [sendViaEmail, setSendViaEmail] = useState(false);
+  const [sendViaSms, setSendViaSms] = useState(false);
+  const [printForm, setPrintForm] = useState(false);
 
   const handleOptionChange = (value: string) => {
     setSelectedOption(value);
@@ -41,6 +44,18 @@ const MyForm: React.FC = () => {
 
   const handleButtonClick = (value: string) => {
     setSelectedItem(value);
+  };
+
+  const handleEmailCheckboxChange = (checked: boolean) => {
+    setSendViaEmail(checked);
+  };
+
+  const handleSmsCheckboxChange = (checked: boolean) => {
+    setSendViaSms(checked);
+  };
+
+  const handlePrintCheckboxChange = (checked: boolean) => {
+    setPrintForm(checked);
   };
 
   const handleSubmit = (values: FormFields) => {
@@ -225,7 +240,99 @@ const MyForm: React.FC = () => {
                 </Form.Item>
               </div>
             </ProForm.Group>
-
+            <div>
+              <Form.Item>
+                <Checkbox.Group>
+                  <Space direction="horizontal">
+                    <div
+                      style={{
+                        width: "30vh",
+                        padding: 8,
+                        margin: 16,
+                        background: sendViaEmail ? light.colorPrimary : "#fff",
+                        border: "1px solid #e3e6e9",
+                        borderRadius: 8,
+                        transition: "background 0.3s ease-in-out",
+                      }}
+                    >
+                      <Checkbox
+                        value="sendViaEmail"
+                        checked={sendViaEmail}
+                        onChange={(e) =>
+                          handleEmailCheckboxChange(e.target.checked)
+                        }
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            borderRadius: "8px",
+                          }}
+                        >
+                          <Avatar
+                            src="./icons/SVG/viaMail.svg"
+                            style={{ marginRight: "8px" }}
+                          />
+                          <span>
+                            Send Forms, Checklists, Instructions, Plumber List
+                            to Applicant Via SMS and Email.
+                          </span>
+                        </div>
+                      </Checkbox>
+                    </div>
+                    <Checkbox value="sendViaSms">
+                      <Button
+                        style={{
+                          margin: "10px 10px",
+                          display: "flex",
+                          justifyContent: "center",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          width: "auto",
+                          height: "auto",
+                        }}
+                        type="default"
+                        className={`checkbox-button ${
+                          sendViaSms ? "selected" : ""
+                        }`}
+                        onClick={() => handleSmsCheckboxChange(!sendViaSms)}
+                      >
+                        <Avatar
+                          src="./icons/SVG/viaMail.svg"
+                          style={{ marginRight: "8px" }}
+                        />
+                        Send via SMS
+                      </Button>
+                    </Checkbox>
+                    <Checkbox value="printForm">
+                      <Button
+                        style={{
+                          margin: "10px 10px",
+                          display: "flex",
+                          justifyContent: "center",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          width: "auto",
+                          height: "auto",
+                        }}
+                        type="default"
+                        className={`checkbox-button ${
+                          printForm ? "selected" : ""
+                        }`}
+                        onClick={() => handlePrintCheckboxChange(!printForm)}
+                      >
+                        <Avatar
+                          src="./icons/icon_print.svg"
+                          style={{ marginRight: "8px" }}
+                        />
+                        Print Form
+                      </Button>
+                    </Checkbox>
+                  </Space>
+                </Checkbox.Group>
+              </Form.Item>
+            </div>
+            <>{/* Existing form fields */}</>
             <Form.Item label="Address" name="address">
               <Input />
             </Form.Item>
