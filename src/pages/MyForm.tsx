@@ -60,7 +60,7 @@ const MyForm: React.FC = () => {
             <ProForm.Group
               style={{
                 marginTop: 16,
-                marginLeft: 48,
+                marginLeft: 40,
                 minWidth: "330px",
               }}
             >
@@ -68,7 +68,7 @@ const MyForm: React.FC = () => {
                 <ProFormText
                   fieldProps={{
                     style: {
-                      width: "30vh", // Set the width to 300px
+                      width: "25vh", //
                       minWidth: "300px", // Ensure a minimum width of 300px
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -100,18 +100,74 @@ const MyForm: React.FC = () => {
                     />
                   </Form.Item>
                 </div>
+                <div>
+                  <Form.Item
+                    label="Mobile Number"
+                    name="mobileNumber"
+                    tooltip="valid and contactable mobile number"
+                  >
+                    <Input
+                      style={{
+                        width: "", // not setting any value for having the same width as "name"
+                        minWidth: "", // not setting any value for having the same width as "name"
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                      addonBefore="+60"
+                      placeholder="contactable number"
+                    />
+                  </Form.Item>
+                </div>
+                <div>
+                  <Form.Item
+                    label="Email Address"
+                    name="emailAdd"
+                    tooltip="valid and contactable email address"
+                  >
+                    <Input
+                      style={{
+                        width: "", // not setting any value for having the same width as "name"
+                        minWidth: "", // not setting any value for having the same width as "name"
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                      placeholder="id@emailDomain.com"
+                    />
+                  </Form.Item>
+                </div>
               </div>
               <div>
-                <Form.Item style={{}} label="Address" name="address">
-                  <Input
-                    placeholder="House No./Block No. , Apt Name."
+                <Form.Item
+                  style={{}}
+                  label="Address:-"
+                  name="fullAddress"
+                  tooltip="fill in as per respective requirements."
+                >
+                  <ProFormText
+                    fieldProps={{
+                      style: {
+                        width: "25vh", //
+                        minWidth: "150px", // Ensure a minimum width of 300px
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      },
+                    }}
+                    name="house-apt-number"
+                    placeholder="House No. / Apt No. , Apt Name, Block"
                     style={{ width: "20vh", marginBottom: 12 }}
                   />
-                  <Input
+                  <ProFormText
+                    label="Street"
+                    name="street-number-name"
                     placeholder="Street No. , Name"
                     style={{ marginBottom: 12 }}
                   />
-                  <Input
+                  <ProFormText
+                    label="Vanue"
+                    name="location-area"
                     placeholder="Location, Area"
                     style={{ marginBottom: 12 }}
                   />
