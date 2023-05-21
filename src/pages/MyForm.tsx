@@ -43,9 +43,13 @@ const MyForm: React.FC = () => {
     setSelectedItem(value);
   };
 
-  const handleSubmit = (values: FormFields): Promise<boolean | void> => {
-    console.log("Form values:", values);
-    return Promise.resolve(); // Return a resolved promise to satisfy the ProForm's onFinish requirement
+  const handleSubmit = (values: FormFields) => {
+    return new Promise<void>((resolve, reject) => {
+      console.log("Form values:", values);
+      // You can perform any async operations here
+      // Resolve the promise when the operations are complete
+      resolve();
+    });
   };
 
   const renderFormFields = () => {
@@ -56,7 +60,7 @@ const MyForm: React.FC = () => {
             <ProForm.Group
               style={{
                 marginTop: 16,
-                marginLeft: 44,
+                marginLeft: 48,
                 minWidth: "330px",
               }}
             >
@@ -64,7 +68,7 @@ const MyForm: React.FC = () => {
                 <ProFormText
                   fieldProps={{
                     style: {
-                      width: "25vh", // Set the width to 300px
+                      width: "30vh", // Set the width to 300px
                       minWidth: "300px", // Ensure a minimum width of 300px
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -73,35 +77,43 @@ const MyForm: React.FC = () => {
                   }}
                   label="Name"
                   name="name"
-                  placeholder="Full Name as shown in ID"
+                  tooltip="customer's legal name on ID"
+                  placeholder="Full Name"
                 />
+
                 <div>
-                  <ProFormText
-                    label="Email Address"
-                    name="emailAddress"
-                    placeholder="id@emailDomain.com"
-                    tooltip="valid & contactable email add."
-                  />
+                  <Form.Item
+                    label="ID"
+                    name="idNumber"
+                    tooltip="select relavant ID type"
+                  >
+                    <Input
+                      style={{
+                        width: "", // not setting any value for having the same width as "name"
+                        minWidth: "", // not setting any value for having the same width as "name"
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                      addonBefore={selectBefore}
+                      placeholder="12-digit number on ID Card"
+                    />
+                  </Form.Item>
                 </div>
               </div>
-
               <div>
-                <Form.Item
-                  label="Address"
-                  style={{ marginBottom: 8 }}
-                  name="address"
-                >
+                <Form.Item style={{}} label="Address" name="address">
                   <Input
                     placeholder="House No./Block No. , Apt Name."
-                    style={{ width: "20vh", marginBottom: 8 }}
+                    style={{ width: "20vh", marginBottom: 12 }}
                   />
                   <Input
                     placeholder="Street No. , Name"
-                    style={{ marginBottom: 8 }}
+                    style={{ marginBottom: 12 }}
                   />
                   <Input
                     placeholder="Location, Area"
-                    style={{ marginBottom: 8 }}
+                    style={{ marginBottom: 12 }}
                   />
                   <div style={{ display: "flex", gap: 8 }}>
                     <ProFormText

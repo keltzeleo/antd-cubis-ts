@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
+import MyForm from "../src/pages/MyForm";
 import "./index.css";
-import MyForm from "./pages/MyForm";
 
 const rootElement: HTMLElement | null = document.getElementById("root");
 
