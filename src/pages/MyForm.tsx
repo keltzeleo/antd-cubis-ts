@@ -249,7 +249,7 @@ const MyForm: React.FC = () => {
                         maxWidth: "30vh",
                         padding: 8,
                         margin: 16,
-                        background: sendViaEmail ? light["green.3"] : "#fff",
+                        background: sendViaEmail ? light["cyan.2"] : "#fff",
                         border: "1px solid #e3e6e9",
                         borderRadius: 8,
                         transition: "background 0.3s ease-in-out",
@@ -280,75 +280,55 @@ const MyForm: React.FC = () => {
                             }}
                           />
                           <span style={{ flex: 1 }}>
-                            Send Forms, Checklists, Instructions, Plumber List
-                            to Applicant Via SMS and Email.
+                            <b>Send</b> Forms, Checklists, Instructions, Plumber
+                            List to Applicant Via <b>SMS & Email.</b>
                           </span>
                         </div>
                       </Checkbox>
                     </div>
-                    <Checkbox value="sendViaSms">
-                      <Button
-                        style={{
-                          margin: "10px 10px",
-                          display: "flex",
-                          justifyContent: "center",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          width: "auto",
-                          height: "auto",
-                        }}
-                        type="default"
-                        className={`checkbox-button ${
-                          sendViaSms ? "selected" : ""
-                        }`}
-                        onClick={() => handleSmsCheckboxChange(!sendViaSms)}
+                    <div
+                      style={{
+                        maxWidth: "30vh",
+                        padding: 8,
+                        margin: 16,
+                        background: printForm ? light["cyan.2"] : "#fff",
+                        border: "1px solid #e3e6e9",
+                        borderRadius: 8,
+                        transition: "background 0.3s ease-in-out",
+                      }}
+                    >
+                      <Checkbox
+                        value="printForm"
+                        checked={printForm}
+                        onChange={(e) =>
+                          handlePrintCheckboxChange(e.target.checked)
+                        }
                       >
-                        <Avatar
-                          src="./icons/SVG/viaMail.svg"
-                          style={{ marginRight: "8px" }}
-                        />
-                        Send via SMS
-                      </Button>
-                    </Checkbox>
-                    <Checkbox value="printForm">
-                      <Button
-                        style={{
-                          margin: "10px 10px",
-                          display: "flex",
-                          justifyContent: "center",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          width: "auto",
-                          height: "auto",
-                        }}
-                        type="default"
-                        className={`checkbox-button ${
-                          printForm ? "selected" : ""
-                        }`}
-                        onClick={() => handlePrintCheckboxChange(!printForm)}
-                      >
-                        <Avatar
-                          src="./icons/icon_print.svg"
-                          style={{ marginRight: "8px" }}
-                        />
-                        Print Form
-                      </Button>
-                    </Checkbox>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            borderRadius: "8px",
+                            maxWidth: "30vh",
+                            flexWrap: "wrap",
+                          }}
+                        >
+                          <Avatar
+                            src="./icons/SVG/printDoc.svg"
+                            style={{ marginRight: "8px" }}
+                          />
+                          <span style={{ flex: 1 }}>
+                            <b>Print out</b> Forms, Checklists, Instructions,
+                            Plumber List to Applicant
+                          </span>
+                        </div>
+                      </Checkbox>
+                    </div>
                   </Space>
                 </Checkbox.Group>
               </Form.Item>
             </div>
             <>{/* Existing form fields */}</>
-            <Form.Item label="Address" name="address">
-              <Input />
-            </Form.Item>
-            <ProFormText
-              name="project"
-              width="md"
-              disabled
-              label="项目名称"
-              initialValue="xxxx项目"
-            />
           </>
         );
       case "accountTransfer":
