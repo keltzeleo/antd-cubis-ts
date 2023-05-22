@@ -31,16 +31,14 @@ const { Item } = Menu;
 const { Title } = Typography;
 
 const App: React.FC = () => {
-  const [tagColor, setTagColor] = useState("blue"); // Dynamic tag color
-  const [tagIndication, setTagIndication] = useState(
-    "indicator for requester group"
-  ); // Dynamic tag indication
+  const [tagColor, setTagColor] = useState("green"); // Dynamic tag color
+  const [tagIndication, setTagIndication] = useState("for Residential"); // Dynamic tag indication
 
   // Function to handle an event and update the tag color and indication
   const handleEvent = () => {
     // Example: On event occurrence, update the tag color and indication
-    setTagColor("red");
-    setTagIndication("New Indication");
+    setTagColor("light.red");
+    setTagIndication("for Commercial");
   };
 
   return (

@@ -1,5 +1,5 @@
 import { FooterToolbar } from "@ant-design/pro-components";
-import { ProForm, ProFormText } from "@ant-design/pro-form";
+import { ProForm, ProFormItem, ProFormText } from "@ant-design/pro-form";
 import {
   Avatar,
   Button,
@@ -24,7 +24,7 @@ interface FormFields {
   sendEmail?: boolean;
   sendSms?: boolean;
   favColors?: string[];
-  phoneNumber?: number;
+  mobileNumber?: number;
   website?: string;
   favoriteColor?: string;
   postcode?: number;
@@ -35,6 +35,7 @@ const { Option } = Select;
 const MyForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
   const [selectedItem, setSelectedItem] = useState("newWaterSupply");
+  const [idNumber, setIdNumber] = useState("");
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
 
@@ -46,6 +47,18 @@ const MyForm: React.FC = () => {
     setSelectedItem(value);
     setPrintForm(false);
     setSendViaEmailSMS(false);
+  };
+
+  const formatIdNumber = (value: string) => {
+    const digitsOnly = value.replace(/[-\D]/g, "");
+    const formattedValue = digitsOnly.slice(0, 6) + "-" + digitsOnly.slice(6);
+    return formattedValue;
+  };
+
+  const handleIdNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    const formattedIdNumber = formatIdNumber(value);
+    setIdNumber(formattedIdNumber);
   };
 
   const handleEmailCheckboxChange = (checked: boolean) => {
@@ -81,7 +94,7 @@ const MyForm: React.FC = () => {
                 <ProFormText
                   fieldProps={{
                     style: {
-                      width: "35vh", //
+                      width: "36vh", //
                       minWidth: "300px", // Ensure a minimum width of 300px
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -95,23 +108,62 @@ const MyForm: React.FC = () => {
                 />
 
                 <div>
-                  <Form.Item
+                  <ProFormItem
                     label="ID"
-                    name="idNumber"
-                    tooltip="select relavant ID type"
+                    tooltip="select relevant ID type"
+                    name="idNumberType"
                   >
                     <Input
                       style={{
-                        width: "", // not setting any value for having the same width as "name"
-                        minWidth: "", // not setting any value for having the same width as "name"
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
+                        width: "100%", // adjust the width according to your layout
                       }}
                       addonBefore={selectBefore}
                       placeholder="12-digit number on ID Card"
+                      maxLength={14} // Increased maxLength to accommodate dashes
+                      pattern="^[0-9-]*$" // Updated pattern to allow dashes as well
+                      title="ID number must contain only digits"
+                      onKeyDown={(event) => {
+                        const key = event.key;
+                        const allowedKeys = [
+                          "Backspace",
+                          "Delete",
+                          "ArrowLeft",
+                          "ArrowRight",
+                        ];
+                        const input = event.target as HTMLInputElement;
+                        const selectionStart = input.selectionStart || 0;
+                        const selectionEnd = input.selectionEnd || 0;
+                        const value = input.value;
+
+                        if (
+                          !/^\d*$/.test(key) && // Check if the key is a digit
+                          !allowedKeys.includes(key) && // Check if the key is allowed (e.g., Backspace, Delete, Arrow keys)
+                          !(key === "Control" && navigator.platform.match("Mac")
+                            ? event.metaKey
+                            : event.ctrlKey) // Check if it's a control key combination (e.g., Ctrl+C, Ctrl+V)
+                        ) {
+                          event.preventDefault();
+                        }
+
+                        // Automatically format the input by adding dashes
+                        if (!allowedKeys.includes(key)) {
+                          let formattedValue = value;
+                          if (selectionStart === selectionEnd) {
+                            if (selectionStart === 6 || selectionStart === 9) {
+                              formattedValue += "-";
+                            }
+                          } else {
+                            formattedValue =
+                              value.slice(0, selectionStart) +
+                              "-" +
+                              value.slice(selectionStart, selectionEnd) +
+                              value.slice(selectionEnd);
+                          }
+                          input.value = formattedValue;
+                        }
+                      }}
                     />
-                  </Form.Item>
+                  </ProFormItem>
                 </div>
                 <div>
                   <Form.Item
@@ -162,7 +214,7 @@ const MyForm: React.FC = () => {
                   <ProFormText
                     fieldProps={{
                       style: {
-                        width: "35vh", //
+                        width: "40vh", //
                         minWidth: "300px", // Ensure a minimum width of 300px
                         overflow: "hidden",
                         textOverflow: "ellipsis",
@@ -176,7 +228,7 @@ const MyForm: React.FC = () => {
                   <ProFormText
                     fieldProps={{
                       style: {
-                        width: "35vh", //
+                        width: "40vh", //
                         minWidth: "300px", // Ensure a minimum width of 300px
                         overflow: "hidden",
                         textOverflow: "ellipsis",
@@ -191,7 +243,7 @@ const MyForm: React.FC = () => {
                   <ProFormText
                     fieldProps={{
                       style: {
-                        width: "35vh", //
+                        width: "40vh", //
                         minWidth: "300px", // Ensure a minimum width of 300px
                         overflow: "hidden",
                         textOverflow: "ellipsis",
@@ -208,7 +260,7 @@ const MyForm: React.FC = () => {
                     <ProFormText
                       fieldProps={{
                         style: {
-                          width: "8vh",
+                          width: "11vh",
                           minWidth: "120px", // Adjust the maximum width as needed
                           overflow: "hidden",
                           textOverflow: "ellipsis",
@@ -221,7 +273,7 @@ const MyForm: React.FC = () => {
                           message: "🔢 numbers only ya...",
                         },
                       ]}
-                      width="xl"
+                      width="md"
                       name="postcode"
                       label=":- Postcode"
                       placeholder="Postcode"
@@ -229,7 +281,7 @@ const MyForm: React.FC = () => {
                     <ProFormText
                       fieldProps={{
                         style: {
-                          width: "12vh",
+                          width: "11vh",
                           minWidth: "120px", // Adjust the maximum width as needed
                           overflow: "hidden",
                           textOverflow: "ellipsis",
@@ -244,7 +296,7 @@ const MyForm: React.FC = () => {
                     <ProFormText
                       fieldProps={{
                         style: {
-                          width: "13vh",
+                          width: "12vh",
                           minWidth: "120px", // Adjust the maximum width as needed
                           overflow: "hidden",
                           textOverflow: "ellipsis",
@@ -268,11 +320,11 @@ const MyForm: React.FC = () => {
                     <Space direction="horizontal">
                       <div
                         style={{
-                          minWidth: "35vh",
-                          padding: 8,
+                          minWidth: "32vh",
+                          padding: 10,
                           marginLeft: 64,
                           background: sendViaEmailSMS
-                            ? light["cyan.2"]
+                            ? light["cyan.3"]
                             : "#fff",
                           border: "1px solid #e3e6e9",
                           borderRadius: 8,
@@ -291,31 +343,34 @@ const MyForm: React.FC = () => {
                               display: "flex",
                               alignItems: "center",
                               borderRadius: "8px",
-                              maxWidth: "30vh",
+                              maxWidth: "32vh",
                               flexWrap: "wrap",
                             }}
                           >
                             <Avatar
-                              src="./icons/SVG/viaMail.svg"
                               style={{
-                                marginRight: "16px",
-                                width: "40px",
-                                height: "40px",
+                                backgroundColor: "#fff",
+                                marginRight: "8px",
+                                padding: 4,
+                                width: 40,
+                                height: 40,
                               }}
+                              src="./icons/icon_sendDoc.png"
                             />
                             <span style={{ flex: 1 }}>
-                              <b>Send</b> Forms, Checklists, Instructions,
-                              Plumber List to Applicant Via <b>SMS & Email.</b>
+                              <b>Send</b> Forms, Checklists, Instructions, and a
+                              Plumber Resource List to Applicant Via{" "}
+                              <b>SMS & Email.</b>
                             </span>
                           </div>
                         </Checkbox>
                       </div>
                       <div
                         style={{
-                          minWidth: "35vh",
-                          padding: 8,
-                          marginLeft: 24,
-                          background: printForm ? light["cyan.2"] : "#fff",
+                          minWidth: "32vh",
+                          padding: 10,
+                          marginLeft: 22,
+                          background: printForm ? light["cyan.3"] : "#fff",
                           border: "1px solid #e3e6e9",
                           borderRadius: 8,
                           transition: "background 0.3s ease-in-out",
@@ -333,17 +388,24 @@ const MyForm: React.FC = () => {
                               display: "flex",
                               alignItems: "center",
                               borderRadius: "8px",
-                              maxWidth: "30vh",
+                              maxWidth: "32vh",
                               flexWrap: "wrap",
                             }}
                           >
                             <Avatar
-                              src="./icons/SVG/printDoc.svg"
-                              style={{ marginRight: "8px" }}
+                              style={{
+                                backgroundColor: "#fff",
+                                marginRight: "8px",
+                                padding: 4,
+                                width: 40,
+                                height: 40,
+                              }}
+                              src="./icons/icon_printDoc.png"
                             />
                             <span style={{ flex: 1 }}>
                               <b>Print out</b> Forms, Checklists, Instructions,
-                              Plumber List to Applicant
+                              and a Plumber Resource List as <b>Hard Copies</b>{" "}
+                              for the Applicant.
                             </span>
                           </div>
                         </Checkbox>
@@ -416,7 +478,9 @@ const MyForm: React.FC = () => {
           ? "myTentera-select"
           : selectedOption === "MyPR"
           ? "myPR-select"
-          : "myKAS-select"
+          : selectedOption === "MyKAS"
+          ? "myKAS-select"
+          : "forBusiness"
       }
     >
       <Option value="MyKad" className="myKad-option">
@@ -430,6 +494,9 @@ const MyForm: React.FC = () => {
       </Option>
       <Option value="MyKAS" className="myKAS-option">
         MyKAS
+      </Option>
+      <Option value="Commercial" className="forBusiness-option">
+        Business
       </Option>
     </Select>
   );
