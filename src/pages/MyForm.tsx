@@ -480,7 +480,7 @@ const MyForm: React.FC = () => {
           ? "myPR-select"
           : selectedOption === "MyKAS"
           ? "myKAS-select"
-          : "forBusiness"
+          : "forCommercial-select" // this is not for individual user (residential) but exclusively for commercial, having this option here is just to remind the color coding in .css
       }
     >
       <Option value="MyKad" className="myKad-option">
@@ -495,8 +495,8 @@ const MyForm: React.FC = () => {
       <Option value="MyKAS" className="myKAS-option">
         MyKAS
       </Option>
-      <Option value="Commercial" className="forBusiness-option">
-        Business
+      <Option value="Commercial" className="forCommercial-option">
+        Commercial
       </Option>
     </Select>
   );

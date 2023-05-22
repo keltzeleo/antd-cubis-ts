@@ -62,6 +62,14 @@
   color: #131213;
 }
 
+.forCommercial-select {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-color: grey;
+  background-color: #faeadf;
+  color: #131213;
+}
+
 .myKad-option {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
@@ -76,6 +84,13 @@
   color: #131213;
 }
 
+.myPR-option {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #f3f6f9;
+  color: #131213;
+}
+
 .myKAS-option {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
@@ -83,7 +98,7 @@
   color: #131213;
 }
 
-.myPR-option {
+.forCommercial-option {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   background-color: #f3f6f9;
@@ -93,7 +108,8 @@
 .myKad-select .ant-select-selector .ant-select-selection-item,
 .myTentera-select .ant-select-selector .ant-select-selection-item,
 .myPR-select .ant-select-selector .ant-select-selection-item,
-.myKAS-select .ant-select-selector .ant-select-selection-item {
+.myKAS-select .ant-select-selector .ant-select-selection-item,
+.forCommercial-select .ant-select-selector .ant-select-selection-item {
   background-color: none;
   color: #131213;
 }
