@@ -141,7 +141,7 @@ const App: React.FC = () => {
                     style={{
                       alignItems: "center",
                       height: "auto",
-                      padding: " 2px 6px 2px 6px",
+                      paddingLeft: "6px",
                       margin: "0px 8px 8px 8px",
                       fontFamily: "play",
                       fontWeight: "bold",

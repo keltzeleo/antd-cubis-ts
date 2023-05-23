@@ -15,6 +15,18 @@
     "Helvetica Neue", sans-serif;
 }
 
+.toggleCommercial {
+  background-color: #ffc99d; /* Set the background color for the enabled state */
+}
+
+.toggleCommercial:hover {
+  background-color: #ffb980; /* Set the background color for the enabled state */
+}
+
+.toggleResidential {
+  background-color: purple; /* Set the background color for the disabled state */
+}
+
 .font-mulish {
   font-family: "Mulish", sans-serif;
 }

@@ -139,21 +139,18 @@ const App: React.FC = () => {
                   {/* Replace the Tag component with a customized Switch */}
                   <Switch
                     style={{
-                      alignItems: "center",
-                      height: "auto",
-                      padding: " 2px 6px 2px 6px",
+                      height: "16px",
                       margin: "0px 8px 8px 8px",
-                      fontFamily: "play",
                       fontWeight: "bold",
                       backgroundColor: isResidential
                         ? light["green"]
                         : light["orange"], // Increase the font size here
                     }}
                     checkedChildren={
-                      <span style={{ fontSize: "16px" }}>Residential</span>
+                      <span style={{ fontSize: "12px" }}>Residential</span>
                     }
                     unCheckedChildren={
-                      <span style={{ fontSize: "16px" }}>Commercial</span>
+                      <span style={{ fontSize: "12px" }}>Commercial</span>
                     }
                     checked={isResidential}
                     onChange={handleSwitchChange}
