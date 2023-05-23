@@ -138,10 +138,15 @@ const App: React.FC = () => {
                   </span>
                   {/* Replace the Tag component with a customized Switch */}
                   <Switch
-                    style={{ margin: "0px 0px 8px 4px", fontWeight: "bold" }}
-                    className="toggle-Residential-Commercial"
-                    checkedChildren="Residential"
-                    unCheckedChildren="Commercial"
+                    style={{
+                      margin: "0px 8px 8px 8px",
+                      fontWeight: "bold",
+                      backgroundColor: isResidential
+                        ? light["green"]
+                        : light["orange"],
+                    }}
+                    checkedChildren={<span>Residential</span>}
+                    unCheckedChildren={<span>Commercial</span>}
                     checked={isResidential}
                     onChange={handleSwitchChange}
                   />
@@ -163,7 +168,13 @@ const App: React.FC = () => {
                 items: [
                   {
                     path: "",
-                    title: <GoldOutlined />,
+                    title: (
+                      <>
+                        <GoldOutlined />
+                        <span> Dashboard </span>
+                      </>
+                    ),
+
                     className: "breadcrumb-item",
                   },
                   {
