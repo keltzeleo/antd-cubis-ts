@@ -140,19 +140,19 @@ const App: React.FC = () => {
                   <Switch
                     style={{
                       height: "auto",
-                      padding: " 1px 10px 1px 4px",
+                      padding: " 1px 4px 1px 4px",
                       margin: "0px 8px 8px 8px",
-                      fontFamily: "",
+                      fontFamily: "play",
                       fontWeight: "bold",
                       backgroundColor: isResidential
                         ? light["green"]
                         : light["orange"], // Increase the font size here
                     }}
                     checkedChildren={
-                      <span style={{ fontSize: "52px" }}>Residential</span>
+                      <span style={{ fontSize: "16px" }}>Residential</span>
                     }
                     unCheckedChildren={
-                      <span style={{ fontSize: "52px" }}>Commercial</span>
+                      <span style={{ fontSize: "16px" }}>Commercial</span>
                     }
                     checked={isResidential}
                     onChange={handleSwitchChange}
