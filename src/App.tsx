@@ -16,7 +16,7 @@ import {
   FloatButton,
   Input,
   Menu,
-  Tag,
+  Switch,
   Typography,
 } from "antd";
 import { useState } from "react";
@@ -25,20 +25,24 @@ import defaultProps from "./_defaultProps";
 import "./styling/breadcrumb.css";
 
 import MyForm from "./pages/MyForm";
+import MyFormDummy from "./pages/MyFormDummy";
 import light from "./tokens/light.json";
 
 const { Item } = Menu;
 const { Title } = Typography;
 
 const App: React.FC = () => {
-  const [tagColor, setTagColor] = useState("green"); // Dynamic tag color
-  const [tagIndication, setTagIndication] = useState("for Residential"); // Dynamic tag indication
+  const [tagColor, setTagColor] = useState("green");
+  const [tagIndication, setTagIndication] = useState("for Residential");
+  const [isResidential, setIsResidential] = useState(true);
 
-  // Function to handle an event and update the tag color and indication
   const handleEvent = () => {
-    // Example: On event occurrence, update the tag color and indication
     setTagColor("light.red");
     setTagIndication("for Commercial");
+  };
+
+  const handleSwitchChange = (checked: boolean) => {
+    setIsResidential(checked);
   };
 
   return (
@@ -51,7 +55,6 @@ const App: React.FC = () => {
             colorBgAppListIconHover: "#00a991",
             colorTextAppListIconHover: "rgba(255,255,255,0.95)",
             colorTextAppListIcon: "rgba(255,255,255,0.85)",
-
             sider: {
               colorBgCollapsedButton: "#fff",
               colorTextCollapsedButtonHover: "#00a991",
@@ -127,24 +130,29 @@ const App: React.FC = () => {
             header={{
               title: (
                 <>
-                  <span className="font-play-header">
+                  <span
+                    className="font-play-header"
+                    style={{ marginRight: "8px" }}
+                  >
                     NEW APPLICATION SYSTEM
                   </span>
+                  {/* Replace the Tag component with a customized Switch */}
+                  <Switch
+                    style={{ margin: "0px 0px 8px 4px", fontWeight: "bold" }}
+                    className="toggle-Residential-Commercial"
+                    checkedChildren="Residential"
+                    unCheckedChildren="Commercial"
+                    checked={isResidential}
+                    onChange={handleSwitchChange}
+                  />
 
-                  <Tag
-                    className="font-Mulish"
-                    style={{ marginLeft: "8px" }}
-                    color={tagColor}
-                  >
-                    {tagIndication}
-                  </Tag>
                   <br />
                   <span
                     className="font-play-header02"
                     style={{
                       background: "#d1e8e1",
                       padding: "4px 16px",
-                      borderRadius: "4px",
+                      borderRadius: "8px",
                     }}
                   >
                     New Request • NEW WATER SUPPLY
@@ -187,14 +195,6 @@ const App: React.FC = () => {
               alt: "Avatar",
             }}
             extraContent={[]}
-            /* Kel:- the below footer is being disabled because of component ProForm below has already used
-          FooterToolbar to replace it*/
-            /*  footer={[
-            <Button key="3">Clear</Button>,
-            <Button key="2" type="primary">
-              Submit
-            </Button>,
-          ]}*/
           >
             <FloatButton.Group
               shape="circle"
@@ -213,7 +213,9 @@ const App: React.FC = () => {
               new location, document and plumber enquiries.
             </ProCard>
             <div style={{ marginTop: "32px" }} />
-            <MyForm />
+
+            {/* Render the appropriate form based on the switch's value */}
+            {isResidential ? <MyForm /> : <MyFormDummy />}
           </PageContainer>
         </ProLayout>
       </div>
