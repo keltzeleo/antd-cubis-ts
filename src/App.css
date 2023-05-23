@@ -42,6 +42,14 @@
   align-items: center;
 }
 
+.toggle-Residential-Commercial .ant-switch-checked {
+  background-color: ("light.green"); /* Change to your desired color */
+}
+
+.toggle-Residential-Commercial .ant-switch-handle {
+  background-color: #000; /* Change to your desired color */
+}
+
 .label {
   margin-right: 10px; /* Adjust the margin value according to your desired spacing */
 }

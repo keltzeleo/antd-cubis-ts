@@ -1,0 +1,10 @@
+// styles.scss
+@import "./tokens/light.json";
+
+.custom-switch .ant-switch-checked {
+  background-color: $green; /* Use the design token value here */
+}
+
+.custom-switch .ant-switch-handle {
+  background-color: $switchHandleColor; /* Use the design token value here */
+}
