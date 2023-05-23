@@ -142,7 +142,7 @@ const App: React.FC = () => {
                       margin: "0px 8px 8px 8px",
                       fontWeight: "bold",
                       backgroundColor: isResidential
-                        ? light["lime"]
+                        ? light["gold"]
                         : light["orange"],
                     }}
                     checkedChildren={<span>Residential</span>}
