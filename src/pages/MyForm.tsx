@@ -351,7 +351,7 @@ const MyForm: React.FC = () => {
                               style={{
                                 backgroundColor: "#fff",
                                 marginRight: "8px",
-                                padding: 4,
+
                                 width: 40,
                                 height: 40,
                               }}
@@ -401,7 +401,6 @@ const MyForm: React.FC = () => {
                               style={{
                                 backgroundColor: "#fff",
                                 marginRight: "8px",
-                                padding: 2,
                                 width: 40,
                                 height: 40,
                               }}
