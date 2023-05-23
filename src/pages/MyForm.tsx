@@ -94,8 +94,8 @@ const MyForm: React.FC = () => {
                 <ProFormText
                   fieldProps={{
                     style: {
-                      width: "36vh", //
-                      minWidth: "300px", // Ensure a minimum width of 300px
+                      width: "480px", //
+                      minWidth: "400px", // Ensure a minimum width of 300px
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -214,8 +214,8 @@ const MyForm: React.FC = () => {
                   <ProFormText
                     fieldProps={{
                       style: {
-                        width: "40vh", //
-                        minWidth: "300px", // Ensure a minimum width of 300px
+                        width: "480px", //
+                        minWidth: "400px", // Ensure a minimum width of 300px
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
@@ -228,8 +228,8 @@ const MyForm: React.FC = () => {
                   <ProFormText
                     fieldProps={{
                       style: {
-                        width: "40vh", //
-                        minWidth: "300px", // Ensure a minimum width of 300px
+                        width: "480px", //
+                        minWidth: "400px", // Ensure a minimum width of 300px
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
@@ -243,8 +243,8 @@ const MyForm: React.FC = () => {
                   <ProFormText
                     fieldProps={{
                       style: {
-                        width: "40vh", //
-                        minWidth: "300px", // Ensure a minimum width of 300px
+                        width: "480px", //
+                        minWidth: "400px", // Ensure a minimum width of 300px
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
@@ -260,7 +260,7 @@ const MyForm: React.FC = () => {
                     <ProFormText
                       fieldProps={{
                         style: {
-                          width: "11vh",
+                          width: "140px",
                           minWidth: "120px", // Adjust the maximum width as needed
                           overflow: "hidden",
                           textOverflow: "ellipsis",
@@ -281,7 +281,7 @@ const MyForm: React.FC = () => {
                     <ProFormText
                       fieldProps={{
                         style: {
-                          width: "11vh",
+                          width: "160px",
                           minWidth: "120px", // Adjust the maximum width as needed
                           overflow: "hidden",
                           textOverflow: "ellipsis",
@@ -296,7 +296,7 @@ const MyForm: React.FC = () => {
                     <ProFormText
                       fieldProps={{
                         style: {
-                          width: "12vh",
+                          width: "160px",
                           minWidth: "120px", // Adjust the maximum width as needed
                           overflow: "hidden",
                           textOverflow: "ellipsis",
@@ -320,7 +320,8 @@ const MyForm: React.FC = () => {
                     <Space direction="horizontal">
                       <div
                         style={{
-                          minWidth: "32vh",
+                          width: "480px",
+                          minWidth: "400px",
                           padding: 10,
                           marginLeft: 64,
                           background: sendViaEmailSMS
@@ -343,7 +344,6 @@ const MyForm: React.FC = () => {
                               display: "flex",
                               alignItems: "center",
                               borderRadius: "8px",
-                              maxWidth: "32vh",
                               flexWrap: "wrap",
                             }}
                           >
@@ -367,12 +367,16 @@ const MyForm: React.FC = () => {
                       </div>
                       <div
                         style={{
-                          minWidth: "32vh",
+                          display: "flex",
+                          alignItems: "center",
+                          borderRadius: "8px",
+                          width: "480px",
+                          minWidth: "400px",
+                          flexWrap: "wrap",
                           padding: 10,
                           marginLeft: 22,
                           background: printForm ? light["cyan.3"] : "#fff",
                           border: "1px solid #e3e6e9",
-                          borderRadius: 8,
                           transition: "background 0.3s ease-in-out",
                         }}
                       >
@@ -388,7 +392,8 @@ const MyForm: React.FC = () => {
                               display: "flex",
                               alignItems: "center",
                               borderRadius: "8px",
-                              maxWidth: "32vh",
+                              width: "420px",
+                              minWidth: "360px",
                               flexWrap: "wrap",
                             }}
                           >
@@ -396,7 +401,7 @@ const MyForm: React.FC = () => {
                               style={{
                                 backgroundColor: "#fff",
                                 marginRight: "8px",
-                                padding: 4,
+                                padding: 2,
                                 width: 40,
                                 height: 40,
                               }}
