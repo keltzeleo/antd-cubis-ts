@@ -15,6 +15,18 @@
     "Helvetica Neue", sans-serif;
 }
 
+.toggleCommercial {
+  background-color: #ffc99d; /* Set the background color for the enabled state */
+}
+
+.toggleCommercial:hover {
+  background-color: #ffb980; /* Set the background color for the enabled state */
+}
+
+.toggleResidential {
+  background-color: purple; /* Set the background color for the disabled state */
+}
+
 .font-mulish {
   font-family: "Mulish", sans-serif;
 }
@@ -40,14 +52,6 @@
 .component-wrapper {
   display: flex;
   align-items: center;
-}
-
-.toggle-Residential-Commercial .ant-switch-checked {
-  background-color: ("light.green"); /* Change to your desired color */
-}
-
-.toggle-Residential-Commercial .ant-switch-handle {
-  background-color: #000; /* Change to your desired color */
 }
 
 .label {
