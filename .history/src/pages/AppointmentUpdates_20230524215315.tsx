@@ -20,12 +20,6 @@ interface Plumber {
   appointments: Appointment[];
 }
 
-const getRandomColor = (): string => {
-  const colors = Object.values(light);
-  const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex] as string;
-};
-
 const AppointmentUpdates: React.FC = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
@@ -152,11 +146,7 @@ const AppointmentUpdates: React.FC = () => {
       dataIndex: "name",
       render: (name: string, record: Plumber) => (
         <div>
-          <Avatar
-            size={32}
-            src={record.avatar}
-            style={{ backgroundColor: getRandomColor() }}
-          />
+          <Avatar size={32} src={record.avatar} />{" "}
           {/* Pass the avatar prop here */}
           <Button
             type="link"
@@ -217,11 +207,7 @@ const AppointmentUpdates: React.FC = () => {
               <Avatar
                 size={32}
                 src={drawerData?.avatar}
-                style={{
-                  backgroundColor: getRandomColor(),
-                  marginLeft: -2,
-                  marginRight: 16,
-                }}
+                style={{ marginLeft: -2, marginRight: 16 }}
               />
               {drawerData?.name}
             </div>

@@ -20,10 +20,10 @@ interface Plumber {
   appointments: Appointment[];
 }
 
-const getRandomColor = (): string => {
+const getRandomColor = (): backgroundColor => {
   const colors = Object.values(light);
   const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex] as string;
+  return colors[randomIndex] as backgroundColor;
 };
 
 const AppointmentUpdates: React.FC = () => {

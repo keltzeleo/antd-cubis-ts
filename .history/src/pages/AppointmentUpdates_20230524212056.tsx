@@ -14,31 +14,20 @@ interface Appointment {
 interface Plumber {
   key: string;
   name: string;
-  avatar: string;
   assignedAppointments: number;
   unassignedAppointments: number;
   appointments: Appointment[];
 }
 
-const getRandomColor = (): string => {
-  const colors = Object.values(light);
-  const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex] as string;
-};
-
 const AppointmentUpdates: React.FC = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
-  const [addAppointmentVisible, setAddAppointmentVisible] = useState(false);
-  const [addAppointmentDrawerVisible, setAddAppointmentDrawerVisible] =
-    useState(false);
+  const [addAppointmentVisible, setAddAppointmentVisible] = useState(false); // State for Add Appointment drawer
 
   const data: Plumber[] = [
     {
       key: "1",
       name: "John Doe",
-      avatar: "./icons/avatarMeow01.jpg", // Replace with the actual URL or identifier for the avatar
-
       assignedAppointments: 5,
       unassignedAppointments: 2,
       appointments: [
@@ -50,14 +39,36 @@ const AppointmentUpdates: React.FC = () => {
           appointmentLocation: "Location 1",
           status: "pending",
         },
+        {
+          key: "2",
+          customerName: "Customer 2",
+          appointmentDate: "2023-05-24",
+          appointmentTime: "1:00 PM",
+          appointmentLocation: "Location 1",
+          status: "pending",
+        },
+        {
+          key: "3",
+          customerName: "Customer 3",
+          appointmentDate: "2023-05-27",
+          appointmentTime: "10:00 AM",
+          appointmentLocation: "Location 1",
+          status: "cancelled",
+        },
+        {
+          key: "4",
+          customerName: "Customer 4",
+          appointmentDate: "2023-05-28",
+          appointmentTime: "10:00 AM",
+          appointmentLocation: "Location 1",
+          status: "pending",
+        },
         // Add more appointments as needed
       ],
     },
     {
       key: "2",
       name: "Kel Huang",
-      avatar: "./icons/avatarMeow.jpg", // Replace with the actual URL or identifier for the avatar
-
       assignedAppointments: 2,
       unassignedAppointments: 4,
       appointments: [
@@ -107,21 +118,11 @@ const AppointmentUpdates: React.FC = () => {
       },
     ];
 
-    const handleAddAppointment = () => {
-      setDrawerData(record);
-      setDrawerVisible(true);
-      setAddAppointmentVisible(true);
-    };
-
-    const closeAddAppointmentDrawer = () => {
-      setAddAppointmentVisible(false);
-    };
-
     return (
       <div>
         {/* Add Appointment button */}
         <div style={{ marginBottom: 16 }}>
-          <Button type="primary" onClick={handleAddAppointment}>
+          <Button type="primary" onClick={() => handleAddAppointment(record)}>
             Add Appointment
           </Button>
         </div>
@@ -130,21 +131,40 @@ const AppointmentUpdates: React.FC = () => {
           columns={nestedColumns}
           pagination={false}
         />
-
-        {/* Add Appointment Drawer */}
-        <Drawer
-          title="Add Appointment"
-          placement="right"
-          closable={false}
-          onClose={closeAddAppointmentDrawer}
-          visible={addAppointmentVisible}
-        >
-          {/* Add appointment form and content */}
-          <p>Add Appointment Form</p>
-        </Drawer>
       </div>
     );
   };
+
+  const appointmentColumns = [
+    { title: "Customer Name", dataIndex: "customerName" },
+    { title: "Appointment Date", dataIndex: "appointmentDate" },
+    { title: "Appointment Time", dataIndex: "appointmentTime" },
+    { title: "Appointment Location", dataIndex: "appointmentLocation" },
+    {
+      title: "Status",
+      dataIndex: "status",
+      render: (status: string) => {
+        let color = "";
+        switch (status) {
+          case "pending":
+            color = "blue";
+            break;
+          case "cancelled":
+            color = "red";
+            break;
+          case "on going":
+            color = "green";
+            break;
+          case "alert":
+            color = "orange";
+            break;
+          default:
+            break;
+        }
+        return <Tag color={color}>{status}</Tag>;
+      },
+    },
+  ];
 
   const columns = [
     {
@@ -152,19 +172,10 @@ const AppointmentUpdates: React.FC = () => {
       dataIndex: "name",
       render: (name: string, record: Plumber) => (
         <div>
-          <Avatar
-            size={32}
-            src={record.avatar}
-            style={{ backgroundColor: getRandomColor() }}
-          />
-          {/* Pass the avatar prop here */}
+          <Avatar size={32} />
           <Button
             type="link"
-            onClick={() => {
-              setDrawerData(record);
-              setDrawerVisible(true);
-              setAddAppointmentVisible(false);
-            }}
+            onClick={() => openDrawer(record)}
             style={{ marginRight: 8 }}
           >
             <span>{name}</span>
@@ -178,20 +189,32 @@ const AppointmentUpdates: React.FC = () => {
     },
   ];
 
+  const openDrawer = (data: Plumber) => {
+    setDrawerData(data);
+    setDrawerVisible(true);
+  };
+
   const closeDrawer = () => {
     setDrawerVisible(false);
     setDrawerData(null);
-    setAddAppointmentVisible(false);
   };
 
-  const openAddAppointmentDrawer = (record: Plumber) => {
-    setAddAppointmentDrawerVisible(true);
-    setDrawerData(record);
+  const handleAddAppointment = (data: Plumber) => {
+    setDrawerData(data);
+    setAddAppointmentVisible(true);
+  };
+
+  const closeAddAppointmentDrawer = () => {
+    setAddAppointmentVisible(false);
   };
 
   return (
     <ConfigProvider theme={{ token: light }}>
       <div>
+        {/* Down Manual Input Updates button */}
+        <div style={{ marginBottom: 16 }}>
+          <Button type="primary">Download Assignment Documents</Button>
+        </div>
         <Table
           columns={columns}
           dataSource={data}
@@ -200,47 +223,25 @@ const AppointmentUpdates: React.FC = () => {
         />
 
         <Drawer
-          title="Add Appointment"
-          width={610}
-          placement="right"
-          closable={true}
-          onClose={() => setAddAppointmentDrawerVisible(false)}
-          visible={addAppointmentDrawerVisible}
-        >
-          {/* Add appointment form and content */}
-          <p>Add Appointment Form</p>
-        </Drawer>
-
-        <Drawer
-          title={
-            <div>
-              <Avatar
-                size={32}
-                src={drawerData?.avatar}
-                style={{
-                  backgroundColor: getRandomColor(),
-                  marginLeft: -2,
-                  marginRight: 16,
-                }}
-              />
-              {drawerData?.name}
-            </div>
-          }
-          width={680}
+          title={drawerData?.name}
           placement="right"
           closable={false}
           onClose={closeDrawer}
           visible={drawerVisible}
         >
           <p>Plumber Info: {drawerData?.name}</p>
-          <Button
-            type="primary"
-            onClick={() => drawerData && openAddAppointmentDrawer(drawerData)}
-          >
-            Add Appointment
-          </Button>
-
           {/* Add/Edit buttons and other content */}
+        </Drawer>
+
+        {/* Add Appointment Drawer */}
+        <Drawer
+          title="Add Appointment"
+          placement="right"
+          closable={false}
+          onClose={closeAddAppointmentDrawer}
+          visible={addAppointmentVisible}
+        >
+          {/* Add appointment form and content */}
         </Drawer>
       </div>
     </ConfigProvider>

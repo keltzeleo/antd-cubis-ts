@@ -1,6 +1,6 @@
 import { Avatar, Button, ConfigProvider, Drawer, Table, Tag } from "antd";
 import React, { useState } from "react";
-import light from "../../src/tokens/light.json";
+import light, { BackgroundColor } from "../../src/tokens/light.json";
 
 interface Appointment {
   key: string;
@@ -20,10 +20,10 @@ interface Plumber {
   appointments: Appointment[];
 }
 
-const getRandomColor = (): string => {
+const getRandomColor = (): BackgroundColor => {
   const colors = Object.values(light);
   const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex] as string;
+  return colors[randomIndex] as BackgroundColor;
 };
 
 const AppointmentUpdates: React.FC = () => {
@@ -156,7 +156,7 @@ const AppointmentUpdates: React.FC = () => {
             size={32}
             src={record.avatar}
             style={{ backgroundColor: getRandomColor() }}
-          />
+          />{" "}
           {/* Pass the avatar prop here */}
           <Button
             type="link"

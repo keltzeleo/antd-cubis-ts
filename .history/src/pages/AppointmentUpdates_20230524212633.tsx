@@ -14,31 +14,20 @@ interface Appointment {
 interface Plumber {
   key: string;
   name: string;
-  avatar: string;
   assignedAppointments: number;
   unassignedAppointments: number;
   appointments: Appointment[];
 }
 
-const getRandomColor = (): string => {
-  const colors = Object.values(light);
-  const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex] as string;
-};
-
 const AppointmentUpdates: React.FC = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
   const [addAppointmentVisible, setAddAppointmentVisible] = useState(false);
-  const [addAppointmentDrawerVisible, setAddAppointmentDrawerVisible] =
-    useState(false);
 
   const data: Plumber[] = [
     {
       key: "1",
       name: "John Doe",
-      avatar: "./icons/avatarMeow01.jpg", // Replace with the actual URL or identifier for the avatar
-
       assignedAppointments: 5,
       unassignedAppointments: 2,
       appointments: [
@@ -56,8 +45,6 @@ const AppointmentUpdates: React.FC = () => {
     {
       key: "2",
       name: "Kel Huang",
-      avatar: "./icons/avatarMeow.jpg", // Replace with the actual URL or identifier for the avatar
-
       assignedAppointments: 2,
       unassignedAppointments: 4,
       appointments: [
@@ -108,8 +95,6 @@ const AppointmentUpdates: React.FC = () => {
     ];
 
     const handleAddAppointment = () => {
-      setDrawerData(record);
-      setDrawerVisible(true);
       setAddAppointmentVisible(true);
     };
 
@@ -139,8 +124,8 @@ const AppointmentUpdates: React.FC = () => {
           onClose={closeAddAppointmentDrawer}
           visible={addAppointmentVisible}
         >
-          {/* Add appointment form and content */}
           <p>Add Appointment Form</p>
+          {/* Add appointment form and content */}
         </Drawer>
       </div>
     );
@@ -152,18 +137,12 @@ const AppointmentUpdates: React.FC = () => {
       dataIndex: "name",
       render: (name: string, record: Plumber) => (
         <div>
-          <Avatar
-            size={32}
-            src={record.avatar}
-            style={{ backgroundColor: getRandomColor() }}
-          />
-          {/* Pass the avatar prop here */}
+          <Avatar size={32} />
           <Button
             type="link"
             onClick={() => {
               setDrawerData(record);
               setDrawerVisible(true);
-              setAddAppointmentVisible(false);
             }}
             style={{ marginRight: 8 }}
           >
@@ -181,12 +160,6 @@ const AppointmentUpdates: React.FC = () => {
   const closeDrawer = () => {
     setDrawerVisible(false);
     setDrawerData(null);
-    setAddAppointmentVisible(false);
-  };
-
-  const openAddAppointmentDrawer = (record: Plumber) => {
-    setAddAppointmentDrawerVisible(true);
-    setDrawerData(record);
   };
 
   return (
@@ -200,46 +173,13 @@ const AppointmentUpdates: React.FC = () => {
         />
 
         <Drawer
-          title="Add Appointment"
-          width={610}
-          placement="right"
-          closable={true}
-          onClose={() => setAddAppointmentDrawerVisible(false)}
-          visible={addAppointmentDrawerVisible}
-        >
-          {/* Add appointment form and content */}
-          <p>Add Appointment Form</p>
-        </Drawer>
-
-        <Drawer
-          title={
-            <div>
-              <Avatar
-                size={32}
-                src={drawerData?.avatar}
-                style={{
-                  backgroundColor: getRandomColor(),
-                  marginLeft: -2,
-                  marginRight: 16,
-                }}
-              />
-              {drawerData?.name}
-            </div>
-          }
-          width={680}
+          title={drawerData?.name}
           placement="right"
           closable={false}
           onClose={closeDrawer}
           visible={drawerVisible}
         >
           <p>Plumber Info: {drawerData?.name}</p>
-          <Button
-            type="primary"
-            onClick={() => drawerData && openAddAppointmentDrawer(drawerData)}
-          >
-            Add Appointment
-          </Button>
-
           {/* Add/Edit buttons and other content */}
         </Drawer>
       </div>

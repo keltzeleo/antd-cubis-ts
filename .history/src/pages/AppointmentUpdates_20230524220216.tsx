@@ -20,10 +20,10 @@ interface Plumber {
   appointments: Appointment[];
 }
 
-const getRandomColor = (): string => {
+const getRandomColor = () => {
   const colors = Object.values(light);
   const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex] as string;
+  return colors[randomIndex];
 };
 
 const AppointmentUpdates: React.FC = () => {
@@ -156,7 +156,7 @@ const AppointmentUpdates: React.FC = () => {
             size={32}
             src={record.avatar}
             style={{ backgroundColor: getRandomColor() }}
-          />
+          />{" "}
           {/* Pass the avatar prop here */}
           <Button
             type="link"

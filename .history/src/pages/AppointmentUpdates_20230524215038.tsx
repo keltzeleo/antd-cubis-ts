@@ -20,12 +20,6 @@ interface Plumber {
   appointments: Appointment[];
 }
 
-const getRandomColor = (): string => {
-  const colors = Object.values(light);
-  const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex] as string;
-};
-
 const AppointmentUpdates: React.FC = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
@@ -37,8 +31,6 @@ const AppointmentUpdates: React.FC = () => {
     {
       key: "1",
       name: "John Doe",
-      avatar: "./icons/avatarMeow01.jpg", // Replace with the actual URL or identifier for the avatar
-
       assignedAppointments: 5,
       unassignedAppointments: 2,
       appointments: [
@@ -56,8 +48,6 @@ const AppointmentUpdates: React.FC = () => {
     {
       key: "2",
       name: "Kel Huang",
-      avatar: "./icons/avatarMeow.jpg", // Replace with the actual URL or identifier for the avatar
-
       assignedAppointments: 2,
       unassignedAppointments: 4,
       appointments: [
@@ -152,11 +142,7 @@ const AppointmentUpdates: React.FC = () => {
       dataIndex: "name",
       render: (name: string, record: Plumber) => (
         <div>
-          <Avatar
-            size={32}
-            src={record.avatar}
-            style={{ backgroundColor: getRandomColor() }}
-          />
+          <Avatar size={32} src={record.avatar} />{" "}
           {/* Pass the avatar prop here */}
           <Button
             type="link"
@@ -214,15 +200,7 @@ const AppointmentUpdates: React.FC = () => {
         <Drawer
           title={
             <div>
-              <Avatar
-                size={32}
-                src={drawerData?.avatar}
-                style={{
-                  backgroundColor: getRandomColor(),
-                  marginLeft: -2,
-                  marginRight: 16,
-                }}
-              />
+              <Avatar size={32} style={{ marginLeft: -2, marginRight: 16 }} />
               {drawerData?.name}
             </div>
           }
