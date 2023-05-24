@@ -16,7 +16,12 @@ interface Plumber {
   name: string;
   avatar: string;
   assignedAppointments: number;
-  unassignedAppointments: number;
+  cancelledAppointments: number;
+  reschedulingAppointments: number;
+  rescheduledAppointments: number;
+  failedAppointments: number;
+  
+
   appointments: Appointment[];
 }
 
@@ -36,10 +41,13 @@ const AppointmentUpdates: React.FC = () => {
     {
       key: "1",
       name: "John Doe",
-      avatar: "./icons/avatarMeow01.jpg", // Replace with the actual URL or identifier for the avatar
+      avatar: "./icons/avatarMeow01.png", // Replace with the actual URL or identifier for the avatar
 
-      assignedAppointments: 5,
-      unassignedAppointments: 2,
+      assignedAppointments: 0,
+      cancelledAppointments: 0,
+      reschedulingAppointments: 0,
+      rescheduledAppointments:0,
+      failedAppointments:0,
       appointments: [
         {
           key: "1",
@@ -55,14 +63,20 @@ const AppointmentUpdates: React.FC = () => {
     {
       key: "2",
       name: "Kel Huang",
-      avatar: "./icons/avatarMeow.jpg", // Replace with the actual URL or identifier for the avatar
+      avatar: "./icons/avatarMeow.png", // Replace with the actual URL or identifier for the avatar
+      assignedAppointments: 0,
+      cancelledAppointments: 0,
+      failedAppointments:0,
+      rescheduledAppointments:0,
+      reschedulingAppointments:0,
+      failedAppointments:0,
+      
 
-      assignedAppointments: 2,
-      unassignedAppointments: 4,
+     
       appointments: [
         {
           key: "1",
-          customerName: "Customer 1",
+          customerName: "Ahmad bin Abdullah",
           appointmentDate: "2023-05-24",
           appointmentTime: "2:00 PM",
           appointmentLocation: "Location 1",
@@ -70,15 +84,15 @@ const AppointmentUpdates: React.FC = () => {
         },
         {
           key: "2",
-          customerName: "Customer 2",
+          customerName: "Tan Ah Ching",
           appointmentDate: "2023-05-26",
           appointmentTime: "1:00 PM",
           appointmentLocation: "Location 1",
-          status: "pending",
+          status: "on going",
         },
         {
           key: "3",
-          customerName: "Customer 3",
+          customerName: "Lee Xiao Ming",
           appointmentDate: "2023-05-27",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
@@ -86,17 +100,31 @@ const AppointmentUpdates: React.FC = () => {
         },
         {
           key: "4",
-          customerName: "Customer 4",
-          appointmentDate: "2023-05-28",
-          appointmentTime: "10:00 AM",
-          appointmentLocation: "Location 1",
-          status: "pending",
+          customerName: "Bhavin a/l Ishir",
+          appointmentDate: "2025-05-28",
+          appointmentTime: "12:00PM",
+          appointmentLocation: "Location 3",
+          status: "cancelled",
         },
+        key: "5",
+        customerName: "Amyra a/p Kiaan",
+        appointmentDate: "2025-05-28",
+        appointmentTime: "12:00PM",
+        appointmentLocation: "Location 3",
+        status: "cancelled",
+      },
         // Add more appointments as needed
       ],
     },
     // Add more plumbers with their appointments
   ];
+
+  data.forEach((plumber) => {
+    plumber.assignedAppointments = plumber.appointments.length;
+    plumber.cancelledAppointments = plumber.appointments.filter(
+      (appointment) => appointment.status === "pending"
+    ).length;
+  });
 
   const expandedRowRender = (record: Plumber) => {
     const nestedColumns = [
@@ -173,10 +201,16 @@ const AppointmentUpdates: React.FC = () => {
             }}
             style={{ marginRight: 8 }}
           >
-            <span>{name}</span>
+            <span>{name} has</span>
           </Button>
           <span style={{ marginLeft: 8 }}>
             {record.appointments.length} assigned appointment
+            {
+              record.appointments.filter(
+                (appointment) => appointment.status === "cancelled"
+              ).length
+            }{" "}
+            pending
             {record.appointments.length !== 1 ? "s" : ""}
           </span>
         </div>
