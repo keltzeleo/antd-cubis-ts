@@ -189,7 +189,7 @@ const AppointmentUpdates: React.FC = () => {
       <div>
         {/* Down Manual Input Updates button */}
         <div style={{ marginBottom: 16 }}>
-          <Button type="primary">Download Assignment Documents</Button>
+          <Button type="primary">Down Manual Input Updates</Button>
         </div>
         <Table
           columns={columns}
