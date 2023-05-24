@@ -232,10 +232,8 @@ const App: React.FC = () => {
               }}
               // eslint-disable-next-line react/jsx-no-comment-textnodes
             >
-              <span>
-                /// /// //// &nbsp; &nbsp;For Customer who wants to apply water
-                supply in new location, document and plumber enquiries.{" "}
-              </span>
+              /// /// /// For Customer who wants to apply water supply in new
+              location, document and plumber enquiries. /// /// ///
             </ProCard>
             <div style={{ marginTop: "32px" }} />
 

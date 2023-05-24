@@ -224,18 +224,12 @@ const App: React.FC = () => {
             </FloatButton.Group>
 
             <ProCard
-              className="fontMulish"
-              style={{
-                background: "#00a991",
-                color: "#fff",
-                fontWeight: "bold",
-              }}
-              // eslint-disable-next-line react/jsx-no-comment-textnodes
+              className="font-Mulish"
+              style={{ background: "#00a991", color: "#fff" }
+            classname={{font-Play}}}
             >
-              <span>
-                /// /// //// &nbsp; &nbsp;For Customer who wants to apply water
-                supply in new location, document and plumber enquiries.{" "}
-              </span>
+              For Customer who wants to apply water supply in
+              new location, document and plumber enquiries.
             </ProCard>
             <div style={{ marginTop: "32px" }} />
 
