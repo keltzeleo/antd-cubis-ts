@@ -133,6 +133,7 @@ const AppointmentUpdates: React.FC = () => {
     const handleAddAppointment = () => {
       setDrawerData(record);
       setDrawerVisible(true);
+      setAddAppointmentVisible(true);
       setAddAppointmentDrawerVisible(true);
     };
 

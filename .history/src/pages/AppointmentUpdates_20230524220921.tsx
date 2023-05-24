@@ -29,6 +29,7 @@ const getRandomColor = (): string => {
 const AppointmentUpdates: React.FC = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
+  const [addAppointmentVisible, setAddAppointmentVisible] = useState(false);
   const [addAppointmentDrawerVisible, setAddAppointmentDrawerVisible] =
     useState(false);
 
@@ -62,16 +63,16 @@ const AppointmentUpdates: React.FC = () => {
       appointments: [
         {
           key: "1",
-          customerName: "Customer 1",
-          appointmentDate: "2023-05-24",
+          customerName: "Customer 2",
+          appointmentDate: "2023-05-25",
           appointmentTime: "2:00 PM",
-          appointmentLocation: "Location 1",
+          appointmentLocation: "Location 2",
           status: "on going",
         },
         {
           key: "2",
           customerName: "Customer 2",
-          appointmentDate: "2023-05-26",
+          appointmentDate: "2023-05-24",
           appointmentTime: "1:00 PM",
           appointmentLocation: "Location 1",
           status: "pending",
@@ -133,7 +134,11 @@ const AppointmentUpdates: React.FC = () => {
     const handleAddAppointment = () => {
       setDrawerData(record);
       setDrawerVisible(true);
-      setAddAppointmentDrawerVisible(true);
+      setAddAppointmentVisible(true);
+    };
+
+    const closeAddAppointmentDrawer = () => {
+      setAddAppointmentVisible(false);
     };
 
     return (
@@ -149,6 +154,18 @@ const AppointmentUpdates: React.FC = () => {
           columns={nestedColumns}
           pagination={false}
         />
+
+        {/* Add Appointment Drawer */}
+        <Drawer
+          title="Add Appointment"
+          placement="right"
+          closable={false}
+          onClose={closeAddAppointmentDrawer}
+          visible={addAppointmentVisible}
+        >
+          {/* Add appointment form and content */}
+          <p>Add Appointment Form</p>
+        </Drawer>
       </div>
     );
   };
@@ -170,6 +187,7 @@ const AppointmentUpdates: React.FC = () => {
             onClick={() => {
               setDrawerData(record);
               setDrawerVisible(true);
+              setAddAppointmentVisible(false);
             }}
             style={{ marginRight: 8 }}
           >
@@ -187,6 +205,7 @@ const AppointmentUpdates: React.FC = () => {
   const closeDrawer = () => {
     setDrawerVisible(false);
     setDrawerData(null);
+    setAddAppointmentVisible(false);
   };
 
   const openAddAppointmentDrawer = (record: Plumber) => {
@@ -205,7 +224,7 @@ const AppointmentUpdates: React.FC = () => {
         />
 
         <Drawer
-          title={`Add Appointment for ${drawerData?.name}`}
+          title="Add Appointment"
           width={610}
           placement="right"
           closable={true}
