@@ -20,9 +20,9 @@
 
 .App {
   text-align: center;
-  font-family: --apple-system, BlinkMacSystemFont, "Mulish", "Play", "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: --apple-system, BlinkMacSystemFont, "Kulgo", "Mulish", "Play",
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 .fontMulish {
@@ -33,11 +33,11 @@
   font-family: "Play", sans-serif;
 }
 
-.fontAzoSans {
+fontAzoSans {
   font-family: "AzoSans", sans-serif;
 }
 
-.fontKulgo {
+fontKulgo {
   font-family: "Kulgo", sans-serif;
 }
 

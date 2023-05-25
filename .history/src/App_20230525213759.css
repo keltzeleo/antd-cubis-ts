@@ -13,11 +13,6 @@
   src: url("./fonts/AzoSans-Regular.ttf") format("truetype");
 }
 
-@font-face {
-  font-family: "Kulgo";
-  src: url("./fonts/KulgoRegular.ttf") format("truetype");
-}
-
 .App {
   text-align: center;
   font-family: --apple-system, BlinkMacSystemFont, "Mulish", "Play", "Segoe UI",
@@ -33,12 +28,8 @@
   font-family: "Play", sans-serif;
 }
 
-.fontAzoSans {
+fontAzoSans {
   font-family: "AzoSans", sans-serif;
-}
-
-.fontKulgo {
-  font-family: "Kulgo", sans-serif;
 }
 
 .font-play-header {
