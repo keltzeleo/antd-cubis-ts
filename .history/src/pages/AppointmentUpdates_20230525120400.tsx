@@ -311,20 +311,11 @@ const AppointmentUpdates: React.FC = () => {
                 justifyContent: "flex-start",
               }}
             >
-              <Tag color={light["cyan"]}>{assignedCount} assigned</Tag> &nbsp;
-              <Tag color={light["red"]}>{cancelledCount} cancelled</Tag> &nbsp;
-              <Tag color={light["orange"]}>
-                {failedCount} failed to visit
-              </Tag>{" "}
-              &nbsp;
-              <Tag color={light["geekblue"]}>
-                {reassigningCount} reassigning
-              </Tag>{" "}
-              &nbsp;
-              <Tag color={light["lime"]}>
-                {rescheduledCount} rescheduled
-              </Tag>{" "}
-              &nbsp;
+              <Tag color= {{light["cyan"]}};>{assignedCount} assigned</Tag> &nbsp;
+              <Tag color="red">{cancelledCount} cancelled</Tag> &nbsp;
+              <Tag color="orange">{failedCount} failed to visit</Tag> &nbsp;
+              <Tag color="blue">{reassigningCount} reassigning</Tag> &nbsp;
+              <Tag color="lime">{rescheduledCount} rescheduled</Tag> &nbsp;
             </span>
           </div>
         );

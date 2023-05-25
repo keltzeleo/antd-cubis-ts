@@ -79,7 +79,7 @@ const AppointmentUpdates: React.FC = () => {
     {
       key: "2",
       name: "Kel Huang",
-      avatar: "./icons/avatarMeow01.png", // Replace with the actual URL or identifier for the avatar
+      avatar: "./icons/avatarMeow.png", // Replace with the actual URL or identifier for the avatar
       assignedAppointments: 0,
       cancelledAppointments: 0,
       failedAppointments: 0,
@@ -130,68 +130,6 @@ const AppointmentUpdates: React.FC = () => {
         // Add more appointments as needed
       ],
     },
-    {
-      key: "3",
-      name: "Elon Mask",
-      avatar: "./icons/avatarMeow01.png", // Replace with the actual URL or identifier for the avatar
-      assignedAppointments: 0,
-      cancelledAppointments: 0,
-      failedAppointments: 0,
-      reassignedAppointments: 0,
-      rescheduledAppointments: 0,
-
-      appointments: [
-        {
-          key: "1",
-          customerName: "Steve Jobs",
-          appointmentDate: "2023-05-24",
-          appointmentTime: "2:00 PM",
-          appointmentLocation: "Location 1",
-          status: "assigned",
-        },
-        {
-          key: "2",
-          customerName: "Mark Zuckerberg",
-          appointmentDate: "2023-05-26",
-          appointmentTime: "1:00 PM",
-          appointmentLocation: "Location 1",
-          status: "assigned",
-        },
-        {
-          key: "3",
-          customerName: "Aventure",
-          appointmentDate: "2023-05-27",
-          appointmentTime: "10:00 AM",
-          appointmentLocation: "Location 1",
-          status: "cancelled",
-        },
-        {
-          key: "4",
-          customerName: "Bamberbee",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
-          status: "failed",
-        },
-        {
-          key: "5",
-          customerName: "Batman",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
-          status: "cancelled",
-        },
-        {
-          key: "5",
-          customerName: "Superman",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
-          status: "assigned",
-        },
-        // Add more appointments as needed
-      ],
-    },
     // Add more plumbers with their appointments
   ];
 
@@ -215,19 +153,19 @@ const AppointmentUpdates: React.FC = () => {
           let color = "";
           switch (status) {
             case "assigned":
-              color = light["cyan"];
+              color = "cyan";
               break;
             case "cancelled":
-              color = light["red"];
+              color = "red";
               break;
             case "failed":
-              color = light["orange"];
+              color = "orange";
               break;
             case "reassigning":
-              color = light["geekblue"];
+              color = "geekblue";
               break;
             case "rescheduled":
-              color = light["lime"];
+              color = "lime";
               break;
 
             default:
@@ -274,7 +212,7 @@ const AppointmentUpdates: React.FC = () => {
           (appointment) => appointment.status === "cancelled"
         ).length;
         const reassigningCount = record.appointments.filter(
-          (appointment) => appointment.status === "reassigning"
+          (appointment) => appointment.status === "rebooking"
         ).length;
         const rescheduledCount = record.appointments.filter(
           (appointment) => appointment.status === "rescheduled"
@@ -311,20 +249,11 @@ const AppointmentUpdates: React.FC = () => {
                 justifyContent: "flex-start",
               }}
             >
-              <Tag color={light["cyan"]}>{assignedCount} assigned</Tag> &nbsp;
-              <Tag color={light["red"]}>{cancelledCount} cancelled</Tag> &nbsp;
-              <Tag color={light["orange"]}>
-                {failedCount} failed to visit
-              </Tag>{" "}
-              &nbsp;
-              <Tag color={light["geekblue"]}>
-                {reassigningCount} reassigning
-              </Tag>{" "}
-              &nbsp;
-              <Tag color={light["lime"]}>
-                {rescheduledCount} rescheduled
-              </Tag>{" "}
-              &nbsp;
+              <Tag color="green">{assignedCount} assigned</Tag> &nbsp;
+              <Tag color="red">{cancelledCount} cancelled</Tag> &nbsp;
+              <Tag color="blue">{reassigningCount} reassigning</Tag> &nbsp;
+              <Tag color="lime">{rescheduledCount} rescheduled</Tag> &nbsp;
+              <Tag color="orange">{failedCount} failed to visit</Tag> &nbsp;
             </span>
           </div>
         );

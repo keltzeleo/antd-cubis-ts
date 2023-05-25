@@ -321,7 +321,7 @@ const AppointmentUpdates: React.FC = () => {
                 {reassigningCount} reassigning
               </Tag>{" "}
               &nbsp;
-              <Tag color={light["lime"]}>
+              <Tag color={light["green"]}>
                 {rescheduledCount} rescheduled
               </Tag>{" "}
               &nbsp;
