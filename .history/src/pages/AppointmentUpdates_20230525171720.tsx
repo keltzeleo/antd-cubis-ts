@@ -250,7 +250,7 @@ const AppointmentUpdates: React.FC = () => {
 
       {
         title: (
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div>
             <span>Status</span>
             <div style={{ marginLeft: "auto" }}>
               <SearchOutlined />
