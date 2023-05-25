@@ -460,7 +460,7 @@ const AppointmentUpdates: React.FC = () => {
               <div
                 style={{
                   height: 32,
-                  width: 80,
+                  width: "auto",
                   padding: " 1px 4px 1px 4px",
                   alignContent: "center",
                   justifyContent: "center",
@@ -468,15 +468,14 @@ const AppointmentUpdates: React.FC = () => {
                   borderRadius: 16,
                   background: light["colorPrimaryBase"],
                   overflow: "hidden",
-                  color: "#fff",
                 }}
               >
                 <div
                   style={{
-                    fontSize: 52,
+                    fontSize: 48,
                     alignContent: "center",
                     justifyContent: "center",
-                    margin: "-20px 0px 0px 10px",
+                    margin: "-24px 0px 0px 0px",
                   }}
                 >
                   {drawerData?.name}

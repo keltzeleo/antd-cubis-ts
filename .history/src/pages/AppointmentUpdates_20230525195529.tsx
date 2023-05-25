@@ -466,7 +466,7 @@ const AppointmentUpdates: React.FC = () => {
                   justifyContent: "center",
                   fontWeight: "bold",
                   borderRadius: 16,
-                  background: light["colorPrimaryBase"],
+                  background: light["purple"],
                   overflow: "hidden",
                   color: "#fff",
                 }}

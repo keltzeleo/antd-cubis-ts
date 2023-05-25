@@ -459,28 +459,16 @@ const AppointmentUpdates: React.FC = () => {
               Add Appointment for
               <div
                 style={{
-                  height: 32,
-                  width: 80,
-                  padding: " 1px 4px 1px 4px",
-                  alignContent: "center",
-                  justifyContent: "center",
+                  height: "50px",
+                  padding: " 1px 10px 1px 4px",
+                  margin: "0px 8px 8px 8px",
+                  fontFamily: "",
                   fontWeight: "bold",
-                  borderRadius: 16,
-                  background: light["colorPrimaryBase"],
+                  background: light["blue"],
                   overflow: "hidden",
-                  color: "#fff",
                 }}
               >
-                <div
-                  style={{
-                    fontSize: 52,
-                    alignContent: "center",
-                    justifyContent: "center",
-                    margin: "-20px 0px 0px 10px",
-                  }}
-                >
-                  {drawerData?.name}
-                </div>
+                <div style={{ fontSize: 52 }}>{drawerData?.name}</div>
               </div>
             </div>
           }

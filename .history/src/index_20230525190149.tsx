@@ -8,7 +8,7 @@ import light from "./tokens/light.json";
 
 ReactDOM.render(
   <ConfigProvider theme={{ token: light }}>
-    <div>
+    <div style={{text-decoration: none}}>
       <AppointmentUpdates />
     </div>
   </ConfigProvider>,

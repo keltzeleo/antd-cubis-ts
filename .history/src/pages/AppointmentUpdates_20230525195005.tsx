@@ -468,7 +468,6 @@ const AppointmentUpdates: React.FC = () => {
                   borderRadius: 16,
                   background: light["colorPrimaryBase"],
                   overflow: "hidden",
-                  color: "#fff",
                 }}
               >
                 <div

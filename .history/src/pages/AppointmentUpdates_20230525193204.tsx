@@ -456,32 +456,21 @@ const AppointmentUpdates: React.FC = () => {
         <Drawer
           title={
             <div>
-              Add Appointment for
-              <div
+              Add Appointment for{" "}
+              <span
                 style={{
-                  height: 32,
-                  width: 80,
-                  padding: " 1px 4px 1px 4px",
-                  alignContent: "center",
-                  justifyContent: "center",
+                  height: "auto",
+                  padding: " 1px 10px 1px 4px",
+                  margin: "0px 8px 8px 8px",
+                  fontFamily: "",
                   fontWeight: "bold",
-                  borderRadius: 16,
-                  background: light["colorPrimaryBase"],
-                  overflow: "hidden",
-                  color: "#fff",
+                  background: light["blue"],
                 }}
               >
-                <div
-                  style={{
-                    fontSize: 52,
-                    alignContent: "center",
-                    justifyContent: "center",
-                    margin: "-20px 0px 0px 10px",
-                  }}
-                >
+                <div div style={{ fontSize: "52px" }}>
                   {drawerData?.name}
                 </div>
-              </div>
+              </span>
             </div>
           }
           width={810}

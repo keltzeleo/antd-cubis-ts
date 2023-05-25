@@ -468,7 +468,6 @@ const AppointmentUpdates: React.FC = () => {
                   borderRadius: 16,
                   background: light["colorPrimaryBase"],
                   overflow: "hidden",
-                  color: "#fff",
                 }}
               >
                 <div
@@ -477,6 +476,7 @@ const AppointmentUpdates: React.FC = () => {
                     alignContent: "center",
                     justifyContent: "center",
                     margin: "-20px 0px 0px 10px",
+                    fontColor: "#fff",
                   }}
                 >
                   {drawerData?.name}

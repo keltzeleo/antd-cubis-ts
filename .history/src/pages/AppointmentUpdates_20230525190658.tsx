@@ -454,44 +454,13 @@ const AppointmentUpdates: React.FC = () => {
           {/* Add/Edit buttons and other content */}
         </Drawer>
         <Drawer
-          title={
-            <div>
-              Add Appointment for
-              <div
-                style={{
-                  height: 32,
-                  width: 80,
-                  padding: " 1px 4px 1px 4px",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  fontWeight: "bold",
-                  borderRadius: 16,
-                  background: light["colorPrimaryBase"],
-                  overflow: "hidden",
-                  color: "#fff",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: 52,
-                    alignContent: "center",
-                    justifyContent: "center",
-                    margin: "-20px 0px 0px 10px",
-                  }}
-                >
-                  {drawerData?.name}
-                </div>
-              </div>
-            </div>
-          }
+          title={`Add Appointment for ${drawerData?.name}`}
           width={810}
           placement="right"
           closable={true}
           onClose={() => setAddAppointmentDrawerVisible(false)}
           visible={addAppointmentDrawerVisible}
         >
-          <div>Add Appointment for {drawerData?.name}</div>
-
           {/* Add appointment form and content */}
           <p>Add Appointment Form</p>
         </Drawer>
