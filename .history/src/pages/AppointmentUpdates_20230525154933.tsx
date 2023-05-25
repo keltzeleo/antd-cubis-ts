@@ -19,9 +19,9 @@ interface Plumber {
   avatar: string;
   assignedAppointments: number;
   cancelledAppointments: number;
-  failedAppointments: number;
   reassignedAppointments: number;
   rescheduledAppointments: number;
+  failedAppointments: number;
 
   appointments: Appointment[];
 }
@@ -220,6 +220,7 @@ const AppointmentUpdates: React.FC = () => {
         dataIndex: "customerName",
         sorter: (a: Appointment, b: Appointment) =>
           a.customerName.localeCompare(b.customerName),
+        key: "customerName",
       },
       {
         title: "Appointment Date",
@@ -355,24 +356,18 @@ const AppointmentUpdates: React.FC = () => {
                 justifyContent: "flex-start",
               }}
             >
-              <Tag color={light["cyan"]}>
-                <b>{assignedCount}</b> assigned
-              </Tag>{" "}
-              &nbsp;
-              <Tag color={light["red"]}>
-                <b>{cancelledCount}</b> cancelled
-              </Tag>{" "}
-              &nbsp;
+              <Tag color={light["cyan"]}>{assignedCount} assigned</Tag> &nbsp;
+              <Tag color={light["red"]}>{cancelledCount} cancelled</Tag> &nbsp;
               <Tag color={light["orange"]}>
-                <b>{failedCount}</b> failed to visit
+                {failedCount} failed to visit
               </Tag>{" "}
               &nbsp;
               <Tag color={light["geekblue"]}>
-                <b>{reassigningCount}</b> reassigning
+                {reassigningCount} reassigning
               </Tag>{" "}
               &nbsp;
               <Tag color={light["lime"]}>
-                <b>{rescheduledCount}</b> rescheduled
+                {rescheduledCount} rescheduled
               </Tag>{" "}
               &nbsp;
             </span>

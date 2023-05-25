@@ -116,7 +116,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-27",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
-          status: "cancelled",
+          status: "rescheduled",
           typeOfService: "Temporary Supply",
         },
         {
@@ -303,6 +303,58 @@ const AppointmentUpdates: React.FC = () => {
 
   const columns = [
     {
+      title: (
+        <div>
+          Status{" "}
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key="1">
+                  <Checkbox.Group
+                    options={[
+                      { label: "Assigned", value: "assigned" },
+                      { label: "Cancelled", value: "cancelled" },
+                      { label: "Failed", value: "failed" },
+                      { label: "Reassigning", value: "reassigning" },
+                      { label: "Rescheduled", value: "rescheduled" },
+                    ]}
+                  />
+                </Menu.Item>
+              </Menu>
+            }
+            trigger={["click"]}
+          >
+            <Button type="text" icon={<SearchOutlined />} />
+          </Dropdown>
+        </div>
+      ),
+      dataIndex: "status",
+      sorter: (a: Appointment, b: Appointment) =>
+        a.status.localeCompare(b.status),
+      render: (status: string) => {
+        let color = "";
+        switch (status) {
+          case "assigned":
+            color = light["cyan"];
+            break;
+          case "cancelled":
+            color = light["red"];
+            break;
+          case "failed":
+            color = light["orange"];
+            break;
+          case "reassigning":
+            color = light["geekblue"];
+            break;
+          case "rescheduled":
+            color = light["lime"];
+            break;
+          default:
+            break;
+        }
+        return <Tag color={color}>{status}</Tag>;
+      }
+{
       title: "",
       dataIndex: "name",
       render: (name: string, record: Plumber) => {

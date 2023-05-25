@@ -19,9 +19,9 @@ interface Plumber {
   avatar: string;
   assignedAppointments: number;
   cancelledAppointments: number;
-  failedAppointments: number;
   reassignedAppointments: number;
   rescheduledAppointments: number;
+  failedAppointments: number;
 
   appointments: Appointment[];
 }

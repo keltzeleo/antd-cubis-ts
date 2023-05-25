@@ -19,9 +19,9 @@ interface Plumber {
   avatar: string;
   assignedAppointments: number;
   cancelledAppointments: number;
-  failedAppointments: number;
   reassignedAppointments: number;
   rescheduledAppointments: number;
+  failedAppointments: number;
 
   appointments: Appointment[];
 }
@@ -175,7 +175,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-27",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
-          status: "reassigning",
+          status: "cancelled",
           typeOfService: "Temporary Supply",
         },
         {
@@ -184,7 +184,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
-          status: "failed to visit",
+          status: "failed",
           typeOfService: "New Water Supply",
         },
         {
@@ -202,7 +202,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
-          status: "rescheduled",
+          status: "assigned",
           typeOfService: "New Water Supply",
         },
         // Add more appointments as needed
@@ -211,7 +211,12 @@ const AppointmentUpdates: React.FC = () => {
     // Add more plumbers with their appointments
   ];
 
-  data.forEach((plumber) => {});
+  data.forEach((plumber) => {
+    plumber.assignedAppointments = plumber.appointments.length;
+    plumber.cancelledAppointments = plumber.appointments.filter(
+      (appointment) => appointment.status === "cancelled"
+    ).length;
+  });
 
   const expandedRowRender = (record: Plumber) => {
     const nestedColumns = [
@@ -220,35 +225,42 @@ const AppointmentUpdates: React.FC = () => {
         dataIndex: "customerName",
         sorter: (a: Appointment, b: Appointment) =>
           a.customerName.localeCompare(b.customerName),
+        key: "customerName",
       },
       {
         title: "Appointment Date",
         dataIndex: "appointmentDate",
         sorter: (a: Appointment, b: Appointment) =>
           a.appointmentDate.localeCompare(b.appointmentDate),
+        key: "appointmentDate",
       },
       {
         title: "Appointment Time",
         dataIndex: "appointmentTime",
         sorter: (a: Appointment, b: Appointment) =>
           a.appointmentTime.localeCompare(b.appointmentTime),
+        key: "appointmentTime",
       },
       {
         title: "Appointment Location",
         dataIndex: "appointmentLocation",
         sorter: (a: Appointment, b: Appointment) =>
           a.appointmentLocation.localeCompare(b.appointmentLocation),
+        key: "appointmentLocation",
       },
       {
         title: "Type of Service",
         dataIndex: "typeOfService",
         sorter: (a: Appointment, b: Appointment) =>
           a.typeOfService.localeCompare(b.typeOfService),
+        key: "typeOfService",
       },
 
       {
         title: "Status",
         dataIndex: "status",
+        key: "status",
+
         sorter: (a: Appointment, b: Appointment) =>
           a.status.localeCompare(b.status),
         render: (status: string) => {
@@ -260,7 +272,7 @@ const AppointmentUpdates: React.FC = () => {
             case "cancelled":
               color = light["red"];
               break;
-            case "failed to visit":
+            case "failed":
               color = light["orange"];
               break;
             case "reassigning":
@@ -320,7 +332,7 @@ const AppointmentUpdates: React.FC = () => {
           (appointment) => appointment.status === "rescheduled"
         ).length;
         const failedCount = record.appointments.filter(
-          (appointment) => appointment.status === "failed to visit"
+          (appointment) => appointment.status === "failed"
         ).length;
 
         return (
@@ -338,41 +350,34 @@ const AppointmentUpdates: React.FC = () => {
               }}
               style={{ marginRight: 8 }}
             >
-              <span style={{ fontStyle: "normal" }}>
+              <span>
                 <b>
-                  <span className="textEffect">{name} </span>
-                </b>
+                  <span>{name}</span>{" "}
+                </b>{" "}
                 has a total of {totalAppointmentCount} appointment
                 {record.appointments.length !== 1 ? "s" : ""}
               </span>
             </Button>
             <span
               style={{
-                textDecoration: "none",
                 marginLeft: 4,
                 marginTop: 8,
                 display: "flex",
                 justifyContent: "flex-start",
               }}
             >
-              <Tag color={light["cyan"]}>
-                <b>{assignedCount}</b> assigned
-              </Tag>{" "}
-              &nbsp;
-              <Tag color={light["red"]}>
-                <b>{cancelledCount}</b> cancelled
-              </Tag>{" "}
-              &nbsp;
+              <Tag color={light["cyan"]}>{assignedCount} assigned</Tag> &nbsp;
+              <Tag color={light["red"]}>{cancelledCount} cancelled</Tag> &nbsp;
               <Tag color={light["orange"]}>
-                <b>{failedCount}</b> failed to visit
+                {failedCount} failed to visit
               </Tag>{" "}
               &nbsp;
               <Tag color={light["geekblue"]}>
-                <b>{reassigningCount}</b> reassigning
+                {reassigningCount} reassigning
               </Tag>{" "}
               &nbsp;
               <Tag color={light["lime"]}>
-                <b>{rescheduledCount}</b> rescheduled
+                {rescheduledCount} rescheduled
               </Tag>{" "}
               &nbsp;
             </span>
@@ -396,13 +401,23 @@ const AppointmentUpdates: React.FC = () => {
     <ConfigProvider theme={{ token: light }}>
       <div>
         <Table
-          style={{ fontFamily: "Play" }}
           columns={columns}
           dataSource={data}
           expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
           onChange={() => {}} // Empty onChange handler to disable default sorting behavior
         />
+        <Drawer
+          title={`Add Appointment for ${drawerData?.name}`}
+          width={810}
+          placement="right"
+          closable={true}
+          onClose={() => setAddAppointmentDrawerVisible(false)}
+          visible={addAppointmentDrawerVisible}
+        >
+          {/* Add appointment form and content */}
+          <p>Add Appointment Form</p>
+        </Drawer>
 
         <Drawer
           title={
@@ -421,13 +436,12 @@ const AppointmentUpdates: React.FC = () => {
           }
           width={880}
           placement="right"
-          closable={true}
+          closable={false}
           onClose={closeDrawer}
           visible={drawerVisible}
         >
           <p>Plumber Info: {drawerData?.name}</p>
           <Button
-            style={{ textDecorationLine: "true" }}
             type="primary"
             onClick={() => drawerData && openAddAppointmentDrawer(drawerData)}
           >
@@ -435,17 +449,6 @@ const AppointmentUpdates: React.FC = () => {
           </Button>
 
           {/* Add/Edit buttons and other content */}
-        </Drawer>
-        <Drawer
-          title={`Add Appointment for ${drawerData?.name}`}
-          width={810}
-          placement="right"
-          closable={true}
-          onClose={() => setAddAppointmentDrawerVisible(false)}
-          visible={addAppointmentDrawerVisible}
-        >
-          {/* Add appointment form and content */}
-          <p>Add Appointment Form</p>
         </Drawer>
       </div>
     </ConfigProvider>

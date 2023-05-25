@@ -19,9 +19,9 @@ interface Plumber {
   avatar: string;
   assignedAppointments: number;
   cancelledAppointments: number;
-  failedAppointments: number;
   reassignedAppointments: number;
   rescheduledAppointments: number;
+  failedAppointments: number;
 
   appointments: Appointment[];
 }
@@ -220,6 +220,7 @@ const AppointmentUpdates: React.FC = () => {
         dataIndex: "customerName",
         sorter: (a: Appointment, b: Appointment) =>
           a.customerName.localeCompare(b.customerName),
+        key: "customerName",
       },
       {
         title: "Appointment Date",

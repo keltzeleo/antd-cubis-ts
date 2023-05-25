@@ -1,4 +1,18 @@
-import { Avatar, Button, ConfigProvider, Drawer, Table, Tag } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import { CheckboxValueType } from "antd/es/checkbox/Group";
+
+import {
+  Avatar,
+  Button,
+  Checkbox,
+  ConfigProvider,
+  Drawer,
+  Dropdown,
+  Menu,
+  Table,
+  Tag,
+  Tooltip,
+} from "antd";
 import React, { useState } from "react";
 import light from "../../src/tokens/light.json";
 import "./MyForm.css";
@@ -19,9 +33,10 @@ interface Plumber {
   avatar: string;
   assignedAppointments: number;
   cancelledAppointments: number;
-  failedAppointments: number;
   reassignedAppointments: number;
   rescheduledAppointments: number;
+  failedAppointments: number;
+  status: string; // Add the status property here
 
   appointments: Appointment[];
 }
@@ -37,6 +52,7 @@ const AppointmentUpdates: React.FC = () => {
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
   const [addAppointmentDrawerVisible, setAddAppointmentDrawerVisible] =
     useState(false);
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
 
   const data: Plumber[] = [
     {
@@ -49,6 +65,7 @@ const AppointmentUpdates: React.FC = () => {
       reassignedAppointments: 0,
       rescheduledAppointments: 0,
       failedAppointments: 0,
+      status: "active", // Add the status property here
 
       appointments: [
         {
@@ -90,6 +107,7 @@ const AppointmentUpdates: React.FC = () => {
       failedAppointments: 0,
       reassignedAppointments: 0,
       rescheduledAppointments: 0,
+      status: "active", // Add the status property here
 
       appointments: [
         {
@@ -116,7 +134,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-27",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
-          status: "cancelled",
+          status: "rescheduled",
           typeOfService: "Temporary Supply",
         },
         {
@@ -149,6 +167,7 @@ const AppointmentUpdates: React.FC = () => {
       failedAppointments: 0,
       reassignedAppointments: 0,
       rescheduledAppointments: 0,
+      status: "active", // Add the status property here
 
       appointments: [
         {
@@ -210,8 +229,6 @@ const AppointmentUpdates: React.FC = () => {
     },
     // Add more plumbers with their appointments
   ];
-
-  data.forEach((plumber) => {});
 
   const expandedRowRender = (record: Plumber) => {
     const nestedColumns = [
@@ -302,6 +319,66 @@ const AppointmentUpdates: React.FC = () => {
   };
 
   const columns = [
+    {
+      title: (
+        <div>
+          Status{" "}
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key="1">
+                  <Checkbox.Group
+                    options={[
+                      { label: "Assigned", value: "assigned" },
+                      { label: "Cancelled", value: "cancelled" },
+                      { label: "Failed", value: "failed" },
+                      { label: "Reassigning", value: "reassigning" },
+                      { label: "Rescheduled", value: "rescheduled" },
+                    ]}
+                    value={selectedStatuses}
+                    onChange={(values: CheckboxValueType[]) =>
+                      setSelectedStatuses(
+                        values.map((value) => value.toString())
+                      )
+                    }
+                  />
+                </Menu.Item>
+              </Menu>
+            }
+            trigger={["click"]}
+          >
+            <Tooltip title="Search Status">
+              <Button type="text" icon={<SearchOutlined />} />
+            </Tooltip>
+          </Dropdown>
+        </div>
+      ),
+      dataIndex: "status",
+      sorter: (a: Plumber, b: Plumber) => a.status.localeCompare(b.status),
+      render: (status: string) => {
+        let color = "";
+        switch (status) {
+          case "assigned":
+            color = light["cyan"];
+            break;
+          case "cancelled":
+            color = light["red"];
+            break;
+          case "failed":
+            color = light["orange"];
+            break;
+          case "reassigning":
+            color = light["geekblue"];
+            break;
+          case "rescheduled":
+            color = light["lime"];
+            break;
+          default:
+            break;
+        }
+        return <Tag color={color}>{status}</Tag>;
+      },
+    },
     {
       title: "",
       dataIndex: "name",
@@ -396,7 +473,6 @@ const AppointmentUpdates: React.FC = () => {
     <ConfigProvider theme={{ token: light }}>
       <div>
         <Table
-          style={{ fontFamily: "Play" }}
           columns={columns}
           dataSource={data}
           expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}

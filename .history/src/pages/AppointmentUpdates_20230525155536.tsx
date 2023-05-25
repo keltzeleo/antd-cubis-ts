@@ -116,7 +116,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-27",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
-          status: "cancelled",
+          status: "rescheduled",
           typeOfService: "Temporary Supply",
         },
         {
