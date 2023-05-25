@@ -17,7 +17,7 @@ interface Plumber {
   avatar: string;
   assignedAppointments: number;
   cancelledAppointments: number;
-  rebookingAppointments: number;
+  reschedulingAppointments: number;
   rescheduledAppointments: number;
   failedAppointments: number;
 
@@ -44,7 +44,7 @@ const AppointmentUpdates: React.FC = () => {
 
       assignedAppointments: 0,
       cancelledAppointments: 0,
-      rebookingAppointments: 0,
+      reschedulingAppointments: 0,
       rescheduledAppointments: 0,
       failedAppointments: 0,
 
@@ -55,7 +55,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-24",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
-          status: "rescheduled",
+          status: "pending",
         },
         // Add more appointments as needed
       ],
@@ -67,8 +67,9 @@ const AppointmentUpdates: React.FC = () => {
       assignedAppointments: 0,
       cancelledAppointments: 0,
       failedAppointments: 0,
-      rebookingAppointments: 0,
       rescheduledAppointments: 0,
+      reschedulingAppointments: 0,
+      failedAppointments: 0,
 
       appointments: [
         {
@@ -77,7 +78,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-24",
           appointmentTime: "2:00 PM",
           appointmentLocation: "Location 1",
-          status: "assigned",
+          status: "on going",
         },
         {
           key: "2",
@@ -85,7 +86,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-26",
           appointmentTime: "1:00 PM",
           appointmentLocation: "Location 1",
-          status: "assigned",
+          status: "on going",
         },
         {
           key: "3",
@@ -136,22 +137,18 @@ const AppointmentUpdates: React.FC = () => {
         render: (status: string) => {
           let color = "";
           switch (status) {
-            case "assigned":
-              color = "green";
+            case "pending":
+              color = "blue";
               break;
             case "cancelled":
               color = "red";
               break;
-            case "failed":
+            case "on going":
+              color = "green";
+              break;
+            case "alert":
               color = "orange";
               break;
-            case "rebook":
-              color = "blue";
-              break;
-            case "rescheduled":
-              color = "lime";
-              break;
-
             default:
               break;
           }
@@ -187,61 +184,36 @@ const AppointmentUpdates: React.FC = () => {
     {
       title: "",
       dataIndex: "name",
-      render: (name: string, record: Plumber) => {
-        const totalAppointmentCount = record.appointments.length;
-        const assignedCount = record.appointments.filter(
-          (appointment) => appointment.status === "assigned"
-        ).length;
-        const cancelledCount = record.appointments.filter(
-          (appointment) => appointment.status === "cancelled"
-        ).length;
-        const rebookingCount = record.appointments.filter(
-          (appointment) => appointment.status === "rebooking"
-        ).length;
-        const rescheduledCount = record.appointments.filter(
-          (appointment) => appointment.status === "rescheduled"
-        ).length;
-        const failedCount = record.appointments.filter(
-          (appointment) => appointment.status === "failed"
-        ).length;
-
-        return (
-          <div>
-            <Avatar
-              size={32}
-              src={record.avatar}
-              style={{ backgroundColor: getRandomColor() }}
-            />
-            <Button
-              type="link"
-              onClick={() => {
-                setDrawerData(record);
-                setDrawerVisible(true);
-              }}
-              style={{ marginRight: 8 }}
-            >
-              <span>
-                {name} has total of {totalAppointmentCount} appointment
-                {record.appointments.length !== 1 ? "s" : ""}
-              </span>
-            </Button>
-            <span
-              style={{
-                marginLeft: 4,
-                marginTop: 8,
-                display: "flex",
-                justifyContent: "flex-start",
-              }}
-            >
-              <Tag color="green">{assignedCount} assigned</Tag> &nbsp;
-              <Tag color="red">{cancelledCount} cancelled</Tag> &nbsp;
-              <Tag color="blue">{rebookingCount} re-booking</Tag> &nbsp;
-              <Tag color="lime">{rescheduledCount} rescheduled</Tag> &nbsp;
-              <Tag color="orange">{failedCount} failed to visit</Tag> &nbsp;
-            </span>
-          </div>
-        );
-      },
+      render: (name: string, record: Plumber) => (
+        <div>
+          <Avatar
+            size={32}
+            src={record.avatar}
+            style={{ backgroundColor: getRandomColor() }}
+          />
+          {/* Pass the avatar prop here */}
+          <Button
+            type="link"
+            onClick={() => {
+              setDrawerData(record);
+              setDrawerVisible(true);
+            }}
+            style={{ marginRight: 8 }}
+          >
+            <span>{name} has</span>
+          </Button>
+          <span style={{ marginLeft: 8 }}>
+            {record.appointments.length} assigned appointment
+            {
+              record.appointments.filter(
+                (appointment) => appointment.status === "cancelled"
+              ).length
+            }{" "}
+            pending
+            {record.appointments.length !== 1 ? "s" : ""}
+          </span>
+        </div>
+      ),
     },
   ];
 

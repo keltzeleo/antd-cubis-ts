@@ -188,7 +188,6 @@ const AppointmentUpdates: React.FC = () => {
       title: "",
       dataIndex: "name",
       render: (name: string, record: Plumber) => {
-        const totalAppointmentCount = record.appointments.length;
         const assignedCount = record.appointments.filter(
           (appointment) => appointment.status === "assigned"
         ).length;
@@ -220,24 +219,15 @@ const AppointmentUpdates: React.FC = () => {
               }}
               style={{ marginRight: 8 }}
             >
-              <span>
-                {name} has total of {totalAppointmentCount} appointment
-                {record.appointments.length !== 1 ? "s" : ""}
-              </span>
+              <span>{name} has</span>
             </Button>
-            <span
-              style={{
-                marginLeft: 4,
-                marginTop: 8,
-                display: "flex",
-                justifyContent: "flex-start",
-              }}
-            >
+            <span style={{ marginLeft: 8 }}>
               <Tag color="green">{assignedCount} assigned</Tag> &nbsp;
               <Tag color="red">{cancelledCount} cancelled</Tag> &nbsp;
               <Tag color="blue">{rebookingCount} re-booking</Tag> &nbsp;
               <Tag color="lime">{rescheduledCount} rescheduled</Tag> &nbsp;
               <Tag color="orange">{failedCount} failed to visit</Tag> &nbsp;
+              {record.appointments.length !== 1 ? "s" : ""}
             </span>
           </div>
         );

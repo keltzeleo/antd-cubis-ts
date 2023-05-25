@@ -228,7 +228,6 @@ const AppointmentUpdates: React.FC = () => {
             <span
               style={{
                 marginLeft: 4,
-                marginTop: 8,
                 display: "flex",
                 justifyContent: "flex-start",
               }}

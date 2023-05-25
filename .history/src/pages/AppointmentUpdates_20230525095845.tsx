@@ -225,14 +225,7 @@ const AppointmentUpdates: React.FC = () => {
                 {record.appointments.length !== 1 ? "s" : ""}
               </span>
             </Button>
-            <span
-              style={{
-                marginLeft: 4,
-                marginTop: 8,
-                display: "flex",
-                justifyContent: "flex-start",
-              }}
-            >
+            <span style={{ marginLeft: 4, alignItems: "screenLeft" }}>
               <Tag color="green">{assignedCount} assigned</Tag> &nbsp;
               <Tag color="red">{cancelledCount} cancelled</Tag> &nbsp;
               <Tag color="blue">{rebookingCount} re-booking</Tag> &nbsp;
