@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Mulish";
-  src: url("../fonts/Mulish-Italic-VariableFont_wght.ttf") format("truetype");
+  src: url("../fonts/Mulish-VariableFont_wght.ttf") format("truetype");
 }
 
 @font-face {
@@ -8,8 +8,19 @@
   src: url("../fonts/Play-Regular.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "AzoSans";
+  src: url("../fonts/AzoSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Kulgo";
+  src: url("../fonts/KulgoRegular.ttf") format("truetype");
+}
+
 .App {
   text-align: center;
+  text-decoration: none;
   font-family: --apple-system, BlinkMacSystemFont, "Mulish", "Play", "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;
@@ -38,16 +49,30 @@
   font-family: "Play", sans-serif;
 }
 
+.font-AzoSans {
+  font-family: "AzoSans", sans-serif;
+}
+
+.font-Kulgo {
+  font-family: "Kulgo", sans-serif;
+}
+
 .font-play-header {
   font-family: "Play", sans-serif;
   font-size: 28px;
 }
 
+.textEffect {
+  font-weight: bold;
+  text-decoration: underline;
+}
 .textEffect:hover {
   border-radius: 8px;
   border: dashed 0.5px #00a991;
-  padding: 2 6 2 6;
+  padding: 2 8 2 8;
+  justify-content: center;
   background: #fff;
+  text-decoration: none;
 }
 
 .two-column-grid {

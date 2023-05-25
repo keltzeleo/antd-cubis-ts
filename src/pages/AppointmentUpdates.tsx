@@ -1,7 +1,16 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Avatar, Button, ConfigProvider, Drawer, Table, Tag } from "antd";
-import React, { useState } from "react";
+import {
+  Avatar,
+  Button,
+  Checkbox,
+  ConfigProvider,
+  Drawer,
+  Table,
+  Tag,
+} from "antd";
 
+import React, { useState } from "react";
+import { CheckboxValueType } from "../../node_modules/antd/lib/checkbox/Group";
 import light from "../../src/tokens/light.json";
 import "./MyForm.css";
 
@@ -39,6 +48,13 @@ const AppointmentUpdates: React.FC = () => {
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
   const [addAppointmentDrawerVisible, setAddAppointmentDrawerVisible] =
     useState(false);
+  const [statusFilters, setStatusFilters] = useState<string[]>([
+    "assigned",
+    "cancelled",
+    "failed to visit",
+    "reassigning",
+    "rescheduled",
+  ]);
 
   const data: Plumber[] = [
     {
@@ -59,14 +75,14 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-24",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
-          status: "reassigning",
+          status: "failed to visit",
           typeOfService: "New Water Supply",
         },
         {
           key: "2",
           customerName: "Siti Binti Abdul Hafiz",
-          appointmentDate: "2023-05-24",
-          appointmentTime: "10:00 AM",
+          appointmentDate: "2023-05-25",
+          appointmentTime: "11:00 AM",
           appointmentLocation: "Location 1",
           status: "reassigning",
           typeOfService: "New Water Supply",
@@ -74,8 +90,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3",
           customerName: "Rajesh a/l Suppiah ",
-          appointmentDate: "2023-05-24",
-          appointmentTime: "10:00 AM",
+          appointmentDate: "2023-05-25",
+          appointmentTime: "4:00 PM",
           appointmentLocation: "Location 1",
           status: "assigned",
           typeOfService: "New Water Supply",
@@ -252,13 +268,9 @@ const AppointmentUpdates: React.FC = () => {
         title: (
           <div style={{ display: "flex", alignItems: "center" }}>
             <span>Status</span>
-            <div style={{ marginLeft: "auto" }}>
-              <SearchOutlined />
-            </div>
           </div>
         ),
         dataIndex: "status",
-
         sorter: (a: Appointment, b: Appointment) =>
           a.status.localeCompare(b.status),
         render: (status: string) => {
@@ -284,7 +296,29 @@ const AppointmentUpdates: React.FC = () => {
           }
           return <Tag color={color}>{status}</Tag>;
         },
+        filterDropdown: () => (
+          <div>
+            <Checkbox.Group
+              options={[
+                { label: "Assigned", value: "assigned" },
+                { label: "Cancelled", value: "cancelled" },
+                { label: "Failed to Visit", value: "failed to visit" },
+                { label: "Reassigning", value: "reassigning" },
+                { label: "Rescheduled", value: "rescheduled" },
+              ]}
+              value={statusFilters}
+              onChange={(checkedValues: CheckboxValueType[]) => {
+                setStatusFilters(checkedValues as string[]);
+              }}
+            />
+          </div>
+        ),
+        filterIcon: () => <SearchOutlined />,
+        filtered: statusFilters.length > 0,
+        onFilter: (value: string | number | boolean, record: Appointment) =>
+          statusFilters.includes(record.status),
       },
+
       {
         title: "Action",
         dataIndex: "action",
@@ -309,10 +343,12 @@ const AppointmentUpdates: React.FC = () => {
           </Button>
         </div>
         <Table
-          dataSource={record.appointments}
+          dataSource={record.appointments.filter((appointment) =>
+            statusFilters.includes(appointment.status)
+          )}
           columns={nestedColumns}
           pagination={false}
-          onChange={() => {}} // Empty onChange handler to disable default sorting behavior
+          onChange={() => {}}
           scroll={{ x: "max-content" }}
         />
       </div>
@@ -342,7 +378,7 @@ const AppointmentUpdates: React.FC = () => {
         ).length;
 
         return (
-          <div>
+          <>
             <Avatar
               size={32}
               src={record.avatar}
@@ -356,11 +392,11 @@ const AppointmentUpdates: React.FC = () => {
               }}
               style={{ marginRight: 8 }}
             >
-              <span style={{ fontStyle: "normal" }}>
+              <span>
                 <b>
-                  <span className="textEffect">{name} </span>
+                  <span className="textEffect">{name}</span>
                 </b>
-                has a total of {totalAppointmentCount} appointment
+                <span> has a total of {totalAppointmentCount} appointment</span>
                 {record.appointments.length !== 1 ? "s" : ""}
               </span>
             </Button>
@@ -394,7 +430,7 @@ const AppointmentUpdates: React.FC = () => {
               </Tag>{" "}
               &nbsp;
             </span>
-          </div>
+          </>
         );
       },
     },
@@ -459,8 +495,8 @@ const AppointmentUpdates: React.FC = () => {
               Add Appointment for
               <div
                 style={{
-                  height: 32,
-                  width: 80,
+                  height: 30,
+                  width: "auto",
                   padding: " 1px 4px 1px 4px",
                   alignContent: "center",
                   justifyContent: "center",
@@ -473,7 +509,8 @@ const AppointmentUpdates: React.FC = () => {
               >
                 <div
                   style={{
-                    fontSize: 52,
+                    fontSize: 40,
+
                     alignContent: "center",
                     justifyContent: "center",
                     margin: "-20px 0px 0px 10px",
