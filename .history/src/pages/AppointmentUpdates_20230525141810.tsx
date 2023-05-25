@@ -1,4 +1,14 @@
-import { Avatar, Button, ConfigProvider, Drawer, Table, Tag } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import {
+  Avatar,
+  Button,
+  Checkbox,
+  ConfigProvider,
+  Drawer,
+  Menu,
+  Table,
+  Tag,
+} from "antd";
 import React, { useState } from "react";
 import light from "../../src/tokens/light.json";
 import "./MyForm.css";
@@ -37,6 +47,7 @@ const AppointmentUpdates: React.FC = () => {
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
   const [addAppointmentDrawerVisible, setAddAppointmentDrawerVisible] =
     useState(false);
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
 
   const data: Plumber[] = [
     {
@@ -220,47 +231,10 @@ const AppointmentUpdates: React.FC = () => {
 
   const expandedRowRender = (record: Plumber) => {
     const nestedColumns = [
-      {
-        title: "Customer Name",
-        dataIndex: "customerName",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.customerName.localeCompare(b.customerName),
-        key: "customerName",
-      },
-      {
-        title: "Appointment Date",
-        dataIndex: "appointmentDate",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentDate.localeCompare(b.appointmentDate),
-        key: "appointmentDate",
-      },
-      {
-        title: "Appointment Time",
-        dataIndex: "appointmentTime",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentTime.localeCompare(b.appointmentTime),
-        key: "appointmentTime",
-      },
-      {
-        title: "Appointment Location",
-        dataIndex: "appointmentLocation",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentLocation.localeCompare(b.appointmentLocation),
-        key: "appointmentLocation",
-      },
-      {
-        title: "Type of Service",
-        dataIndex: "typeOfService",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.typeOfService.localeCompare(b.typeOfService),
-        key: "typeOfService",
-      },
-
+      // Existing columns...
       {
         title: "Status",
         dataIndex: "status",
-        key: "status",
-
         sorter: (a: Appointment, b: Appointment) =>
           a.status.localeCompare(b.status),
         render: (status: string) => {
@@ -285,6 +259,32 @@ const AppointmentUpdates: React.FC = () => {
               break;
           }
           return <Tag color={color}>{status}</Tag>;
+        },
+        filterDropdown: () => (
+          <Menu>
+            <Menu.Item key="status-filter">
+              <Checkbox.Group
+                options={[
+                  { label: "Assigned", value: "assigned" },
+                  { label: "Cancelled", value: "cancelled" },
+                  { label: "Failed", value: "failed" },
+                  { label: "Reassigning", value: "reassigning" },
+                  { label: "Rescheduled", value: "rescheduled" },
+                ]}
+                value={selectedStatuses}
+                onChange={(values) => setSelectedStatuses(values as string[])}
+              />
+            </Menu.Item>
+          </Menu>
+        ),
+        filterIcon: (filtered: boolean) => (
+          <SearchOutlined
+            style={{ color: filtered ? light["geekblue"] : undefined }}
+          />
+        ),
+        filteredValue: selectedStatuses,
+        onFilter: (value: string | number | boolean, record: Appointment) => {
+          return selectedStatuses.includes(record.status);
         },
       },
     ];
@@ -317,72 +317,62 @@ const AppointmentUpdates: React.FC = () => {
     {
       title: "",
       dataIndex: "name",
-      render: (name: string, record: Plumber) => {
-        const totalAppointmentCount = record.appointments.length;
-        const assignedCount = record.appointments.filter(
-          (appointment) => appointment.status === "assigned"
-        ).length;
-        const cancelledCount = record.appointments.filter(
-          (appointment) => appointment.status === "cancelled"
-        ).length;
-        const reassigningCount = record.appointments.filter(
-          (appointment) => appointment.status === "reassigning"
-        ).length;
-        const rescheduledCount = record.appointments.filter(
-          (appointment) => appointment.status === "rescheduled"
-        ).length;
-        const failedCount = record.appointments.filter(
-          (appointment) => appointment.status === "failed"
-        ).length;
-
-        return (
-          <div>
-            <Avatar
-              size={32}
-              src={record.avatar}
-              style={{ backgroundColor: getRandomColor() }}
+      // Existing code...
+    },
+    // Existing columns...
+    {
+      title: "Status",
+      dataIndex: "status",
+      sorter: (a: Appointment, b: Appointment) =>
+        a.status.localeCompare(b.status),
+      render: (status: string) => {
+        let color = "";
+        switch (status) {
+          case "assigned":
+            color = light["cyan"];
+            break;
+          case "cancelled":
+            color = light["red"];
+            break;
+          case "failed":
+            color = light["orange"];
+            break;
+          case "reassigning":
+            color = light["geekblue"];
+            break;
+          case "rescheduled":
+            color = light["lime"];
+            break;
+          default:
+            break;
+        }
+        return <Tag color={color}>{status}</Tag>;
+      },
+      filterDropdown: () => (
+        <Menu>
+          <Menu.Item key="status-filter">
+            <Checkbox.Group
+              options={[
+                { label: "Assigned", value: "assigned" },
+                { label: "Cancelled", value: "cancelled" },
+                { label: "Failed", value: "failed" },
+                { label: "Reassigning", value: "reassigning" },
+                { label: "Rescheduled", value: "rescheduled" },
+              ]}
+              value={selectedStatuses}
+              onChange={(values) => setSelectedStatuses(values as string[])}
             />
-            <Button
-              type="link"
-              onClick={() => {
-                setDrawerData(record);
-                setDrawerVisible(true);
-              }}
-              style={{ marginRight: 8 }}
-            >
-              <span>
-                <b>
-                  <span className="textEffect">{name}</span>{" "}
-                </b>{" "}
-                has a total of {totalAppointmentCount} appointment
-                {record.appointments.length !== 1 ? "s" : ""}
-              </span>
-            </Button>
-            <span
-              style={{
-                marginLeft: 4,
-                marginTop: 8,
-                display: "flex",
-                justifyContent: "flex-start",
-              }}
-            >
-              <Tag color={light["cyan"]}>{assignedCount} assigned</Tag> &nbsp;
-              <Tag color={light["red"]}>{cancelledCount} cancelled</Tag> &nbsp;
-              <Tag color={light["orange"]}>
-                {failedCount} failed to visit
-              </Tag>{" "}
-              &nbsp;
-              <Tag color={light["geekblue"]}>
-                {reassigningCount} reassigning
-              </Tag>{" "}
-              &nbsp;
-              <Tag color={light["lime"]}>
-                {rescheduledCount} rescheduled
-              </Tag>{" "}
-              &nbsp;
-            </span>
-          </div>
-        );
+          </Menu.Item>
+        </Menu>
+      ),
+      filterIcon: (filtered: boolean) => (
+        <SearchOutlined
+          style={{ color: filtered ? light["geekblue"] : undefined }}
+        />
+      ),
+      filteredValue: selectedStatuses,
+      onFilter: (value: string | number | boolean, record: Plumber) => {
+        return selectedStatuses.includes(record.status);
       },
     },
   ];

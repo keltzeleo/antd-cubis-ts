@@ -352,7 +352,9 @@ const AppointmentUpdates: React.FC = () => {
             >
               <span>
                 <b>
-                  <span className="textEffect">{name}</span>{" "}
+                  <u>
+                    <span className="textEffect">{name}</span>
+                  </u>{" "}
                 </b>{" "}
                 has a total of {totalAppointmentCount} appointment
                 {record.appointments.length !== 1 ? "s" : ""}

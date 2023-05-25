@@ -220,49 +220,14 @@ const AppointmentUpdates: React.FC = () => {
 
   const expandedRowRender = (record: Plumber) => {
     const nestedColumns = [
-      {
-        title: "Customer Name",
-        dataIndex: "customerName",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.customerName.localeCompare(b.customerName),
-        key: "customerName",
-      },
-      {
-        title: "Appointment Date",
-        dataIndex: "appointmentDate",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentDate.localeCompare(b.appointmentDate),
-        key: "appointmentDate",
-      },
-      {
-        title: "Appointment Time",
-        dataIndex: "appointmentTime",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentTime.localeCompare(b.appointmentTime),
-        key: "appointmentTime",
-      },
-      {
-        title: "Appointment Location",
-        dataIndex: "appointmentLocation",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentLocation.localeCompare(b.appointmentLocation),
-        key: "appointmentLocation",
-      },
-      {
-        title: "Type of Service",
-        dataIndex: "typeOfService",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.typeOfService.localeCompare(b.typeOfService),
-        key: "typeOfService",
-      },
-
+      { title: "Customer Name", dataIndex: "customerName" },
+      { title: "Appointment Date", dataIndex: "appointmentDate" },
+      { title: "Appointment Time", dataIndex: "appointmentTime" },
+      { title: "Appointment Location", dataIndex: "appointmentLocation" },
+      { title: "Type of Service", dataIndex: "typeOfService" },
       {
         title: "Status",
         dataIndex: "status",
-        key: "status",
-
-        sorter: (a: Appointment, b: Appointment) =>
-          a.status.localeCompare(b.status),
         render: (status: string) => {
           let color = "";
           switch (status) {
@@ -281,6 +246,7 @@ const AppointmentUpdates: React.FC = () => {
             case "rescheduled":
               color = light["lime"];
               break;
+
             default:
               break;
           }
@@ -307,7 +273,6 @@ const AppointmentUpdates: React.FC = () => {
           dataSource={record.appointments}
           columns={nestedColumns}
           pagination={false}
-          onChange={() => {}} // Empty onChange handler to disable default sorting behavior
         />
       </div>
     );
@@ -352,9 +317,11 @@ const AppointmentUpdates: React.FC = () => {
             >
               <span>
                 <b>
-                  <span className="textEffect">{name}</span>{" "}
+                  <u>
+                    <span className="textEffect">{name}</span>
+                  </u>{" "}
                 </b>{" "}
-                has a total of {totalAppointmentCount} appointment
+                has total of {totalAppointmentCount} appointment
                 {record.appointments.length !== 1 ? "s" : ""}
               </span>
             </Button>
@@ -405,11 +372,10 @@ const AppointmentUpdates: React.FC = () => {
           dataSource={data}
           expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
-          onChange={() => {}} // Empty onChange handler to disable default sorting behavior
         />
         <Drawer
           title={`Add Appointment for ${drawerData?.name}`}
-          width={810}
+          width={710}
           placement="right"
           closable={true}
           onClose={() => setAddAppointmentDrawerVisible(false)}

@@ -225,44 +225,35 @@ const AppointmentUpdates: React.FC = () => {
         dataIndex: "customerName",
         sorter: (a: Appointment, b: Appointment) =>
           a.customerName.localeCompare(b.customerName),
-        key: "customerName",
       },
       {
         title: "Appointment Date",
         dataIndex: "appointmentDate",
         sorter: (a: Appointment, b: Appointment) =>
           a.appointmentDate.localeCompare(b.appointmentDate),
-        key: "appointmentDate",
       },
       {
         title: "Appointment Time",
         dataIndex: "appointmentTime",
         sorter: (a: Appointment, b: Appointment) =>
           a.appointmentTime.localeCompare(b.appointmentTime),
-        key: "appointmentTime",
       },
       {
         title: "Appointment Location",
         dataIndex: "appointmentLocation",
         sorter: (a: Appointment, b: Appointment) =>
           a.appointmentLocation.localeCompare(b.appointmentLocation),
-        key: "appointmentLocation",
       },
       {
         title: "Type of Service",
         dataIndex: "typeOfService",
         sorter: (a: Appointment, b: Appointment) =>
           a.typeOfService.localeCompare(b.typeOfService),
-        key: "typeOfService",
       },
 
       {
         title: "Status",
         dataIndex: "status",
-        key: "status",
-
-        sorter: (a: Appointment, b: Appointment) =>
-          a.status.localeCompare(b.status),
         render: (status: string) => {
           let color = "";
           switch (status) {
@@ -352,7 +343,9 @@ const AppointmentUpdates: React.FC = () => {
             >
               <span>
                 <b>
-                  <span className="textEffect">{name}</span>{" "}
+                  <u>
+                    <span className="textEffect">{name}</span>
+                  </u>{" "}
                 </b>{" "}
                 has a total of {totalAppointmentCount} appointment
                 {record.appointments.length !== 1 ? "s" : ""}

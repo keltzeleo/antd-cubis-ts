@@ -46,8 +46,7 @@
 .textEffect:hover {
   border-radius: 8px;
   border: dashed 0.5px #00a991;
-  padding: 2 6 2 6;
-  background: #fff;
+  padding: 4;
 }
 
 .two-column-grid {

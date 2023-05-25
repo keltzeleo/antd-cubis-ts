@@ -1,7 +1,6 @@
 import { Avatar, Button, ConfigProvider, Drawer, Table, Tag } from "antd";
 import React, { useState } from "react";
 import light from "../../src/tokens/light.json";
-import "./MyForm.css";
 
 interface Appointment {
   key: string;
@@ -189,7 +188,7 @@ const AppointmentUpdates: React.FC = () => {
         },
         {
           key: "5",
-          customerName: "Cinderlala",
+          customerName: "Batman",
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
@@ -198,7 +197,7 @@ const AppointmentUpdates: React.FC = () => {
         },
         {
           key: "5",
-          customerName: "Doraemon",
+          customerName: "Superman",
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
@@ -220,49 +219,14 @@ const AppointmentUpdates: React.FC = () => {
 
   const expandedRowRender = (record: Plumber) => {
     const nestedColumns = [
-      {
-        title: "Customer Name",
-        dataIndex: "customerName",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.customerName.localeCompare(b.customerName),
-        key: "customerName",
-      },
-      {
-        title: "Appointment Date",
-        dataIndex: "appointmentDate",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentDate.localeCompare(b.appointmentDate),
-        key: "appointmentDate",
-      },
-      {
-        title: "Appointment Time",
-        dataIndex: "appointmentTime",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentTime.localeCompare(b.appointmentTime),
-        key: "appointmentTime",
-      },
-      {
-        title: "Appointment Location",
-        dataIndex: "appointmentLocation",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentLocation.localeCompare(b.appointmentLocation),
-        key: "appointmentLocation",
-      },
-      {
-        title: "Type of Service",
-        dataIndex: "typeOfService",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.typeOfService.localeCompare(b.typeOfService),
-        key: "typeOfService",
-      },
-
+      { title: "Customer Name", dataIndex: "customerName" },
+      { title: "Appointment Date", dataIndex: "appointmentDate" },
+      { title: "Appointment Time", dataIndex: "appointmentTime" },
+      { title: "Appointment Location", dataIndex: "appointmentLocation" },
+      { title: "Type of Service", dataIndex: "typeOfService" },
       {
         title: "Status",
         dataIndex: "status",
-        key: "status",
-
-        sorter: (a: Appointment, b: Appointment) =>
-          a.status.localeCompare(b.status),
         render: (status: string) => {
           let color = "";
           switch (status) {
@@ -281,6 +245,7 @@ const AppointmentUpdates: React.FC = () => {
             case "rescheduled":
               color = light["lime"];
               break;
+
             default:
               break;
           }
@@ -307,7 +272,6 @@ const AppointmentUpdates: React.FC = () => {
           dataSource={record.appointments}
           columns={nestedColumns}
           pagination={false}
-          onChange={() => {}} // Empty onChange handler to disable default sorting behavior
         />
       </div>
     );
@@ -350,11 +314,11 @@ const AppointmentUpdates: React.FC = () => {
               }}
               style={{ marginRight: 8 }}
             >
-              <span>
+              <span className="textEffect:hover">
                 <b>
-                  <span className="textEffect">{name}</span>{" "}
+                  <u>{name}</u>{" "}
                 </b>{" "}
-                has a total of {totalAppointmentCount} appointment
+                has total of {totalAppointmentCount} appointment
                 {record.appointments.length !== 1 ? "s" : ""}
               </span>
             </Button>
@@ -387,14 +351,14 @@ const AppointmentUpdates: React.FC = () => {
     },
   ];
 
-  const openAddAppointmentDrawer = (record: Plumber) => {
-    setAddAppointmentDrawerVisible(true);
-    setDrawerData(record);
-  };
-
   const closeDrawer = () => {
     setDrawerVisible(false);
     setDrawerData(null);
+  };
+
+  const openAddAppointmentDrawer = (record: Plumber) => {
+    setAddAppointmentDrawerVisible(true);
+    setDrawerData(record);
   };
 
   return (
@@ -405,11 +369,11 @@ const AppointmentUpdates: React.FC = () => {
           dataSource={data}
           expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
-          onChange={() => {}} // Empty onChange handler to disable default sorting behavior
         />
+
         <Drawer
           title={`Add Appointment for ${drawerData?.name}`}
-          width={810}
+          width={610}
           placement="right"
           closable={true}
           onClose={() => setAddAppointmentDrawerVisible(false)}
@@ -434,7 +398,7 @@ const AppointmentUpdates: React.FC = () => {
               {drawerData?.name}
             </div>
           }
-          width={880}
+          width={680}
           placement="right"
           closable={false}
           onClose={closeDrawer}

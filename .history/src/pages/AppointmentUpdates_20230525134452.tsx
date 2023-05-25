@@ -1,4 +1,12 @@
-import { Avatar, Button, ConfigProvider, Drawer, Table, Tag } from "antd";
+import {
+  Avatar,
+  Button,
+  ConfigProvider,
+  Drawer,
+  Input,
+  Table,
+  Tag,
+} from "antd";
 import React, { useState } from "react";
 import light from "../../src/tokens/light.json";
 import "./MyForm.css";
@@ -39,176 +47,7 @@ const AppointmentUpdates: React.FC = () => {
     useState(false);
 
   const data: Plumber[] = [
-    {
-      key: "1",
-      name: "John Doe",
-      avatar: "./icons/avatarMeow01.png", // Replace with the actual URL or identifier for the avatar
-
-      assignedAppointments: 0,
-      cancelledAppointments: 0,
-      reassignedAppointments: 0,
-      rescheduledAppointments: 0,
-      failedAppointments: 0,
-
-      appointments: [
-        {
-          key: "1",
-          customerName: "Muhammad Bin Amir",
-          appointmentDate: "2023-05-24",
-          appointmentTime: "10:00 AM",
-          appointmentLocation: "Location 1",
-          status: "reassigning",
-          typeOfService: "New Water Supply",
-        },
-        {
-          key: "2",
-          customerName: "Siti Binti Abdul Hafiz",
-          appointmentDate: "2023-05-24",
-          appointmentTime: "10:00 AM",
-          appointmentLocation: "Location 1",
-          status: "reassigning",
-          typeOfService: "New Water Supply",
-        },
-        {
-          key: "3",
-          customerName: "Rajesh a/l Suppiah ",
-          appointmentDate: "2023-05-24",
-          appointmentTime: "10:00 AM",
-          appointmentLocation: "Location 1",
-          status: "assigned",
-          typeOfService: "New Water Supply",
-        },
-        // Add more appointments as needed
-      ],
-    },
-    {
-      key: "2",
-      name: "Kel Huang",
-      avatar: "./icons/avatarMeow01.png", // Replace with the actual URL or identifier for the avatar
-      assignedAppointments: 0,
-      cancelledAppointments: 0,
-      failedAppointments: 0,
-      reassignedAppointments: 0,
-      rescheduledAppointments: 0,
-
-      appointments: [
-        {
-          key: "1",
-          customerName: "Ahmad bin Abdullah",
-          appointmentDate: "2023-05-24",
-          appointmentTime: "2:00 PM",
-          appointmentLocation: "Location 1",
-          status: "assigned",
-          typeOfService: "New Water Supply",
-        },
-        {
-          key: "2",
-          customerName: "Tan Ah Ching",
-          appointmentDate: "2023-05-26",
-          appointmentTime: "1:00 PM",
-          appointmentLocation: "Location 1",
-          status: "assigned",
-          typeOfService: "New Water Supply",
-        },
-        {
-          key: "3",
-          customerName: "Lee Xiao Ming",
-          appointmentDate: "2023-05-27",
-          appointmentTime: "10:00 AM",
-          appointmentLocation: "Location 1",
-          status: "cancelled",
-          typeOfService: "Temporary Supply",
-        },
-        {
-          key: "4",
-          customerName: "Bhavin a/l Ishir",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
-          status: "cancelled",
-          typeOfService: "Temporary Supply",
-        },
-        {
-          key: "5",
-          customerName: "Amyra a/p Kiaan",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
-          status: "cancelled",
-          typeOfService: "New Water Supply",
-        },
-        // Add more appointments as needed
-      ],
-    },
-    {
-      key: "3",
-      name: "Elon Mask",
-      avatar: "./icons/avatarMeow01.png", // Replace with the actual URL or identifier for the avatar
-      assignedAppointments: 0,
-      cancelledAppointments: 0,
-      failedAppointments: 0,
-      reassignedAppointments: 0,
-      rescheduledAppointments: 0,
-
-      appointments: [
-        {
-          key: "1",
-          customerName: "Steve Jobs",
-          appointmentDate: "2023-05-24",
-          appointmentTime: "2:00 PM",
-          appointmentLocation: "Location 1",
-          status: "assigned",
-          typeOfService: "Temporary Supply",
-        },
-        {
-          key: "2",
-          customerName: "Mark Zuckerberg",
-          appointmentDate: "2023-05-26",
-          appointmentTime: "1:00 PM",
-          appointmentLocation: "Location 1",
-          status: "assigned",
-          typeOfService: "Temporary Supply",
-        },
-        {
-          key: "3",
-          customerName: "Aventure",
-          appointmentDate: "2023-05-27",
-          appointmentTime: "10:00 AM",
-          appointmentLocation: "Location 1",
-          status: "cancelled",
-          typeOfService: "Temporary Supply",
-        },
-        {
-          key: "4",
-          customerName: "Bamberbee",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
-          status: "failed",
-          typeOfService: "New Water Supply",
-        },
-        {
-          key: "5",
-          customerName: "Cinderlala",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
-          status: "cancelled",
-          typeOfService: "New Water Supply",
-        },
-        {
-          key: "5",
-          customerName: "Doraemon",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
-          status: "assigned",
-          typeOfService: "New Water Supply",
-        },
-        // Add more appointments as needed
-      ],
-    },
-    // Add more plumbers with their appointments
+    // Data objects
   ];
 
   data.forEach((plumber) => {
@@ -220,49 +59,19 @@ const AppointmentUpdates: React.FC = () => {
 
   const expandedRowRender = (record: Plumber) => {
     const nestedColumns = [
-      {
-        title: "Customer Name",
-        dataIndex: "customerName",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.customerName.localeCompare(b.customerName),
-        key: "customerName",
-      },
-      {
-        title: "Appointment Date",
-        dataIndex: "appointmentDate",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentDate.localeCompare(b.appointmentDate),
-        key: "appointmentDate",
-      },
-      {
-        title: "Appointment Time",
-        dataIndex: "appointmentTime",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentTime.localeCompare(b.appointmentTime),
-        key: "appointmentTime",
-      },
+      { title: "Customer Name", dataIndex: "customerName", sorter: true },
+      { title: "Appointment Date", dataIndex: "appointmentDate", sorter: true },
+      { title: "Appointment Time", dataIndex: "appointmentTime", sorter: true },
       {
         title: "Appointment Location",
         dataIndex: "appointmentLocation",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.appointmentLocation.localeCompare(b.appointmentLocation),
-        key: "appointmentLocation",
+        sorter: true,
       },
-      {
-        title: "Type of Service",
-        dataIndex: "typeOfService",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.typeOfService.localeCompare(b.typeOfService),
-        key: "typeOfService",
-      },
-
+      { title: "Type of Service", dataIndex: "typeOfService", sorter: true },
       {
         title: "Status",
         dataIndex: "status",
-        key: "status",
-
-        sorter: (a: Appointment, b: Appointment) =>
-          a.status.localeCompare(b.status),
+        sorter: true,
         render: (status: string) => {
           let color = "";
           switch (status) {
@@ -281,6 +90,7 @@ const AppointmentUpdates: React.FC = () => {
             case "rescheduled":
               color = light["lime"];
               break;
+
             default:
               break;
           }
@@ -295,6 +105,86 @@ const AppointmentUpdates: React.FC = () => {
       setAddAppointmentDrawerVisible(true);
     };
 
+    const [searchText, setSearchText] = useState("");
+    const [searchedColumn, setSearchedColumn] = useState("");
+
+    const handleSearch = (selectedKeys: any, confirm: any, dataIndex: any) => {
+      confirm();
+      setSearchText(selectedKeys[0]);
+      setSearchedColumn(dataIndex);
+    };
+
+    const handleReset = (clearFilters: any) => {
+      clearFilters();
+      setSearchText("");
+    };
+
+    const getColumnSearchProps = (dataIndex: any) => ({
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }: any) => (
+        <div style={{ padding: 8 }}>
+          <Input
+            placeholder={`Search ${dataIndex}`}
+            value={selectedKeys[0]}
+            onChange={(e) =>
+              setSelectedKeys(e.target.value ? [e.target.value] : [])
+            }
+            onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            style={{ marginBottom: 8, display: "block" }}
+          />
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            size="small"
+            style={{ width: 90, marginRight: 8 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </div>
+      ),
+      filterIcon: (filtered: any) => (
+        <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+      ),
+      onFilter: (value: any, record: any) =>
+        record[dataIndex]
+          ? record[dataIndex]
+              .toString()
+              .toLowerCase()
+              .includes(value.toLowerCase())
+          : "",
+      onFilterDropdownVisibleChange: (visible: any) => {
+        if (visible) {
+          setTimeout(() => searchInput.select(), 100);
+        }
+      },
+      render: (text: any) =>
+        searchedColumn === dataIndex ? (
+          <Highlighter
+            highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+            searchWords={[searchText]}
+            autoEscape
+            textToHighlight={text ? text.toString() : ""}
+          />
+        ) : (
+          text
+        ),
+    });
+
+    nestedColumns.forEach((column: any) => {
+      column["..."] = getColumnSearchProps(column.dataIndex);
+    });
+
     return (
       <div>
         {/* Add Appointment button */}
@@ -307,7 +197,6 @@ const AppointmentUpdates: React.FC = () => {
           dataSource={record.appointments}
           columns={nestedColumns}
           pagination={false}
-          onChange={() => {}} // Empty onChange handler to disable default sorting behavior
         />
       </div>
     );
@@ -352,9 +241,11 @@ const AppointmentUpdates: React.FC = () => {
             >
               <span>
                 <b>
-                  <span className="textEffect">{name}</span>{" "}
+                  <u>
+                    <span className="textEffect">{name}</span>
+                  </u>{" "}
                 </b>{" "}
-                has a total of {totalAppointmentCount} appointment
+                has total of {totalAppointmentCount} appointment
                 {record.appointments.length !== 1 ? "s" : ""}
               </span>
             </Button>
@@ -405,7 +296,6 @@ const AppointmentUpdates: React.FC = () => {
           dataSource={data}
           expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
-          onChange={() => {}} // Empty onChange handler to disable default sorting behavior
         />
         <Drawer
           title={`Add Appointment for ${drawerData?.name}`}

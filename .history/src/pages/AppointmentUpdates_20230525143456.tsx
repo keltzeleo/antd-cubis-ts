@@ -259,8 +259,6 @@ const AppointmentUpdates: React.FC = () => {
       {
         title: "Status",
         dataIndex: "status",
-        key: "status",
-
         sorter: (a: Appointment, b: Appointment) =>
           a.status.localeCompare(b.status),
         render: (status: string) => {
@@ -352,7 +350,9 @@ const AppointmentUpdates: React.FC = () => {
             >
               <span>
                 <b>
-                  <span className="textEffect">{name}</span>{" "}
+                  <u>
+                    <span className="textEffect">{name}</span>
+                  </u>{" "}
                 </b>{" "}
                 has a total of {totalAppointmentCount} appointment
                 {record.appointments.length !== 1 ? "s" : ""}
