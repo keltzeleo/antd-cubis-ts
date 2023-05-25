@@ -1,4 +1,3 @@
-import { SearchOutlined } from "@ant-design/icons";
 import { Avatar, Button, ConfigProvider, Drawer, Table, Tag } from "antd";
 import React, { useState } from "react";
 

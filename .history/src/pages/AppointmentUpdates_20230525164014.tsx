@@ -1,7 +1,5 @@
-import { SearchOutlined } from "@ant-design/icons";
 import { Avatar, Button, ConfigProvider, Drawer, Table, Tag } from "antd";
 import React, { useState } from "react";
-
 import light from "../../src/tokens/light.json";
 import "./MyForm.css";
 
@@ -249,14 +247,8 @@ const AppointmentUpdates: React.FC = () => {
       },
 
       {
-        title: (
-          <div>
-            <span>Status</span>
-            <SearchOutlined style={{ marginLeft: 4 }} />
-          </div>
-        ),
+        title: "Status",
         dataIndex: "status",
-
         sorter: (a: Appointment, b: Appointment) =>
           a.status.localeCompare(b.status),
         render: (status: string) => {
@@ -287,8 +279,12 @@ const AppointmentUpdates: React.FC = () => {
         title: "Action",
         dataIndex: "action",
         width: 100,
-        fixed: "right" as const,
-        render: () => <Button type="link">Action</Button>,
+        fixed: "right",
+        render: (text: string, record: Appointment) => (
+          <Button type="link" onClick={() => handleAction(record)}>
+            Action
+          </Button>
+        ),
       },
     ];
 

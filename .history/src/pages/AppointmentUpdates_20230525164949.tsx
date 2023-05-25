@@ -1,4 +1,4 @@
-import { SearchOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Avatar, Button, ConfigProvider, Drawer, Table, Tag } from "antd";
 import React, { useState } from "react";
 
@@ -252,7 +252,9 @@ const AppointmentUpdates: React.FC = () => {
         title: (
           <div>
             <span>Status</span>
-            <SearchOutlined style={{ marginLeft: 4 }} />
+            <ExclamationCircleOutlined
+              style={{ marginLeft: 4, color: "red" }}
+            />
           </div>
         ),
         dataIndex: "status",

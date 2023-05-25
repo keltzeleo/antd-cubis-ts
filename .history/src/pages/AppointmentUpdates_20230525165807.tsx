@@ -1,5 +1,14 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Avatar, Button, ConfigProvider, Drawer, Table, Tag } from "antd";
+import {
+  Avatar,
+  Button,
+  Checkbox,
+  ConfigProvider,
+  Drawer,
+  Popover,
+  Table,
+  Tag,
+} from "antd";
 import React, { useState } from "react";
 
 import light from "../../src/tokens/light.json";
@@ -216,6 +225,28 @@ const AppointmentUpdates: React.FC = () => {
   data.forEach((plumber) => {});
 
   const expandedRowRender = (record: Plumber) => {
+    const [statusFilter, setStatusFilter] = useState<CheckboxValueType[]>([]);
+
+  const handleStatusFilterChange = (checkedValues: CheckboxValueType[]) => {
+    setStatusFilter(checkedValues);
+  };
+    };
+    const statusFilterContent = (
+      <Checkbox.Group value={statusFilter} onChange={handleStatusFilterChange}>
+        <Checkbox value="assigned">Assigned</Checkbox>
+        <Checkbox value="cancelled">Cancelled</Checkbox>
+        <Checkbox value="failed to visit">Failed to Visit</Checkbox>
+        <Checkbox value="reassigning">Reassigning</Checkbox>
+        <Checkbox value="rescheduled">Rescheduled</Checkbox>
+      </Checkbox.Group>
+    );
+
+    const statusFilterPopover = (
+      <Popover content={statusFilterContent} trigger="hover" placement="bottom">
+        <SearchOutlined style={{ marginLeft: 4, color: "red" }} />
+      </Popover>
+    );
+
     const nestedColumns = [
       {
         title: "Customer Name",

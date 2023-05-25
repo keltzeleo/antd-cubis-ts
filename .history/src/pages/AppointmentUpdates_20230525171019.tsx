@@ -216,6 +216,20 @@ const AppointmentUpdates: React.FC = () => {
   data.forEach((plumber) => {});
 
   const expandedRowRender = (record: Plumber) => {
+    const [statusFilter, setStatusFilter] = useState<string[]>([]);
+    const handleStatusFilterChange = (checkedValues: string[]) => {
+      setStatusFilter(checkedValues);
+    };
+    const statusFilterContent = (
+      <Checkbox.Group value={statusFilter} onChange={handleStatusFilterChange}>
+        <Checkbox value="assigned">Assigned</Checkbox>
+        <Checkbox value="cancelled">Cancelled</Checkbox>
+        <Checkbox value="failed to visit">Failed to Visit</Checkbox>
+        <Checkbox value="reassigning">Reassigning</Checkbox>
+        <Checkbox value="rescheduled">Rescheduled</Checkbox>
+      </Checkbox.Group>
+    );
+
     const nestedColumns = [
       {
         title: "Customer Name",
