@@ -1,7 +1,73 @@
+@font-face {
+  font-family: "Mulish";
+  src: url("./fonts/Mulish-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Play";
+  src: url("./fonts/Play-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "AzoSans";
+  src: url("./fonts/AzoSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Kulgo";
+  src: url("./fonts/KulgoRegular.ttf") format("truetype");
+}
+
 .App {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   text-align: center;
+  font-family: --apple-system, BlinkMacSystemFont, "Mulish", "Play", "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+}
+
+.fontMulish {
+  font-family: "Mulish", sans-serif;
+}
+
+.fontPlay {
+  font-family: "Play", sans-serif;
+}
+
+.fontAzoSans {
+  font-family: "AzoSans", sans-serif;
+}
+
+.fontKulgo {
+  font-family: "Kulgo", sans-serif;
+}
+
+.font-play-header {
+  font-family: "Play", sans-serif;
+  font-size: 28px;
+}
+
+.font-play-header02 {
+  font-family: "Play", sans-serif;
+  font-size: 18px;
+}
+
+.space-wrapper {
+  margin-right: 10px;
+}
+
+.component-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  margin-right: 10px; /* Adjust the margin value according to your desired spacing */
+}
+
+.segmented-wrapper {
+  flex-grow: 1;
 }
 
 .App-logo {
@@ -37,4 +103,28 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.header-essentials {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  margin: -10px;
+  background: #d1e8e1;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.steady-alignment {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ant-pro-footer-bar {
+  padding: 10px;
 }

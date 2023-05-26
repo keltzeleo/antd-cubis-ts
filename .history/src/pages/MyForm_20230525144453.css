@@ -1,0 +1,141 @@
+@font-face {
+  font-family: "Mulish";
+  src: url("../fonts/Mulish-Italic-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Play";
+  src: url("../fonts/Play-Regular.ttf") format("truetype");
+}
+
+.App {
+  text-align: center;
+  font-family: --apple-system, BlinkMacSystemFont, "Mulish", "Play", "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+}
+
+.custom-radio-group {
+  .ant-radio-wrapper {
+  }
+
+  .ant-radio-wrapper:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+/* Custom styles for toggle switches */
+
+.segmented-button {
+  margin-right: 8px; /* Add spacing between the buttons */
+}
+
+.font-Mulish {
+  font-family: "Mulish", sans-serif;
+}
+
+.font-Play {
+  font-family: "Play", sans-serif;
+}
+
+.font-play-header {
+  font-family: "Play", sans-serif;
+  font-size: 28px;
+}
+
+.textEffect:hover {
+  border-radius: 8px;
+  border: dashed 0.5px #00a991;
+  padding: 2 6 2 6;
+  background: #fff;
+}
+
+.two-column-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.myKad-select {
+  z-index: 0;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: rgba(222, 231, 241, 0.5);
+  color: #131213;
+}
+
+.myTentera-select {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-color: grey;
+  background-color: #f1eff2;
+  color: #131213;
+}
+
+.myPR-select {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-color: grey;
+  background-color: #eedcde;
+  color: #131213;
+}
+
+.myKAS-select {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-color: grey;
+  background-color: #e7eee6;
+  color: #131213;
+}
+
+.forCommercial-select {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-color: grey;
+  background-color: #faeadf;
+  color: #131213;
+}
+
+.myKad-option {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #f3f6f9;
+  color: #131213;
+}
+
+.myTentera-option {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #f3f6f9;
+  color: #131213;
+}
+
+.myPR-option {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #f3f6f9;
+  color: #131213;
+}
+
+.myKAS-option {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #f3f6f9;
+  color: #131213;
+}
+
+.forCommercial-option {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #f3f6f9;
+  color: #131213;
+}
+
+.myKad-select .ant-select-selector .ant-select-selection-item,
+.myTentera-select .ant-select-selector .ant-select-selection-item,
+.myPR-select .ant-select-selector .ant-select-selection-item,
+.myKAS-select .ant-select-selector .ant-select-selection-item,
+.forCommercial-select .ant-select-selector .ant-select-selection-item {
+  background-color: none;
+  color: #131213;
+}
