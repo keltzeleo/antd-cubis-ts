@@ -314,7 +314,7 @@ const AppointmentUpdates: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 padding: 8,
-                backgroundColor: "rgba(0, 0, 0, 0.12)",
+                bottom: 24,
               }} // Add flexbox styles
             />
           </div>
@@ -349,10 +349,10 @@ const AppointmentUpdates: React.FC = () => {
           </Button>
         </div>
         <Table
-          columns={nestedColumns}
           dataSource={record.appointments.filter((appointment) =>
             statusFilters.includes(appointment.status)
           )}
+          columns={nestedColumns}
           pagination={false}
           onChange={() => {}}
           scroll={{ x: "max-content" }}

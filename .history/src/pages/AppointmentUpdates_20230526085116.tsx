@@ -314,7 +314,6 @@ const AppointmentUpdates: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 padding: 8,
-                backgroundColor: "rgba(0, 0, 0, 0.12)",
               }} // Add flexbox styles
             />
           </div>
