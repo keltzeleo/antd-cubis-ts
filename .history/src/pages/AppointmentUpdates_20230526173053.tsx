@@ -680,14 +680,14 @@ const AppointmentUpdates: React.FC = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: statusFilters.includes("rescheduled")
+                    background: statusFilters.includes("reassigning")
                       ? "#fff"
                       : undefined,
                     borderRadius: "50%",
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters.includes("rescheduled")
+                    color: statusFilters.includes("reassigning")
                       ? light["lime"]
                       : light["colorTextDisabled"],
                   }}

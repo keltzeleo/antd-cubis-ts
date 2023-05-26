@@ -8,7 +8,7 @@ import {
   Table,
   Tag,
 } from "antd";
-
+import type { ColumnsType } from "antd/es/table";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import React, { useState } from "react";
 import light from "../../src/tokens/light.json";
@@ -99,34 +99,7 @@ const AppointmentUpdates: React.FC = () => {
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
   const [addAppointmentDrawerVisible, setAddAppointmentDrawerVisible] =
     useState(false);
-  const [statusFilters, setStatusFilters] = useState<string[]>([
-    "assigned",
-    "cancelled",
-    "failed to visit",
-    "reassigning",
-    "rescheduled",
-  ]);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
-  const handleTagChange = (tagValue: string) => {
-    if (selectedTags.includes(tagValue)) {
-      setSelectedTags(selectedTags.filter((tag) => tag !== tagValue));
-    } else {
-      setSelectedTags([...selectedTags, tagValue]);
-    }
-  };
-
-  const tags = [
-    { value: "assigned", label: "Assigned", color: light["cyan"] },
-    { value: "cancelled", label: "Cancelled", color: light["red"] },
-    {
-      value: "failed to visit",
-      label: "Failed to Visit",
-      color: light["orange"],
-    },
-    { value: "reassigning", label: "Reassigning", color: light["geekblue"] },
-    { value: "rescheduled", label: "Rescheduled", color: light["lime"] },
-  ];
+  const [tagFilters, setTagFilters] = useState<{ [key: string]: string[] }>({});
 
   const data: Plumber[] = [
     {
@@ -301,10 +274,10 @@ const AppointmentUpdates: React.FC = () => {
     // Add more plumbers with their appointments
   ];
 
-  data.forEach((plumber) => {});
-
   const expandedRowRender = (record: Plumber) => {
-    const nestedColumns = [
+    const plumberId = record.key;
+
+    const nestedColumns: ColumnsType<Appointment> = [
       {
         title: "Customer Name",
         dataIndex: "customerName",
@@ -366,7 +339,40 @@ const AppointmentUpdates: React.FC = () => {
             default:
               break;
           }
-          return <Tag color={color}>{status}</Tag>;
+          const isFilterActive =
+            tagFilters.hasOwnProperty(plumberId) &&
+            tagFilters[plumberId].includes(status);
+
+          return (
+            <Tag
+              color={color}
+              onClick={() => handleTagFilter(status)}
+              style={{
+                color: isFilterActive ? "black" : undefined,
+                backgroundColor: isFilterActive
+                  ? light["colorPrimaryBase"]
+                  : undefined,
+                borderColor: light["colorPrimaryBase"],
+                cursor: "pointer",
+                borderRadius: "20px",
+                padding: "2px 8px",
+              }}
+            >
+              {isFilterActive && (
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: "12px",
+                    height: "12px",
+                    borderRadius: "50%",
+                    background: "#fff",
+                    marginRight: "4px",
+                  }}
+                ></span>
+              )}
+              {status}
+            </Tag>
+          );
         },
         filterDropdown: () => (
           <div>
@@ -406,6 +412,20 @@ const AppointmentUpdates: React.FC = () => {
       },
     ];
 
+    const handleTagFilter = (plumberId: string, status: string) => {
+      const updatedFilters = { ...tagFilters };
+      if (updatedFilters.hasOwnProperty(plumberId)) {
+        // If the plumberId already exists in the filters, update its status
+        updatedFilters[plumberId] = updatedFilters[plumberId].includes(status)
+          ? updatedFilters[plumberId].filter((item) => item !== status)
+          : [...updatedFilters[plumberId], status];
+      } else {
+        // If the plumberId doesn't exist in the filters, add it with the status
+        updatedFilters[plumberId] = [status];
+      }
+      setTagFilters(updatedFilters);
+    };
+
     const handleAddAppointment = () => {
       setDrawerData(record);
       setDrawerVisible(true);
@@ -422,7 +442,9 @@ const AppointmentUpdates: React.FC = () => {
         </div>
         <Table
           dataSource={record.appointments.filter((appointment) =>
-            statusFilters.includes(appointment.status)
+            tagFilters.hasOwnProperty(plumberId)
+              ? tagFilters[plumberId].includes(appointment.status)
+              : true
           )}
           columns={nestedColumns}
           pagination={false}
@@ -433,7 +455,7 @@ const AppointmentUpdates: React.FC = () => {
     );
   };
 
-  const columns = [
+  const columns: ColumnsType<Plumber> = [
     {
       title: "",
       dataIndex: "name",
@@ -497,13 +519,11 @@ const AppointmentUpdates: React.FC = () => {
 
                   color: statusFilters.includes("assigned")
                     ? "white"
-                    : light["colorTextDisabled"],
+                    : light["shades"],
                   backgroundColor: statusFilters.includes("assigned")
-                    ? light["cyan"]
+                    ? light["colorPrimaryBase"]
                     : undefined,
-                  borderColor: statusFilters.includes("assigned")
-                    ? light["cyan"]
-                    : light["colorTextDisabled"],
+                  borderColor: light["colorPrimaryBase"],
                   cursor: "pointer",
                 }}
               >
@@ -519,182 +539,40 @@ const AppointmentUpdates: React.FC = () => {
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters.includes("assigned")
-                      ? light["cyan"]
-                      : light["colorTextDisabled"],
+                    color: light["cyan"],
                   }}
                 >
                   <b>{assignedCount}</b>
-                </span>{" "}
+                </span>
                 assigned
               </Tag>{" "}
               &nbsp;
               <Tag
                 color={light["red"]}
                 onClick={() => handleTagFilter("cancelled")}
-                style={{
-                  borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
-                  color: statusFilters.includes("cancelled")
-                    ? "white"
-                    : light["colorTextDisabled"],
-                  backgroundColor: statusFilters.includes("cancelled")
-                    ? light["red"]
-                    : undefined,
-                  borderColor: statusFilters.includes("cancelled")
-                    ? light["red"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
-                }}
               >
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: statusFilters.includes("cancelled")
-                      ? "#fff"
-                      : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
-                    marginRight: 4,
-                    color: statusFilters.includes("cancelled")
-                      ? light["red"]
-                      : light["colorTextDisabled"],
-                  }}
-                >
-                  <b>{assignedCount}</b>
-                </span>{" "}
-                cancelled
+                <b>{cancelledCount}</b> cancelled
               </Tag>{" "}
               &nbsp;
               <Tag
                 color={light["orange"]}
                 onClick={() => handleTagFilter("failed to visit")}
-                style={{
-                  borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
-                  color: statusFilters.includes("failed to visit")
-                    ? "white"
-                    : light["colorTextDisabled"],
-                  backgroundColor: statusFilters.includes("failed to visit")
-                    ? light["orange"]
-                    : undefined,
-                  borderColor: statusFilters.includes("failed to visit")
-                    ? light["orange"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
-                }}
               >
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: statusFilters.includes("failed to visit")
-                      ? "#fff"
-                      : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
-                    marginRight: 4,
-                    color: statusFilters.includes("failed to visit")
-                      ? light["orange"]
-                      : light["colorTextDisabled"],
-                  }}
-                >
-                  <b>{failedCount}</b>
-                </span>{" "}
-                failed to visit
+                <b>{failedCount}</b> failed to visit
               </Tag>{" "}
               &nbsp;
               <Tag
                 color={light["geekblue"]}
                 onClick={() => handleTagFilter("reassigning")}
-                style={{
-                  borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
-                  color: statusFilters.includes("reassigning")
-                    ? "white"
-                    : light["colorTextDisabled"],
-                  backgroundColor: statusFilters.includes("reassigning")
-                    ? light["geekblue"]
-                    : undefined,
-                  borderColor: statusFilters.includes("reassigning")
-                    ? light["geekblue"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
-                }}
               >
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: statusFilters.includes("reassigning")
-                      ? "#fff"
-                      : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
-                    marginRight: 4,
-                    color: statusFilters.includes("reassigning")
-                      ? light["geekblue"]
-                      : light["colorTextDisabled"],
-                  }}
-                >
-                  <b>{reassigningCount}</b>
-                </span>{" "}
-                reassigning
+                <b>{reassigningCount}</b> reassigning
               </Tag>{" "}
               &nbsp;
               <Tag
                 color={light["lime"]}
                 onClick={() => handleTagFilter("rescheduled")}
-                style={{
-                  borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
-                  color: statusFilters.includes("rescheduled")
-                    ? "white"
-                    : light["colorTextDisabled"],
-                  backgroundColor: statusFilters.includes("rescheduled")
-                    ? light["lime"]
-                    : undefined,
-                  borderColor: statusFilters.includes("rescheduled")
-                    ? light["lime"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
-                }}
               >
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: statusFilters.includes("rescheduled")
-                      ? "#fff"
-                      : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
-                    marginRight: 4,
-                    color: statusFilters.includes("rescheduled")
-                      ? light["lime"]
-                      : light["colorTextDisabled"],
-                  }}
-                >
-                  <b>{rescheduledCount}</b>{" "}
-                </span>
-                rescheduled
+                <b>{rescheduledCount}</b> rescheduled
               </Tag>{" "}
               &nbsp;
             </span>
@@ -703,17 +581,6 @@ const AppointmentUpdates: React.FC = () => {
       },
     },
   ];
-  const handleTagFilter = (status: string) => {
-    const updatedFilters = [...statusFilters];
-    if (updatedFilters.includes(status)) {
-      // If the filter is already active, remove it
-      updatedFilters.splice(updatedFilters.indexOf(status), 1);
-    } else {
-      // If the filter is not active, add it
-      updatedFilters.push(status);
-    }
-    setStatusFilters(updatedFilters);
-  };
 
   const openAddAppointmentDrawer = (record: Plumber) => {
     setAddAppointmentDrawerVisible(true);
@@ -731,7 +598,7 @@ const AppointmentUpdates: React.FC = () => {
         <Table
           columns={columns}
           dataSource={data}
-          expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
+          expandable={{ expandedRowRender }}
           pagination={false}
           onChange={() => {}}
         />

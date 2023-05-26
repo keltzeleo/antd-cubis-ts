@@ -498,10 +498,10 @@ const AppointmentUpdates: React.FC = () => {
                   color: statusFilters.includes("assigned")
                     ? "white"
                     : light["colorTextDisabled"],
-                  backgroundColor: statusFilters.includes("assigned")
+                  backgroundColor: statusFilters.includes("cancelled")
                     ? light["cyan"]
                     : undefined,
-                  borderColor: statusFilters.includes("assigned")
+                  borderColor: statusFilters.includes("cancelled")
                     ? light["cyan"]
                     : light["colorTextDisabled"],
                   cursor: "pointer",
@@ -525,7 +525,7 @@ const AppointmentUpdates: React.FC = () => {
                   }}
                 >
                   <b>{assignedCount}</b>
-                </span>{" "}
+                </span>
                 assigned
               </Tag>{" "}
               &nbsp;
@@ -567,134 +567,29 @@ const AppointmentUpdates: React.FC = () => {
                   }}
                 >
                   <b>{assignedCount}</b>
-                </span>{" "}
+                </span>
                 cancelled
               </Tag>{" "}
               &nbsp;
               <Tag
                 color={light["orange"]}
                 onClick={() => handleTagFilter("failed to visit")}
-                style={{
-                  borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
-                  color: statusFilters.includes("failed to visit")
-                    ? "white"
-                    : light["colorTextDisabled"],
-                  backgroundColor: statusFilters.includes("failed to visit")
-                    ? light["orange"]
-                    : undefined,
-                  borderColor: statusFilters.includes("failed to visit")
-                    ? light["orange"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
-                }}
               >
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: statusFilters.includes("failed to visit")
-                      ? "#fff"
-                      : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
-                    marginRight: 4,
-                    color: statusFilters.includes("failed to visit")
-                      ? light["orange"]
-                      : light["colorTextDisabled"],
-                  }}
-                >
-                  <b>{failedCount}</b>
-                </span>{" "}
-                failed to visit
+                <b>{failedCount}</b> failed to visit
               </Tag>{" "}
               &nbsp;
               <Tag
                 color={light["geekblue"]}
                 onClick={() => handleTagFilter("reassigning")}
-                style={{
-                  borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
-                  color: statusFilters.includes("reassigning")
-                    ? "white"
-                    : light["colorTextDisabled"],
-                  backgroundColor: statusFilters.includes("reassigning")
-                    ? light["geekblue"]
-                    : undefined,
-                  borderColor: statusFilters.includes("reassigning")
-                    ? light["geekblue"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
-                }}
               >
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: statusFilters.includes("reassigning")
-                      ? "#fff"
-                      : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
-                    marginRight: 4,
-                    color: statusFilters.includes("reassigning")
-                      ? light["geekblue"]
-                      : light["colorTextDisabled"],
-                  }}
-                >
-                  <b>{reassigningCount}</b>
-                </span>{" "}
-                reassigning
+                <b>{reassigningCount}</b> reassigning
               </Tag>{" "}
               &nbsp;
               <Tag
                 color={light["lime"]}
                 onClick={() => handleTagFilter("rescheduled")}
-                style={{
-                  borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
-                  color: statusFilters.includes("rescheduled")
-                    ? "white"
-                    : light["colorTextDisabled"],
-                  backgroundColor: statusFilters.includes("rescheduled")
-                    ? light["lime"]
-                    : undefined,
-                  borderColor: statusFilters.includes("rescheduled")
-                    ? light["lime"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
-                }}
               >
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: statusFilters.includes("rescheduled")
-                      ? "#fff"
-                      : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
-                    marginRight: 4,
-                    color: statusFilters.includes("rescheduled")
-                      ? light["lime"]
-                      : light["colorTextDisabled"],
-                  }}
-                >
-                  <b>{rescheduledCount}</b>{" "}
-                </span>
-                rescheduled
+                <b>{rescheduledCount}</b> rescheduled
               </Tag>{" "}
               &nbsp;
             </span>

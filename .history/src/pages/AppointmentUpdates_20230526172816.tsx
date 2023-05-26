@@ -658,43 +658,8 @@ const AppointmentUpdates: React.FC = () => {
               <Tag
                 color={light["lime"]}
                 onClick={() => handleTagFilter("rescheduled")}
-                style={{
-                  borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
-                  color: statusFilters.includes("rescheduled")
-                    ? "white"
-                    : light["colorTextDisabled"],
-                  backgroundColor: statusFilters.includes("rescheduled")
-                    ? light["lime"]
-                    : undefined,
-                  borderColor: statusFilters.includes("rescheduled")
-                    ? light["lime"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
-                }}
               >
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: statusFilters.includes("rescheduled")
-                      ? "#fff"
-                      : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
-                    marginRight: 4,
-                    color: statusFilters.includes("rescheduled")
-                      ? light["lime"]
-                      : light["colorTextDisabled"],
-                  }}
-                >
-                  <b>{rescheduledCount}</b>{" "}
-                </span>
-                rescheduled
+                <b>{rescheduledCount}</b> rescheduled
               </Tag>{" "}
               &nbsp;
             </span>
