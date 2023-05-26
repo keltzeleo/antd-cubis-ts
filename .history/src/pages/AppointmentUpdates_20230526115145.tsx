@@ -493,7 +493,7 @@ const AppointmentUpdates: React.FC = () => {
                 style={{
                   borderRadius: 8,
                   height: "auto",
-                  padding: "2 8 2 8",
+                  padding: "4 8 4 16",
 
                   color: statusFilters.includes("assigned")
                     ? "white"

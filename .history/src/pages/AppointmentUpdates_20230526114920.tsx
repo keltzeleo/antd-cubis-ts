@@ -493,7 +493,7 @@ const AppointmentUpdates: React.FC = () => {
                 style={{
                   borderRadius: 8,
                   height: "auto",
-                  padding: "2 8 2 8",
+                  padding: "4 16 4 16",
 
                   color: statusFilters.includes("assigned")
                     ? "white"
@@ -507,15 +507,13 @@ const AppointmentUpdates: React.FC = () => {
               >
                 <span
                   style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    display: "inline",
                     background: statusFilters.includes("assigned")
                       ? "#fff"
                       : undefined,
                     borderRadius: "50%",
-                    width: 16,
-                    height: 16,
+                    width: "16px",
+                    height: "16px",
                     marginRight: 4,
                     color: light["cyan"],
                   }}

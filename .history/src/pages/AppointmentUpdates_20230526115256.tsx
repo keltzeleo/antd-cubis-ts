@@ -491,7 +491,7 @@ const AppointmentUpdates: React.FC = () => {
                 color={light["cyan"]}
                 onClick={() => handleTagFilter("assigned")}
                 style={{
-                  borderRadius: 8,
+                  borderRadius: 16,
                   height: "auto",
                   padding: "2 8 2 8",
 

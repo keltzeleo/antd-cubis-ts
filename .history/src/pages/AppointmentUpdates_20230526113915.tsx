@@ -492,32 +492,31 @@ const AppointmentUpdates: React.FC = () => {
                 onClick={() => handleTagFilter("assigned")}
                 style={{
                   borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
+                  height: 32,
+                  padding: "2 16 0 8",
+                  alignContent: "center",
+                  justifyContent: "center",
                   color: statusFilters.includes("assigned")
                     ? "white"
-                    : light["shades"],
+                    : light["colorTextDisabled"],
                   backgroundColor: statusFilters.includes("assigned")
                     ? light["colorPrimaryBase"]
                     : undefined,
                   borderColor: light["colorPrimaryBase"],
-                  cursor: "pointer",
                 }}
               >
+                <Checkbox
+                  checked={statusFilters.includes("assigned")}
+                  onChange={() => handleTagFilter("assigned")}
+                />
                 <span
                   style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
                     background: statusFilters.includes("assigned")
                       ? "#fff"
                       : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
+                    borderRadius: 8,
+                    padding: "2px 6px",
                     marginRight: 4,
-                    color: light["cyan"],
                   }}
                 >
                   <b>{assignedCount}</b>

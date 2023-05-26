@@ -421,10 +421,10 @@ const AppointmentUpdates: React.FC = () => {
           </Button>
         </div>
         <Table
+          columns={nestedColumns}
           dataSource={record.appointments.filter((appointment) =>
             statusFilters.includes(appointment.status)
           )}
-          columns={nestedColumns}
           pagination={false}
           onChange={() => {}}
           scroll={{ x: "max-content" }}
@@ -487,69 +487,23 @@ const AppointmentUpdates: React.FC = () => {
                 justifyContent: "flex-start",
               }}
             >
-              <Tag
-                color={light["cyan"]}
-                onClick={() => handleTagFilter("assigned")}
-                style={{
-                  borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
-                  color: statusFilters.includes("assigned")
-                    ? "white"
-                    : light["shades"],
-                  backgroundColor: statusFilters.includes("assigned")
-                    ? light["colorPrimaryBase"]
-                    : undefined,
-                  borderColor: light["colorPrimaryBase"],
-                  cursor: "pointer",
-                }}
-              >
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: statusFilters.includes("assigned")
-                      ? "#fff"
-                      : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
-                    marginRight: 4,
-                    color: light["cyan"],
-                  }}
-                >
-                  <b>{assignedCount}</b>
-                </span>
-                assigned
+              <Tag color={light["cyan"]}>
+                <b>{assignedCount}</b> assigned
               </Tag>{" "}
               &nbsp;
-              <Tag
-                color={light["red"]}
-                onClick={() => handleTagFilter("cancelled")}
-              >
+              <Tag color={light["red"]}>
                 <b>{cancelledCount}</b> cancelled
               </Tag>{" "}
               &nbsp;
-              <Tag
-                color={light["orange"]}
-                onClick={() => handleTagFilter("failed to visit")}
-              >
+              <Tag color={light["orange"]}>
                 <b>{failedCount}</b> failed to visit
               </Tag>{" "}
               &nbsp;
-              <Tag
-                color={light["geekblue"]}
-                onClick={() => handleTagFilter("reassigning")}
-              >
+              <Tag color={light["geekblue"]}>
                 <b>{reassigningCount}</b> reassigning
               </Tag>{" "}
               &nbsp;
-              <Tag
-                color={light["lime"]}
-                onClick={() => handleTagFilter("rescheduled")}
-              >
+              <Tag color={light["lime"]}>
                 <b>{rescheduledCount}</b> rescheduled
               </Tag>{" "}
               &nbsp;
@@ -559,17 +513,6 @@ const AppointmentUpdates: React.FC = () => {
       },
     },
   ];
-  const handleTagFilter = (status: string) => {
-    const updatedFilters = [...statusFilters];
-    if (updatedFilters.includes(status)) {
-      // If the filter is already active, remove it
-      updatedFilters.splice(updatedFilters.indexOf(status), 1);
-    } else {
-      // If the filter is not active, add it
-      updatedFilters.push(status);
-    }
-    setStatusFilters(updatedFilters);
-  };
 
   const openAddAppointmentDrawer = (record: Plumber) => {
     setAddAppointmentDrawerVisible(true);

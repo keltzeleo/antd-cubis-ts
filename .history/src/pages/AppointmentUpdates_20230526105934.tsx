@@ -9,8 +9,8 @@ import {
   Tag,
 } from "antd";
 
-import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import React, { useState } from "react";
+import { CheckboxValueType } from "../../node_modules/antd/lib/checkbox/Group";
 import light from "../../src/tokens/light.json";
 import "./MyForm.css";
 
@@ -43,19 +43,7 @@ const getRandomColor = (): string => {
   return colors[randomIndex] as string;
 };
 
-interface FilterableTagProps {
-  color: string;
-  label: string;
-  checked: boolean;
-  onCheckboxChange: () => void;
-}
-
-const FilterableTag: React.FC<FilterableTagProps> = ({
-  color,
-  label,
-  checked,
-  onCheckboxChange,
-}) => (
+const FilterableTag = ({ color, label, checked, onCheckboxChange }) => (
   <Checkbox checked={checked} onChange={onCheckboxChange}>
     <Tag color={color}>
       <b>{label}</b> {label.toLowerCase()}
@@ -63,17 +51,7 @@ const FilterableTag: React.FC<FilterableTagProps> = ({
   </Checkbox>
 );
 
-interface TagFilterProps {
-  tags: { value: string; label: string; color: string }[];
-  selectedTags: string[];
-  onTagChange: (tagValue: string) => void;
-}
-
-const TagFilter: React.FC<TagFilterProps> = ({
-  tags,
-  selectedTags,
-  onTagChange,
-}) => (
+const TagFilter = ({ tags, selectedTags, onTagChange }) => (
   <span
     style={{
       marginLeft: 4,
@@ -387,7 +365,7 @@ const AppointmentUpdates: React.FC = () => {
                 flexDirection: "row",
                 padding: 8,
                 backgroundColor: light["colorPrimaryBg"],
-              }}
+              }} // Add flexbox styles
             />
           </div>
         ),
@@ -421,10 +399,10 @@ const AppointmentUpdates: React.FC = () => {
           </Button>
         </div>
         <Table
+          columns={nestedColumns}
           dataSource={record.appointments.filter((appointment) =>
             statusFilters.includes(appointment.status)
           )}
-          columns={nestedColumns}
           pagination={false}
           onChange={() => {}}
           scroll={{ x: "max-content" }}
@@ -487,69 +465,23 @@ const AppointmentUpdates: React.FC = () => {
                 justifyContent: "flex-start",
               }}
             >
-              <Tag
-                color={light["cyan"]}
-                onClick={() => handleTagFilter("assigned")}
-                style={{
-                  borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
-                  color: statusFilters.includes("assigned")
-                    ? "white"
-                    : light["shades"],
-                  backgroundColor: statusFilters.includes("assigned")
-                    ? light["colorPrimaryBase"]
-                    : undefined,
-                  borderColor: light["colorPrimaryBase"],
-                  cursor: "pointer",
-                }}
-              >
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: statusFilters.includes("assigned")
-                      ? "#fff"
-                      : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
-                    marginRight: 4,
-                    color: light["cyan"],
-                  }}
-                >
-                  <b>{assignedCount}</b>
-                </span>
-                assigned
+              <Tag color={light["cyan"]}>
+                <b>{assignedCount}</b> assigned
               </Tag>{" "}
               &nbsp;
-              <Tag
-                color={light["red"]}
-                onClick={() => handleTagFilter("cancelled")}
-              >
+              <Tag color={light["red"]}>
                 <b>{cancelledCount}</b> cancelled
               </Tag>{" "}
               &nbsp;
-              <Tag
-                color={light["orange"]}
-                onClick={() => handleTagFilter("failed to visit")}
-              >
+              <Tag color={light["orange"]}>
                 <b>{failedCount}</b> failed to visit
               </Tag>{" "}
               &nbsp;
-              <Tag
-                color={light["geekblue"]}
-                onClick={() => handleTagFilter("reassigning")}
-              >
+              <Tag color={light["geekblue"]}>
                 <b>{reassigningCount}</b> reassigning
               </Tag>{" "}
               &nbsp;
-              <Tag
-                color={light["lime"]}
-                onClick={() => handleTagFilter("rescheduled")}
-              >
+              <Tag color={light["lime"]}>
                 <b>{rescheduledCount}</b> rescheduled
               </Tag>{" "}
               &nbsp;
@@ -559,17 +491,6 @@ const AppointmentUpdates: React.FC = () => {
       },
     },
   ];
-  const handleTagFilter = (status: string) => {
-    const updatedFilters = [...statusFilters];
-    if (updatedFilters.includes(status)) {
-      // If the filter is already active, remove it
-      updatedFilters.splice(updatedFilters.indexOf(status), 1);
-    } else {
-      // If the filter is not active, add it
-      updatedFilters.push(status);
-    }
-    setStatusFilters(updatedFilters);
-  };
 
   const openAddAppointmentDrawer = (record: Plumber) => {
     setAddAppointmentDrawerVisible(true);
@@ -589,7 +510,7 @@ const AppointmentUpdates: React.FC = () => {
           dataSource={data}
           expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
-          onChange={() => {}}
+          onChange={() => {}} // Empty onChange handler to disable default sorting behavior
         />
 
         <Drawer
@@ -615,6 +536,7 @@ const AppointmentUpdates: React.FC = () => {
         >
           <p>Plumber Info: {drawerData?.name}</p>
           <Button
+            style={{ textDecorationLine: "true" }}
             type="primary"
             onClick={() => drawerData && openAddAppointmentDrawer(drawerData)}
           >

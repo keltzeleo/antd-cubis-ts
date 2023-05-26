@@ -34,6 +34,8 @@ interface Plumber {
   reassignedAppointments: number;
   rescheduledAppointments: number;
 
+  statusFilters: string[]; // Add statusFilters property
+
   appointments: Appointment[];
 }
 
@@ -491,7 +493,7 @@ const AppointmentUpdates: React.FC = () => {
                 color={light["cyan"]}
                 onClick={() => handleTagFilter("assigned")}
                 style={{
-                  borderRadius: 8,
+                  borderRadius: 12,
                   height: "auto",
                   padding: "2 8 2 8",
 

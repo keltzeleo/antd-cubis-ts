@@ -30,12 +30,20 @@ interface Plumber {
   avatar: string;
   assignedAppointments: number;
   cancelledAppointments: number;
-  failedAppointments: number;
   reassignedAppointments: number;
   rescheduledAppointments: number;
-
-  appointments: Appointment[];
-}
+  failedAppointments: number;
+  appointments: {
+    key: string;
+    customerName: string;
+    appointmentDate: string;
+    appointmentTime: string;
+    appointmentLocation: string;
+    status: string;
+    typeOfService: string;
+  }[];
+  statusFilters: string[]; // Add the statusFilters property
+} // Add the statusFilters property
 
 const getRandomColor = (): string => {
   const colors = Object.values(light);
@@ -170,6 +178,13 @@ const AppointmentUpdates: React.FC = () => {
         },
         // Add more appointments as needed
       ],
+      statusFilters: [
+        "assigned",
+        "cancelled",
+        "failed to visit",
+        "reassigning",
+        "rescheduled",
+      ],
     },
     {
       key: "2",
@@ -228,6 +243,13 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "New Water Supply",
         },
         // Add more appointments as needed
+      ],
+      statusFilters: [
+        "assigned",
+        "cancelled",
+        "failed to visit",
+        "reassigning",
+        "rescheduled",
       ],
     },
     {
@@ -297,6 +319,13 @@ const AppointmentUpdates: React.FC = () => {
         },
         // Add more appointments as needed
       ],
+      statusFilters: [
+        "assigned",
+        "cancelled",
+        "failed to visit",
+        "reassigning",
+        "rescheduled",
+      ],
     },
     // Add more plumbers with their appointments
   ];
@@ -304,6 +333,9 @@ const AppointmentUpdates: React.FC = () => {
   data.forEach((plumber) => {});
 
   const expandedRowRender = (record: Plumber) => {
+    const filteredAppointments = record.appointments.filter((appointment) =>
+      record.statusFilters.includes(appointment.status)
+    );
     const nestedColumns = [
       {
         title: "Customer Name",
@@ -421,9 +453,7 @@ const AppointmentUpdates: React.FC = () => {
           </Button>
         </div>
         <Table
-          dataSource={record.appointments.filter((appointment) =>
-            statusFilters.includes(appointment.status)
-          )}
+          dataSource={filteredAppointments}
           columns={nestedColumns}
           pagination={false}
           onChange={() => {}}
@@ -491,7 +521,7 @@ const AppointmentUpdates: React.FC = () => {
                 color={light["cyan"]}
                 onClick={() => handleTagFilter("assigned")}
                 style={{
-                  borderRadius: 8,
+                  borderRadius: 12,
                   height: "auto",
                   padding: "2 8 2 8",
 

@@ -490,39 +490,8 @@ const AppointmentUpdates: React.FC = () => {
               <Tag
                 color={light["cyan"]}
                 onClick={() => handleTagFilter("assigned")}
-                style={{
-                  borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
-
-                  color: statusFilters.includes("assigned")
-                    ? "white"
-                    : light["shades"],
-                  backgroundColor: statusFilters.includes("assigned")
-                    ? light["colorPrimaryBase"]
-                    : undefined,
-                  borderColor: light["colorPrimaryBase"],
-                  cursor: "pointer",
-                }}
               >
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: statusFilters.includes("assigned")
-                      ? "#fff"
-                      : undefined,
-                    borderRadius: "50%",
-                    width: 16,
-                    height: 16,
-                    marginRight: 4,
-                    color: light["cyan"],
-                  }}
-                >
-                  <b>{assignedCount}</b>
-                </span>
-                assigned
+                <b>{assignedCount}</b> assigned
               </Tag>{" "}
               &nbsp;
               <Tag
