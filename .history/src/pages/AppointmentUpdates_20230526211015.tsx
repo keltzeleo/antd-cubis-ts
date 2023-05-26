@@ -92,45 +92,21 @@ const AppointmentUpdates: React.FC = () => {
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
   const [addAppointmentDrawerVisible, setAddAppointmentDrawerVisible] =
     useState(false);
-  const [statusFilters, setStatusFilters] = useState<{
-    [key: string]: string[];
-  }>({
-    "1": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
-    "2": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
-    "3": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
-  });
+  const [statusFilters, setStatusFilters] = useState<string[]>([
+    "assigned",
+    "cancelled",
+    "failed to visit",
+    "reassigning",
+    "rescheduled",
+  ]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const handleTagChange = (tagValue: string, plumberKey: string) => {
-    setStatusFilters((prevFilters) => {
-      const plumberFilters = prevFilters[plumberKey] || [];
-      if (plumberFilters.includes(tagValue)) {
-        return {
-          ...prevFilters,
-          [plumberKey]: plumberFilters.filter((filter) => filter !== tagValue),
-        };
+  const handleTagChange = (tagValue: string) => {
+    setSelectedTags((prevTags) => {
+      if (prevTags.includes(tagValue)) {
+        return prevTags.filter((tag) => tag !== tagValue);
       }
-      return {
-        ...prevFilters,
-        [plumberKey]: [...plumberFilters, tagValue],
-      };
+      return [...prevTags, tagValue];
     });
   };
 
@@ -145,8 +121,6 @@ const AppointmentUpdates: React.FC = () => {
     { value: "reassigning", label: "Reassigning", color: light["geekblue"] },
     { value: "rescheduled", label: "Rescheduled", color: light["lime"] },
   ];
-
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const data: Plumber[] = [
     {
@@ -379,12 +353,9 @@ const AppointmentUpdates: React.FC = () => {
                 { label: "Reassigning", value: "reassigning" },
                 { label: "Rescheduled", value: "rescheduled" },
               ]}
-              value={statusFilters["1"]} // Update to use the filters for plumber '1'
+              value={statusFilters}
               onChange={(checkedValues: CheckboxValueType[]) => {
-                setStatusFilters((prevFilters) => ({
-                  ...prevFilters,
-                  "1": checkedValues as string[],
-                }));
+                setStatusFilters(checkedValues as string[]);
               }}
               style={{
                 display: "run-in",
@@ -396,9 +367,9 @@ const AppointmentUpdates: React.FC = () => {
           </div>
         ),
         filterIcon: () => <SearchOutlined />,
-        filtered: statusFilters[record.key]?.length > 0,
+        filtered: statusFilters.length > 0,
         onFilter: (value: string | number | boolean, record: Appointment) =>
-          statusFilters[record.key]?.includes(record.status),
+          statusFilters.includes(record.status),
       },
 
       {
@@ -426,7 +397,7 @@ const AppointmentUpdates: React.FC = () => {
         </div>
         <Table
           dataSource={record.appointments.filter((appointment) =>
-            statusFilters[record.key]?.includes(appointment.status)
+            statusFilters.includes(appointment.status)
           )}
           columns={nestedColumns}
           pagination={false}
@@ -493,21 +464,19 @@ const AppointmentUpdates: React.FC = () => {
             >
               <Tag
                 color={light["cyan"]}
-                onClick={() => handleTagFilter("assigned", record.key)}
+                onClick={() => handleTagFilter("assigned")}
                 style={{
                   borderRadius: 8,
                   height: "auto",
                   padding: "2 8 2 8",
 
-                  color: statusFilters[record.key]?.includes("assigned")
+                  color: statusFilters.includes("assigned")
                     ? "white"
                     : light["colorTextDisabled"],
-                  backgroundColor: statusFilters[record.key]?.includes(
-                    "assigned"
-                  )
+                  backgroundColor: statusFilters.includes("assigned")
                     ? light["cyan"]
                     : undefined,
-                  borderColor: statusFilters[record.key]?.includes("assigned")
+                  borderColor: statusFilters.includes("assigned")
                     ? light["cyan"]
                     : light["colorTextDisabled"],
                   cursor: "pointer",
@@ -518,14 +487,14 @@ const AppointmentUpdates: React.FC = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: statusFilters[record.key]?.includes("assigned")
+                    background: statusFilters.includes("assigned")
                       ? "#fff"
                       : undefined,
                     borderRadius: "50%",
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters[record.key]?.includes("assigned")
+                    color: statusFilters.includes("assigned")
                       ? light["cyan"]
                       : light["colorTextDisabled"],
                   }}
@@ -537,21 +506,19 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["red"]}
-                onClick={() => handleTagFilter("cancelled", record.key)}
+                onClick={() => handleTagFilter("cancelled")}
                 style={{
                   borderRadius: 8,
                   height: "auto",
                   padding: "2 8 2 8",
 
-                  color: statusFilters[record.key]?.includes("cancelled")
+                  color: statusFilters.includes("cancelled")
                     ? "white"
                     : light["colorTextDisabled"],
-                  backgroundColor: statusFilters[record.key]?.includes(
-                    "cancelled"
-                  )
+                  backgroundColor: statusFilters.includes("cancelled")
                     ? light["red"]
                     : undefined,
-                  borderColor: statusFilters[record.key]?.includes("cancelled")
+                  borderColor: statusFilters.includes("cancelled")
                     ? light["red"]
                     : light["colorTextDisabled"],
                   cursor: "pointer",
@@ -562,42 +529,38 @@ const AppointmentUpdates: React.FC = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: statusFilters[record.key]?.includes("cancelled")
+                    background: statusFilters.includes("cancelled")
                       ? "#fff"
                       : undefined,
                     borderRadius: "50%",
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters[record.key]?.includes("cancelled")
+                    color: statusFilters.includes("cancelled")
                       ? light["red"]
                       : light["colorTextDisabled"],
                   }}
                 >
-                  <b>{cancelledCount}</b>
+                  <b>{assignedCount}</b>
                 </span>{" "}
                 cancelled
               </Tag>{" "}
               &nbsp;
               <Tag
                 color={light["orange"]}
-                onClick={() => handleTagFilter("failed to visit", record.key)}
+                onClick={() => handleTagFilter("failed to visit")}
                 style={{
                   borderRadius: 8,
                   height: "auto",
                   padding: "2 8 2 8",
 
-                  color: statusFilters[record.key]?.includes("failed to visit")
+                  color: statusFilters.includes("failed to visit")
                     ? "white"
                     : light["colorTextDisabled"],
-                  backgroundColor: statusFilters[record.key]?.includes(
-                    "failed to visit"
-                  )
+                  backgroundColor: statusFilters.includes("failed to visit")
                     ? light["orange"]
                     : undefined,
-                  borderColor: statusFilters[record.key]?.includes(
-                    "failed to visit"
-                  )
+                  borderColor: statusFilters.includes("failed to visit")
                     ? light["orange"]
                     : light["colorTextDisabled"],
                   cursor: "pointer",
@@ -608,18 +571,14 @@ const AppointmentUpdates: React.FC = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: statusFilters[record.key]?.includes(
-                      "failed to visit"
-                    )
+                    background: statusFilters.includes("failed to visit")
                       ? "#fff"
                       : undefined,
                     borderRadius: "50%",
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters[record.key]?.includes(
-                      "failed to visit"
-                    )
+                    color: statusFilters.includes("failed to visit")
                       ? light["orange"]
                       : light["colorTextDisabled"],
                   }}
@@ -631,23 +590,19 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["geekblue"]}
-                onClick={() => handleTagFilter("reassigning", record.key)}
+                onClick={() => handleTagFilter("reassigning")}
                 style={{
                   borderRadius: 8,
                   height: "auto",
                   padding: "2 8 2 8",
 
-                  color: statusFilters[record.key]?.includes("reassigning")
+                  color: statusFilters.includes("reassigning")
                     ? "white"
                     : light["colorTextDisabled"],
-                  backgroundColor: statusFilters[record.key]?.includes(
-                    "reassigning"
-                  )
+                  backgroundColor: statusFilters.includes("reassigning")
                     ? light["geekblue"]
                     : undefined,
-                  borderColor: statusFilters[record.key]?.includes(
-                    "reassigning"
-                  )
+                  borderColor: statusFilters.includes("reassigning")
                     ? light["geekblue"]
                     : light["colorTextDisabled"],
                   cursor: "pointer",
@@ -658,16 +613,14 @@ const AppointmentUpdates: React.FC = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: statusFilters[record.key]?.includes(
-                      "reassigning"
-                    )
+                    background: statusFilters.includes("reassigning")
                       ? "#fff"
                       : undefined,
                     borderRadius: "50%",
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters[record.key]?.includes("reassigning")
+                    color: statusFilters.includes("reassigning")
                       ? light["geekblue"]
                       : light["colorTextDisabled"],
                   }}
@@ -679,23 +632,19 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["lime"]}
-                onClick={() => handleTagFilter("rescheduled", record.key)}
+                onClick={() => handleTagFilter("rescheduled")}
                 style={{
                   borderRadius: 8,
                   height: "auto",
                   padding: "2 8 2 8",
 
-                  color: statusFilters[record.key]?.includes("rescheduled")
+                  color: statusFilters.includes("rescheduled")
                     ? "white"
                     : light["colorTextDisabled"],
-                  backgroundColor: statusFilters[record.key]?.includes(
-                    "rescheduled"
-                  )
+                  backgroundColor: statusFilters.includes("rescheduled")
                     ? light["lime"]
                     : undefined,
-                  borderColor: statusFilters[record.key]?.includes(
-                    "rescheduled"
-                  )
+                  borderColor: statusFilters.includes("rescheduled")
                     ? light["lime"]
                     : light["colorTextDisabled"],
                   cursor: "pointer",
@@ -706,16 +655,14 @@ const AppointmentUpdates: React.FC = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: statusFilters[record.key]?.includes(
-                      "rescheduled"
-                    )
+                    background: statusFilters.includes("rescheduled")
                       ? "#fff"
                       : undefined,
                     borderRadius: "50%",
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters[record.key]?.includes("rescheduled")
+                    color: statusFilters.includes("rescheduled")
                       ? light["lime"]
                       : light["colorTextDisabled"],
                   }}
@@ -732,19 +679,12 @@ const AppointmentUpdates: React.FC = () => {
     },
   ];
 
-  const handleTagFilter = (status: string, plumberKey: string) => {
+  const handleTagFilter = (status: string) => {
     setStatusFilters((prevFilters) => {
-      const plumberFilters = prevFilters[plumberKey] || [];
-      if (plumberFilters.includes(status)) {
-        return {
-          ...prevFilters,
-          [plumberKey]: plumberFilters.filter((filter) => filter !== status),
-        };
+      if (prevFilters.includes(status)) {
+        return prevFilters.filter((filter) => filter !== status);
       }
-      return {
-        ...prevFilters,
-        [plumberKey]: [...plumberFilters, status],
-      };
+      return [...prevFilters, status];
     });
   };
 
@@ -820,7 +760,7 @@ const AppointmentUpdates: React.FC = () => {
               >
                 <div
                   style={{
-                    fontSize: 48,
+                    fontSize: 40,
 
                     alignContent: "center",
                     justifyContent: "center",

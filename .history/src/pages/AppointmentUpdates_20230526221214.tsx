@@ -820,7 +820,7 @@ const AppointmentUpdates: React.FC = () => {
               >
                 <div
                   style={{
-                    fontSize: 48,
+                    fontSize: 52,
 
                     alignContent: "center",
                     justifyContent: "center",

@@ -80,7 +80,7 @@ const TagFilter: React.FC<TagFilterProps> = ({
         key={tag.value}
         color={tag.color}
         label={tag.label}
-        checked={selectedTags.includes(tag.value)}
+        unchecked={selectedTags.includes(tag.value)}
         onCheckboxChange={() => onTagChange(tag.value)}
       />
     ))}
@@ -95,27 +95,9 @@ const AppointmentUpdates: React.FC = () => {
   const [statusFilters, setStatusFilters] = useState<{
     [key: string]: string[];
   }>({
-    "1": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
-    "2": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
-    "3": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
+    "1": [],
+    "2": [],
+    "3": [],
   });
 
   const handleTagChange = (tagValue: string, plumberKey: string) => {
@@ -146,7 +128,9 @@ const AppointmentUpdates: React.FC = () => {
     { value: "rescheduled", label: "Rescheduled", color: light["lime"] },
   ];
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    tags.map((tag) => tag.value)
+  );
 
   const data: Plumber[] = [
     {
@@ -820,7 +804,7 @@ const AppointmentUpdates: React.FC = () => {
               >
                 <div
                   style={{
-                    fontSize: 48,
+                    fontSize: 40,
 
                     alignContent: "center",
                     justifyContent: "center",

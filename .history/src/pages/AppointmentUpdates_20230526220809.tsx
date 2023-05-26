@@ -95,27 +95,9 @@ const AppointmentUpdates: React.FC = () => {
   const [statusFilters, setStatusFilters] = useState<{
     [key: string]: string[];
   }>({
-    "1": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
-    "2": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
-    "3": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
+    "1": [],
+    "2": [],
+    "3": [],
   });
 
   const handleTagChange = (tagValue: string, plumberKey: string) => {
@@ -820,7 +802,7 @@ const AppointmentUpdates: React.FC = () => {
               >
                 <div
                   style={{
-                    fontSize: 48,
+                    fontSize: 40,
 
                     alignContent: "center",
                     justifyContent: "center",

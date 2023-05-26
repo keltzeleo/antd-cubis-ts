@@ -95,28 +95,13 @@ const AppointmentUpdates: React.FC = () => {
   const [statusFilters, setStatusFilters] = useState<{
     [key: string]: string[];
   }>({
-    "1": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
-    "2": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
-    "3": [
-      "assigned",
-      "cancelled",
-      "failed to visit",
-      "reassigning",
-      "rescheduled",
-    ],
+    "1": [],
+    "2": [],
+    "3": [],
   });
+  const [selectedTags, setSelectedTags] = useState<string[]>(
+    tags.map((tag) => tag.value)
+  );
 
   const handleTagChange = (tagValue: string, plumberKey: string) => {
     setStatusFilters((prevFilters) => {
@@ -145,8 +130,6 @@ const AppointmentUpdates: React.FC = () => {
     { value: "reassigning", label: "Reassigning", color: light["geekblue"] },
     { value: "rescheduled", label: "Rescheduled", color: light["lime"] },
   ];
-
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const data: Plumber[] = [
     {
@@ -820,7 +803,7 @@ const AppointmentUpdates: React.FC = () => {
               >
                 <div
                   style={{
-                    fontSize: 48,
+                    fontSize: 40,
 
                     alignContent: "center",
                     justifyContent: "center",
