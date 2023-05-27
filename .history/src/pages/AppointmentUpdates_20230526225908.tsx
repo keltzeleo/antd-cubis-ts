@@ -36,29 +36,12 @@ const getRandomColor = (): string => {
   return colors[randomIndex] as string;
 };
 
-/**
- * FilterableTagProps describes the properties for the FilterableTag component.
- * @property color - The color of the tag.
- * @property label - The label of the tag.
- * @property checked - Whether the checkbox is checked.
- * @property onCheckboxChange - The handler for checkbox changes.
- */
-
 interface FilterableTagProps {
   color: string;
   label: string;
   checked: boolean;
   onCheckboxChange: () => void;
 }
-
-/**
- * FilterableTag is a component that displays a tag with a checkbox.
- * The checkbox can be used to select or deselect the tag.
- * @param color - The color of the tag.
- * @param label - The label of the tag.
- * @param checked - Whether the checkbox is checked.
- * @param onCheckboxChange - The handler for checkbox changes.
- */
 
 const FilterableTag: React.FC<FilterableTagProps> = ({
   color,
@@ -135,23 +118,6 @@ const AppointmentUpdates: React.FC = () => {
     ],
   });
 
-  /**
-   * Enum for appointment status labels
-   */
-  enum StatusLabels {
-    ASSIGNED = "assigned",
-    CANCELLED = "cancelled",
-    FAILED_TO_VISIT = "failed to visit",
-    REASSIGNING = "reassigning",
-    RESCHEDULED = "rescheduled",
-  }
-
-  /**
-   * handleTagChange updates the status filters for a given plumber when a tag is selected or deselected.
-   * @param tagValue - The value of the tag that changed.
-   * @param plumberKey - The key of the plumber for which to update the status filters.
-   */
-
   const handleTagChange = (tagValue: string, plumberKey: string) => {
     setStatusFilters((prevFilters) => {
       const plumberFilters = prevFilters[plumberKey] || [];
@@ -194,7 +160,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-24",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
-          status: StatusLabels.FAILED_TO_VISIT,
+          status: "failed to visit",
           typeOfService: "New Water Supply",
         },
         {
@@ -203,7 +169,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-25",
           appointmentTime: "11:00 AM",
           appointmentLocation: "Location 1",
-          status: StatusLabels.REASSIGNING,
+          status: "reassigning",
           typeOfService: "New Water Supply",
         },
         {
@@ -212,7 +178,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-25",
           appointmentTime: "4:00 PM",
           appointmentLocation: "Location 1",
-          status: StatusLabels.ASSIGNED,
+          status: "assigned",
           typeOfService: "New Water Supply",
         },
         // Add more appointments as needed
@@ -230,7 +196,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-24",
           appointmentTime: "2:00 PM",
           appointmentLocation: "Location 1",
-          status: StatusLabels.REASSIGNING,
+          status: "assigned",
           typeOfService: "New Water Supply",
         },
         {
@@ -239,7 +205,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-26",
           appointmentTime: "1:00 PM",
           appointmentLocation: "Location 1",
-          status: StatusLabels.CANCELLED,
+          status: "assigned",
           typeOfService: "New Water Supply",
         },
         {
@@ -248,7 +214,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-27",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
-          status: StatusLabels.CANCELLED,
+          status: "cancelled",
           typeOfService: "Temporary Supply",
         },
         {
@@ -257,7 +223,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
-          status: StatusLabels.RESCHEDULED,
+          status: "cancelled",
           typeOfService: "Temporary Supply",
         },
         {
@@ -266,7 +232,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
-          status: StatusLabels.ASSIGNED,
+          status: "cancelled",
           typeOfService: "New Water Supply",
         },
         // Add more appointments as needed
@@ -284,7 +250,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-24",
           appointmentTime: "2:00 PM",
           appointmentLocation: "Location 1",
-          status: StatusLabels.ASSIGNED,
+          status: "assigned",
           typeOfService: "Temporary Supply",
         },
         {
@@ -293,7 +259,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-26",
           appointmentTime: "1:00 PM",
           appointmentLocation: "Location 1",
-          status: StatusLabels.ASSIGNED,
+          status: "assigned",
           typeOfService: "Temporary Supply",
         },
         {
@@ -302,7 +268,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2023-05-27",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
-          status: StatusLabels.CANCELLED,
+          status: "reassigning",
           typeOfService: "Temporary Supply",
         },
         {
@@ -311,7 +277,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
-          status: StatusLabels.FAILED_TO_VISIT,
+          status: "failed to visit",
           typeOfService: "New Water Supply",
         },
         {
@@ -320,7 +286,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
-          status: StatusLabels.REASSIGNING,
+          status: "cancelled",
           typeOfService: "New Water Supply",
         },
         {
@@ -329,7 +295,7 @@ const AppointmentUpdates: React.FC = () => {
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
-          status: StatusLabels.RESCHEDULED,
+          status: "rescheduled",
           typeOfService: "New Water Supply",
         },
         // Add more appointments as needed
