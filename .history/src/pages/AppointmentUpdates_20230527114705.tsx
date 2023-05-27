@@ -338,7 +338,7 @@ const AppointmentUpdates: React.FC = () => {
   ];
 
   const expandedRowRender = (record: Plumber) => {
-    const plumberStatusFilters = statusFilters[record.key] || [];
+    const plumberStatusFilters = statusFilters[record.key] || {};
 
     const nestedColumns = [
       {
@@ -414,11 +414,14 @@ const AppointmentUpdates: React.FC = () => {
                 { label: "Reassigning", value: "reassigning" },
                 { label: "Rescheduled", value: "rescheduled" },
               ]}
-              value={plumberStatusFilters}
+              value={Object.keys(plumberStatusFilters)}
               onChange={(checkedValues: CheckboxValueType[]) => {
                 setStatusFilters((prevFilters) => ({
                   ...prevFilters,
-                  [record.key]: checkedValues as string[],
+                  [record.key]: checkedValues.reduce(
+                    (acc, value) => ({ ...acc, [value]: true }),
+                    {}
+                  ),
                 }));
               }}
               style={{
@@ -431,10 +434,10 @@ const AppointmentUpdates: React.FC = () => {
           </div>
         ),
 
-        filtered: plumberStatusFilters.length > 0,
+        filtered: Object.keys(plumberStatusFilters).length > 0,
 
         onFilter: (value: string | number | boolean, record: Appointment) =>
-          plumberStatusFilters.includes(record.status),
+          plumberStatusFilters.hasOwnProperty(record.status),
       },
 
       {
@@ -770,16 +773,21 @@ const AppointmentUpdates: React.FC = () => {
 
   const handleTagFilter = (status: string, plumberKey: string) => {
     setStatusFilters((prevFilters) => {
-      const plumberFilters = prevFilters[plumberKey] || [];
-      if (plumberFilters.includes(status)) {
+      const plumberFilters = prevFilters[plumberKey] || {};
+      if (plumberFilters.hasOwnProperty(status)) {
+        const updatedFilters = { ...plumberFilters };
+        delete updatedFilters[status];
         return {
           ...prevFilters,
-          [plumberKey]: plumberFilters.filter((filter) => filter !== status),
+          [plumberKey]: updatedFilters,
         };
       }
       return {
         ...prevFilters,
-        [plumberKey]: [...plumberFilters, status],
+        [plumberKey]: {
+          ...plumberFilters,
+          [status]: true,
+        },
       };
     });
   };

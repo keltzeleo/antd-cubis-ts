@@ -1,3 +1,4 @@
+import { SearchOutlined } from "@ant-design/icons";
 import {
   Avatar,
   Button,
@@ -338,8 +339,6 @@ const AppointmentUpdates: React.FC = () => {
   ];
 
   const expandedRowRender = (record: Plumber) => {
-    const plumberStatusFilters = statusFilters[record.key] || [];
-
     const nestedColumns = [
       {
         title: "Customer Name",
@@ -414,11 +413,11 @@ const AppointmentUpdates: React.FC = () => {
                 { label: "Reassigning", value: "reassigning" },
                 { label: "Rescheduled", value: "rescheduled" },
               ]}
-              value={plumberStatusFilters}
+              value={statusFilters["1"]} // Update to use the filters for plumber '1'
               onChange={(checkedValues: CheckboxValueType[]) => {
                 setStatusFilters((prevFilters) => ({
                   ...prevFilters,
-                  [record.key]: checkedValues as string[],
+                  "1": checkedValues as string[],
                 }));
               }}
               style={{
@@ -430,11 +429,10 @@ const AppointmentUpdates: React.FC = () => {
             />
           </div>
         ),
-
-        filtered: plumberStatusFilters.length > 0,
-
+        filterIcon: () => <SearchOutlined />,
+        filtered: statusFilters[record.key]?.length > 0,
         onFilter: (value: string | number | boolean, record: Appointment) =>
-          plumberStatusFilters.includes(record.status),
+          statusFilters[record.key]?.includes(record.status),
       },
 
       {
@@ -803,7 +801,7 @@ const AppointmentUpdates: React.FC = () => {
           expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
           onChange={() => {}}
-          size="small"
+          size="middle"
         />
 
         <Drawer
