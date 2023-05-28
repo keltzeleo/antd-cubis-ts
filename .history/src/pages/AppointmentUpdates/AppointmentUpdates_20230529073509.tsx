@@ -56,6 +56,7 @@ const getRandomColor = (): string => {
  */
 
 const AppointmentUpdates: React.FC = () => {
+  const plumberKeys = data.map((plumber) => plumber.key);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
   const [addAppointmentDrawerVisible, setAddAppointmentDrawerVisible] =
@@ -279,9 +280,6 @@ const AppointmentUpdates: React.FC = () => {
     },
     // Add more plumbers with their appointments
   ];
-
-  const plumberKeys = data.map((plumber) => plumber.key);
-
 
   const expandedRowRender = (record: Plumber) => {
     const plumberStatusFilters = statusFilters[record.key] || [];
@@ -782,7 +780,7 @@ const AppointmentUpdates: React.FC = () => {
         <Table
           columns={columns}
           dataSource={data}
-          expandable={{ expandedRowRender, defaultExpandedRowKeys: plumberKeys }}
+          expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
           onChange={() => {}}
           size="small"

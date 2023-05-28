@@ -782,7 +782,7 @@ const AppointmentUpdates: React.FC = () => {
         <Table
           columns={columns}
           dataSource={data}
-          expandable={{ expandedRowRender, defaultExpandedRowKeys: plumberKeys }}
+          expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
           onChange={() => {}}
           size="small"

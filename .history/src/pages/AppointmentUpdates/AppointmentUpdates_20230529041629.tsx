@@ -108,8 +108,6 @@ const AppointmentUpdates: React.FC = () => {
     });
   };
 
-  
-
   const tags = [
     { value: "assigned", label: "Assigned", color: light["cyan"] },
     { value: "cancelled", label: "Cancelled", color: light["red"] },
@@ -280,9 +278,6 @@ const AppointmentUpdates: React.FC = () => {
     // Add more plumbers with their appointments
   ];
 
-  const plumberKeys = data.map((plumber) => plumber.key);
-
-
   const expandedRowRender = (record: Plumber) => {
     const plumberStatusFilters = statusFilters[record.key] || [];
 
@@ -362,10 +357,10 @@ const AppointmentUpdates: React.FC = () => {
               ]}
               value={plumberStatusFilters}
               onChange={(checkedValues: CheckboxValueType[]) => {
-                setSelectedTags(checkedValues as string[]);
-                checkedValues.forEach((value) =>
-                  handleTagChange(value as StatusLabels)
-                );
+                setStatusFilters((prevFilters) => ({
+                  ...prevFilters,
+                  [record.key]: checkedValues as StatusLabels[],
+                }));
               }}
               style={{
                 display: "run-in",
@@ -782,10 +777,17 @@ const AppointmentUpdates: React.FC = () => {
         <Table
           columns={columns}
           dataSource={data}
-          expandable={{ expandedRowRender, defaultExpandedRowKeys: plumberKeys }}
+          expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
-          onChange={() => {}}
-          size="small"
+          <Checkbox.Group
+          // ...
+          onChange={(checkedValues: CheckboxValueType[]) => {
+            setSelectedTags(checkedValues as string[]);
+            checkedValues.forEach((value) =>
+              handleTagChange(value as StatusLabels)
+            );
+          }}
+        />          size="small"
         />
 
         <Drawer

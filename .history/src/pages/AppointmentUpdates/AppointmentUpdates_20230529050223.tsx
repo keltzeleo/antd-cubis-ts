@@ -91,24 +91,21 @@ const AppointmentUpdates: React.FC = () => {
    * @param tagValue - The value of the tag that changed.
    * @param plumberKey - The key of the plumber for which to update the status filters.
    */
-  const handleTagChange = (tagValue: StatusLabels) => {
-    setStatusFilters((prevFilters) => {
-      const updatedFilters = { ...prevFilters };
-      Object.keys(updatedFilters).forEach((plumberKey) => {
-        const plumberFilters = updatedFilters[plumberKey] || [];
-        if (plumberFilters.includes(tagValue)) {
-          updatedFilters[plumberKey] = plumberFilters.filter(
-            (filter) => filter !== tagValue
-          ) as StatusLabels[];
-        } else {
-          updatedFilters[plumberKey] = [...plumberFilters, tagValue];
-        }
-      });
-      return updatedFilters;
-    });
-  };
+  const handleTagChange = (tagValue: StatusLabels) => { setStatusFilters((prevFilters) => { const updatedFilters = { ...prevFilters };
 
+  Object.keys(prevFilters).forEach((plumberKey) => {
+    const plumberFilters = prevFilters[plumberKey] || [];
+    if (plumberFilters.includes(tagValue)) {
+      updatedFilters[plumberKey] = plumberFilters.filter(
+        (filter) => filter !== tagValue
+      ) as StatusLabels[];
+    } else {
+      updatedFilters[plumberKey] = [...plumberFilters, tagValue];
+    }
+  });
   
+  return updatedFilters;
+  }); };
 
   const tags = [
     { value: "assigned", label: "Assigned", color: light["cyan"] },
@@ -280,9 +277,6 @@ const AppointmentUpdates: React.FC = () => {
     // Add more plumbers with their appointments
   ];
 
-  const plumberKeys = data.map((plumber) => plumber.key);
-
-
   const expandedRowRender = (record: Plumber) => {
     const plumberStatusFilters = statusFilters[record.key] || [];
 
@@ -362,10 +356,10 @@ const AppointmentUpdates: React.FC = () => {
               ]}
               value={plumberStatusFilters}
               onChange={(checkedValues: CheckboxValueType[]) => {
-                setSelectedTags(checkedValues as string[]);
-                checkedValues.forEach((value) =>
-                  handleTagChange(value as StatusLabels)
-                );
+                setStatusFilters((prevFilters) => ({
+                  ...prevFilters,
+                  [record.key]: checkedValues as StatusLabels[],
+                }));
               }}
               style={{
                 display: "run-in",
@@ -782,7 +776,7 @@ const AppointmentUpdates: React.FC = () => {
         <Table
           columns={columns}
           dataSource={data}
-          expandable={{ expandedRowRender, defaultExpandedRowKeys: plumberKeys }}
+          expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
           onChange={() => {}}
           size="small"

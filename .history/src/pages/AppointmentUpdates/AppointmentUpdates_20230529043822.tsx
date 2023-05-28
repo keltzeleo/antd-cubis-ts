@@ -108,7 +108,12 @@ const AppointmentUpdates: React.FC = () => {
     });
   };
 
-  
+      setSelectedTags((prevTags) => {
+      const nextTags = prevTags.reverse();
+      nextTags.forEach((tag) => handleTagChange(tag as StatusLabels));
+      return nextTags;
+    });
+  };
 
   const tags = [
     { value: "assigned", label: "Assigned", color: light["cyan"] },
@@ -279,9 +284,6 @@ const AppointmentUpdates: React.FC = () => {
     },
     // Add more plumbers with their appointments
   ];
-
-  const plumberKeys = data.map((plumber) => plumber.key);
-
 
   const expandedRowRender = (record: Plumber) => {
     const plumberStatusFilters = statusFilters[record.key] || [];
@@ -782,7 +784,7 @@ const AppointmentUpdates: React.FC = () => {
         <Table
           columns={columns}
           dataSource={data}
-          expandable={{ expandedRowRender, defaultExpandedRowKeys: plumberKeys }}
+          expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
           onChange={() => {}}
           size="small"
