@@ -91,22 +91,11 @@ const AppointmentUpdates: React.FC = () => {
    * @param tagValue - The value of the tag that changed.
    * @param plumberKey - The key of the plumber for which to update the status filters.
    */
-  const handleTagChange = (tagValue: StatusLabels, plumberKey: string) => {
-    setStatusFilters((prevFilters) => {
-      const plumberFilters = prevFilters[plumberKey] || [];
-      if (plumberFilters.includes(tagValue)) {
-        return {
-          ...prevFilters,
-          [plumberKey]: plumberFilters.filter(
-            (filter) => filter !== tagValue
-          ) as StatusLabels[],
-        };
-      }
-      return {
-        ...prevFilters,
-        [plumberKey]: [...plumberFilters, tagValue],
-      };
-    });
+  const handleTagChange = (tagValues: StatusLabels[], plumberKey: string) => {
+    setStatusFilters((prevFilters) => ({
+      ...prevFilters,
+      [plumberKey]: tagValues,
+    }));
   };
 
   const tags = [
@@ -279,8 +268,15 @@ const AppointmentUpdates: React.FC = () => {
     // Add more plumbers with their appointments
   ];
 
-  const expandedRowRender = (record: Plumber) => {
-    const plumberStatusFilters = statusFilters[record.key] || [];
+  const expandedRowRender = (
+    record: Plumber,
+    parentStatusFilters: { [key: string]: StatusLabels[] },
+    handleParentTagChange: (
+      tagValues: StatusLabels[],
+      plumberKey: string
+    ) => void
+  ) => {
+    const plumberStatusFilters = parentStatusFilters[record.key] || [];
 
     const nestedColumns = [
       {
@@ -349,19 +345,16 @@ const AppointmentUpdates: React.FC = () => {
         filterDropdown: () => (
           <div>
             <Checkbox.Group
-              options={[
-                { label: "Assigned", value: "assigned" },
-                { label: "Cancelled", value: "cancelled" },
-                { label: "Failed to Visit", value: "failed to visit" },
-                { label: "Reassigning", value: "reassigning" },
-                { label: "Rescheduled", value: "rescheduled" },
-              ]}
+              options={tags.map((tag) => ({
+                label: tag.label,
+                value: tag.value,
+              }))}
               value={plumberStatusFilters}
               onChange={(checkedValues: CheckboxValueType[]) => {
-                setStatusFilters((prevFilters) => ({
-                  ...prevFilters,
-                  [record.key]: checkedValues as StatusLabels[],
-                }));
+                handleParentTagChange(
+                  checkedValues as StatusLabels[],
+                  record.key
+                );
               }}
               style={{
                 display: "run-in",
@@ -375,8 +368,12 @@ const AppointmentUpdates: React.FC = () => {
 
         filtered: plumberStatusFilters.length > 0,
 
-        onFilter: (value: string | number | boolean, record: Appointment) =>
-          plumberStatusFilters.includes(record.status),
+        onFilter: (
+          value: string | number | boolean,
+          record: Appointment
+        ): boolean =>
+          plumberStatusFilters.includes(value as StatusLabels) ||
+          parentStatusFilters.all?.includes(value as StatusLabels), // Check if the status is included in the plumber's filters or the "all" filter
       },
 
       {
@@ -471,7 +468,9 @@ const AppointmentUpdates: React.FC = () => {
             >
               <Tag
                 color={light["cyan"]}
-                onClick={() => handleTagFilter(StatusLabels.ASSIGNED)}
+                onClick={() =>
+                  handleTagFilter(StatusLabels.ASSIGNED, record.key)
+                }
                 style={{
                   borderRadius: 8,
                   height: "auto",
@@ -523,7 +522,9 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["red"]}
-                onClick={() => handleTagFilter(StatusLabels.CANCELLED)}
+                onClick={() =>
+                  handleTagFilter(StatusLabels.CANCELLED, record.key)
+                }
                 style={{
                   borderRadius: 8,
                   height: "auto",
@@ -575,7 +576,9 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["orange"]}
-                onClick={() => handleTagFilter(StatusLabels.FAILED_TO_VISIT)}
+                onClick={() =>
+                  handleTagFilter(StatusLabels.FAILED_TO_VISIT, record.key)
+                }
                 style={{
                   borderRadius: 8,
                   height: "auto",
@@ -627,7 +630,9 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["geekblue"]}
-                onClick={() => handleTagFilter(StatusLabels.REASSIGNING)}
+                onClick={() =>
+                  handleTagFilter(StatusLabels.REASSIGNING, record.key)
+                }
                 style={{
                   borderRadius: 8,
                   height: "auto",
@@ -679,7 +684,9 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["lime"]}
-                onClick={() => handleTagFilter(StatusLabels.RESCHEDULED)}
+                onClick={() =>
+                  handleTagFilter(StatusLabels.RESCHEDULED, record.key)
+                }
                 style={{
                   borderRadius: 8,
                   height: "auto",
@@ -736,20 +743,19 @@ const AppointmentUpdates: React.FC = () => {
     },
   ];
 
-  const handleTagFilter = (status: StatusLabels) => {
+  const handleTagFilter = (status: StatusLabels, plumberKey: string) => {
     setStatusFilters((prevFilters) => {
-      const updatedFilters: { [key: string]: StatusLabels[] } = {};
-      Object.keys(prevFilters).forEach((plumberKey) => {
-        const plumberFilters = prevFilters[plumberKey] || [];
-        if (plumberFilters.includes(status)) {
-          updatedFilters[plumberKey] = plumberFilters.filter(
-            (filter) => filter !== status
-          );
-        } else {
-          updatedFilters[plumberKey] = [...plumberFilters, status];
-        }
-      });
-      return updatedFilters;
+      const plumberFilters = prevFilters[plumberKey] || [];
+      if (plumberFilters.includes(status)) {
+        return {
+          ...prevFilters,
+          [plumberKey]: plumberFilters.filter((filter) => filter !== status),
+        };
+      }
+      return {
+        ...prevFilters,
+        [plumberKey]: [...plumberFilters, status],
+      };
     });
   };
 
@@ -770,8 +776,9 @@ const AppointmentUpdates: React.FC = () => {
           columns={columns}
           dataSource={data}
           expandable={{
-            expandedRowRender,
-            defaultExpandedRowKeys: data.map((plumber) => plumber.key),
+            expandedRowRender: (record: Plumber) =>
+              expandedRowRender(record, statusFilters, handleTagChange), // Pass the statusFilters and handleTagChange to expandedRowRender
+            defaultExpandedRowKeys: ["0"],
           }}
           pagination={false}
           onChange={() => {}}

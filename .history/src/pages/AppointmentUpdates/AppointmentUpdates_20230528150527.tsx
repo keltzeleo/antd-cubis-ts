@@ -92,20 +92,26 @@ const AppointmentUpdates: React.FC = () => {
    * @param plumberKey - The key of the plumber for which to update the status filters.
    */
   const handleTagChange = (tagValue: StatusLabels, plumberKey: string) => {
+    setSelectedTags((prevTags) => {
+      if (prevTags.includes(tagValue)) {
+        return prevTags.filter((tag) => tag !== tagValue);
+      } else {
+        return [...prevTags, tagValue];
+      }
+    });
     setStatusFilters((prevFilters) => {
       const plumberFilters = prevFilters[plumberKey] || [];
       if (plumberFilters.includes(tagValue)) {
         return {
           ...prevFilters,
-          [plumberKey]: plumberFilters.filter(
-            (filter) => filter !== tagValue
-          ) as StatusLabels[],
+          [plumberKey]: plumberFilters.filter((filter) => filter !== tagValue),
+        };
+      } else {
+        return {
+          ...prevFilters,
+          [plumberKey]: [...plumberFilters, tagValue],
         };
       }
-      return {
-        ...prevFilters,
-        [plumberKey]: [...plumberFilters, tagValue],
-      };
     });
   };
 
@@ -130,7 +136,7 @@ const AppointmentUpdates: React.FC = () => {
       avatar: "./icons/avatarMeow01.png", // Replace with the actual URL or identifier for the avatar
       appointments: [
         {
-          key: "1a",
+          key: "1",
           customerName: "Muhammad Bin Amir",
           appointmentDate: "2023-05-24",
           appointmentTime: "10:00 AM",
@@ -139,7 +145,7 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "New Water Supply",
         },
         {
-          key: "1b",
+          key: "2",
           customerName: "Siti Binti Abdul Hafiz",
           appointmentDate: "2023-05-25",
           appointmentTime: "11:00 AM",
@@ -148,7 +154,7 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "New Water Supply",
         },
         {
-          key: "1c",
+          key: "3",
           customerName: "Rajesh a/l Suppiah ",
           appointmentDate: "2023-05-25",
           appointmentTime: "4:00 PM",
@@ -166,7 +172,7 @@ const AppointmentUpdates: React.FC = () => {
 
       appointments: [
         {
-          key: "2a",
+          key: "1",
           customerName: "Ahmad bin Abdullah",
           appointmentDate: "2023-05-24",
           appointmentTime: "2:00 PM",
@@ -175,7 +181,7 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "New Water Supply",
         },
         {
-          key: "2b",
+          key: "2",
           customerName: "Tan Ah Ching",
           appointmentDate: "2023-05-26",
           appointmentTime: "1:00 PM",
@@ -184,7 +190,7 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "New Water Supply",
         },
         {
-          key: "2c",
+          key: "3",
           customerName: "Lee Xiao Ming",
           appointmentDate: "2023-05-27",
           appointmentTime: "10:00 AM",
@@ -193,7 +199,7 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "Temporary Supply",
         },
         {
-          key: "2d",
+          key: "4",
           customerName: "Bhavin a/l Ishir",
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
@@ -202,7 +208,7 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "Temporary Supply",
         },
         {
-          key: "2e",
+          key: "5",
           customerName: "Amyra a/p Kiaan",
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
@@ -220,7 +226,7 @@ const AppointmentUpdates: React.FC = () => {
 
       appointments: [
         {
-          key: "3a",
+          key: "1",
           customerName: "Steve Jobs",
           appointmentDate: "2023-05-24",
           appointmentTime: "2:00 PM",
@@ -229,7 +235,7 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "Temporary Supply",
         },
         {
-          key: "3b",
+          key: "2",
           customerName: "Mark Zuckerberg",
           appointmentDate: "2023-05-26",
           appointmentTime: "1:00 PM",
@@ -238,7 +244,7 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "Temporary Supply",
         },
         {
-          key: "3c",
+          key: "3",
           customerName: "Aventure",
           appointmentDate: "2023-05-27",
           appointmentTime: "10:00 AM",
@@ -247,7 +253,7 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "Temporary Supply",
         },
         {
-          key: "3d",
+          key: "4",
           customerName: "Bamberbee",
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
@@ -256,7 +262,7 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "New Water Supply",
         },
         {
-          key: "3e",
+          key: "5",
           customerName: "Cinderlala",
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
@@ -265,7 +271,7 @@ const AppointmentUpdates: React.FC = () => {
           typeOfService: "New Water Supply",
         },
         {
-          key: "3f",
+          key: "6",
           customerName: "Doraemon",
           appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
@@ -350,17 +356,25 @@ const AppointmentUpdates: React.FC = () => {
           <div>
             <Checkbox.Group
               options={[
-                { label: "Assigned", value: "assigned" },
-                { label: "Cancelled", value: "cancelled" },
-                { label: "Failed to Visit", value: "failed to visit" },
-                { label: "Reassigning", value: "reassigning" },
-                { label: "Rescheduled", value: "rescheduled" },
+                { label: "Assigned", value: StatusLabels.ASSIGNED },
+                { label: "Cancelled", value: StatusLabels.CANCELLED },
+                {
+                  label: "Failed to Visit",
+                  value: StatusLabels.FAILED_TO_VISIT,
+                },
+                { label: "Reassigning", value: StatusLabels.REASSIGNING },
+                { label: "Rescheduled", value: StatusLabels.RESCHEDULED },
               ]}
-              value={plumberStatusFilters}
+              value={[...selectedTags, ...(statusFilters[record.key] || [])]}
               onChange={(checkedValues: CheckboxValueType[]) => {
+                const newSelectedTags = checkedValues.filter(
+                  (value) =>
+                    !statusFilters[record.key]?.includes(value as StatusLabels)
+                );
+                setSelectedTags(newSelectedTags as string[]);
                 setStatusFilters((prevFilters) => ({
                   ...prevFilters,
-                  [record.key]: checkedValues as StatusLabels[],
+                  [record.key]: newSelectedTags as StatusLabels[],
                 }));
               }}
               style={{
@@ -471,23 +485,25 @@ const AppointmentUpdates: React.FC = () => {
             >
               <Tag
                 color={light["cyan"]}
-                onClick={() => handleTagFilter(StatusLabels.ASSIGNED)}
+                onClick={() =>
+                  handleTagFilter(StatusLabels.ASSIGNED, record.key)
+                }
                 style={{
                   borderRadius: 8,
                   height: "auto",
                   padding: "2 8 2 8",
 
-                  color: statusFilters[record.key]?.includes(
+                  color: selectedTags[record.key]?.includes(
                     StatusLabels.ASSIGNED
                   )
                     ? "white"
                     : light["colorTextDisabled"],
-                  backgroundColor: statusFilters[record.key]?.includes(
+                  backgroundColor: selectedTags[record.key]?.includes(
                     StatusLabels.ASSIGNED
                   )
                     ? light["cyan"]
                     : undefined,
-                  borderColor: statusFilters[record.key]?.includes(
+                  borderColor: selectedTags[record.key]?.includes(
                     StatusLabels.ASSIGNED
                   )
                     ? light["cyan"]
@@ -500,7 +516,7 @@ const AppointmentUpdates: React.FC = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: statusFilters[record.key]?.includes(
+                    background: selectedTags[record.key]?.includes(
                       StatusLabels.ASSIGNED
                     )
                       ? "#fff"
@@ -509,7 +525,7 @@ const AppointmentUpdates: React.FC = () => {
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters[record.key]?.includes(
+                    color: selectedTags[record.key]?.includes(
                       StatusLabels.ASSIGNED
                     )
                       ? light["cyan"]
@@ -523,23 +539,25 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["red"]}
-                onClick={() => handleTagFilter(StatusLabels.CANCELLED)}
+                onClick={() =>
+                  handleTagFilter(StatusLabels.CANCELLED, record.key)
+                }
                 style={{
                   borderRadius: 8,
                   height: "auto",
                   padding: "2 8 2 8",
 
-                  color: statusFilters[record.key]?.includes(
+                  color: selectedTags[record.key]?.includes(
                     StatusLabels.CANCELLED
                   )
                     ? "white"
                     : light["colorTextDisabled"],
-                  backgroundColor: statusFilters[record.key]?.includes(
+                  backgroundColor: selectedTags[record.key]?.includes(
                     StatusLabels.CANCELLED
                   )
                     ? light["red"]
                     : undefined,
-                  borderColor: statusFilters[record.key]?.includes(
+                  borderColor: selectedTags[record.key]?.includes(
                     StatusLabels.CANCELLED
                   )
                     ? light["red"]
@@ -552,7 +570,7 @@ const AppointmentUpdates: React.FC = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: statusFilters[record.key]?.includes(
+                    background: selectedTags[record.key]?.includes(
                       StatusLabels.CANCELLED
                     )
                       ? "#fff"
@@ -561,7 +579,7 @@ const AppointmentUpdates: React.FC = () => {
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters[record.key]?.includes(
+                    color: selectedTags[record.key]?.includes(
                       StatusLabels.CANCELLED
                     )
                       ? light["red"]
@@ -575,23 +593,25 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["orange"]}
-                onClick={() => handleTagFilter(StatusLabels.FAILED_TO_VISIT)}
+                onClick={() =>
+                  handleTagFilter(StatusLabels.FAILED_TO_VISIT, record.key)
+                }
                 style={{
                   borderRadius: 8,
                   height: "auto",
                   padding: "2 8 2 8",
 
-                  color: statusFilters[record.key]?.includes(
+                  color: selectedTags[record.key]?.includes(
                     StatusLabels.FAILED_TO_VISIT
                   )
                     ? "white"
                     : light["colorTextDisabled"],
-                  backgroundColor: statusFilters[record.key]?.includes(
+                  backgroundColor: selectedTags[record.key]?.includes(
                     StatusLabels.FAILED_TO_VISIT
                   )
                     ? light["orange"]
                     : undefined,
-                  borderColor: statusFilters[record.key]?.includes(
+                  borderColor: selectedTags[record.key]?.includes(
                     StatusLabels.FAILED_TO_VISIT
                   )
                     ? light["orange"]
@@ -604,7 +624,7 @@ const AppointmentUpdates: React.FC = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: statusFilters[record.key]?.includes(
+                    background: selectedTags[record.key]?.includes(
                       StatusLabels.FAILED_TO_VISIT
                     )
                       ? "#fff"
@@ -613,7 +633,7 @@ const AppointmentUpdates: React.FC = () => {
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters[record.key]?.includes(
+                    color: selectedTags[record.key]?.includes(
                       StatusLabels.FAILED_TO_VISIT
                     )
                       ? light["orange"]
@@ -627,23 +647,25 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["geekblue"]}
-                onClick={() => handleTagFilter(StatusLabels.REASSIGNING)}
+                onClick={() =>
+                  handleTagFilter(StatusLabels.REASSIGNING, record.key)
+                }
                 style={{
                   borderRadius: 8,
                   height: "auto",
                   padding: "2 8 2 8",
 
-                  color: statusFilters[record.key]?.includes(
+                  color: selectedTags[record.key]?.includes(
                     StatusLabels.REASSIGNING
                   )
                     ? "white"
                     : light["colorTextDisabled"],
-                  backgroundColor: statusFilters[record.key]?.includes(
+                  backgroundColor: selectedTags[record.key]?.includes(
                     StatusLabels.REASSIGNING
                   )
                     ? light["geekblue"]
                     : undefined,
-                  borderColor: statusFilters[record.key]?.includes(
+                  borderColor: selectedTags[record.key]?.includes(
                     StatusLabels.REASSIGNING
                   )
                     ? light["geekblue"]
@@ -656,7 +678,7 @@ const AppointmentUpdates: React.FC = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: statusFilters[record.key]?.includes(
+                    background: selectedTags[record.key]?.includes(
                       StatusLabels.REASSIGNING
                     )
                       ? "#fff"
@@ -665,7 +687,7 @@ const AppointmentUpdates: React.FC = () => {
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters[record.key]?.includes(
+                    color: selectedTags[record.key]?.includes(
                       StatusLabels.REASSIGNING
                     )
                       ? light["geekblue"]
@@ -679,23 +701,25 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["lime"]}
-                onClick={() => handleTagFilter(StatusLabels.RESCHEDULED)}
+                onClick={() =>
+                  handleTagFilter(StatusLabels.RESCHEDULED, record.key)
+                }
                 style={{
                   borderRadius: 8,
                   height: "auto",
                   padding: "2 8 2 8",
 
-                  color: statusFilters[record.key]?.includes(
+                  color: selectedTags[record.key]?.includes(
                     StatusLabels.RESCHEDULED
                   )
                     ? "white"
                     : light["colorTextDisabled"],
-                  backgroundColor: statusFilters[record.key]?.includes(
+                  backgroundColor: selectedTags[record.key]?.includes(
                     StatusLabels.RESCHEDULED
                   )
                     ? light["lime"]
                     : undefined,
-                  borderColor: statusFilters[record.key]?.includes(
+                  borderColor: selectedTags[record.key]?.includes(
                     StatusLabels.RESCHEDULED
                   )
                     ? light["lime"]
@@ -708,7 +732,7 @@ const AppointmentUpdates: React.FC = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: statusFilters[record.key]?.includes(
+                    background: selectedTags[record.key]?.includes(
                       StatusLabels.RESCHEDULED
                     )
                       ? "#fff"
@@ -717,7 +741,7 @@ const AppointmentUpdates: React.FC = () => {
                     width: 16,
                     height: 16,
                     marginRight: 4,
-                    color: statusFilters[record.key]?.includes(
+                    color: selectedTags[record.key]?.includes(
                       StatusLabels.RESCHEDULED
                     )
                       ? light["lime"]
@@ -736,20 +760,25 @@ const AppointmentUpdates: React.FC = () => {
     },
   ];
 
-  const handleTagFilter = (status: StatusLabels) => {
+  const handleTagFilter = (status: StatusLabels, plumberKey: string) => {
     setStatusFilters((prevFilters) => {
-      const updatedFilters: { [key: string]: StatusLabels[] } = {};
-      Object.keys(prevFilters).forEach((plumberKey) => {
-        const plumberFilters = prevFilters[plumberKey] || [];
-        if (plumberFilters.includes(status)) {
-          updatedFilters[plumberKey] = plumberFilters.filter(
-            (filter) => filter !== status
-          );
-        } else {
-          updatedFilters[plumberKey] = [...plumberFilters, status];
-        }
-      });
-      return updatedFilters;
+      const plumberFilters = prevFilters[plumberKey] || [];
+      if (plumberFilters.includes(status)) {
+        const newPlumberFilters = plumberFilters.filter(
+          (filter) => filter !== status
+        );
+        setSelectedTags((prevTags) => prevTags.filter((tag) => tag !== status));
+        return {
+          ...prevFilters,
+          [plumberKey]: newPlumberFilters,
+        };
+      } else {
+        setSelectedTags((prevTags) => [...prevTags, status]);
+        return {
+          ...prevFilters,
+          [plumberKey]: [...plumberFilters, status],
+        };
+      }
     });
   };
 
@@ -769,10 +798,7 @@ const AppointmentUpdates: React.FC = () => {
         <Table
           columns={columns}
           dataSource={data}
-          expandable={{
-            expandedRowRender,
-            defaultExpandedRowKeys: data.map((plumber) => plumber.key),
-          }}
+          expandable={{ expandedRowRender, defaultExpandedRowKeys: ["0"] }}
           pagination={false}
           onChange={() => {}}
           size="small"
