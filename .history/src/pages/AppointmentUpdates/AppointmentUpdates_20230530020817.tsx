@@ -7,13 +7,13 @@ import {
   Drawer,
   Table,
   Tag,
-} from "antd";
-import { CheckboxValueType } from "antd/lib/checkbox/Group";
-import React, { useState } from "react";
-import { StatusLabels } from "../../customConstants/constants";
+} from 'antd';
+import { CheckboxValueType } from 'antd/lib/checkbox/Group';
+import React, { useState } from 'react';
+import { StatusLabels } from '../../customConstants/constants';
 
-import light from "../../../src/tokens/light.json";
-import "../MyForm.css";
+import light from '../../../src/tokens/light.json';
+import '../MyForm.css';
 
 interface Appointment {
   key: string;
@@ -63,21 +63,21 @@ const AppointmentUpdates: React.FC = () => {
   const [statusFilters, setStatusFilters] = useState<{
     [key: string]: StatusLabels[];
   }>({
-    "1": [
+    '1': [
       StatusLabels.ASSIGNED,
       StatusLabels.CANCELLED,
       StatusLabels.FAILED_TO_VISIT,
       StatusLabels.REASSIGNING,
       StatusLabels.RESCHEDULED,
     ],
-    "2": [
+    '2': [
       StatusLabels.ASSIGNED,
       StatusLabels.CANCELLED,
       StatusLabels.FAILED_TO_VISIT,
       StatusLabels.REASSIGNING,
       StatusLabels.RESCHEDULED,
     ],
-    "3": [
+    '3': [
       StatusLabels.ASSIGNED,
       StatusLabels.CANCELLED,
       StatusLabels.FAILED_TO_VISIT,
@@ -98,7 +98,7 @@ const AppointmentUpdates: React.FC = () => {
         const plumberFilters = updatedFilters[plumberKey] || [];
         if (plumberFilters.includes(tagValue)) {
           updatedFilters[plumberKey] = plumberFilters.filter(
-            (filter) => filter !== tagValue
+            (filter) => filter !== tagValue,
           ) as StatusLabels[];
         } else {
           updatedFilters[plumberKey] = [...plumberFilters, tagValue];
@@ -109,168 +109,168 @@ const AppointmentUpdates: React.FC = () => {
   };
 
   const tags = [
-    { value: "assigned", label: "Assigned", color: light["cyan"] },
-    { value: "cancelled", label: "Cancelled", color: light["red"] },
+    { value: 'assigned', label: 'Assigned', color: light['cyan'] },
+    { value: 'cancelled', label: 'Cancelled', color: light['red'] },
     {
-      value: "failed to visit",
-      label: "Failed to Visit",
-      color: light["orange"],
+      value: 'failed to visit',
+      label: 'Failed to Visit',
+      color: light['orange'],
     },
-    { value: "reassigning", label: "Reassigning", color: light["geekblue"] },
-    { value: "rescheduled", label: "Rescheduled", color: light["lime"] },
+    { value: 'reassigning', label: 'Reassigning', color: light['geekblue'] },
+    { value: 'rescheduled', label: 'Rescheduled', color: light['lime'] },
   ];
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const data: Plumber[] = [
     {
-      key: "1",
-      name: "John Doe",
-      avatar: "./icons/avatarMeow01.png", // Replace with the actual URL or identifier for the avatar
+      key: '1',
+      name: 'John Doe',
+      avatar: './icons/avatarMeow01.png', // Replace with the actual URL or identifier for the avatar
       appointments: [
         {
-          key: "1a",
-          customerName: "Muhammad Bin Amir",
-          appointmentDate: "2023-05-24",
-          appointmentTime: "10:00 AM",
-          appointmentLocation: "Location 1",
+          key: '1a',
+          customerName: 'Muhammad Bin Amir',
+          appointmentDate: '2023-05-24',
+          appointmentTime: '10:00 AM',
+          appointmentLocation: 'Location 1',
           status: StatusLabels.FAILED_TO_VISIT,
-          typeOfService: "New Water Supply",
+          typeOfService: 'New Water Supply',
         },
         {
-          key: "1b",
-          customerName: "Siti Binti Abdul Hafiz",
-          appointmentDate: "2023-05-25",
-          appointmentTime: "11:00 AM",
-          appointmentLocation: "Location 1",
+          key: '1b',
+          customerName: 'Siti Binti Abdul Hafiz',
+          appointmentDate: '2023-05-25',
+          appointmentTime: '11:00 AM',
+          appointmentLocation: 'Location 1',
           status: StatusLabels.REASSIGNING,
-          typeOfService: "New Water Supply",
+          typeOfService: 'New Water Supply',
         },
         {
-          key: "1c",
-          customerName: "Rajesh a/l Suppiah ",
-          appointmentDate: "2023-05-25",
-          appointmentTime: "4:00 PM",
-          appointmentLocation: "Location 1",
+          key: '1c',
+          customerName: 'Rajesh a/l Suppiah ',
+          appointmentDate: '2023-05-25',
+          appointmentTime: '4:00 PM',
+          appointmentLocation: 'Location 1',
           status: StatusLabels.ASSIGNED,
-          typeOfService: "New Water Supply",
+          typeOfService: 'New Water Supply',
         },
         // Add more appointments as needed
       ],
     },
     {
-      key: "2",
-      name: "Kel Huang",
-      avatar: "./icons/avatarMeow01.png", // Replace with the actual URL or identifier for the avatar
+      key: '2',
+      name: 'Kel Huang',
+      avatar: './icons/avatarMeow01.png', // Replace with the actual URL or identifier for the avatar
 
       appointments: [
         {
-          key: "2a",
-          customerName: "Ahmad bin Abdullah",
-          appointmentDate: "2023-05-24",
-          appointmentTime: "2:00 PM",
-          appointmentLocation: "Location 1",
+          key: '2a',
+          customerName: 'Ahmad bin Abdullah',
+          appointmentDate: '2023-05-24',
+          appointmentTime: '2:00 PM',
+          appointmentLocation: 'Location 1',
           status: StatusLabels.REASSIGNING,
-          typeOfService: "New Water Supply",
+          typeOfService: 'New Water Supply',
         },
         {
-          key: "2b",
-          customerName: "Tan Ah Ching",
-          appointmentDate: "2023-05-26",
-          appointmentTime: "1:00 PM",
-          appointmentLocation: "Location 1",
+          key: '2b',
+          customerName: 'Tan Ah Ching',
+          appointmentDate: '2023-05-26',
+          appointmentTime: '1:00 PM',
+          appointmentLocation: 'Location 1',
           status: StatusLabels.CANCELLED,
-          typeOfService: "New Water Supply",
+          typeOfService: 'New Water Supply',
         },
         {
-          key: "2c",
-          customerName: "Lee Xiao Ming",
-          appointmentDate: "2023-05-27",
-          appointmentTime: "10:00 AM",
-          appointmentLocation: "Location 1",
+          key: '2c',
+          customerName: 'Lee Xiao Ming',
+          appointmentDate: '2023-05-27',
+          appointmentTime: '10:00 AM',
+          appointmentLocation: 'Location 1',
           status: StatusLabels.CANCELLED,
-          typeOfService: "Temporary Supply",
+          typeOfService: 'Temporary Supply',
         },
         {
-          key: "2d",
-          customerName: "Bhavin a/l Ishir",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
+          key: '2d',
+          customerName: 'Bhavin a/l Ishir',
+          appointmentDate: '2025-05-28',
+          appointmentTime: '12:00PM',
+          appointmentLocation: 'Location 3',
           status: StatusLabels.RESCHEDULED,
-          typeOfService: "Temporary Supply",
+          typeOfService: 'Temporary Supply',
         },
         {
-          key: "2e",
-          customerName: "Amyra a/p Kiaan",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
+          key: '2e',
+          customerName: 'Amyra a/p Kiaan',
+          appointmentDate: '2025-05-28',
+          appointmentTime: '12:00PM',
+          appointmentLocation: 'Location 3',
           status: StatusLabels.ASSIGNED,
-          typeOfService: "New Water Supply",
+          typeOfService: 'New Water Supply',
         },
         // Add more appointments as needed
       ],
     },
     {
-      key: "3",
-      name: "Elon Mask",
-      avatar: "./icons/avatarMeow01.png", // Replace with the actual URL or identifier for the avatar
+      key: '3',
+      name: 'Elon Mask',
+      avatar: './icons/avatarMeow01.png', // Replace with the actual URL or identifier for the avatar
 
       appointments: [
         {
-          key: "3a",
-          customerName: "Steve Jobs",
-          appointmentDate: "2023-05-24",
-          appointmentTime: "2:00 PM",
-          appointmentLocation: "Location 1",
+          key: '3a',
+          customerName: 'Steve Jobs',
+          appointmentDate: '2023-05-24',
+          appointmentTime: '2:00 PM',
+          appointmentLocation: 'Location 1',
           status: StatusLabels.ASSIGNED,
-          typeOfService: "Temporary Supply",
+          typeOfService: 'Temporary Supply',
         },
         {
-          key: "3b",
-          customerName: "Mark Zuckerberg",
-          appointmentDate: "2023-05-26",
-          appointmentTime: "1:00 PM",
-          appointmentLocation: "Location 1",
+          key: '3b',
+          customerName: 'Mark Zuckerberg',
+          appointmentDate: '2023-05-26',
+          appointmentTime: '1:00 PM',
+          appointmentLocation: 'Location 1',
           status: StatusLabels.ASSIGNED,
-          typeOfService: "Temporary Supply",
+          typeOfService: 'Temporary Supply',
         },
         {
-          key: "3c",
-          customerName: "Aventure",
-          appointmentDate: "2023-05-27",
-          appointmentTime: "10:00 AM",
-          appointmentLocation: "Location 1",
+          key: '3c',
+          customerName: 'Aventure',
+          appointmentDate: '2023-05-27',
+          appointmentTime: '10:00 AM',
+          appointmentLocation: 'Location 1',
           status: StatusLabels.CANCELLED,
-          typeOfService: "Temporary Supply",
+          typeOfService: 'Temporary Supply',
         },
         {
-          key: "3d",
-          customerName: "Bamberbee",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
+          key: '3d',
+          customerName: 'Bamberbee',
+          appointmentDate: '2025-05-28',
+          appointmentTime: '12:00PM',
+          appointmentLocation: 'Location 3',
           status: StatusLabels.FAILED_TO_VISIT,
-          typeOfService: "New Water Supply",
+          typeOfService: 'New Water Supply',
         },
         {
-          key: "3e",
-          customerName: "Cinderlala",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
+          key: '3e',
+          customerName: 'Cinderlala',
+          appointmentDate: '2025-05-28',
+          appointmentTime: '12:00PM',
+          appointmentLocation: 'Location 3',
           status: StatusLabels.REASSIGNING,
-          typeOfService: "New Water Supply",
+          typeOfService: 'New Water Supply',
         },
         {
-          key: "3f",
-          customerName: "Doraemon",
-          appointmentDate: "2025-05-28",
-          appointmentTime: "12:00PM",
-          appointmentLocation: "Location 3",
+          key: '3f',
+          customerName: 'Doraemon',
+          appointmentDate: '2025-05-28',
+          appointmentTime: '12:00PM',
+          appointmentLocation: 'Location 3',
           status: StatusLabels.RESCHEDULED,
-          typeOfService: "New Water Supply",
+          typeOfService: 'New Water Supply',
         },
         // Add more appointments as needed
       ],
@@ -285,62 +285,62 @@ const AppointmentUpdates: React.FC = () => {
 
     const nestedColumns = [
       {
-        title: "Customer Name",
-        dataIndex: "customerName",
+        title: 'Customer Name',
+        dataIndex: 'customerName',
         sorter: (a: Appointment, b: Appointment) =>
           a.customerName.localeCompare(b.customerName),
       },
       {
-        title: "Appointment Date",
-        dataIndex: "appointmentDate",
+        title: 'Appointment Date',
+        dataIndex: 'appointmentDate',
         sorter: (a: Appointment, b: Appointment) =>
           a.appointmentDate.localeCompare(b.appointmentDate),
       },
       {
-        title: "Appointment Time",
-        dataIndex: "appointmentTime",
+        title: 'Appointment Time',
+        dataIndex: 'appointmentTime',
         sorter: (a: Appointment, b: Appointment) =>
           a.appointmentTime.localeCompare(b.appointmentTime),
       },
       {
-        title: "Appointment Location",
-        dataIndex: "appointmentLocation",
+        title: 'Appointment Location',
+        dataIndex: 'appointmentLocation',
         sorter: (a: Appointment, b: Appointment) =>
           a.appointmentLocation.localeCompare(b.appointmentLocation),
       },
       {
-        title: "Type of Service",
-        dataIndex: "typeOfService",
+        title: 'Type of Service',
+        dataIndex: 'typeOfService',
         sorter: (a: Appointment, b: Appointment) =>
           a.typeOfService.localeCompare(b.typeOfService),
       },
 
       {
         title: (
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <span>Status</span>
           </div>
         ),
-        dataIndex: "status",
+        dataIndex: 'status',
         sorter: (a: Appointment, b: Appointment) =>
           a.status.localeCompare(b.status),
         render: (status: string) => {
-          let color = "";
+          let color = '';
           switch (status) {
-            case "assigned":
-              color = light["cyan"];
+            case 'assigned':
+              color = light['cyan'];
               break;
-            case "cancelled":
-              color = light["red"];
+            case 'cancelled':
+              color = light['red'];
               break;
-            case "failed to visit":
-              color = light["orange"];
+            case 'failed to visit':
+              color = light['orange'];
               break;
-            case "reassigning":
-              color = light["geekblue"];
+            case 'reassigning':
+              color = light['geekblue'];
               break;
-            case "rescheduled":
-              color = light["lime"];
+            case 'rescheduled':
+              color = light['lime'];
               break;
             default:
               break;
@@ -351,24 +351,24 @@ const AppointmentUpdates: React.FC = () => {
           <div>
             <Checkbox.Group
               options={[
-                { label: "Assigned", value: "assigned" },
-                { label: "Cancelled", value: "cancelled" },
-                { label: "Failed to Visit", value: "failed to visit" },
-                { label: "Reassigning", value: "reassigning" },
-                { label: "Rescheduled", value: "rescheduled" },
+                { label: 'Assigned', value: 'assigned' },
+                { label: 'Cancelled', value: 'cancelled' },
+                { label: 'Failed to Visit', value: 'failed to visit' },
+                { label: 'Reassigning', value: 'reassigning' },
+                { label: 'Rescheduled', value: 'rescheduled' },
               ]}
               value={plumberStatusFilters}
               onChange={(checkedValues: CheckboxValueType[]) => {
                 setSelectedTags(checkedValues as string[]);
                 checkedValues.forEach((value) =>
-                  handleTagChange(value as StatusLabels)
+                  handleTagChange(value as StatusLabels),
                 );
               }}
               style={{
-                display: "run-in",
-                flexDirection: "row",
+                display: 'run-in',
+                flexDirection: 'row',
                 padding: 8,
-                backgroundColor: light["colorPrimaryBg"],
+                backgroundColor: light['colorPrimaryBg'],
               }}
             />
           </div>
@@ -381,10 +381,10 @@ const AppointmentUpdates: React.FC = () => {
       },
 
       {
-        title: "Action",
-        dataIndex: "action",
+        title: 'Action',
+        dataIndex: 'action',
         width: 100,
-        fixed: "right" as const,
+        fixed: 'right' as const,
         render: () => <Button type="link">Action</Button>,
       },
     ];
@@ -405,12 +405,12 @@ const AppointmentUpdates: React.FC = () => {
         </div>
         <Table
           dataSource={record.appointments.filter((appointment) =>
-            statusFilters[record.key]?.includes(appointment.status)
+            statusFilters[record.key]?.includes(appointment.status),
           )}
           columns={nestedColumns}
           pagination={false}
           onChange={() => {}}
-          scroll={{ x: "max-content" }}
+          scroll={{ x: 'max-content' }}
         />
       </div>
     );
@@ -418,24 +418,24 @@ const AppointmentUpdates: React.FC = () => {
 
   const columns = [
     {
-      title: "",
-      dataIndex: "name",
+      title: '',
+      dataIndex: 'name',
       render: (name: string, record: Plumber) => {
         const totalAppointmentCount = record.appointments.length;
         const assignedCount = record.appointments.filter(
-          (appointment) => appointment.status === "assigned"
+          (appointment) => appointment.status === 'assigned',
         ).length;
         const cancelledCount = record.appointments.filter(
-          (appointment) => appointment.status === "cancelled"
+          (appointment) => appointment.status === 'cancelled',
         ).length;
         const reassigningCount = record.appointments.filter(
-          (appointment) => appointment.status === "reassigning"
+          (appointment) => appointment.status === 'reassigning',
         ).length;
         const rescheduledCount = record.appointments.filter(
-          (appointment) => appointment.status === "rescheduled"
+          (appointment) => appointment.status === 'rescheduled',
         ).length;
         const failedCount = record.appointments.filter(
-          (appointment) => appointment.status === "failed to visit"
+          (appointment) => appointment.status === 'failed to visit',
         ).length;
 
         return (
@@ -458,277 +458,277 @@ const AppointmentUpdates: React.FC = () => {
                   <span className="textEffect">{name}</span>
                 </b>
                 <span> has a total of {totalAppointmentCount} appointment</span>
-                {record.appointments.length !== 1 ? "s" : ""}
+                {record.appointments.length !== 1 ? 's' : ''}
               </span>
             </Button>
             <span
               style={{
-                textDecoration: "none",
+                textDecoration: 'none',
                 marginLeft: 4,
                 marginTop: 8,
-                display: "flex",
-                justifyContent: "flex-start",
+                display: 'flex',
+                justifyContent: 'flex-start',
               }}
             >
               <Tag
-                color={light["cyan"]}
+                color={light['cyan']}
                 onClick={() => handleTagFilter(StatusLabels.ASSIGNED)}
                 style={{
                   borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
+                  height: 'auto',
+                  padding: '2 8 2 8',
 
                   color: statusFilters[record.key]?.includes(
-                    StatusLabels.ASSIGNED
+                    StatusLabels.ASSIGNED,
                   )
-                    ? "white"
-                    : light["colorTextDisabled"],
+                    ? 'white'
+                    : light['colorTextDisabled'],
                   backgroundColor: statusFilters[record.key]?.includes(
-                    StatusLabels.ASSIGNED
+                    StatusLabels.ASSIGNED,
                   )
-                    ? light["cyan"]
+                    ? light['cyan']
                     : undefined,
                   borderColor: statusFilters[record.key]?.includes(
-                    StatusLabels.ASSIGNED
+                    StatusLabels.ASSIGNED,
                   )
-                    ? light["cyan"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
+                    ? light['cyan']
+                    : light['colorTextDisabled'],
+                  cursor: 'pointer',
                 }}
               >
                 <span
                   style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     background: statusFilters[record.key]?.includes(
-                      StatusLabels.ASSIGNED
+                      StatusLabels.ASSIGNED,
                     )
-                      ? "#fff"
+                      ? '#fff'
                       : undefined,
-                    borderRadius: "50%",
+                    borderRadius: '50%',
                     width: 16,
                     height: 16,
                     marginRight: 4,
                     color: statusFilters[record.key]?.includes(
-                      StatusLabels.ASSIGNED
+                      StatusLabels.ASSIGNED,
                     )
-                      ? light["cyan"]
-                      : light["colorTextDisabled"],
+                      ? light['cyan']
+                      : light['colorTextDisabled'],
                   }}
                 >
                   <b>{assignedCount}</b>
-                </span>{" "}
+                </span>{' '}
                 assigned
-              </Tag>{" "}
+              </Tag>{' '}
               &nbsp;
               <Tag
-                color={light["red"]}
+                color={light['red']}
                 onClick={() => handleTagFilter(StatusLabels.CANCELLED)}
                 style={{
                   borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
+                  height: 'auto',
+                  padding: '2 8 2 8',
 
                   color: statusFilters[record.key]?.includes(
-                    StatusLabels.CANCELLED
+                    StatusLabels.CANCELLED,
                   )
-                    ? "white"
-                    : light["colorTextDisabled"],
+                    ? 'white'
+                    : light['colorTextDisabled'],
                   backgroundColor: statusFilters[record.key]?.includes(
-                    StatusLabels.CANCELLED
+                    StatusLabels.CANCELLED,
                   )
-                    ? light["red"]
+                    ? light['red']
                     : undefined,
                   borderColor: statusFilters[record.key]?.includes(
-                    StatusLabels.CANCELLED
+                    StatusLabels.CANCELLED,
                   )
-                    ? light["red"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
+                    ? light['red']
+                    : light['colorTextDisabled'],
+                  cursor: 'pointer',
                 }}
               >
                 <span
                   style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     background: statusFilters[record.key]?.includes(
-                      StatusLabels.CANCELLED
+                      StatusLabels.CANCELLED,
                     )
-                      ? "#fff"
+                      ? '#fff'
                       : undefined,
-                    borderRadius: "50%",
+                    borderRadius: '50%',
                     width: 16,
                     height: 16,
                     marginRight: 4,
                     color: statusFilters[record.key]?.includes(
-                      StatusLabels.CANCELLED
+                      StatusLabels.CANCELLED,
                     )
-                      ? light["red"]
-                      : light["colorTextDisabled"],
+                      ? light['red']
+                      : light['colorTextDisabled'],
                   }}
                 >
                   <b>{cancelledCount}</b>
-                </span>{" "}
+                </span>{' '}
                 cancelled
-              </Tag>{" "}
+              </Tag>{' '}
               &nbsp;
               <Tag
-                color={light["orange"]}
+                color={light['orange']}
                 onClick={() => handleTagFilter(StatusLabels.FAILED_TO_VISIT)}
                 style={{
                   borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
+                  height: 'auto',
+                  padding: '2 8 2 8',
 
                   color: statusFilters[record.key]?.includes(
-                    StatusLabels.FAILED_TO_VISIT
+                    StatusLabels.FAILED_TO_VISIT,
                   )
-                    ? "white"
-                    : light["colorTextDisabled"],
+                    ? 'white'
+                    : light['colorTextDisabled'],
                   backgroundColor: statusFilters[record.key]?.includes(
-                    StatusLabels.FAILED_TO_VISIT
+                    StatusLabels.FAILED_TO_VISIT,
                   )
-                    ? light["orange"]
+                    ? light['orange']
                     : undefined,
                   borderColor: statusFilters[record.key]?.includes(
-                    StatusLabels.FAILED_TO_VISIT
+                    StatusLabels.FAILED_TO_VISIT,
                   )
-                    ? light["orange"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
+                    ? light['orange']
+                    : light['colorTextDisabled'],
+                  cursor: 'pointer',
                 }}
               >
                 <span
                   style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     background: statusFilters[record.key]?.includes(
-                      StatusLabels.FAILED_TO_VISIT
+                      StatusLabels.FAILED_TO_VISIT,
                     )
-                      ? "#fff"
+                      ? '#fff'
                       : undefined,
-                    borderRadius: "50%",
+                    borderRadius: '50%',
                     width: 16,
                     height: 16,
                     marginRight: 4,
                     color: statusFilters[record.key]?.includes(
-                      StatusLabels.FAILED_TO_VISIT
+                      StatusLabels.FAILED_TO_VISIT,
                     )
-                      ? light["orange"]
-                      : light["colorTextDisabled"],
+                      ? light['orange']
+                      : light['colorTextDisabled'],
                   }}
                 >
                   <b>{failedCount}</b>
-                </span>{" "}
+                </span>{' '}
                 failed to visit
-              </Tag>{" "}
+              </Tag>{' '}
               &nbsp;
               <Tag
-                color={light["geekblue"]}
+                color={light['geekblue']}
                 onClick={() => handleTagFilter(StatusLabels.REASSIGNING)}
                 style={{
                   borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
+                  height: 'auto',
+                  padding: '2 8 2 8',
 
                   color: statusFilters[record.key]?.includes(
-                    StatusLabels.REASSIGNING
+                    StatusLabels.REASSIGNING,
                   )
-                    ? "white"
-                    : light["colorTextDisabled"],
+                    ? 'white'
+                    : light['colorTextDisabled'],
                   backgroundColor: statusFilters[record.key]?.includes(
-                    StatusLabels.REASSIGNING
+                    StatusLabels.REASSIGNING,
                   )
-                    ? light["geekblue"]
+                    ? light['geekblue']
                     : undefined,
                   borderColor: statusFilters[record.key]?.includes(
-                    StatusLabels.REASSIGNING
+                    StatusLabels.REASSIGNING,
                   )
-                    ? light["geekblue"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
+                    ? light['geekblue']
+                    : light['colorTextDisabled'],
+                  cursor: 'pointer',
                 }}
               >
                 <span
                   style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     background: statusFilters[record.key]?.includes(
-                      StatusLabels.REASSIGNING
+                      StatusLabels.REASSIGNING,
                     )
-                      ? "#fff"
+                      ? '#fff'
                       : undefined,
-                    borderRadius: "50%",
+                    borderRadius: '50%',
                     width: 16,
                     height: 16,
                     marginRight: 4,
                     color: statusFilters[record.key]?.includes(
-                      StatusLabels.REASSIGNING
+                      StatusLabels.REASSIGNING,
                     )
-                      ? light["geekblue"]
-                      : light["colorTextDisabled"],
+                      ? light['geekblue']
+                      : light['colorTextDisabled'],
                   }}
                 >
                   <b>{reassigningCount}</b>
-                </span>{" "}
+                </span>{' '}
                 reassigning
-              </Tag>{" "}
+              </Tag>{' '}
               &nbsp;
               <Tag
-                color={light["lime"]}
+                color={light['lime']}
                 onClick={() => handleTagFilter(StatusLabels.RESCHEDULED)}
                 style={{
                   borderRadius: 8,
-                  height: "auto",
-                  padding: "2 8 2 8",
+                  height: 'auto',
+                  padding: '2 8 2 8',
 
                   color: statusFilters[record.key]?.includes(
-                    StatusLabels.RESCHEDULED
+                    StatusLabels.RESCHEDULED,
                   )
-                    ? "white"
-                    : light["colorTextDisabled"],
+                    ? 'white'
+                    : light['colorTextDisabled'],
                   backgroundColor: statusFilters[record.key]?.includes(
-                    StatusLabels.RESCHEDULED
+                    StatusLabels.RESCHEDULED,
                   )
-                    ? light["lime"]
+                    ? light['lime']
                     : undefined,
                   borderColor: statusFilters[record.key]?.includes(
-                    StatusLabels.RESCHEDULED
+                    StatusLabels.RESCHEDULED,
                   )
-                    ? light["lime"]
-                    : light["colorTextDisabled"],
-                  cursor: "pointer",
+                    ? light['lime']
+                    : light['colorTextDisabled'],
+                  cursor: 'pointer',
                 }}
               >
                 <span
                   style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     background: statusFilters[record.key]?.includes(
-                      StatusLabels.RESCHEDULED
+                      StatusLabels.RESCHEDULED,
                     )
-                      ? "#fff"
+                      ? '#fff'
                       : undefined,
-                    borderRadius: "50%",
+                    borderRadius: '50%',
                     width: 16,
                     height: 16,
                     marginRight: 4,
                     color: statusFilters[record.key]?.includes(
-                      StatusLabels.RESCHEDULED
+                      StatusLabels.RESCHEDULED,
                     )
-                      ? light["lime"]
-                      : light["colorTextDisabled"],
+                      ? light['lime']
+                      : light['colorTextDisabled'],
                   }}
                 >
-                  <b>{rescheduledCount}</b>{" "}
+                  <b>{rescheduledCount}</b>{' '}
                 </span>
                 rescheduled
-              </Tag>{" "}
+              </Tag>{' '}
               &nbsp;
             </span>
           </>
@@ -744,7 +744,7 @@ const AppointmentUpdates: React.FC = () => {
         const plumberFilters = prevFilters[plumberKey] || [];
         if (plumberFilters.includes(status)) {
           updatedFilters[plumberKey] = plumberFilters.filter(
-            (filter) => filter !== status
+            (filter) => filter !== status,
           );
         } else {
           updatedFilters[plumberKey] = [...plumberFilters, status];
@@ -772,7 +772,7 @@ const AppointmentUpdates: React.FC = () => {
           dataSource={data}
           expandable={{
             expandedRowRender,
-            defaultExpandedRowKeys: data.map((plumber) => plumber.key),
+            defaultExpandedRowKeys: plumberKeys,
           }}
           pagination={false}
           onChange={() => {}}
@@ -817,24 +817,24 @@ const AppointmentUpdates: React.FC = () => {
               <div
                 style={{
                   height: 30,
-                  width: "auto",
-                  padding: " 1px 4px 1px 4px",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  fontWeight: "bold",
+                  width: 'auto',
+                  padding: ' 1px 4px 1px 4px',
+                  alignContent: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 'bold',
                   borderRadius: 16,
-                  background: light["colorPrimaryBase"],
-                  overflow: "hidden",
-                  color: "#fff",
+                  background: light['colorPrimaryBase'],
+                  overflow: 'hidden',
+                  color: '#fff',
                 }}
               >
                 <div
                   style={{
                     fontSize: 40,
 
-                    alignContent: "center",
-                    justifyContent: "center",
-                    margin: "-20px 0px 0px 10px",
+                    alignContent: 'center',
+                    justifyContent: 'center',
+                    margin: '-20px 0px 0px 10px',
                   }}
                 >
                   {drawerData?.name}
