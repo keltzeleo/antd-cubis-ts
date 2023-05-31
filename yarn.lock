@@ -42,7 +42,7 @@
 
 "@ant-design/colors@^7.0.0":
   version "7.0.0"
-  resolved "https://registry.npmjs.org/@ant-design/colors/-/colors-7.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/@ant-design/colors/-/colors-7.0.0.tgz#eb7eecead124c3533aea05d61254f0a17f2b61b3"
   integrity sha512-iVm/9PfGCbC0dSMBrz7oiEXZaaGH7ceU40OJEfKmyuzR9R5CRimJYPlRiFtMQGQcbNMea/ePcoIebi4ASGYXtg==
   dependencies:
     "@ctrl/tinycolor" "^3.4.0"
