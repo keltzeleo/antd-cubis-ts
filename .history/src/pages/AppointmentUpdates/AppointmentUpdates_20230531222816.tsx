@@ -12,17 +12,18 @@ import {
   Tag,
 } from "antd";
 
-import { SearchOutlined } from "@ant-design/icons";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import React, { useState } from "react";
 import { StatusLabels } from "../../customConstants/constants";
 
+import { SearchOutlined } from "@ant-design/icons";
+
 import light from "../../../src/tokens/light.json";
-import "../MyForm.css";
+//import "../MyForm.css";
 
 interface Appointment {
   key: string;
-  datePlanned: string;
+  appointmentDate: string;
   appointmentLocation: string;
   appointmentTime: string;
   customerName: string;
@@ -142,7 +143,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "1a",
           customerName: "Muhammad Bin Amir",
-          datePlanned: "2023-05-24",
+          appointmentDate: "2023-05-24",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
           status: StatusLabels.FAILED_TO_VISIT,
@@ -151,7 +152,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "1b",
           customerName: "Siti Binti Abdul Hafiz",
-          datePlanned: "2023-05-25",
+          appointmentDate: "2023-05-25",
           appointmentTime: "11:00 AM",
           appointmentLocation: "Location 1",
           status: StatusLabels.REASSIGNING,
@@ -160,7 +161,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "1c",
           customerName: "Rajesh a/l Suppiah ",
-          datePlanned: "2023-05-25",
+          appointmentDate: "2023-05-25",
           appointmentTime: "4:00 PM",
           appointmentLocation: "Location 1",
           status: StatusLabels.ASSIGNED,
@@ -178,7 +179,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "2a",
           customerName: "Ahmad bin Abdullah",
-          datePlanned: "2023-05-24",
+          appointmentDate: "2023-05-24",
           appointmentTime: "2:00 PM",
           appointmentLocation: "Location 1",
           status: StatusLabels.REASSIGNING,
@@ -187,7 +188,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "2b",
           customerName: "Tan Ah Ching",
-          datePlanned: "2023-05-26",
+          appointmentDate: "2023-05-26",
           appointmentTime: "1:00 PM",
           appointmentLocation: "Location 1",
           status: StatusLabels.CANCELLED,
@@ -196,7 +197,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "2c",
           customerName: "Lee Xiao Ming",
-          datePlanned: "2023-05-27",
+          appointmentDate: "2023-05-27",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
           status: StatusLabels.CANCELLED,
@@ -205,7 +206,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "2d",
           customerName: "Bhavin a/l Ishir",
-          datePlanned: "2025-05-28",
+          appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
           status: StatusLabels.RESCHEDULED,
@@ -214,7 +215,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "2e",
           customerName: "Amyra a/p Kiaan",
-          datePlanned: "2025-05-28",
+          appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
           status: StatusLabels.ASSIGNED,
@@ -232,7 +233,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3a",
           customerName: "Steve Jobs",
-          datePlanned: "2023-05-24",
+          appointmentDate: "2023-05-24",
           appointmentTime: "2:00 PM",
           appointmentLocation: "Location 1",
           status: StatusLabels.ASSIGNED,
@@ -241,7 +242,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3b",
           customerName: "Mark Zuckerberg",
-          datePlanned: "2023-05-26",
+          appointmentDate: "2023-05-26",
           appointmentTime: "1:00 PM",
           appointmentLocation: "Location 1",
           status: StatusLabels.ASSIGNED,
@@ -250,7 +251,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3c",
           customerName: "Aventure",
-          datePlanned: "2023-05-27",
+          appointmentDate: "2023-05-27",
           appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
           status: StatusLabels.CANCELLED,
@@ -259,7 +260,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3d",
           customerName: "Bamberbee",
-          datePlanned: "2025-05-28",
+          appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
           status: StatusLabels.FAILED_TO_VISIT,
@@ -268,7 +269,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3e",
           customerName: "Cinderlala",
-          datePlanned: "2025-05-28",
+          appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
           status: StatusLabels.REASSIGNING,
@@ -277,7 +278,7 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3f",
           customerName: "Doraemon",
-          datePlanned: "2025-05-28",
+          appointmentDate: "2025-05-28",
           appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
           status: StatusLabels.RESCHEDULED,
@@ -314,10 +315,10 @@ const AppointmentUpdates: React.FC = () => {
           a.customerName.localeCompare(b.customerName),
       },
       {
-        title: "Date Planned",
-        dataIndex: "datePlanned",
+        title: "Appointment Date",
+        dataIndex: "appointmentDate",
         sorter: (a: Appointment, b: Appointment) =>
-          a.datePlanned.localeCompare(b.datePlanned),
+          a.appointmentDate.localeCompare(b.appointmentDate),
       },
       {
         title: "Appointment Time",
@@ -466,7 +467,7 @@ const AppointmentUpdates: React.FC = () => {
             <Avatar
               size={32}
               src={record.avatar}
-              style={{ backgroundColor: getRandomColor(), marginTop: 8 }}
+              style={{ backgroundColor: getRandomColor() }}
             />
             <Button
               type="link"
@@ -795,15 +796,21 @@ const AppointmentUpdates: React.FC = () => {
         <>
           <Form.Item>
             <span>
+              <Input.Search
+                style={{ marginTop: 24, width: "25vh" }}
+                allowClear
+                enterButton="Search"
+                value={searchValue}
+                onChange={(e) => handleSearch(e.target.value)}
+                onSearch={handleSearch}
+                placeholder="Enter a plumber's name"
+              />
               <Space.Compact size="large">
                 <Input
-                  style={{ marginTop: 24, width: "25vh" }}
-                  allowClear
-                  value={searchValue}
-                  onChange={(e) => handleSearch(e.target.value)}
-                  placeholder="Plumber's Name for Quick Search"
                   addonBefore={<SearchOutlined />}
+                  placeholder="large size"
                 />
+                <Input placeholder="another input" />
               </Space.Compact>
             </span>
           </Form.Item>
@@ -811,7 +818,6 @@ const AppointmentUpdates: React.FC = () => {
       </div>
       <div>
         <Table
-          style={{ margin: 10 }}
           columns={columns}
           dataSource={filteredData}
           expandable={{

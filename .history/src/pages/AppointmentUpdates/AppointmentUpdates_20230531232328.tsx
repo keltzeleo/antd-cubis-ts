@@ -19,6 +19,7 @@ import { StatusLabels } from "../../customConstants/constants";
 
 import light from "../../../src/tokens/light.json";
 import "../MyForm.css";
+import "./AppointmentUpdates.css";
 
 interface Appointment {
   key: string;
@@ -801,7 +802,7 @@ const AppointmentUpdates: React.FC = () => {
                   allowClear
                   value={searchValue}
                   onChange={(e) => handleSearch(e.target.value)}
-                  placeholder="Plumber's Name for Quick Search"
+                  placeholder="Enter a plumber's name"
                   addonBefore={<SearchOutlined />}
                 />
               </Space.Compact>

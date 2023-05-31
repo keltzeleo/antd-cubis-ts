@@ -801,7 +801,7 @@ const AppointmentUpdates: React.FC = () => {
                   allowClear
                   value={searchValue}
                   onChange={(e) => handleSearch(e.target.value)}
-                  placeholder="Plumber's Name for Quick Search"
+                  placeholder="Enter Plumber's Name for Quick Search"
                   addonBefore={<SearchOutlined />}
                 />
               </Space.Compact>

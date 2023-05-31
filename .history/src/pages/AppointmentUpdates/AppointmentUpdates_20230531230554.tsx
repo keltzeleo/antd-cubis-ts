@@ -18,7 +18,7 @@ import React, { useState } from "react";
 import { StatusLabels } from "../../customConstants/constants";
 
 import light from "../../../src/tokens/light.json";
-import "../MyForm.css";
+//import "../MyForm.css";
 
 interface Appointment {
   key: string;
@@ -434,6 +434,7 @@ const AppointmentUpdates: React.FC = () => {
           pagination={false}
           onChange={() => {}}
           scroll={{ x: "max-content" }}
+          style={{ marginTop: 16, marginBottom: 16 }} // Add custom styles for spacing
         />
       </div>
     );
@@ -466,7 +467,7 @@ const AppointmentUpdates: React.FC = () => {
             <Avatar
               size={32}
               src={record.avatar}
-              style={{ backgroundColor: getRandomColor(), marginTop: 8 }}
+              style={{ backgroundColor: getRandomColor() }}
             />
             <Button
               type="link"
@@ -801,7 +802,7 @@ const AppointmentUpdates: React.FC = () => {
                   allowClear
                   value={searchValue}
                   onChange={(e) => handleSearch(e.target.value)}
-                  placeholder="Plumber's Name for Quick Search"
+                  placeholder="Enter a plumber's name"
                   addonBefore={<SearchOutlined />}
                 />
               </Space.Compact>
