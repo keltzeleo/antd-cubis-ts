@@ -87,27 +87,25 @@ const AppointmentUpdates: React.FC = () => {
   });
 
   /**
-   * handleTagFilterExclusive updates the status filters for a given plumber when a tag is selected or deselected.
+   * handleTagChange updates the status filters for a given plumber when a tag is selected or deselected.
    * @param tagValue - The value of the tag that changed.
    * @param plumberKey - The key of the plumber for which to update the status filters.
    */
-  const handleTagFilterExclusive = (
-    tagValue: StatusLabels,
-    plumberKey: string
-  ) => {
+  const handleTagChange = (tagValue: StatusLabels, plumberKey: string) => {
     setStatusFilters((prevFilters) => {
-      const updatedFilters = { ...prevFilters };
-      Object.keys(updatedFilters).forEach((plumberKey) => {
-        const plumberFilters = updatedFilters[plumberKey] || [];
-        if (plumberFilters.includes(tagValue)) {
-          updatedFilters[plumberKey] = plumberFilters.filter(
+      const plumberFilters = prevFilters[plumberKey] || [];
+      if (plumberFilters.includes(tagValue)) {
+        return {
+          ...prevFilters,
+          [plumberKey]: plumberFilters.filter(
             (filter) => filter !== tagValue
-          ) as StatusLabels[];
-        } else {
-          updatedFilters[plumberKey] = [...plumberFilters, tagValue];
-        }
-      });
-      return updatedFilters;
+          ) as StatusLabels[],
+        };
+      }
+      return {
+        ...prevFilters,
+        [plumberKey]: [...plumberFilters, tagValue],
+      };
     });
   };
 
@@ -473,7 +471,7 @@ const AppointmentUpdates: React.FC = () => {
             >
               <Tag
                 color={light["cyan"]}
-                onClick={() => handleTagFilterMaster(StatusLabels.ASSIGNED)}
+                onClick={() => handleTagFilter(StatusLabels.ASSIGNED)}
                 style={{
                   borderRadius: 8,
                   height: "auto",
@@ -525,7 +523,7 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["red"]}
-                onClick={() => handleTagFilterMaster(StatusLabels.CANCELLED)}
+                onClick={() => handleTagFilter(StatusLabels.CANCELLED)}
                 style={{
                   borderRadius: 8,
                   height: "auto",
@@ -577,9 +575,7 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["orange"]}
-                onClick={() =>
-                  handleTagFilterMaster(StatusLabels.FAILED_TO_VISIT)
-                }
+                onClick={() => handleTagFilter(StatusLabels.FAILED_TO_VISIT)}
                 style={{
                   borderRadius: 8,
                   height: "auto",
@@ -631,7 +627,7 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["geekblue"]}
-                onClick={() => handleTagFilterMaster(StatusLabels.REASSIGNING)}
+                onClick={() => handleTagFilter(StatusLabels.REASSIGNING)}
                 style={{
                   borderRadius: 8,
                   height: "auto",
@@ -683,7 +679,7 @@ const AppointmentUpdates: React.FC = () => {
               &nbsp;
               <Tag
                 color={light["lime"]}
-                onClick={() => handleTagFilterMaster(StatusLabels.RESCHEDULED)}
+                onClick={() => handleTagFilter(StatusLabels.RESCHEDULED)}
                 style={{
                   borderRadius: 8,
                   height: "auto",
@@ -740,7 +736,7 @@ const AppointmentUpdates: React.FC = () => {
     },
   ];
 
-  const handleTagFilterMaster = (status: StatusLabels) => {
+  const handleTagFilter = (status: StatusLabels) => {
     setStatusFilters((prevFilters) => {
       const updatedFilters: { [key: string]: StatusLabels[] } = {};
       Object.keys(prevFilters).forEach((plumberKey) => {

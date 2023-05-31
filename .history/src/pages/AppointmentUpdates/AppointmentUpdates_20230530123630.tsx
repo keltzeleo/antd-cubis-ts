@@ -96,18 +96,19 @@ const AppointmentUpdates: React.FC = () => {
     plumberKey: string
   ) => {
     setStatusFilters((prevFilters) => {
-      const updatedFilters = { ...prevFilters };
-      Object.keys(updatedFilters).forEach((plumberKey) => {
-        const plumberFilters = updatedFilters[plumberKey] || [];
-        if (plumberFilters.includes(tagValue)) {
-          updatedFilters[plumberKey] = plumberFilters.filter(
+      const plumberFilters = prevFilters[plumberKey] || [];
+      if (plumberFilters.includes(tagValue)) {
+        return {
+          ...prevFilters,
+          [plumberKey]: plumberFilters.filter(
             (filter) => filter !== tagValue
-          ) as StatusLabels[];
-        } else {
-          updatedFilters[plumberKey] = [...plumberFilters, tagValue];
-        }
-      });
-      return updatedFilters;
+          ) as StatusLabels[],
+        };
+      }
+      return {
+        ...prevFilters,
+        [plumberKey]: [...plumberFilters, tagValue],
+      };
     });
   };
 
