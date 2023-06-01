@@ -826,9 +826,7 @@ const AppointmentUpdates: React.FC = () => {
 
         <Drawer
           title={
-            <div
-              style={{ display: "flex", alignItems: "center", marginTop: 24 }}
-            >
+            <div style={{ display: "flex", alignItems: "center" }}>
               <Avatar
                 size={32}
                 src={drawerData?.avatar}
@@ -841,7 +839,7 @@ const AppointmentUpdates: React.FC = () => {
               <div
                 style={{
                   height: 30,
-                  width: "100vh",
+                  width: "auto",
                   padding: " 1px 4px 1px 4px",
                   alignContent: "center",
                   justifyContent: "center",
@@ -889,7 +887,7 @@ const AppointmentUpdates: React.FC = () => {
               <div
                 style={{
                   height: 30,
-                  width: "100vh",
+                  width: "auto",
                   padding: " 1px 4px 1px 4px",
                   alignContent: "center",
                   justifyContent: "center",

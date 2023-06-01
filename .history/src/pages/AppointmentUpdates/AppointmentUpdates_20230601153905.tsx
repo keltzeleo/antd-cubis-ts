@@ -826,44 +826,34 @@ const AppointmentUpdates: React.FC = () => {
 
         <Drawer
           title={
-            <div
-              style={{ display: "flex", alignItems: "center", marginTop: 24 }}
-            >
-              <Avatar
-                size={32}
-                src={drawerData?.avatar}
-                style={{
-                  backgroundColor: getRandomColor(),
-                  marginLeft: -2,
-                  marginRight: 16,
-                }}
-              />
-              <div
-                style={{
-                  height: 30,
-                  width: "100vh",
-                  padding: " 1px 4px 1px 4px",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  fontWeight: "bold",
-                  borderRadius: 16,
-                  background: light["colorPrimaryBase"],
-                  overflow: "hidden",
-                  color: "#fff",
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: 40,
-
-                    alignContent: "center",
-                    justifyContent: "center",
-                    margin: "-20px 0px 0px 10px",
-                  }}
-                >
-                  {drawerData?.name}
-                </div>
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+  <Avatar
+    size={32}
+    src={drawerData?.avatar}
+    style={{
+      backgroundColor: getRandomColor(),
+      marginLeft: -2,
+      marginRight: 16,
+    }}
+  />
+  <div
+    style={{
+      height: 30,
+      width: 'auto',
+      padding: '1px 4px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontWeight: 'bold',
+      borderRadius: 16,
+      background: light['colorPrimaryBase'],
+      overflow: 'hidden',
+      color: '#fff',
+    }}
+  >
+    <div style={{ fontSize: 40, margin: '-20px 0 0 10px' }}>{drawerData?.name}</div>
+  </div>
+</div>
             </div>
           }
           width={880}
@@ -889,7 +879,7 @@ const AppointmentUpdates: React.FC = () => {
               <div
                 style={{
                   height: 30,
-                  width: "100vh",
+                  width: "auto",
                   padding: " 1px 4px 1px 4px",
                   alignContent: "center",
                   justifyContent: "center",
