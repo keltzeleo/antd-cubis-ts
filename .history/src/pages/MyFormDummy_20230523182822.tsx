@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 import "./MyForm.css";
 
-import light from "../../src/tokens/light.json";
+import light from "../tokens/light.json";
 
 interface FormFields {
   name?: string;
@@ -32,7 +32,7 @@ interface FormFields {
 
 const { Option } = Select;
 
-const MyFormDummy: React.FC = () => {
+const MyForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
   const [selectedItem, setSelectedItem] = useState("newWaterSupply");
   const [idNumber, setIdNumber] = useState("");
@@ -506,7 +506,7 @@ const MyFormDummy: React.FC = () => {
   );
 
   return (
-    <ConfigProvider>
+    <ConfigProvider theme={{ token: light }}>
       <Space direction="vertical" className="font-Mulish space-wrapper">
         <Space>
           <span></span>
@@ -647,4 +647,4 @@ const MyFormDummy: React.FC = () => {
   );
 };
 
-export default MyFormDummy;
+export default MyForm;

@@ -39,7 +39,7 @@ interface Plumber {
 }
 
 const getRandomColor = (): string => {
-  const colors = Object.values(light);
+  const colors = Object.values(token);
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex] as string;
 };
@@ -406,7 +406,7 @@ const AppointmentUpdates: React.FC = () => {
                 display: "run-in",
                 flexDirection: "row",
                 padding: 8,
-                backgroundColor: "colorPrimaryBg",
+                backgroundColor: colorPrimaryBg,
               }}
             />
           </div>
@@ -810,7 +810,7 @@ const AppointmentUpdates: React.FC = () => {
   };
 
   return (
-    <ConfigProvider>
+    <ConfigProvider theme={{ light }}>
       <div style={{ background: "", margin: "10px 10px" }}>
         <>
           <Form.Item>

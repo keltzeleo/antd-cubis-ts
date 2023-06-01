@@ -47,7 +47,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <ConfigProvider>
+    <ConfigProvider theme={{ token }}>
       <div>
         <ProLayout
           siderWidth={264}

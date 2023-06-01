@@ -10,12 +10,12 @@ interface Theme {
 }
 
 const ThemeApp: React.FC = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [token, setToken] = useState<Theme>(light);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const handleThemeChange = () => {
     setIsDarkMode(!isDarkMode);
-    setToken(isDarkMode ? { ...light } : { ...dark });
+    setToken(isDarkMode ? light : dark);
   };
 
   return (

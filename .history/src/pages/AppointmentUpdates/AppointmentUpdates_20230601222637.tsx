@@ -39,7 +39,7 @@ interface Plumber {
 }
 
 const getRandomColor = (): string => {
-  const colors = Object.values(light);
+  const colors = Object.values(token);
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex] as string;
 };
@@ -810,7 +810,7 @@ const AppointmentUpdates: React.FC = () => {
   };
 
   return (
-    <ConfigProvider>
+ 
       <div style={{ background: "", margin: "10px 10px" }}>
         <>
           <Form.Item>
@@ -945,7 +945,7 @@ const AppointmentUpdates: React.FC = () => {
           <p>Add Appointment Form</p>
         </Drawer>
       </div>
-    </ConfigProvider>
+
   );
 };
 

@@ -17,7 +17,7 @@ import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import React, { useState } from "react";
 import { StatusLabels } from "../../customConstants/constants";
 
-import light from "../../../src/tokens/light.json";
+//import light from "../../../src/lights/light.json";
 import "../MyForm.css";
 
 interface Appointment {
@@ -39,7 +39,7 @@ interface Plumber {
 }
 
 const getRandomColor = (): string => {
-  const colors = Object.values(light);
+  const colors = Object.values(token);
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex] as string;
 };
@@ -406,7 +406,7 @@ const AppointmentUpdates: React.FC = () => {
                 display: "run-in",
                 flexDirection: "row",
                 padding: 8,
-                backgroundColor: "colorPrimaryBg",
+                backgroundColor: light["colorPrimaryBg"],
               }}
             />
           </div>
@@ -810,7 +810,7 @@ const AppointmentUpdates: React.FC = () => {
   };
 
   return (
-    <ConfigProvider>
+    <ConfigProvider theme={{ light }}>
       <div style={{ background: "", margin: "10px 10px" }}>
         <>
           <Form.Item>
