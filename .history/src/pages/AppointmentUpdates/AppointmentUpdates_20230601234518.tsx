@@ -17,7 +17,6 @@ import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import React, { useState } from "react";
 import { StatusLabels } from "../../customConstants/constants";
 
-import light from "../../../src/tokens/light.json";
 import "../MyForm.css";
 
 interface Appointment {
@@ -43,7 +42,6 @@ const getRandomColor = (): string => {
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex] as string;
 };
-
 /**
  * FilterableTagProps describes the properties for the FilterableTag component.
  * @property color - The color of the tag.
@@ -407,7 +405,7 @@ const AppointmentUpdates: React.FC = () => {
                 display: "run-in",
                 flexDirection: "row",
                 padding: 8,
-                backgroundColor: light["colorPrimaryBg"],
+                backgroundColor: "colorPrimaryBg",
               }}
             />
           </div>
@@ -609,8 +607,8 @@ const AppointmentUpdates: React.FC = () => {
                     color: statusFilters[record.key]?.includes(
                       StatusLabels.CANCELLED
                     )
-                      ? light["red"]
-                      : light["colorTextDisabled"],
+                      ? "red"
+                      : "colorTextDisabled",
                   }}
                 >
                   <b>{cancelledCount}</b>
@@ -831,19 +829,20 @@ const AppointmentUpdates: React.FC = () => {
         </>
       </div>
       <div>
-        <Table
-          style={{ margin: 10 }}
-          columns={columns}
-          dataSource={filteredData}
-          expandable={{
-            expandedRowRender,
-            defaultExpandedRowKeys: data.map((plumber) => plumber.key),
-          }}
-          pagination={false}
-          onChange={() => {}}
-          size="small"
-        />
-
+        <ConfigProvider theme={{ token: isDarkMode ? dark : light }}>
+          <Table
+            style={{ margin: 10 }}
+            columns={columns}
+            dataSource={filteredData}
+            expandable={{
+              expandedRowRender,
+              defaultExpandedRowKeys: data.map((plumber) => plumber.key),
+            }}
+            pagination={false}
+            onChange={() => {}}
+            size="small"
+          />
+        </ConfigProvider>
         <Drawer
           title={
             <div

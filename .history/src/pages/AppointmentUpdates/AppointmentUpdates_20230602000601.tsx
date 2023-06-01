@@ -811,7 +811,7 @@ const AppointmentUpdates: React.FC = () => {
   };
 
   return (
-    <ConfigProvider>
+    <ConfigProvider theme={{ token: light }}>
       <div style={{ background: "", margin: "10px 10px" }}>
         <>
           <Form.Item>

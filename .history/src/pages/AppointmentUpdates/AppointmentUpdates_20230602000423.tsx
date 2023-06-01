@@ -39,11 +39,10 @@ interface Plumber {
 }
 
 const getRandomColor = (): string => {
-  const colors = Object.values(light);
+  const colors = Object.values(token);
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex] as string;
 };
-
 /**
  * FilterableTagProps describes the properties for the FilterableTag component.
  * @property color - The color of the tag.
@@ -407,7 +406,7 @@ const AppointmentUpdates: React.FC = () => {
                 display: "run-in",
                 flexDirection: "row",
                 padding: 8,
-                backgroundColor: light["colorPrimaryBg"],
+                backgroundColor: "colorPrimaryBg",
               }}
             />
           </div>
@@ -811,7 +810,7 @@ const AppointmentUpdates: React.FC = () => {
   };
 
   return (
-    <ConfigProvider>
+    <ConfigProvider theme={{ light }}>
       <div style={{ background: "", margin: "10px 10px" }}>
         <>
           <Form.Item>

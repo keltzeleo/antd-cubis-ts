@@ -43,7 +43,6 @@ const getRandomColor = (): string => {
   const randomIndex = Math.floor(Math.random() * colors.length);
   return colors[randomIndex] as string;
 };
-
 /**
  * FilterableTagProps describes the properties for the FilterableTag component.
  * @property color - The color of the tag.
@@ -407,7 +406,7 @@ const AppointmentUpdates: React.FC = () => {
                 display: "run-in",
                 flexDirection: "row",
                 padding: 8,
-                backgroundColor: light["colorPrimaryBg"],
+                backgroundColor: "colorPrimaryBg",
               }}
             />
           </div>
@@ -831,19 +830,20 @@ const AppointmentUpdates: React.FC = () => {
         </>
       </div>
       <div>
-        <Table
-          style={{ margin: 10 }}
-          columns={columns}
-          dataSource={filteredData}
-          expandable={{
-            expandedRowRender,
-            defaultExpandedRowKeys: data.map((plumber) => plumber.key),
-          }}
-          pagination={false}
-          onChange={() => {}}
-          size="small"
-        />
-
+        <ConfigProvider theme={{ token: isDarkMode ? dark : light }}>
+          <Table
+            style={{ margin: 10 }}
+            columns={columns}
+            dataSource={filteredData}
+            expandable={{
+              expandedRowRender,
+              defaultExpandedRowKeys: data.map((plumber) => plumber.key),
+            }}
+            pagination={false}
+            onChange={() => {}}
+            size="small"
+          />
+        </ConfigProvider>
         <Drawer
           title={
             <div
