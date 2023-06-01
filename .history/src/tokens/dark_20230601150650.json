@@ -214,9 +214,9 @@
   "colorTextSecondary": "rgba(239, 239, 239, 0.65)",
   "colorTextTertiary": "rgba(239, 239, 239, 0.45)",
   "colorTextQuaternary": " rgba(239,239, 239, 0.25)",
-  "colorTextDisabled": "rgba(239, 239, 239, 0.45)",
-  "colorBorder": "#4a6b6b",
-  "colorBorderSecondary": "#3c5656",
+  "colorTextDisabled"]: "rgba(239, 239, 239, 0.45)",
+  "colorBorder":"#4a6b6b",
+  "colorBorderSecondary":"#3c5656",
   "colorFill": "rgba(239, 239, 239, 0.18)",
   "colorFillSecondary": "rgba(239, 239, 239, 0.12)",
   "colorFillTertiary": "rgba(239, 239, 239, 0.08)",
@@ -230,5 +230,4 @@
   "borderRadiusXS": 2,
   "borderRadiusSM": 6,
   "borderRadiusLG": 10,
-  "fontFamily": "-apple-system, BlinkMacSystemFont, 'Mulish', 'Play', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
-}
+  "fontFamily": "-apple-system, BlinkMacSystemFont, 'Mulish', 'Play', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",

@@ -24,7 +24,7 @@ interface Appointment {
   key: string;
   datePlanned: string;
   appointmentLocation: string;
-  icNumber: string;
+  appointmentTime: string;
   customerName: string;
   status: StatusLabels;
   typeOfService: string;
@@ -142,8 +142,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "1a",
           customerName: "Muhammad Bin Amir",
-          icNumber: "112233-44-5566",
           datePlanned: "2023-05-24",
+          appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
           status: StatusLabels.FAILED_TO_VISIT,
           typeOfService: "New Water Supply",
@@ -151,8 +151,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "1b",
           customerName: "Siti Binti Abdul Hafiz",
-          icNumber: "112233-44-5566",
           datePlanned: "2023-05-25",
+          appointmentTime: "11:00 AM",
           appointmentLocation: "Location 1",
           status: StatusLabels.REASSIGNING,
           typeOfService: "New Water Supply",
@@ -160,8 +160,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "1c",
           customerName: "Rajesh a/l Suppiah ",
-          icNumber: "112233-44-5566",
           datePlanned: "2023-05-25",
+          appointmentTime: "4:00 PM",
           appointmentLocation: "Location 1",
           status: StatusLabels.ASSIGNED,
           typeOfService: "New Water Supply",
@@ -178,8 +178,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "2a",
           customerName: "Ahmad bin Abdullah",
-          icNumber: "112233-44-5566",
           datePlanned: "2023-05-24",
+          appointmentTime: "2:00 PM",
           appointmentLocation: "Location 1",
           status: StatusLabels.REASSIGNING,
           typeOfService: "New Water Supply",
@@ -187,8 +187,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "2b",
           customerName: "Tan Ah Ching",
-          icNumber: "112233-44-5566",
           datePlanned: "2023-05-26",
+          appointmentTime: "1:00 PM",
           appointmentLocation: "Location 1",
           status: StatusLabels.CANCELLED,
           typeOfService: "New Water Supply",
@@ -196,8 +196,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "2c",
           customerName: "Lee Xiao Ming",
-          icNumber: "112233-44-5566",
           datePlanned: "2023-05-27",
+          appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
           status: StatusLabels.CANCELLED,
           typeOfService: "Temporary Supply",
@@ -205,8 +205,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "2d",
           customerName: "Bhavin a/l Ishir",
-          icNumber: "1112233-44-5566",
           datePlanned: "2025-05-28",
+          appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
           status: StatusLabels.RESCHEDULED,
           typeOfService: "Temporary Supply",
@@ -214,8 +214,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "2e",
           customerName: "Amyra a/p Kiaan",
-          icNumber: "112233-44-5566",
           datePlanned: "2025-05-28",
+          appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
           status: StatusLabels.ASSIGNED,
           typeOfService: "New Water Supply",
@@ -232,8 +232,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3a",
           customerName: "Steve Jobs",
-          icNumber: "112233-44-5566",
           datePlanned: "2023-05-24",
+          appointmentTime: "2:00 PM",
           appointmentLocation: "Location 1",
           status: StatusLabels.ASSIGNED,
           typeOfService: "Temporary Supply",
@@ -241,8 +241,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3b",
           customerName: "Mark Zuckerberg",
-          icNumber: "112233-44-5566",
           datePlanned: "2023-05-26",
+          appointmentTime: "1:00 PM",
           appointmentLocation: "Location 1",
           status: StatusLabels.ASSIGNED,
           typeOfService: "Temporary Supply",
@@ -250,8 +250,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3c",
           customerName: "Aventure",
-          icNumber: "112233-44-5566",
           datePlanned: "2023-05-27",
+          appointmentTime: "10:00 AM",
           appointmentLocation: "Location 1",
           status: StatusLabels.CANCELLED,
           typeOfService: "Temporary Supply",
@@ -259,8 +259,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3d",
           customerName: "Bamberbee",
-          icNumber: "112233-44-5566",
           datePlanned: "2025-05-28",
+          appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
           status: StatusLabels.FAILED_TO_VISIT,
           typeOfService: "New Water Supply",
@@ -268,8 +268,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3e",
           customerName: "Cinderlala",
-          icNumber: "112233-44-5566",
           datePlanned: "2025-05-28",
+          appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
           status: StatusLabels.REASSIGNING,
           typeOfService: "New Water Supply",
@@ -277,8 +277,8 @@ const AppointmentUpdates: React.FC = () => {
         {
           key: "3f",
           customerName: "Doraemon",
-          icNumber: "112233-44-5566",
           datePlanned: "2025-05-28",
+          appointmentTime: "12:00PM",
           appointmentLocation: "Location 3",
           status: StatusLabels.RESCHEDULED,
           typeOfService: "New Water Supply",
@@ -314,18 +314,17 @@ const AppointmentUpdates: React.FC = () => {
           a.customerName.localeCompare(b.customerName),
       },
       {
-        title: "IC Number",
-        dataIndex: "icNumber",
-        sorter: (a: Appointment, b: Appointment) =>
-          a.icNumber.localeCompare(b.icNumber),
-      },
-      {
         title: "Date Planned",
         dataIndex: "datePlanned",
         sorter: (a: Appointment, b: Appointment) =>
           a.datePlanned.localeCompare(b.datePlanned),
       },
-
+      {
+        title: "Appointment Time",
+        dataIndex: "appointmentTime",
+        sorter: (a: Appointment, b: Appointment) =>
+          a.appointmentTime.localeCompare(b.appointmentTime),
+      },
       {
         title: "Appointment Location",
         dataIndex: "appointmentLocation",

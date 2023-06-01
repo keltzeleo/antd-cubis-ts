@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import "./App.css";
 //import "./index.css";
-import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
+import ThemeTest from "./pages/ThemeTest/ThemeTest";
 
 //import dark from "./tokens/dark.json";
 
@@ -9,7 +9,7 @@ import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
 
 ReactDOM.render(
   <div>
-    <AppointmentUpdates />
+    <ThemeTest />
   </div>,
   document.getElementById("root")
 );
