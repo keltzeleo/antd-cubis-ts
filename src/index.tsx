@@ -1,16 +1,14 @@
+import React from "react";
 import ReactDOM from "react-dom";
-import "./App.css";
-//import "./index.css";
-//import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
-import ThemeApp from "./pages/ThemeTest/ThemeApp";
-
-//import dark from "./tokens/dark.json";
-
-//import "./pages/MyForm.css";
+import "./index.css";
+//import ThemeApp from "./pages/ThemeTest/ThemeApp";
+// import App from "./App";
+import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
 
 ReactDOM.render(
-  <div>
-    <ThemeApp />
-  </div>,
+  <React.StrictMode>
+    {/* <App /> */}[]
+    <AppointmentUpdates />
+  </React.StrictMode>,
   document.getElementById("root")
 );
