@@ -832,13 +832,10 @@ const AppointmentUpdates: React.FC = () => {
       theme={{
         token: {
           colorPrimary: "#00a991",
-          colorError: "#ea7480",
-          colorSuccess: "#7fb86d",
-          colorWarning: "#ffaa64",
-          colorInfo: "#00a991",
-          borderRadius: 8,
+          colorBgBase: "#141d1d",
           fontFamily:
             "-apple-system, BlinkMacSystemFont, 'Mulish', 'Play', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+          colorInfo: "#00a991",
         },
       }}
     >

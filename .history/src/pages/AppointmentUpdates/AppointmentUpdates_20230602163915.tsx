@@ -837,8 +837,6 @@ const AppointmentUpdates: React.FC = () => {
           colorWarning: "#ffaa64",
           colorInfo: "#00a991",
           borderRadius: 8,
-          fontFamily:
-            "-apple-system, BlinkMacSystemFont, 'Mulish', 'Play', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
         },
       }}
     >

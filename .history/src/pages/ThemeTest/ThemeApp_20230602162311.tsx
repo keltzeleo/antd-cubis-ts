@@ -20,27 +20,27 @@ const ThemeApp: React.FC = () => {
   };
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorBgBase: "#141c1b",
-          colorTextBase: "#f3f3f3",
-          colorPrimary: "#00a991",
-          colorError: "#ea7480",
-          colorSuccess: "#7fb86d",
-          colorWarning: "#ffaa64",
-          colorInfo: "#00a991",
-          borderRadius: 8,
-        },
-      }}
-    >
+       <
+    theme={{
+      token: {
+        colorBgBase: "#141c1b",
+        colorTextBase: "#f3f3f3",
+        colorPrimary: "#00a991",
+        colorError: "#ea7480",
+        colorSuccess: "#7fb86d",
+        colorWarning: "#ffaa64",
+        colorInfo: "#00a991",
+        borderRadius: 8,
+      },
+    }}
+  >
       <div style={{ display: "flex", alignItems: "center", marginBottom: 20 }}>
         <span style={{ marginRight: 10 }}>Light</span>
         <Switch checked={isDarkMode} onChange={handleThemeChange} />
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
       <ThemeTest />
-    </ConfigProvider>
+    </>
   );
 };
 

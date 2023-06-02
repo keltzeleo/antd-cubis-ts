@@ -81,7 +81,21 @@ const { Search } = Input;
 
 const onSearch = (value: string) => console.log(value);
 
-const AppointmentUpdates: React.FC = () => {
+const AppointmentUpdates: React.FC = () => (
+  <ConfigProvider
+      theme={{
+        token: {
+          colorBgBase: "#141c1b",
+          colorTextBase: "#f3f3f3",
+          colorPrimary: "#00a991",
+          colorError: "#ea7480",
+          colorSuccess: "#7fb86d",
+          colorWarning: "#ffaa64",
+          colorInfo: "#00a991",
+          borderRadius: 8,
+        },
+      }}
+    >
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
   const [addAppointmentDrawerVisible, setAddAppointmentDrawerVisible] =
@@ -828,20 +842,7 @@ const AppointmentUpdates: React.FC = () => {
   };
 
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: "#00a991",
-          colorError: "#ea7480",
-          colorSuccess: "#7fb86d",
-          colorWarning: "#ffaa64",
-          colorInfo: "#00a991",
-          borderRadius: 8,
-          fontFamily:
-            "-apple-system, BlinkMacSystemFont, 'Mulish', 'Play', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
-        },
-      }}
-    >
+    
       <div style={{ background: "", margin: "10px 10px" }}>
         <>
           <Form.Item>
@@ -1020,8 +1021,9 @@ const AppointmentUpdates: React.FC = () => {
           <p>Add Appointment Form</p>
         </Drawer>
       </div>
-    </ConfigProvider>
   );
-};
+  </ConfigProvider>
+
+);
 
 export default AppointmentUpdates;
