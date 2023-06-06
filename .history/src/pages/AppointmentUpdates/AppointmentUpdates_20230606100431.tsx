@@ -441,8 +441,8 @@ const AppointmentUpdates: React.FC = () => {
           a.rearrangementCount.localeCompare(b.rearrangementCount),
       },
       {
-        title: "Options",
-        dataIndex: "options",
+        title: "Action for Current",
+        dataIndex: "action",
         width: 150,
         fixed: "right" as const,
         render: () => <Button type="link">edit</Button>,
