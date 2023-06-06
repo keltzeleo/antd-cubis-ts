@@ -25,7 +25,7 @@ const DragDropArea: React.FC = () => {
     beforeUpload: (file: RcFile, fileList: RcFile[]) => {
       const isFileRedundant = fileList.some(
         (existingFile) =>
-          existingFile.name === file.name && existingFile.size === file.size
+          existingFile.name === file.name || existingFile.size === file.size
       );
 
       if (isFileRedundant) {

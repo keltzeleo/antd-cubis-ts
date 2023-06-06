@@ -18,14 +18,14 @@ const handleFileUpload = (files: File[]) => {
 };
 
 const DragDropArea: React.FC = () => {
-  const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const props: UploadProps = {
     accept: ".pdf,.doc,.docx,.csv",
     beforeUpload: (file: RcFile, fileList: RcFile[]) => {
       const isFileRedundant = fileList.some(
         (existingFile) =>
-          existingFile.name === file.name && existingFile.size === file.size
+          existingFile.name === file.name || existingFile.size === file.size
       );
 
       if (isFileRedundant) {
@@ -37,14 +37,14 @@ const DragDropArea: React.FC = () => {
     },
     fileList,
     onChange: (info: UploadChangeParam<UploadFile<any>>) => {
-      const { file, fileList } = info;
-      if (file.status !== "uploading") {
+      const { status, fileList } = info;
+      if (status !== "uploading") {
         console.log(fileList);
       }
-      if (file.status === "done") {
-        message.success(`${file.name} file uploaded successfully.`);
-      } else if (file.status === "error") {
-        message.error(`${file.name} file upload failed.`);
+      if (status === "done") {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
       }
       setFileList(fileList);
     },

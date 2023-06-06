@@ -7,7 +7,7 @@ import ReactDOM from "react-dom";
 // import App from "./App";
 //import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
 //import ThemeTest from "./pages/ThemeTest/ThemeTest";
-//import "./customDarkTheme.css";
+import "./customDarkTheme.css";
 import DragDropArea from "./pages/DragDropArea/DragDropArea";
 
 const { darkAlgorithm, compactAlgorithm } = theme;

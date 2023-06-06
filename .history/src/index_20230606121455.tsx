@@ -7,14 +7,14 @@ import ReactDOM from "react-dom";
 // import App from "./App";
 //import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
 //import ThemeTest from "./pages/ThemeTest/ThemeTest";
-//import "./customDarkTheme.css";
+import "./customDarkTheme.css";
 import DragDropArea from "./pages/DragDropArea/DragDropArea";
 
 const { darkAlgorithm, compactAlgorithm } = theme;
 
 ReactDOM.render(
   <React.StrictMode>
-    <div style={{ background: "rgba(18,29,29,0.90" }}>
+    <div style={{ background: "" }}>
       <ConfigProvider
         theme={{
           token: {
