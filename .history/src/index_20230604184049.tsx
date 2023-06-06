@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import "./App.css";
 //import "./index.css";
-import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
+//import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
 //import ThemeApp from "./pages/ThemeTest/ThemeApp";
 
 //import dark from "./tokens/dark.json";

@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import "./App.css";
 //import "./index.css";
-import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
-//import ThemeApp from "./pages/ThemeTest/ThemeApp";
+//import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
+import ThemeApp from "./pages/ThemeTest/ThemeApp";
 
 //import dark from "./tokens/dark.json";
 
@@ -10,8 +10,7 @@ import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
 
 ReactDOM.render(
   <div>
-    {/* <ThemeApp /> */}
-    <AppointmentUpdates />
+    <ThemeApp />
   </div>,
   document.getElementById("root")
 );

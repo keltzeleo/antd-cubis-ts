@@ -20,6 +20,7 @@ import { CheckboxValueType } from "antd/lib/checkbox/Group";
 import React, { useState } from "react";
 import { StatusLabels } from "../../customConstants/constants";
 
+import dark from "../../../src/tokens/dark.json";
 import light from "../../../src/tokens/light.json";
 
 import "../MyForm.css";
@@ -137,15 +138,15 @@ const AppointmentUpdates: React.FC = () => {
   };
 
   const tags = [
-    { value: "assigned", label: "Assigned", color: ["cyan"] },
-    { value: "cancelled", label: "Cancelled", color: ["red"] },
+    { value: "assigned", label: "Assigned", color: dark["cyan"] },
+    { value: "cancelled", label: "Cancelled", color: dark["red"] },
     {
       value: "failed to visit",
       label: "Failed to Visit",
-      color: ["orange"],
+      color: dark["orange"],
     },
-    { value: "reassigning", label: "Reassigning", color: ["geekblue"] },
-    { value: "rescheduled", label: "Rescheduled", color: ["lime"] },
+    { value: "reassigning", label: "Reassigning", color: dark["geekblue"] },
+    { value: "rescheduled", label: "Rescheduled", color: dark["lime"] },
   ];
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -383,19 +384,19 @@ const AppointmentUpdates: React.FC = () => {
           let color = "";
           switch (status) {
             case "assigned":
-              color = light["cyan"];
+              color = dark["cyan"];
               break;
             case "cancelled":
-              color = light["red"];
+              color = dark["red"];
               break;
             case "failed to visit":
-              color = light["orange"];
+              color = dark["orange"];
               break;
             case "reassigning":
-              color = light["geekblue"];
+              color = dark["geekblue"];
               break;
             case "rescheduled":
-              color = light["lime"];
+              color = dark["lime"];
               break;
             default:
               break;
@@ -423,7 +424,7 @@ const AppointmentUpdates: React.FC = () => {
                 display: "run-in",
                 flexDirection: "row",
                 padding: 8,
-                backgroundColor: light["colorPrimaryBg"],
+                backgroundColor: dark["colorPrimaryBg"],
               }}
             />
           </div>
@@ -531,7 +532,7 @@ const AppointmentUpdates: React.FC = () => {
               }}
             >
               <Tag
-                color={light["cyan"]}
+                color={dark["cyan"]}
                 onClick={() => handleTagFilterMaster(StatusLabels.ASSIGNED)}
                 style={{
                   borderRadius: 8,
@@ -542,17 +543,17 @@ const AppointmentUpdates: React.FC = () => {
                     StatusLabels.ASSIGNED
                   )
                     ? "white"
-                    : light["colorTextDisabled"],
+                    : dark["colorTextDisabled"],
                   backgroundColor: statusFilters[record.key]?.includes(
                     StatusLabels.ASSIGNED
                   )
-                    ? light["cyan"]
+                    ? dark["cyan"]
                     : undefined,
                   borderColor: statusFilters[record.key]?.includes(
                     StatusLabels.ASSIGNED
                   )
-                    ? light["cyan"]
-                    : light["colorTextDisabled"],
+                    ? dark["cyan"]
+                    : dark["colorTextDisabled"],
                   cursor: "pointer",
                 }}
               >
@@ -573,8 +574,8 @@ const AppointmentUpdates: React.FC = () => {
                     color: statusFilters[record.key]?.includes(
                       StatusLabels.ASSIGNED
                     )
-                      ? light["cyan"]
-                      : light["colorTextDisabled"],
+                      ? dark["cyan"]
+                      : dark["colorTextDisabled"],
                   }}
                 >
                   <b>{assignedCount}</b>
@@ -583,7 +584,7 @@ const AppointmentUpdates: React.FC = () => {
               </Tag>{" "}
               &nbsp;
               <Tag
-                color={light["red"]}
+                color={dark["red"]}
                 onClick={() => handleTagFilterMaster(StatusLabels.CANCELLED)}
                 style={{
                   borderRadius: 8,
@@ -594,17 +595,17 @@ const AppointmentUpdates: React.FC = () => {
                     StatusLabels.CANCELLED
                   )
                     ? "white"
-                    : light["colorTextDisabled"],
+                    : dark["colorTextDisabled"],
                   backgroundColor: statusFilters[record.key]?.includes(
                     StatusLabels.CANCELLED
                   )
-                    ? light["red"]
+                    ? dark["red"]
                     : undefined,
                   borderColor: statusFilters[record.key]?.includes(
                     StatusLabels.CANCELLED
                   )
-                    ? light["red"]
-                    : light["colorTextDisabled"],
+                    ? dark["red"]
+                    : dark["colorTextDisabled"],
                   cursor: "pointer",
                 }}
               >
@@ -625,8 +626,8 @@ const AppointmentUpdates: React.FC = () => {
                     color: statusFilters[record.key]?.includes(
                       StatusLabels.CANCELLED
                     )
-                      ? light["red"]
-                      : light["colorTextDisabled"],
+                      ? dark["red"]
+                      : dark["colorTextDisabled"],
                   }}
                 >
                   <b>{cancelledCount}</b>
@@ -635,7 +636,7 @@ const AppointmentUpdates: React.FC = () => {
               </Tag>{" "}
               &nbsp;
               <Tag
-                color={light["orange"]}
+                color={dark["orange"]}
                 onClick={() =>
                   handleTagFilterMaster(StatusLabels.FAILED_TO_VISIT)
                 }
@@ -648,17 +649,17 @@ const AppointmentUpdates: React.FC = () => {
                     StatusLabels.FAILED_TO_VISIT
                   )
                     ? "white"
-                    : light["colorTextDisabled"],
+                    : dark["colorTextDisabled"],
                   backgroundColor: statusFilters[record.key]?.includes(
                     StatusLabels.FAILED_TO_VISIT
                   )
-                    ? light["orange"]
+                    ? dark["orange"]
                     : undefined,
                   borderColor: statusFilters[record.key]?.includes(
                     StatusLabels.FAILED_TO_VISIT
                   )
-                    ? light["orange"]
-                    : light["colorTextDisabled"],
+                    ? dark["orange"]
+                    : dark["colorTextDisabled"],
                   cursor: "pointer",
                 }}
               >
@@ -679,8 +680,8 @@ const AppointmentUpdates: React.FC = () => {
                     color: statusFilters[record.key]?.includes(
                       StatusLabels.FAILED_TO_VISIT
                     )
-                      ? light["orange"]
-                      : light["colorTextDisabled"],
+                      ? dark["orange"]
+                      : dark["colorTextDisabled"],
                   }}
                 >
                   <b>{failedCount}</b>
@@ -689,7 +690,7 @@ const AppointmentUpdates: React.FC = () => {
               </Tag>{" "}
               &nbsp;
               <Tag
-                color={light["geekblue"]}
+                color={dark["geekblue"]}
                 onClick={() => handleTagFilterMaster(StatusLabels.REASSIGNING)}
                 style={{
                   borderRadius: 8,
@@ -700,17 +701,17 @@ const AppointmentUpdates: React.FC = () => {
                     StatusLabels.REASSIGNING
                   )
                     ? "white"
-                    : light["colorTextDisabled"],
+                    : dark["colorTextDisabled"],
                   backgroundColor: statusFilters[record.key]?.includes(
                     StatusLabels.REASSIGNING
                   )
-                    ? light["geekblue"]
+                    ? dark["geekblue"]
                     : undefined,
                   borderColor: statusFilters[record.key]?.includes(
                     StatusLabels.REASSIGNING
                   )
-                    ? light["geekblue"]
-                    : light["colorTextDisabled"],
+                    ? dark["geekblue"]
+                    : dark["colorTextDisabled"],
                   cursor: "pointer",
                 }}
               >
@@ -731,8 +732,8 @@ const AppointmentUpdates: React.FC = () => {
                     color: statusFilters[record.key]?.includes(
                       StatusLabels.REASSIGNING
                     )
-                      ? light["geekblue"]
-                      : light["colorTextDisabled"],
+                      ? dark["geekblue"]
+                      : dark["colorTextDisabled"],
                   }}
                 >
                   <b>{reassigningCount}</b>
@@ -741,7 +742,7 @@ const AppointmentUpdates: React.FC = () => {
               </Tag>{" "}
               &nbsp;
               <Tag
-                color={light["lime"]}
+                color={dark["lime"]}
                 onClick={() => handleTagFilterMaster(StatusLabels.RESCHEDULED)}
                 style={{
                   borderRadius: 8,
@@ -752,17 +753,17 @@ const AppointmentUpdates: React.FC = () => {
                     StatusLabels.RESCHEDULED
                   )
                     ? "white"
-                    : light["colorTextDisabled"],
+                    : dark["colorTextDisabled"],
                   backgroundColor: statusFilters[record.key]?.includes(
                     StatusLabels.RESCHEDULED
                   )
-                    ? light["lime"]
+                    ? dark["lime"]
                     : undefined,
                   borderColor: statusFilters[record.key]?.includes(
                     StatusLabels.RESCHEDULED
                   )
-                    ? light["lime"]
-                    : light["colorTextDisabled"],
+                    ? dark["lime"]
+                    : dark["colorTextDisabled"],
                   cursor: "pointer",
                 }}
               >
@@ -783,8 +784,8 @@ const AppointmentUpdates: React.FC = () => {
                     color: statusFilters[record.key]?.includes(
                       StatusLabels.RESCHEDULED
                     )
-                      ? light["lime"]
-                      : light["colorTextDisabled"],
+                      ? dark["lime"]
+                      : dark["colorTextDisabled"],
                   }}
                 >
                   <b>{rescheduledCount}</b>{" "}
@@ -873,11 +874,8 @@ const AppointmentUpdates: React.FC = () => {
           expandable={{
             expandedRowRender,
             //defaultExpandedRowKeys: data.map((plumber) => plumber.key),//
-            //disable above for table to be collapsed by default//
           }}
-          pagination={{
-            pageSize: 20, // Set the page size to 20
-          }}
+          pagination={false}
           onChange={() => {}}
           size="small"
         />
@@ -904,7 +902,7 @@ const AppointmentUpdates: React.FC = () => {
                   justifyContent: "center",
                   fontWeight: "bold",
                   borderRadius: 16,
-                  background: light["colorPrimaryBase"],
+                  background: dark["colorPrimaryBase"],
                   overflow: "hidden",
                   color: "#fff",
                 }}
@@ -991,7 +989,7 @@ const AppointmentUpdates: React.FC = () => {
                   justifyContent: "center",
                   fontWeight: "bold",
                   borderRadius: 16,
-                  background: light["colorPrimaryBase"],
+                  background: dark["colorPrimaryBase"],
                   overflow: "hidden",
                   color: "#fff",
                 }}

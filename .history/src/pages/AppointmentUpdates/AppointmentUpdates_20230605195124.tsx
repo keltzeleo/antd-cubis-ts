@@ -138,14 +138,14 @@ const AppointmentUpdates: React.FC = () => {
 
   const tags = [
     { value: "assigned", label: "Assigned", color: ["cyan"] },
-    { value: "cancelled", label: "Cancelled", color: ["red"] },
+    { value: "cancelled", label: "Cancelled", color: light["red"] },
     {
       value: "failed to visit",
       label: "Failed to Visit",
-      color: ["orange"],
+      color: light["orange"],
     },
-    { value: "reassigning", label: "Reassigning", color: ["geekblue"] },
-    { value: "rescheduled", label: "Rescheduled", color: ["lime"] },
+    { value: "reassigning", label: "Reassigning", color: light["geekblue"] },
+    { value: "rescheduled", label: "Rescheduled", color: light["lime"] },
   ];
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);

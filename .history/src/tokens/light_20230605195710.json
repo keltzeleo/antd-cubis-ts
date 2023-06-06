@@ -213,7 +213,7 @@
   "colorTextSecondary": "rgba(20, 29, 29, 0.65)",
   "colorTextTertiary": "rgba(20, 29, 29, 0.45)",
   "colorTextQuaternary": "rgba(20, 29, 29, 0.25)",
-  "colorTextDisabled": "rgba(20, 29, 29, 0.45)",
+  "colorTextDisabled": "rgba(20, 29, 29, 0.40)",
   "colorTextDescription": "rgba(19, 18, 19, 0.45)",
   "colorIcon": "rgba(19, 18, 19, 0.45)",
   "colorIconHover": "rgba(19, 18, 19, 0.88)",

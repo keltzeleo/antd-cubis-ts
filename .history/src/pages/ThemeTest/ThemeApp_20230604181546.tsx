@@ -20,7 +20,7 @@ const ThemeApp: React.FC = () => {
   };
 
   return (
-    <ConfigProvider theme={{ token }}>
+    <ConfigProvider>
       <div style={{ display: "flex", alignItems: "center", marginBottom: 20 }}>
         <span style={{ marginRight: 10 }}>Light</span>
         <Switch checked={isDarkMode} onChange={handleThemeChange} />

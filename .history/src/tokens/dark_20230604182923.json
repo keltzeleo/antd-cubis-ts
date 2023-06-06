@@ -220,7 +220,6 @@
   "colorBorder": "#4a6b6b",
   "colorBorderSecondary": "#3c5656",
   "colorFill": "rgba(239, 239, 239, 0.18)",
-  "colorFillAlter": "rgba(243, 246, 243, 0.04)",
   "colorFillSecondary": "rgba(239, 239, 239, 0.12)",
   "colorFillTertiary": "rgba(239, 239, 239, 0.08)",
   "colorFillQuaternary": "rgba(239, 239, 239, 0.04)",
