@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/colors": "^7.0.0",
+    "@ant-design/icons": "^5.1.4",
     "@ant-design/pro-card": "^2.4.7",
     "@ant-design/pro-components": "^2.4.14",
     "@ant-design/pro-form": "^2.11.7",
@@ -31,6 +32,7 @@
     "react-router-dom": "^6.11.2",
     "react-scripts": "^5.0.1",
     "sass": "^1.62.1",
+    "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
     "web-vitals": "^2.1.0"
   },

@@ -1,0 +1,14 @@
+:root {
+  --color-bg-base: #141c1b;
+  --color-text-base: #f3f3f3;
+  --color-primary: #00a991;
+  --color-error: #ea7480;
+  --color-success: #7fb86d;
+  --color-warning: #ffaa64;
+  --color-info: #00a991;
+  --border-radius-base: 8px;
+  --size-step: 4px;
+  --size-unit: 4px;
+}
+
+/* Additional dark mode styles */

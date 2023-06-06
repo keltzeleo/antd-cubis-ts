@@ -8,8 +8,7 @@ import ReactDOM from "react-dom";
 //import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
 //import ThemeTest from "./pages/ThemeTest/ThemeTest";
 //import "./customDarkTheme.css";
-//import DragDropArea from "./pages/DragDropArea/DragDropArea";
-import DragDropArea2 from "./pages/DragDropArea/DragDropArea2";
+import DragDropArea from "./pages/DragDropArea/DragDropArea";
 
 const { darkAlgorithm, compactAlgorithm } = theme;
 
@@ -36,7 +35,7 @@ ReactDOM.render(
     {/* <App /> */}
     {/* <AppointmentUpdates /> */}
     {/*  <ThemeTest />*/}
-    <DragDropArea2 />
+    <DragDropArea />
     {/* </ConfigProvider> */}
     {/* </div> */}
   </React.StrictMode>,

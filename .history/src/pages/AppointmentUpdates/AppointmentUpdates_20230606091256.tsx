@@ -137,15 +137,15 @@ const AppointmentUpdates: React.FC = () => {
   };
 
   const tags = [
-    { value: "assigned", label: "Assigned", color: ["cyan"] },
-    { value: "cancelled", label: "Cancelled", color: ["red"] },
+    { value: "assigned", label: "Assigned", color: light["cyan"] },
+    { value: "cancelled", label: "Cancelled", color: light["red"] },
     {
       value: "failed to visit",
       label: "Failed to Visit",
-      color: ["orange"],
+      color: light["orange"],
     },
-    { value: "reassigning", label: "Reassigning", color: ["geekblue"] },
-    { value: "rescheduled", label: "Rescheduled", color: ["lime"] },
+    { value: "reassigning", label: "Reassigning", color: light["geekblue"] },
+    { value: "rescheduled", label: "Rescheduled", color: light["lime"] },
   ];
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -441,11 +441,11 @@ const AppointmentUpdates: React.FC = () => {
           a.rearrangementCount.localeCompare(b.rearrangementCount),
       },
       {
-        title: "Options",
-        dataIndex: "options",
-        width: 150,
+        title: "Action",
+        dataIndex: "action",
+        width: 100,
         fixed: "right" as const,
-        render: () => <Button type="link">edit</Button>,
+        render: () => <Button type="link">Action</Button>,
       },
     ];
 
@@ -872,12 +872,9 @@ const AppointmentUpdates: React.FC = () => {
           dataSource={filteredData}
           expandable={{
             expandedRowRender,
-            //defaultExpandedRowKeys: data.map((plumber) => plumber.key),//
-            //disable above for table to be collapsed by default//
+            defaultExpandedRowKeys: data.map((plumber) => plumber.key),
           }}
-          pagination={{
-            pageSize: 20, // Set the page size to 20
-          }}
+          pagination={false}
           onChange={() => {}}
           size="small"
         />
