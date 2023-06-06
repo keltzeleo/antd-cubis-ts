@@ -9,7 +9,6 @@ const acceptedFileTypes = [
   ".csv",
   "image/jpeg",
   "image/png",
-  "image/jpg",
 ];
 
 const getBase64 = (file: RcFile): Promise<string> =>
@@ -24,50 +23,46 @@ const DragDropArea2: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState<any[]>([]);
+  const [fileList, setFileList] = useState<any[]>([
+    {
+      uid: "-1",
+      name: "image1.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-2",
+      name: "image2.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-3",
+      name: "image3.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-4",
+      name: "image4.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-xxx",
+      percent: 50,
+      name: "image5.png",
+      status: "uploading",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-5",
+      name: "image6.png",
+      status: "error",
+    },
+  ]);
 
   const handleCancel = () => setPreviewOpen(false);
-
-  const props = {
-    accept: ".pdf,.doc,.docx,.csv,image/*",
-    beforeUpload: (file: File) => {
-      const isFileRedundant = fileList.some(
-        (existingFile: any) =>
-          existingFile.name === file.name && existingFile.size === file.size
-      );
-
-      if (isFileRedundant) {
-        message.error(`${file.name} file is redundant.`);
-        return Upload.LIST_IGNORE; // Skip the file from being added to the fileList
-      }
-
-      // Generate a data URL for image files to be used as thumbnail preview
-      if (file.type.includes("image")) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          const dataUrl = reader.result as string;
-          const updatedFile = { ...file, dataUrl };
-          setFileList([...fileList, updatedFile]); // Add the updated file to the fileList
-        };
-        return Upload.LIST_IGNORE; // Skip the file from being added to the fileList immediately
-      }
-    },
-
-    fileList,
-    onChange: (info: any) => {
-      const { file, fileList } = info;
-      if (file.status !== "uploading") {
-        console.log(fileList);
-      }
-      if (file.status === "done") {
-        message.success(`${file.name} file uploaded successfully.`);
-      } else if (file.status === "error") {
-        message.error(`${file.name} file upload failed.`);
-      }
-      setFileList(fileList);
-    },
-  };
 
   const handlePreview = async (file: any) => {
     if (!file.url && !file.preview) {

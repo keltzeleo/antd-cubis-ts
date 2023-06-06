@@ -9,7 +9,6 @@ const acceptedFileTypes = [
   ".csv",
   "image/jpeg",
   "image/png",
-  "image/jpg",
 ];
 
 const getBase64 = (file: RcFile): Promise<string> =>
@@ -24,7 +23,44 @@ const DragDropArea2: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState<any[]>([]);
+  const [fileList, setFileList] = useState<any[]>([
+    {
+      uid: "-1",
+      name: "image1.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-2",
+      name: "image2.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-3",
+      name: "image3.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-4",
+      name: "image4.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-xxx",
+      percent: 50,
+      name: "image5.png",
+      status: "uploading",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-5",
+      name: "image6.png",
+      status: "error",
+    },
+  ]);
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -52,6 +88,9 @@ const DragDropArea2: React.FC = () => {
         };
         return Upload.LIST_IGNORE; // Skip the file from being added to the fileList immediately
       }
+
+      setFileList([...fileList, file]); // Add the file to the fileList
+      return false; // Prevent the default file upload behavior of Ant Design Upload component
     },
 
     fileList,
