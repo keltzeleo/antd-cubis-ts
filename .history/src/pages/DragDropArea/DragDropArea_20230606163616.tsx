@@ -8,10 +8,17 @@ import { useState } from "react";
 
 const { Dragger } = Upload;
 
+const handleFileUpload = (files: File[]) => {
+  files.forEach((file: File) => {
+    // Handle the file upload logic for each file here
+    console.log(file);
+  });
+};
+
 const DragDropArea = () => {
   const [fileList, setFileList] = useState<any[]>([]);
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [previewImage, setPreviewImage] = useState<string | undefined>("");
+  const [previewFile, setPreviewFile] = useState<any>(null);
 
   const getFileStatusIcon = (file: any) => {
     if (file.status === "uploading") {
@@ -24,9 +31,9 @@ const DragDropArea = () => {
   };
 
   const handlePreview = async (file: any) => {
-    if (file.type.includes("image")) {
+    if (file.url || file.preview) {
+      setPreviewFile(file);
       setPreviewVisible(true);
-      setPreviewImage(file.dataUrl);
     }
   };
 
@@ -34,8 +41,13 @@ const DragDropArea = () => {
     setPreviewVisible(false);
   };
 
+  const handleRemove = (file: any) => {
+    const updatedFileList = fileList.filter((item) => item.uid !== file.uid);
+    setFileList(updatedFileList);
+  };
+
   const props = {
-    accept: ".pdf,.doc,.docx,.csv,image/*",
+    accept: ".pdf,.doc,.docx,.csv",
     beforeUpload: (file: File) => {
       const isFileRedundant = fileList.some(
         (existingFile: any) =>
@@ -47,22 +59,10 @@ const DragDropArea = () => {
         return Upload.LIST_IGNORE; // Skip the file from being added to the fileList
       }
 
-      // Generate a data URL for image files to be used as thumbnail preview
-      if (file.type.includes("image")) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          const dataUrl = reader.result as string;
-          const updatedFile = { ...file, dataUrl };
-          setFileList([...fileList, updatedFile]); // Add the updated file to the fileList
-        };
-        return Upload.LIST_IGNORE; // Skip the file from being added to the fileList immediately
-      }
-
-      setFileList([...fileList, file]); // Add the file to the fileList
-      return false; // Prevent the default file upload behavior of Ant Design Upload component
+      return true; // Allow the file upload
     },
     fileList,
+    onPreview: handlePreview,
     onChange: (info: any) => {
       const { file, fileList } = info;
       if (file.status !== "uploading") {
@@ -90,25 +90,35 @@ const DragDropArea = () => {
           Support for a single or bulk upload. Strictly prohibited from
           uploading company data or other banned files.
         </p>
+        <div>
+          {fileList.map((file) => (
+            <div key={file.uid}>
+              <span
+                onMouseEnter={() => handlePreview(file)}
+                onMouseLeave={handleCancelPreview}
+                onClick={() => handleRemove(file)}
+              >
+                {getFileStatusIcon(file)}
+                <span>{file.name}</span>
+              </span>
+            </div>
+          ))}
+        </div>
       </Dragger>
-      <div>
-        {fileList.map((file) => (
-          <div
-            key={file.uid}
-            onMouseEnter={() => handlePreview(file)}
-            onMouseLeave={handleCancelPreview}
-          >
-            {getFileStatusIcon(file)}
-            <span>{file.name}</span>
-          </div>
-        ))}
-      </div>
       <Modal
         visible={previewVisible}
+        title={previewFile?.name}
         footer={null}
         onCancel={handleCancelPreview}
       >
-        <img alt="Preview" style={{ width: "100%" }} src={previewImage} />
+        {previewFile?.url ? (
+          <iframe
+            src={previewFile?.url}
+            style={{ width: "100%", height: "500px" }}
+          />
+        ) : (
+          <p>No preview available for this file.</p>
+        )}
       </Modal>
     </>
   );

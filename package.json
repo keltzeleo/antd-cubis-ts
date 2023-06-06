@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/colors": "^7.0.0",
+    "@ant-design/icons": "^5.1.4",
     "@ant-design/pro-card": "^2.4.7",
     "@ant-design/pro-components": "^2.4.14",
     "@ant-design/pro-form": "^2.11.7",

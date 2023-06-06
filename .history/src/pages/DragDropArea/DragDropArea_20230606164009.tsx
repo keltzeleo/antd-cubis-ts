@@ -90,19 +90,19 @@ const DragDropArea = () => {
           Support for a single or bulk upload. Strictly prohibited from
           uploading company data or other banned files.
         </p>
+        <div>
+          {fileList.map((file) => (
+            <div
+              key={file.uid}
+              onMouseEnter={() => handlePreview(file)}
+              onMouseLeave={handleCancelPreview}
+            >
+              {getFileStatusIcon(file)}
+              <span>{file.name}</span>
+            </div>
+          ))}
+        </div>
       </Dragger>
-      <div>
-        {fileList.map((file) => (
-          <div
-            key={file.uid}
-            onMouseEnter={() => handlePreview(file)}
-            onMouseLeave={handleCancelPreview}
-          >
-            {getFileStatusIcon(file)}
-            <span>{file.name}</span>
-          </div>
-        ))}
-      </div>
       <Modal
         visible={previewVisible}
         footer={null}

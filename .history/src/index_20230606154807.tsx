@@ -14,8 +14,8 @@ const { darkAlgorithm, compactAlgorithm } = theme;
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <div style={{ background: "rgba(18,29,29,0.90" }}> */}
-    {/* <ConfigProvider
+    <div style={{ background: "rgba(18,29,29,0.90" }}>
+      {/* <ConfigProvider
         theme={{
           token: {
             colorBgBase: "#141c1b",
@@ -32,12 +32,12 @@ ReactDOM.render(
           algorithm: [darkAlgorithm, compactAlgorithm],
         }}
       > */}
-    {/* <App /> */}
-    {/* <AppointmentUpdates /> */}
-    {/*  <ThemeTest />*/}
-    <DragDropArea />
-    {/* </ConfigProvider> */}
-    {/* </div> */}
+      {/* <App /> */}
+      {/* <AppointmentUpdates /> */}
+      {/*  <ThemeTest />*/}
+      <DragDropArea />
+      {/* </ConfigProvider> */}
+    </div>
   </React.StrictMode>,
   document.getElementById("root")
 );
