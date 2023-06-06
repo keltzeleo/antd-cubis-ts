@@ -1,4 +1,4 @@
-import { Modal, Upload, message } from "antd";
+import { Modal, Upload, UploadProps, message } from "antd";
 import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
@@ -46,6 +46,41 @@ const getChecksum = (file: RcFile): Promise<number> =>
     reader.readAsArrayBuffer(file);
   });
 
+const beforeUpload = async (file: RcFile, fileList: UploadFile<any>[]) => {
+  const isFileRedundant = fileList.some(
+    (existingFile) =>
+      existingFile.name === file.name && existingFile.size === file.size
+  );
+
+  if (isFileRedundant) {
+    message.error(`${file.name} file is redundant.`);
+    return false; // Cancel the file upload
+  }
+
+  const isValidFileType =
+    file.type === "application/pdf" ||
+    file.type === "application/msword" ||
+    file.type ===
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+    file.type === "text/csv" ||
+    file.type === "image/jpeg" ||
+    file.type === "image/png";
+
+  if (!isValidFileType) {
+    message.error({
+      content:
+        "Invalid file type. Only .pdf, .doc, .docx, .csv, image files are allowed.",
+      duration: 3,
+      style: {
+        marginTop: "20px",
+      },
+    });
+    return false; // Cancel the file upload
+  }
+
+  return true; // Allow the file upload
+};
+
 const DragDropArea2: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -54,7 +89,25 @@ const DragDropArea2: React.FC = () => {
 
   const handleCancel = () => setPreviewOpen(false);
 
-  const handlePreview = async (file: UploadFile<any>) => {
+  const props = {
+    accept: ".pdf,.doc,.docx,.csv,image/*",
+    beforeUpload,
+    fileList,
+    onChange: (info: UploadChangeParam<UploadFile<any>>) => {
+      const { file, fileList } = info;
+      if (file.status !== "uploading") {
+        console.log(fileList);
+      }
+      if (file.status === "done") {
+        message.success(`${file.name} file uploaded successfully.`);
+      } else if (file.status === "error") {
+        message.error(`${file.name} file upload failed.`);
+      }
+      setFileList(fileList);
+    },
+  };
+
+  const handlePreview = async (file: any) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
@@ -66,47 +119,24 @@ const DragDropArea2: React.FC = () => {
     );
   };
 
-  const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
-    let { file, fileList } = info;
-
-    // Check for redundant files in the new fileList
-    const isFileRedundant = fileList.some(
+  const handleChange: UploadProps<UploadFile<any>>["onChange"] = async ({
+    fileList: newFileList,
+    file,
+  }) => {
+    const isFileRedundant = newFileList.some(
       (existingFile) =>
-        existingFile.name === file.name && existingFile.uid !== file.uid
+        existingFile.name === file.name && existingFile.size === file.size
     );
 
-    if (isFileRedundant) {
-      message.error(`File '${file.name}' is redundant. Please double-check.`);
-      fileList = fileList.filter(
-        (existingFile) => existingFile.uid !== file.uid
-      );
+    if (!isFileRedundant) {
+      if (file.status === "done") {
+        message.success(`${file.name} file uploaded successfully.`);
+      } else if (file.status === "error") {
+        message.error(`${file.name} file upload failed.`);
+      }
     }
 
-    // Calculate checksum for each file
-    const checksumPromises = fileList.map(async (file) => {
-      const checksum = await getChecksum(file.originFileObj as RcFile);
-      return { file, checksum };
-    });
-
-    const checksumResults = await Promise.all(checksumPromises);
-
-    // Check for duplicates based on checksum
-    const duplicateFiles = checksumResults.filter(
-      ({ checksum }, index) =>
-        checksumResults.findIndex((result) => result.checksum === checksum) !==
-        index
-    );
-
-    if (duplicateFiles.length > 0) {
-      message.error(
-        `${duplicateFiles[0].file.name} is duplicated. Removed redundant file(s). Please double-check.`
-      );
-      fileList = fileList.filter(
-        (file) => file.uid !== duplicateFiles[0].file.uid
-      );
-    }
-
-    setFileList(fileList);
+    setFileList(newFileList);
   };
 
   const uploadButton = (
@@ -156,6 +186,7 @@ const DragDropArea2: React.FC = () => {
             style={{
               display: "flex",
               flexDirection: "column",
+
               width: "450px",
               height: "450px",
             }}

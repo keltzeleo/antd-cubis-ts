@@ -70,16 +70,21 @@ const DragDropArea2: React.FC = () => {
     let { file, fileList } = info;
 
     // Check for redundant files in the new fileList
-    const isFileRedundant = fileList.some(
-      (existingFile) =>
-        existingFile.name === file.name && existingFile.uid !== file.uid
+    const redundantFiles = fileList.filter((newFile) =>
+      fileList.some(
+        (existingFile) =>
+          existingFile.name === newFile.name && existingFile.uid !== newFile.uid
+      )
     );
 
-    if (isFileRedundant) {
-      message.error(`File '${file.name}' is redundant. Please double-check.`);
+    if (redundantFiles.length > 0) {
       fileList = fileList.filter(
-        (existingFile) => existingFile.uid !== file.uid
+        (newFile) =>
+          !redundantFiles.find(
+            (redundantFile) => redundantFile.uid === newFile.uid
+          )
       );
+      message.error(`${redundantFiles.length} redundant file(s) removed.`);
     }
 
     // Calculate checksum for each file
@@ -98,12 +103,11 @@ const DragDropArea2: React.FC = () => {
     );
 
     if (duplicateFiles.length > 0) {
-      message.error(
-        `${duplicateFiles[0].file.name} is duplicated. Removed redundant file(s). Please double-check.`
-      );
       fileList = fileList.filter(
-        (file) => file.uid !== duplicateFiles[0].file.uid
+        (file) =>
+          !duplicateFiles.find((duplicate) => duplicate.file.uid === file.uid)
       );
+      message.error(`${duplicateFiles.length} duplicate file(s) removed.`);
     }
 
     setFileList(fileList);
