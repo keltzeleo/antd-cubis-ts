@@ -23,8 +23,8 @@ const IWillFollowYou: React.FC<IWillFollowYouProps> = ({ errorMessage }) => {
     const errorNotification = document.getElementById("error-notification");
 
     if (errorNotification) {
-      const left = position.x + 32; // Adjust the left position
-      const top = position.y - 4; // Adjust the top position
+      const left = position.x + 10; // Adjust the left position
+      const top = position.y + 10; // Adjust the top position
       errorNotification.style.left = `${left}px`;
       errorNotification.style.top = `${top}px`;
     }

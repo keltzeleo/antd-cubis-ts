@@ -39,7 +39,7 @@ ReactDOM.render(
     {/*  <ThemeTest />*/}
     {/* <DragDropArea2 /> */}
     {/* </ConfigProvider> */}
-    <IWillFollowYou errorMessage="I Will Follow You Message Sample!" />
+    <IWillFollowYou errorMessage="Something went wrong!" />
     {/* </div> */}
   </React.StrictMode>,
   document.getElementById("root")

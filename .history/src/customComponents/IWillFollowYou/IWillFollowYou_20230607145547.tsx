@@ -20,13 +20,13 @@ const IWillFollowYou: React.FC<IWillFollowYouProps> = ({ errorMessage }) => {
   }, []);
 
   useEffect(() => {
-    const errorNotification = document.getElementById("error-notification");
+    const notification = document.getElementById("error-notification");
 
-    if (errorNotification) {
-      const left = position.x + 32; // Adjust the left position
-      const top = position.y - 4; // Adjust the top position
-      errorNotification.style.left = `${left}px`;
-      errorNotification.style.top = `${top}px`;
+    if (notification) {
+      const left = position.x + 10; // Adjust the left position
+      const top = position.y + 10; // Adjust the top position
+      notification.style.left = `${left}px`;
+      notification.style.top = `${top}px`;
     }
   }, [position]);
 
@@ -35,7 +35,10 @@ const IWillFollowYou: React.FC<IWillFollowYouProps> = ({ errorMessage }) => {
       id="error-notification"
       style={{
         position: "fixed",
-        zIndex: 9999,
+        left: 0,
+        top: 0,
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        pointerEvents: "none",
       }}
     >
       {errorMessage}

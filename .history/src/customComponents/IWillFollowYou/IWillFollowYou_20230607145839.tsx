@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { useEffect, useState } from "react";
 
 interface IWillFollowYouProps {
@@ -20,27 +21,28 @@ const IWillFollowYou: React.FC<IWillFollowYouProps> = ({ errorMessage }) => {
   }, []);
 
   useEffect(() => {
-    const errorNotification = document.getElementById("error-notification");
+    const timeout = setTimeout(() => {
+      message.error(errorMessage, 5); // Display the error message for 5 seconds
+    }, 500);
 
-    if (errorNotification) {
-      const left = position.x + 32; // Adjust the left position
-      const top = position.y - 4; // Adjust the top position
-      errorNotification.style.left = `${left}px`;
-      errorNotification.style.top = `${top}px`;
+    return () => {
+      clearTimeout(timeout);
+      message.destroy(); // Clear the message when the component unmounts
+    };
+  }, [errorMessage]);
+
+  useEffect(() => {
+    const notification = document.querySelector(".ant-message");
+
+    if (notification) {
+      notification.setAttribute(
+        "style",
+        `left: ${position.x}px; top: ${position.y}px;`
+      );
     }
   }, [position]);
 
-  return (
-    <div
-      id="error-notification"
-      style={{
-        position: "fixed",
-        zIndex: 9999,
-      }}
-    >
-      {errorMessage}
-    </div>
-  );
+  return null;
 };
 
 export default IWillFollowYou;
