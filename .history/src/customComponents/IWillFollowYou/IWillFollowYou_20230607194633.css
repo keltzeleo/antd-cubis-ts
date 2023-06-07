@@ -1,0 +1,21 @@
+/* IWillFollowYou.css */
+
+.message-transition-enter {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.message-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.message-transition-exit {
+  opacity: 1;
+}
+
+.message-transition-exit-active {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}

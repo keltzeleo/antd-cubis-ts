@@ -1,0 +1,55 @@
+import { ConfigContext } from "antd/lib/config-provider";
+import { useContext, useEffect, useState } from "react";
+
+interface IWillFollowYouProps {
+  errorMessage: string;
+}
+
+const IWillFollowYou: React.FC<IWillFollowYouProps> = ({ errorMessage }) => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const { getPrefixCls } = useContext(ConfigContext);
+  const prefixCls = getPrefixCls("message");
+
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      setPosition({ x: event.clientX, y: event.clientY });
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  return (
+    <div
+      id="error-notification"
+      style={{
+        position: "fixed",
+        left: position.x,
+        top: position.y,
+        zIndex: 9999,
+        padding: "10px 16px",
+        borderRadius: "8px",
+        border: "1px solid red", // Adjust the border color based on your styling
+        backgroundColor: "rgba(255, 0, 0, 0.1)", // Adjust the background color based on your styling
+        color: "red", // Adjust the text color based on your styling
+        display: "flex",
+        alignItems: "center",
+      }}
+      className={`${prefixCls}-notice ${prefixCls}-notice-closable`}
+    >
+      <span
+        style={{
+          marginRight: "8px",
+        }}
+      >
+        {/* Add your error icon component here */}
+      </span>
+      {errorMessage}
+    </div>
+  );
+};
+
+export default IWillFollowYou;

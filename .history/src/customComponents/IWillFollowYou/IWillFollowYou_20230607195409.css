@@ -1,0 +1,21 @@
+.message-transition-enter {
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.message-transition-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+}
+
+.message-transition-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.message-transition-exit-active {
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}

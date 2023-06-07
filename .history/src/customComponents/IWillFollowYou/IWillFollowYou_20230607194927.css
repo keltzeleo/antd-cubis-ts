@@ -1,0 +1,33 @@
+/* IWillFollowYou.css */
+
+@keyframes slideFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.message-transition-enter {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideFadeIn 0.5s ease-in;
+}
+
+.message-transition-exit {
+  opacity: 1;
+  animation: slideFadeOut 0.5s ease-in;
+}
