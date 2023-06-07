@@ -40,19 +40,12 @@ const getChecksum = (file: RcFile): Promise<number> =>
     reader.readAsArrayBuffer(file);
   });
 
-  const handleFileUpload = (files: File[]) => {
-    files.forEach((file) => {
-      // Handle the file upload logic for each file here
-      console.log(file);
-    });
-  };
-
 const DragDropArea2: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
-
+  const [isWarningVisible, setIsWarningVisible] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(""); // Error message state
   const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false); // Visibility state of error message
@@ -82,7 +75,7 @@ const DragDropArea2: React.FC = () => {
 
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     let { file, fileList } = info;
-    
+
     // Check for redundant files in the new fileList
     const isFileRedundant = fileList.some(
       (existingFile) =>
@@ -102,62 +95,31 @@ const DragDropArea2: React.FC = () => {
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
-    }if (file.type && !acceptedFileTypes.includes(file.type)) {
-      handleError("Unsupported file type. Please upload a valid file.");
-      fileList = fileList.filter(
-        (existingFile) => existingFile.uid !== file.uid
-      );
-    }
-
-    // Calculate checksum for each file
-    const checksumPromises = fileList.map(async (file) => {
-      const checksum = await getChecksum(file.originFileObj as RcFile);
-      return { file, checksum };
-    });
-
-    const checksumResults = await Promise.all(checksumPromises);
-
-    // Check for duplicates based on checksum
-    const duplicateFiles = checksumResults.filter(
-      ({ checksum }, index) =>
-        checksumResults.findIndex((result) => result.checksum === checksum) !==
-        index
-    );
-
-    if (duplicateFiles.length > 0) {
-      handleError(
-        `${duplicateFiles[0].file.name} is duplicated. Removed redundant file(s). Please double-check.`
-      );
-      fileList = fileList.filter(
-        (file) => file.uid !== duplicateFiles[0].file.uid
-      );
     }
 
     setFileList(fileList);
   };
 
-  const uploadButton = (
-    <div
-      style={{
-        width: "450px",
-        height: "450px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      <p className="ant-upload-drag-icon">
-        <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
-      </p>
-      <p className="ant-upload-text">
-        Click or drag file to this area to upload
-      </p>
-      <p className="ant-upload-hint">
-        Support for a single or bulk upload. Strictly prohibited from uploading
-        company data or other banned files.
-      </p>
-    </div>
-  );
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsWarningVisible(true);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsWarningVisible(false);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsWarningVisible(false);
+    const { files } = e.dataTransfer;
+    handleFileUpload(Array.from(files));
+  };
 
   return (
     <>
@@ -168,7 +130,15 @@ const DragDropArea2: React.FC = () => {
           flexDirection: "column",
           justifyContent: "center",
         }}
+        onDragEnter={handleDragEnter}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
       >
+        {isWarningVisible && (
+          <div className="warning-message">Drop files here to upload</div>
+        )}
+
         <Upload.Dragger
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           fileList={fileList}

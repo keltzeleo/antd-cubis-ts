@@ -1,9 +1,7 @@
 import { Modal, Upload } from "antd";
-import { RcFile } from "antd/es/upload";
-import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
-import React, { useState } from "react";
-import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou"; // Import the IWillFollowYou component
+import { useState } from "react";
+import IWillFollowYou from "./IWillFollowYou"; // Import the IWillFollowYou component
 
 const acceptedFileTypes = [
   ".pdf",
@@ -15,15 +13,26 @@ const acceptedFileTypes = [
   "image/jpg",
 ];
 
-const getBase64 = (file: RcFile): Promise<string> =>
+const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
+    reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
   });
 
-const getChecksum = (file: RcFile): Promise<number> =>
+const handleFileUpload = (files) => {
+  files.forEach((file) => {
+    // Handle the file upload logic for each file here
+    if (!acceptedFileTypes.includes(file.type)) {
+      handleError("Invalid file type. Please upload a valid file.");
+    } else {
+      console.log(file);
+    }
+  });
+};
+
+const getChecksum = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -40,38 +49,30 @@ const getChecksum = (file: RcFile): Promise<number> =>
     reader.readAsArrayBuffer(file);
   });
 
-  const handleFileUpload = (files: File[]) => {
-    files.forEach((file) => {
-      // Handle the file upload logic for each file here
-      console.log(file);
-    });
-  };
-
-const DragDropArea2: React.FC = () => {
+const DragDropArea2 = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
-
+  const [fileList, setFileList] = useState([]);
 
   const [errorMessage, setErrorMessage] = useState(""); // Error message state
   const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false); // Visibility state of error message
 
   const handleCancel = () => setPreviewOpen(false);
 
-  const handlePreview = async (file: UploadFile<any>) => {
+  const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
+      file.preview = await getBase64(file.originFileObj);
     }
 
-    setPreviewImage(file.url || (file.preview as string));
+    setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
     setPreviewTitle(
       file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
     );
   };
 
-  const handleError = (errorMsg: string) => {
+  const handleError = (errorMsg) => {
     setErrorMessage(errorMsg);
     setIsErrorMessageVisible(true);
 
@@ -80,9 +81,9 @@ const DragDropArea2: React.FC = () => {
     }, 5000); // Show error message for 5 seconds
   };
 
-  const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
+  const handleChange = async (info) => {
     let { file, fileList } = info;
-    
+
     // Check for redundant files in the new fileList
     const isFileRedundant = fileList.some(
       (existingFile) =>
@@ -96,22 +97,9 @@ const DragDropArea2: React.FC = () => {
       );
     }
 
-    // Check for unsupported file types
-    if (file.type && !acceptedFileTypes.includes(file.type)) {
-      handleError("Unsupported file type. Please upload a valid file.");
-      fileList = fileList.filter(
-        (existingFile) => existingFile.uid !== file.uid
-      );
-    }if (file.type && !acceptedFileTypes.includes(file.type)) {
-      handleError("Unsupported file type. Please upload a valid file.");
-      fileList = fileList.filter(
-        (existingFile) => existingFile.uid !== file.uid
-      );
-    }
-
     // Calculate checksum for each file
     const checksumPromises = fileList.map(async (file) => {
-      const checksum = await getChecksum(file.originFileObj as RcFile);
+      const checksum = await getChecksum(file.originFileObj);
       return { file, checksum };
     });
 
@@ -178,7 +166,6 @@ const DragDropArea2: React.FC = () => {
           showUploadList={{ showRemoveIcon: true }}
           accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types
           style={{ marginRight: 16 }}
-          multiple // Enable multiple file upload
         >
           <div
             style={{

@@ -40,19 +40,12 @@ const getChecksum = (file: RcFile): Promise<number> =>
     reader.readAsArrayBuffer(file);
   });
 
-  const handleFileUpload = (files: File[]) => {
-    files.forEach((file) => {
-      // Handle the file upload logic for each file here
-      console.log(file);
-    });
-  };
-
 const DragDropArea2: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
-
+  const [isWarningVisible, setIsWarningVisible] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(""); // Error message state
   const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false); // Visibility state of error message
@@ -82,7 +75,7 @@ const DragDropArea2: React.FC = () => {
 
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     let { file, fileList } = info;
-    
+
     // Check for redundant files in the new fileList
     const isFileRedundant = fileList.some(
       (existingFile) =>
@@ -98,11 +91,6 @@ const DragDropArea2: React.FC = () => {
 
     // Check for unsupported file types
     if (file.type && !acceptedFileTypes.includes(file.type)) {
-      handleError("Unsupported file type. Please upload a valid file.");
-      fileList = fileList.filter(
-        (existingFile) => existingFile.uid !== file.uid
-      );
-    }if (file.type && !acceptedFileTypes.includes(file.type)) {
       handleError("Unsupported file type. Please upload a valid file.");
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid

@@ -80,9 +80,19 @@ const DragDropArea2: React.FC = () => {
     }, 5000); // Show error message for 5 seconds
   };
 
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const files = Array.from(e.dataTransfer.files);
+    handleFileUpload(files);
+  };
+
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     let { file, fileList } = info;
-    
+
     // Check for redundant files in the new fileList
     const isFileRedundant = fileList.some(
       (existingFile) =>
@@ -97,17 +107,16 @@ const DragDropArea2: React.FC = () => {
     }
 
     // Check for unsupported file types
+       // Check for unsupported file types
     if (file.type && !acceptedFileTypes.includes(file.type)) {
       handleError("Unsupported file type. Please upload a valid file.");
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
-    }if (file.type && !acceptedFileTypes.includes(file.type)) {
-      handleError("Unsupported file type. Please upload a valid file.");
-      fileList = fileList.filter(
-        (existingFile) => existingFile.uid !== file.uid
-      );
     }
+
+    setFileList(fileList);
+  };
 
     // Calculate checksum for each file
     const checksumPromises = fileList.map(async (file) => {
@@ -174,6 +183,8 @@ const DragDropArea2: React.FC = () => {
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}
+                    onDrop={handleDrop}
+
           listType="picture-card"
           showUploadList={{ showRemoveIcon: true }}
           accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types
