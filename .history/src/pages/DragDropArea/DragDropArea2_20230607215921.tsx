@@ -70,10 +70,10 @@ const DragDropArea2: React.FC = () => {
     );
   };
 
-  const handleError = (errorMsg: string) => {
-    setErrorMessage(errorMsg);
+  const handleError = (errorMsg: string, event: DragEvent<HTMLDivElement>) => {
+    event.dataTransfer?.setData('text', errorMsg); // Set the error message as custom attribute
     setIsErrorMessageVisible(true);
-
+  
     setTimeout(() => {
       setIsErrorMessageVisible(false);
     }, 5000); // Show error message for 5 seconds
@@ -164,18 +164,18 @@ const DragDropArea2: React.FC = () => {
         }}
       >
         <Upload.Dragger
+        const handleError = (errorMsg: string, event: DragEvent<HTMLDivElement>) => {
+          event.dataTransfer?.setData('text', errorMsg); // Set the error message as custom attribute
+          setIsErrorMessageVisible(true);
+        
+          setTimeout(() => {
+            setIsErrorMessageVisible(false);
+          }, 5000); // Show error message for 5 seconds
+        };
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}
-          onDrop={(e) => {
-            const unsupportedFiles = Array.from(e.dataTransfer.files).filter(
-              (file) => !acceptedFileTypes.includes(file.type)
-            );
-            if (unsupportedFiles.length > 0) {
-              handleError("Unsupported file type. Please upload a valid file.");
-            }
-          }}
           listType="picture-card"
           showUploadList={{ showRemoveIcon: true }}
           accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types

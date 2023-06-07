@@ -164,18 +164,18 @@ const DragDropArea2: React.FC = () => {
         }}
       >
         <Upload.Dragger
+          beforeUpload={(file) => {
+            // Check for unsupported file types
+            if (file.type && !acceptedFileTypes.includes(file.type)) {
+              handleError("Unsupported file type. Please upload a valid file.");
+              return false; // Return false to prevent file from being added
+            }
+            return true; // Allow file to be added
+          }}
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}
-          onDrop={(e) => {
-            const unsupportedFiles = Array.from(e.dataTransfer.files).filter(
-              (file) => !acceptedFileTypes.includes(file.type)
-            );
-            if (unsupportedFiles.length > 0) {
-              handleError("Unsupported file type. Please upload a valid file.");
-            }
-          }}
           listType="picture-card"
           showUploadList={{ showRemoveIcon: true }}
           accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types

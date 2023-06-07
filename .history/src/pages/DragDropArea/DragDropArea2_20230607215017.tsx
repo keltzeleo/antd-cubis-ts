@@ -3,7 +3,6 @@ import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
-import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou"; // Import the IWillFollowYou component
 
 const acceptedFileTypes = [
   ".pdf",
@@ -40,21 +39,12 @@ const getChecksum = (file: RcFile): Promise<number> =>
     reader.readAsArrayBuffer(file);
   });
 
-const handleFileUpload = (files: File[]) => {
-  files.forEach((file) => {
-    // Handle the file upload logic for each file here
-    console.log(file);
-  });
-};
-
 const DragDropArea2: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
-
-  const [errorMessage, setErrorMessage] = useState(""); // Error message state
-  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false); // Visibility state of error message
+  const [unsupportedFileDropped, setUnsupportedFileDropped] = useState(false);
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -71,75 +61,29 @@ const DragDropArea2: React.FC = () => {
   };
 
   const handleError = (errorMsg: string) => {
-    setErrorMessage(errorMsg);
-    setIsErrorMessageVisible(true);
-
-    setTimeout(() => {
-      setIsErrorMessageVisible(false);
-    }, 5000); // Show error message for 5 seconds
+    // Handle the error message here
+    console.log(errorMsg);
   };
 
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     let { file, fileList } = info;
 
-    // Check for redundant files in the new fileList
-    const isFileRedundant = fileList.some(
-      (existingFile) =>
-        existingFile.name === file.name && existingFile.uid !== file.uid
-    );
-
-    if (isFileRedundant) {
-      handleError(`File '${file.name}' is redundant. Please double-check.`);
-      fileList = fileList.filter(
-        (existingFile) => existingFile.uid !== file.uid
-      );
-    }
-
     // Check for unsupported file types
     if (file.type && !acceptedFileTypes.includes(file.type)) {
       handleError("Unsupported file type. Please upload a valid file.");
+      setUnsupportedFileDropped(true);
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
-    }
-
-    // Calculate checksum for each file
-    const checksumPromises = fileList.map(async (file) => {
-      const checksum = await getChecksum(file.originFileObj as RcFile);
-      return { file, checksum };
-    });
-
-    const checksumResults = await Promise.all(checksumPromises);
-
-    // Check for duplicates based on checksum
-    const duplicateFiles = checksumResults.filter(
-      ({ checksum }, index) =>
-        checksumResults.findIndex((result) => result.checksum === checksum) !==
-        index
-    );
-
-    if (duplicateFiles.length > 0) {
-      handleError(
-        `${duplicateFiles[0].file.name} is duplicated. Removed redundant file(s). Please double-check.`
-      );
-      fileList = fileList.filter(
-        (file) => file.uid !== duplicateFiles[0].file.uid
-      );
+    } else {
+      setUnsupportedFileDropped(false);
     }
 
     setFileList(fileList);
   };
 
   const uploadButton = (
-    <div
-      style={{
-        width: "450px",
-        height: "450px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
+    <div>
       <p className="ant-upload-drag-icon">
         <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
       </p>
@@ -155,48 +99,27 @@ const DragDropArea2: React.FC = () => {
 
   return (
     <>
-      <div
-        style={{
-          width: "450px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
+      <div>
         <Upload.Dragger
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}
-          onDrop={(e) => {
-            const unsupportedFiles = Array.from(e.dataTransfer.files).filter(
-              (file) => !acceptedFileTypes.includes(file.type)
-            );
-            if (unsupportedFiles.length > 0) {
-              handleError("Unsupported file type. Please upload a valid file.");
-            }
-          }}
           listType="picture-card"
           showUploadList={{ showRemoveIcon: true }}
           accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types
-          style={{ marginRight: 16 }}
+          style={{
+            marginRight: 16,
+            borderColor: unsupportedFileDropped ? "red" : undefined,
+          }}
           multiple // Enable multiple file upload
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "450px",
-              height: "450px",
-            }}
-          >
-            {fileList.length >= 8 ? null : uploadButton}
-          </div>
+          {unsupportedFileDropped && (
+            <div style={{ color: "red" }}>
+              Unsupported file type. Please upload a valid file.
+            </div>
+          )}
+          {fileList.length >= 8 ? null : uploadButton}
         </Upload.Dragger>
-
-        {isErrorMessageVisible && (
-          <IWillFollowYou errorMessage={errorMessage} />
-        )}
 
         <Modal
           visible={previewOpen}

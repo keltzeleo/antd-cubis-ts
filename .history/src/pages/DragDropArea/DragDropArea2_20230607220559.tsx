@@ -169,7 +169,7 @@ const DragDropArea2: React.FC = () => {
           onPreview={handlePreview}
           onChange={handleChange}
           onDrop={(e) => {
-            const unsupportedFiles = Array.from(e.dataTransfer.files).filter(
+            const unsupportedFiles = e.dataTransfer.files.filter(
               (file) => !acceptedFileTypes.includes(file.type)
             );
             if (unsupportedFiles.length > 0) {

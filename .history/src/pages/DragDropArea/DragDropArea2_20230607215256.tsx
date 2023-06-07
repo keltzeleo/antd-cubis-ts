@@ -98,9 +98,7 @@ const DragDropArea2: React.FC = () => {
     // Check for unsupported file types
     if (file.type && !acceptedFileTypes.includes(file.type)) {
       handleError("Unsupported file type. Please upload a valid file.");
-      fileList = fileList.filter(
-        (existingFile) => existingFile.uid !== file.uid
-      );
+      return; // Exit the function to prevent further processing
     }
 
     // Calculate checksum for each file
@@ -168,14 +166,6 @@ const DragDropArea2: React.FC = () => {
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}
-          onDrop={(e) => {
-            const unsupportedFiles = Array.from(e.dataTransfer.files).filter(
-              (file) => !acceptedFileTypes.includes(file.type)
-            );
-            if (unsupportedFiles.length > 0) {
-              handleError("Unsupported file type. Please upload a valid file.");
-            }
-          }}
           listType="picture-card"
           showUploadList={{ showRemoveIcon: true }}
           accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types
