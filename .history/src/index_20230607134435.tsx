@@ -10,7 +10,7 @@ import ReactDOM from "react-dom";
 //import "./customDarkTheme.css";
 //import DragDropArea from "./pages/DragDropArea/DragDropArea";
 // import DragDropArea2 from "./pages/DragDropArea/DragDropArea2";
-import IWillFollowYou from "../src/customComponents/IWillFollowYou/IWillFollowYou";
+import IWillFollowYou from "./customComponents/IWillFollowYou/IWillFoloowYou";
 
 const { darkAlgorithm, compactAlgorithm } = theme;
 
