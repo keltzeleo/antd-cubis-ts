@@ -45,6 +45,7 @@ const DragDropArea2: React.FC = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
+  s;
 
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);

@@ -22,6 +22,6 @@
 
 .ant-upload-list-item .ant-upload-list-item-remove {
   position: absolute;
-  top: -100;
-  left: 10;
+  top: -20;
+  right: 0;
 }

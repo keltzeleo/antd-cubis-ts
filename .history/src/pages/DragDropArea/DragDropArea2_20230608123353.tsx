@@ -40,14 +40,21 @@ const getChecksum = (file: RcFile): Promise<number> =>
     reader.readAsArrayBuffer(file);
   });
 
+const handleFileUpload = (files: File[]) => {
+  files.forEach((file) => {
+    // Handle the file upload logic for each file here
+    console.log(file);
+  });
+};
+
 const DragDropArea2: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
 
-  const [errorMessages, setErrorMessages] = useState<string[]>([]);
-  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // Error message state
+  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false); // Visibility state of error message
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -64,40 +71,39 @@ const DragDropArea2: React.FC = () => {
   };
 
   const handleError = (errorMsg: string) => {
-    setErrorMessages((prevMessages) => [...prevMessages, errorMsg]);
+    setErrorMessage(errorMsg);
     setIsErrorMessageVisible(true);
 
     setTimeout(() => {
       setIsErrorMessageVisible(false);
-      setErrorMessages([]);
-    }, 5000); // Show error messages for 5 seconds
+    }, 5000); // Show error message for 5 seconds
   };
 
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     let { file, fileList } = info;
 
+    // Check for redundant files in the new fileList
     const isFileRedundant = fileList.some(
       (existingFile) =>
         existingFile.name === file.name && existingFile.uid !== file.uid
     );
 
     if (isFileRedundant) {
-      const redundantFileErrorMsg = `File '${file.name}' is redundant. Please double-check.`;
-      handleError(redundantFileErrorMsg);
+      handleError(`File '${file.name}' is redundant. Please double-check.`);
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
     }
 
+    // Check for unsupported file types
     if (file.type && !acceptedFileTypes.includes(file.type)) {
-      const unsupportedFileErrorMsg =
-        "Unsupported file type. Please upload a valid file.";
-      handleError(unsupportedFileErrorMsg);
+      handleError("Unsupported file type. Please upload a valid file.");
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
     }
 
+    // Calculate checksum for each file
     const checksumPromises = fileList.map(async (file) => {
       const checksum = await getChecksum(file.originFileObj as RcFile);
       return { file, checksum };
@@ -105,6 +111,7 @@ const DragDropArea2: React.FC = () => {
 
     const checksumResults = await Promise.all(checksumPromises);
 
+    // Check for duplicates based on checksum
     const duplicateFiles = checksumResults.filter(
       ({ checksum }, index) =>
         checksumResults.findIndex((result) => result.checksum === checksum) !==
@@ -112,8 +119,9 @@ const DragDropArea2: React.FC = () => {
     );
 
     if (duplicateFiles.length > 0) {
-      const duplicatedFileErrorMsg = `${duplicateFiles[0].file.name} is duplicated. Please double-check.`;
-      handleError(duplicatedFileErrorMsg);
+      handleError(
+        `${duplicateFiles[0].file.name} is duplicated. Removed redundant file(s). Please double-check.`
+      );
       fileList = fileList.filter(
         (file) => file.uid !== duplicateFiles[0].file.uid
       );
@@ -165,16 +173,17 @@ const DragDropArea2: React.FC = () => {
               (file) => !acceptedFileTypes.includes(file.type)
             );
             if (unsupportedFiles.length > 0) {
-              const unsupportedFileErrorMsg =
-                "Unsupported file type. Please upload a valid file.";
-              handleError(unsupportedFileErrorMsg);
+              handleError("Unsupported file type. Please upload a valid file.");
             }
           }}
           listType="picture-card"
           showUploadList={{ showRemoveIcon: true }}
+          style={{
+            position: "relative",
+          }}
           className="custom-upload-dragger"
           accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types
-          style={{ marginRight: 16, position: "relative" }}
+          style={{ marginRight: 16 }}
           multiple // Enable multiple file upload
         >
           <div
@@ -189,11 +198,7 @@ const DragDropArea2: React.FC = () => {
         </Upload.Dragger>
 
         {isErrorMessageVisible && (
-          <div>
-            {errorMessages.map((errorMessage, index) => (
-              <IWillFollowYou key={index} errorMessage={errorMessage} />
-            ))}
-          </div>
+          <IWillFollowYou errorMessage={errorMessage} />
         )}
 
         <Modal

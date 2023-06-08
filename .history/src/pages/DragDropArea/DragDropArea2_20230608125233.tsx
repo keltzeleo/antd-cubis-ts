@@ -45,9 +45,106 @@ const DragDropArea2: React.FC = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [cancelUpload, setCancelUpload] = useState(false);
 
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
+
+  const handleCancelUpload = () => {
+    // Set the cancelUpload flag to true
+    setCancelUpload(true);
+  };
+
+  const handleUpload = async () => {
+    // Set the uploading flag to true
+    setUploading(true);
+
+    // Perform the upload logic
+    try {
+      // Start uploading the files
+      await uploadFiles();
+
+      // Check if the upload was canceled
+      if (cancelUpload) {
+        console.log('Upload canceled');
+        // Reset the cancelUpload flag
+        setCancelUpload(false);
+        return;
+      }
+
+      // Upload completed successfully
+      console.log('Upload completed');
+    } catch (error) {
+      // Handle the error
+      console.error('Upload error:', error);
+    } finally {
+      // Set the uploading flag to false
+      setUploading(false);
+    }
+  };
+
+  const uploadFiles = () => {
+    return new Promise<void>((resolve, reject) => {
+      // Simulate an asynchronous upload process
+      setTimeout(() => {
+        // Resolve or reject based on the cancelUpload flag
+        if (cancelUpload) {
+          reject(new Error('Upload canceled'));
+        } else {
+          resolve();
+        }
+      }, 2000); // Simulated upload duration of 2 seconds
+    });
+  };
+
+  const handleUpload = async () => {
+    // Set the uploading flag to true
+    setUploading(true);
+
+    // Perform the upload logic
+    try {
+      // Start uploading the files
+      await uploadFiles();
+
+      // Check if the upload was canceled
+      if (cancelUpload) {
+        console.log('Upload canceled');
+        // Reset the cancelUpload flag
+        setCancelUpload(false);
+        return;
+      }
+
+      // Upload completed successfully
+      console.log('Upload completed');
+    } catch (error) {
+      // Handle the error
+      console.error('Upload error:', error);
+    } finally {
+      // Set the uploading flag to false
+      setUploading(false);
+    }
+  };
+
+  const cancelUpload = () => {
+    // Set the cancelUpload flag to true
+    setCancelUpload(true);
+  };
+
+  // Function to simulate file upload
+  const uploadFiles = () => {
+    return new Promise((resolve, reject) => {
+      // Simulate an asynchronous upload process
+      setTimeout(() => {
+        // Resolve or reject based on the cancelUpload flag
+        if (cancelUpload) {
+          reject(new Error('Upload canceled'));
+        } else {
+          resolve();
+        }
+      }, 2000); // Simulated upload duration of 2 seconds
+    });
+  };
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -194,6 +291,15 @@ const DragDropArea2: React.FC = () => {
               <IWillFollowYou key={index} errorMessage={errorMessage} />
             ))}
           </div>
+
+           <button onClick={handleUpload} disabled={uploading}>
+           {uploading ? 'Uploading...' : 'Upload'}
+
+         </button>
+         {uploading && (
+           <button onClick={cancelUpload} disabled={!uploading}>
+             Cancel Upload
+           </button>
         )}
 
         <Modal

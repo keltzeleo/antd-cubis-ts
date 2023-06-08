@@ -48,6 +48,8 @@ const DragDropArea2: React.FC = () => {
 
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [cancelUpload, setCancelUpload] = useState(false);
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -91,120 +93,112 @@ const DragDropArea2: React.FC = () => {
 
     if (file.type && !acceptedFileTypes.includes(file.type)) {
       const unsupportedFileErrorMsg =
-        "Unsupported file type. Please upload a valid file.";
+        "Unsupported file type. Please upload a PDF, Word document, CSV, or image file.";
       handleError(unsupportedFileErrorMsg);
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
     }
 
-    const checksumPromises = fileList.map(async (file) => {
-      const checksum = await getChecksum(file.originFileObj as RcFile);
-      return { file, checksum };
-    });
+    if (fileList.length > 5) {
+      const maxFilesErrorMsg = "You can upload up to 5 files.";
+      handleError(maxFilesErrorMsg);
+      fileList = fileList.slice(0, 5);
+    }
 
-    const checksumResults = await Promise.all(checksumPromises);
-
-    const duplicateFiles = checksumResults.filter(
-      ({ checksum }, index) =>
-        checksumResults.findIndex((result) => result.checksum === checksum) !==
-        index
-    );
-
-    if (duplicateFiles.length > 0) {
-      const duplicatedFileErrorMsg = `${duplicateFiles[0].file.name} is duplicated. Please double-check.`;
-      handleError(duplicatedFileErrorMsg);
+    if (file.status === "error") {
+      const uploadErrorMsg = `File '${file.name}' failed to upload. Please try again.`;
+      handleError(uploadErrorMsg);
       fileList = fileList.filter(
-        (file) => file.uid !== duplicateFiles[0].file.uid
+        (existingFile) => existingFile.uid !== file.uid
       );
     }
 
     setFileList(fileList);
   };
 
-  const uploadButton = (
-    <div
-      style={{
-        width: "auto",
-        height: "auto",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      <p className="ant-upload-drag-icon">
-        <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
-      </p>
-      <p className="ant-upload-text">
-        Click or drag file to this area to upload
-      </p>
-      <p className="ant-upload-hint">
-        Support for a single or bulk upload. Strictly prohibited from uploading
-        company data or other banned files.
-      </p>
-    </div>
-  );
+  const handleRemove = (file: UploadFile<any>) => {
+    setFileList((prevFileList) =>
+      prevFileList.filter((existingFile) => existingFile.uid !== file.uid)
+    );
+  };
+
+  const handleUpload = async () => {
+    // Set the uploading flag to true
+    setUploading(true);
+
+    // Perform the upload logic
+    try {
+      // Start uploading the files
+      await uploadFiles();
+
+      // Check if the upload was canceled
+      if (cancelUpload) {
+        console.log("Upload canceled");
+        // Reset the cancelUpload flag
+        setCancelUpload(false);
+        return;
+      }
+
+      // Upload completed successfully
+      console.log("Upload completed");
+    } catch (error) {
+      // Handle the error
+      console.error("Upload error:", error);
+    } finally {
+      // Set the uploading flag to false
+      setUploading(false);
+    }
+  };
+
+  const uploadFiles = () => {
+    return new Promise<void>((resolve, reject) => {
+      // Simulate an asynchronous upload process
+      setTimeout(() => {
+        // Resolve or reject based on the cancelUpload flag
+        if (cancelUpload) {
+          reject(new Error("Upload canceled"));
+        } else {
+          resolve();
+        }
+      }, 2000); // Simulated upload duration of 2 seconds
+    });
+  };
 
   return (
     <>
-      <div
-        style={{
-          width: 400,
-          display: "inline-block",
-          flexDirection: "column",
-          height: 400,
-        }}
+      <Upload
+        listType="picture-card"
+        fileList={fileList}
+        onPreview={handlePreview}
+        onChange={handleChange}
+        onRemove={handleRemove}
       >
-        <Upload.Dragger
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          fileList={fileList}
-          onPreview={handlePreview}
-          onChange={handleChange}
-          onDrop={(e) => {
-            const unsupportedFiles = Array.from(e.dataTransfer.files).filter(
-              (file) => !acceptedFileTypes.includes(file.type)
-            );
-            if (unsupportedFiles.length > 0) {
-              const unsupportedFileErrorMsg =
-                "Unsupported file type. Please upload a valid file.";
-              handleError(unsupportedFileErrorMsg);
-            }
-          }}
-          listType="picture-card"
-          showUploadList={{ showRemoveIcon: true }}
-          className="custom-upload-dragger"
-          accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types
-          style={{ marginRight: 16, position: "relative" }}
-          multiple // Enable multiple file upload
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            {fileList.length >= 8 ? null : uploadButton}
-          </div>
-        </Upload.Dragger>
-
-        {isErrorMessageVisible && (
-          <div>
-            {errorMessages.map((errorMessage, index) => (
-              <IWillFollowYou key={index} errorMessage={errorMessage} />
-            ))}
-          </div>
-        )}
-
-        <Modal
-          visible={previewOpen}
-          title={previewTitle}
-          footer={null}
-          onCancel={handleCancel}
-        >
-          <img alt="example" style={{ width: "100%" }} src={previewImage} />
-        </Modal>
-      </div>
+        {fileList.length < 5 && "+ Upload"}
+      </Upload>
+      <Modal
+        visible={previewOpen}
+        title={previewTitle}
+        footer={null}
+        onCancel={handleCancel}
+      >
+        <img alt="Preview" style={{ width: "100%" }} src={previewImage} />
+      </Modal>
+      {isErrorMessageVisible && (
+        <div>
+          {errorMessages.map((errorMessage, index) => (
+            <IWillFollowYou key={index} errorMessage={errorMessage} />
+          ))}
+        </div>
+      )}
+      <button onClick={handleUpload} disabled={uploading}>
+        {uploading ? "Uploading..." : "Upload"}
+      </button>
+      {uploading && (
+        <button onClick={handleCancel} disabled={!uploading}>
+          Cancel Upload
+        </button>
+      )}
     </>
   );
 };
