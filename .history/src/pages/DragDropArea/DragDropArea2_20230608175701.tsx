@@ -139,20 +139,8 @@ const DragDropArea2: React.FC = () => {
       );
     }
 
-    setFileList(
-      fileList.map((file) => {
-        // Set a custom error icon for files with status 'error'
-        if (file.status === "error") {
-          return {
-            ...file,
-            thumbUrl: "../../icons/icon_error_sm.png", // Replace 'error.png' with the path to your error icon
-          };
-        }
-        return file;
-      })
-    );
+    setFileList(fileList);
   };
-
   const uploadButton = (
     <div
       style={{

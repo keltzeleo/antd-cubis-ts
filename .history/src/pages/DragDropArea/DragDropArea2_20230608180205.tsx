@@ -145,14 +145,13 @@ const DragDropArea2: React.FC = () => {
         if (file.status === "error") {
           return {
             ...file,
-            thumbUrl: "../../icons/icon_error_sm.png", // Replace 'error.png' with the path to your error icon
+            thumbUrl: "error.png", // Replace 'error.png' with the path to your error icon
           };
         }
         return file;
       })
     );
   };
-
   const uploadButton = (
     <div
       style={{
