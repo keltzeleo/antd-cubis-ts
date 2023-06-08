@@ -59,11 +59,6 @@ const DragDropArea2: React.FC = () => {
   const handleCancel = () => setPreviewOpen(false);
 
   const handlePreview = async (file: UploadFile<any>) => {
-    if (file.status === "error") {
-      handleError(`File '${file.name}' encountered an error during upload.`);
-      return;
-    }
-
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
@@ -71,8 +66,7 @@ const DragDropArea2: React.FC = () => {
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
     setPreviewTitle(
-      file.name ||
-        (file.url ? file.url.substring(file.url.lastIndexOf("/") + 1) : "")
+      file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
     );
   };
 
@@ -88,25 +82,25 @@ const DragDropArea2: React.FC = () => {
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     let { file, fileList } = info;
 
-    // Check for redundant files and unsupported file types
-    if (file.status === "done") {
-      const isFileRedundant = fileList.some(
-        (existingFile) =>
-          existingFile.name === file.name && existingFile.uid !== file.uid
+    // Check for redundant files in the new fileList
+    const isFileRedundant = fileList.some(
+      (existingFile) =>
+        existingFile.name === file.name && existingFile.uid !== file.uid
+    );
+
+    if (isFileRedundant) {
+      handleError(`File '${file.name}' is redundant. Please double-check.`);
+      fileList = fileList.filter(
+        (existingFile) => existingFile.uid !== file.uid
       );
-      if (
-        isFileRedundant ||
-        (file.type && !acceptedFileTypes.includes(file.type))
-      ) {
-        handleError(
-          `File '${file.name}' is redundant or unsupported. Please double-check.`
-        );
-        fileList = fileList.filter(
-          (existingFile) => existingFile.uid !== file.uid
-        );
-        setFileList(fileList);
-        return;
-      }
+    }
+
+    // Check for unsupported file types
+    if (file.type && !acceptedFileTypes.includes(file.type)) {
+      handleError("Unsupported file type. Please upload a valid file.");
+      fileList = fileList.filter(
+        (existingFile) => existingFile.uid !== file.uid
+      );
     }
 
     // Calculate checksum for each file
@@ -135,6 +129,7 @@ const DragDropArea2: React.FC = () => {
 
     setFileList(fileList);
   };
+
   const uploadButton = (
     <div
       style={{

@@ -59,11 +59,6 @@ const DragDropArea2: React.FC = () => {
   const handleCancel = () => setPreviewOpen(false);
 
   const handlePreview = async (file: UploadFile<any>) => {
-    if (file.status === "error") {
-      handleError(`File '${file.name}' encountered an error during upload.`);
-      return;
-    }
-
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
@@ -71,8 +66,7 @@ const DragDropArea2: React.FC = () => {
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
     setPreviewTitle(
-      file.name ||
-        (file.url ? file.url.substring(file.url.lastIndexOf("/") + 1) : "")
+      file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
     );
   };
 
