@@ -88,12 +88,7 @@ const DragDropArea2: React.FC = () => {
 
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     let { file, fileList } = info;
-    if (file.status === "error" && !file.url && !file.preview) {
-      // Handle the case where the error file has no thumbnail
-      // You can set a default thumbnail image or handle it as per your needs
-      // For example, set a placeholder image
-      file.preview = "placeholder.png";
-    }
+  
     // Check for redundant files and unsupported file types
     if (file.status === "done") {
       const isFileRedundant = fileList.some(
@@ -104,7 +99,9 @@ const DragDropArea2: React.FC = () => {
         isFileRedundant ||
         (file.type && !acceptedFileTypes.includes(file.type))
       ) {
-        handleError(`File '${file.name}' is redundant. Please double-check.`);
+        handleError(
+          `File '${file.name}' is redundant or unsupported. Please double-check.`
+        );
         fileList = fileList.filter(
           (existingFile) => existingFile.uid !== file.uid
         );
@@ -112,6 +109,33 @@ const DragDropArea2: React.FC = () => {
         return;
       }
     }
+  
+    // Calculate checksum for each file
+    const checksumPromises = fileList.map(async (file) => {
+      const checksum = await getChecksum(file.originFileObj as RcFile);
+      return { file, checksum };
+    });
+  
+    const checksumResults = await Promise.all(checksumPromises);
+  
+    // Check for duplicates based on checksum
+    const duplicateFiles = checksumResults.filter(
+      ({ checksum }, index) =>
+        checksumResults.findIndex((result) => result.checksum === checksum) !==
+        index
+    );
+  
+    if (duplicateFiles.length > 0) {
+      handleError(
+        `${duplicateFiles[0].file.name} is duplicated. Skipping redundant file(s). Please double-check.`
+      );
+      fileList = fileList.filter(
+        (file) => file.uid !== duplicateFiles[0].file.uid
+      );
+    }
+  
+    setFileList(fileList);
+  };
 
     // Calculate checksum for each file
     const checksumPromises = fileList.map(async (file) => {
