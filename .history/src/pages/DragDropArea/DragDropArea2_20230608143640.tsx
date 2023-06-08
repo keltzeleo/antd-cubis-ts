@@ -1,35 +1,9 @@
+import React, { useState } from "react";
 import { Modal, Upload } from "antd";
 import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
-import React, { useState } from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
-
-const getChecksum = async (file: RcFile): Promise<string> => {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const arrayBuffer = reader.result as ArrayBuffer;
-      const crc = crc32(arrayBuffer);
-      resolve(crc.toString());
-    };
-    reader.onerror = (error) => {
-      reject(error);
-    };
-    reader.readAsArrayBuffer(file);
-  });
-};
-
-const getCroppedImage = async (file: File): Promise<string> => {
-  // Implement the logic to get the cropped image preview here
-  return new Promise<string>((resolve, reject) => {
-    // Example code to generate a placeholder image URL
-    const placeholderImage = `https://via.placeholder.com/300x300?text=${encodeURIComponent(
-      file.name
-    )}`;
-    resolve(placeholderImage);
-  });
-};
 
 interface ErrorItem {
   id: number;
@@ -46,6 +20,8 @@ const acceptedFileTypes = [
   "image/jpg",
 ];
 
+// Rest of the code...
+
 const DragDropArea2: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>("");
@@ -53,8 +29,7 @@ const DragDropArea2: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
 
   const [errorMessages, setErrorMessages] = useState<ErrorItem[]>([]);
-  const [isErrorMessageVisible, setIsErrorMessageVisible] =
-    useState<boolean>(false);
+  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState<boolean>(false);
 
   const handleError = (errorMsg: string) => {
     setErrorMessages((prevMessages) => [
@@ -62,23 +37,30 @@ const DragDropArea2: React.FC = () => {
       { id: Date.now(), message: errorMsg },
     ]);
     setIsErrorMessageVisible(true);
+  };
+
+    setErrorMessages((prevMessages) => [
+      ...prevMessages,
+      { id: errorId, message: errorMsg },
+    ]);
+    setIsErrorMessageVisible(true);
 
     setTimeout(() => {
       setIsErrorMessageVisible(false);
       setErrorMessages((prevMessages) =>
-        prevMessages.filter((error) => error.message !== errorMsg)
+        prevMessages.filter((error) => error.id !== errorId)
       );
     }, 5000); // Show error messages for 5 seconds
   };
 
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     let { file, fileList } = info;
-
+  
     const isFileRedundant = fileList.some(
       (existingFile) =>
         existingFile.name === file.name && existingFile.uid !== file.uid
     );
-
+  
     if (isFileRedundant) {
       const redundantFileErrorMsg = `File '${file.name}' is redundant. Please double-check.`;
       handleError(redundantFileErrorMsg);
@@ -86,7 +68,7 @@ const DragDropArea2: React.FC = () => {
         (existingFile) => existingFile.uid !== file.uid
       );
     }
-
+  
     if (file.type && !acceptedFileTypes.includes(file.type)) {
       const unsupportedFileErrorMsg =
         "Unsupported file type. Please upload a valid file.";
@@ -95,20 +77,20 @@ const DragDropArea2: React.FC = () => {
         (existingFile) => existingFile.uid !== file.uid
       );
     }
-
+  
     const checksumPromises = fileList.map(async (file) => {
       const checksum = await getChecksum(file.originFileObj as RcFile);
       return { file, checksum };
     });
-
+  
     const checksumResults = await Promise.all(checksumPromises);
-
+  
     const duplicateFiles = checksumResults.filter(
       ({ checksum }, index) =>
         checksumResults.findIndex((result) => result.checksum === checksum) !==
         index
     );
-
+  
     if (duplicateFiles.length > 0) {
       const duplicatedFileErrorMsg = `${duplicateFiles[0].file.name} is duplicated. Please double-check.`;
       handleError(duplicatedFileErrorMsg);
@@ -116,7 +98,7 @@ const DragDropArea2: React.FC = () => {
         (file) => file.uid !== duplicateFiles[0].file.uid
       );
     }
-
+  
     setFileList(fileList);
   };
 
@@ -143,19 +125,6 @@ const DragDropArea2: React.FC = () => {
     </div>
   );
 
-  const handlePreview = async (file: UploadFile<any>) => {
-    if (file.status === "error") {
-      file.preview = await getCroppedImage(file.originFileObj as File);
-    } else {
-      if (!file.url && !file.preview) {
-        file.preview = await getCroppedImage(file.originFileObj as File);
-      }
-    }
-
-    setPreviewImage(file.preview || file.url || "");
-    setPreviewTitle(file.name || "");
-  };
-
   return (
     <>
       <div
@@ -170,12 +139,22 @@ const DragDropArea2: React.FC = () => {
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}
+          // onDrop={(e) => {
+          //   const unsupportedFiles = Array.from(e.dataTransfer.files).filter(
+          //     (file) => !acceptedFileTypes.includes(file.type)
+          //   );
+          //   if (unsupportedFiles.length > 0) {
+          //     const unsupportedFileErrorMsg =
+          //       "Unsupported file type. Please upload a valid file.";
+          //     handleError(unsupportedFileErrorMsg);
+          //   }
+          // }}
           listType="picture-card"
           showUploadList={{ showRemoveIcon: true }}
           className="custom-upload-dragger"
-          accept=".pdf,.doc,.docx,.csv,image/*"
+          accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types
           style={{ marginRight: 16, position: "relative" }}
-          multiple
+          multiple // Enable multiple file upload
         >
           <div
             style={{
@@ -200,33 +179,9 @@ const DragDropArea2: React.FC = () => {
           visible={previewOpen}
           title={previewTitle}
           footer={null}
-          onCancel={() => setPreviewOpen(false)} // Handle cancel directly inline
+          onCancel={handleCancel}
         >
-          {previewImage && (
-            <div style={{ position: "relative" }}>
-              <img
-                alt="example"
-                style={{
-                  width: "100%",
-                }}
-                src={previewImage}
-              />
-              {fileList.find((file) => file.url === previewImage)?.status ===
-                "error" && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(255, 0, 0, 0.5)",
-                    mixBlendMode: "multiply",
-                  }}
-                />
-              )}
-            </div>
-          )}
+          <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
       </div>
     </>

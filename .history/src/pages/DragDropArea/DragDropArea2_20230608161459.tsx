@@ -144,12 +144,8 @@ const DragDropArea2: React.FC = () => {
   );
 
   const handlePreview = async (file: UploadFile<any>) => {
-    if (file.status === "error") {
+    if (!file.url && !file.preview) {
       file.preview = await getCroppedImage(file.originFileObj as File);
-    } else {
-      if (!file.url && !file.preview) {
-        file.preview = await getCroppedImage(file.originFileObj as File);
-      }
     }
 
     setPreviewImage(file.preview || file.url || "");
@@ -200,7 +196,7 @@ const DragDropArea2: React.FC = () => {
           visible={previewOpen}
           title={previewTitle}
           footer={null}
-          onCancel={() => setPreviewOpen(false)} // Handle cancel directly inline
+          onCancel={handleCancel}
         >
           {previewImage && (
             <div style={{ position: "relative" }}>
@@ -211,8 +207,8 @@ const DragDropArea2: React.FC = () => {
                 }}
                 src={previewImage}
               />
-              {fileList.find((file) => file.url === previewImage)?.status ===
-                "error" && (
+              {fileList.find((file) => file.uid === previewImage.uid)
+                ?.status === "error" && (
                 <div
                   style={{
                     position: "absolute",

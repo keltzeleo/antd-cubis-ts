@@ -17,10 +17,6 @@
   cursor: pointer;
 }
 
-.thumbnail.error {
-  filter: brightness(75%);
-}
-
 .thumbnail-overlay {
   position: absolute;
   top: 0;

@@ -1,3 +1,4 @@
+import { CloseOutlined } from "@ant-design/icons";
 import { Modal, Upload } from "antd";
 import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
@@ -145,15 +146,21 @@ const DragDropArea2: React.FC = () => {
 
   const handlePreview = async (file: UploadFile<any>) => {
     if (file.status === "error") {
+      setPreviewImage("");
+      setPreviewTitle("");
+      return;
+    }
+
+    if (!file.url && !file.preview) {
       file.preview = await getCroppedImage(file.originFileObj as File);
-    } else {
-      if (!file.url && !file.preview) {
-        file.preview = await getCroppedImage(file.originFileObj as File);
-      }
     }
 
     setPreviewImage(file.preview || file.url || "");
     setPreviewTitle(file.name || "");
+  };
+
+  const handleCancel = () => {
+    setPreviewOpen(false);
   };
 
   return (
@@ -196,37 +203,38 @@ const DragDropArea2: React.FC = () => {
           </div>
         )}
 
+        <div className="file-list">
+          {fileList.map((file: UploadFile<any>) => (
+            <div key={file.uid} className="file-item">
+              <div
+                className={`thumbnail-container ${
+                  file.status === "error" ? "error-thumbnail" : ""
+                }`}
+              >
+                {file.status === "error" && (
+                  <div className="error-overlay">
+                    <CloseOutlined className="error-icon" />
+                  </div>
+                )}
+                <img
+                  src={file.url || file.preview}
+                  alt={file.name}
+                  className="thumbnail"
+                  onClick={() => handlePreview(file)}
+                />
+              </div>
+              <span className="file-name">{file.name}</span>
+            </div>
+          ))}
+        </div>
+
         <Modal
           visible={previewOpen}
           title={previewTitle}
           footer={null}
-          onCancel={() => setPreviewOpen(false)} // Handle cancel directly inline
+          onCancel={handleCancel}
         >
-          {previewImage && (
-            <div style={{ position: "relative" }}>
-              <img
-                alt="example"
-                style={{
-                  width: "100%",
-                }}
-                src={previewImage}
-              />
-              {fileList.find((file) => file.url === previewImage)?.status ===
-                "error" && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(255, 0, 0, 0.5)",
-                    mixBlendMode: "multiply",
-                  }}
-                />
-              )}
-            </div>
-          )}
+          <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
       </div>
     </>

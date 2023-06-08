@@ -56,7 +56,10 @@ const DragDropArea2: React.FC = () => {
   const [isErrorMessageVisible, setIsErrorMessageVisible] =
     useState<boolean>(false);
 
-  const handleError = (errorMsg: string) => {
+  const handleError = (errorMsg: string, file: UploadFile<any>) => {
+    const updatedFileList = fileList.filter((item) => item.uid !== file.uid);
+    setFileList(updatedFileList);
+
     setErrorMessages((prevMessages) => [
       ...prevMessages,
       { id: Date.now(), message: errorMsg },
@@ -81,7 +84,7 @@ const DragDropArea2: React.FC = () => {
 
     if (isFileRedundant) {
       const redundantFileErrorMsg = `File '${file.name}' is redundant. Please double-check.`;
-      handleError(redundantFileErrorMsg);
+      handleError(redundantFileErrorMsg, file);
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
@@ -90,7 +93,7 @@ const DragDropArea2: React.FC = () => {
     if (file.type && !acceptedFileTypes.includes(file.type)) {
       const unsupportedFileErrorMsg =
         "Unsupported file type. Please upload a valid file.";
-      handleError(unsupportedFileErrorMsg);
+      handleError(unsupportedFileErrorMsg, file);
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
@@ -111,7 +114,7 @@ const DragDropArea2: React.FC = () => {
 
     if (duplicateFiles.length > 0) {
       const duplicatedFileErrorMsg = `${duplicateFiles[0].file.name} is duplicated. Please double-check.`;
-      handleError(duplicatedFileErrorMsg);
+      handleError(duplicatedFileErrorMsg, duplicateFiles[0].file);
       fileList = fileList.filter(
         (file) => file.uid !== duplicateFiles[0].file.uid
       );
@@ -144,16 +147,18 @@ const DragDropArea2: React.FC = () => {
   );
 
   const handlePreview = async (file: UploadFile<any>) => {
-    if (file.status === "error") {
-      file.preview = await getCroppedImage(file.originFileObj as File);
-    } else {
+    if (file.status !== "error") {
       if (!file.url && !file.preview) {
         file.preview = await getCroppedImage(file.originFileObj as File);
       }
+      setPreviewImage(file.preview || file.url || "");
+      setPreviewTitle(file.name || "");
+      setPreviewOpen(true);
     }
+  };
 
-    setPreviewImage(file.preview || file.url || "");
-    setPreviewTitle(file.name || "");
+  const handleCancel = () => {
+    setPreviewOpen(false);
   };
 
   return (
@@ -186,6 +191,32 @@ const DragDropArea2: React.FC = () => {
           >
             {fileList.length >= 8 ? null : uploadButton}
           </div>
+          {fileList.map((file: UploadFile<any>) => {
+            if (file.status === "error") {
+              return (
+                <div key={file.uid} className="preview-thumbnail">
+                  <img
+                    src={file.url || file.preview}
+                    alt={file.name}
+                    className="preview-image"
+                  />
+                  <div className="error-overlay">
+                    <span className="error-overlay-icon">X</span>
+                  </div>
+                </div>
+              );
+            }
+
+            return (
+              <div key={file.uid} className="preview-thumbnail">
+                <img
+                  src={file.url || file.preview}
+                  alt={file.name}
+                  className="preview-image"
+                />
+              </div>
+            );
+          })}
         </Upload.Dragger>
 
         {isErrorMessageVisible && (
@@ -200,33 +231,9 @@ const DragDropArea2: React.FC = () => {
           visible={previewOpen}
           title={previewTitle}
           footer={null}
-          onCancel={() => setPreviewOpen(false)} // Handle cancel directly inline
+          onCancel={handleCancel}
         >
-          {previewImage && (
-            <div style={{ position: "relative" }}>
-              <img
-                alt="example"
-                style={{
-                  width: "100%",
-                }}
-                src={previewImage}
-              />
-              {fileList.find((file) => file.url === previewImage)?.status ===
-                "error" && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(255, 0, 0, 0.5)",
-                    mixBlendMode: "multiply",
-                  }}
-                />
-              )}
-            </div>
-          )}
+          <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
       </div>
     </>

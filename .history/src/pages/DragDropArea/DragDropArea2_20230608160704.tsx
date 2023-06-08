@@ -156,6 +156,10 @@ const DragDropArea2: React.FC = () => {
     setPreviewTitle(file.name || "");
   };
 
+  const handleCancel = () => {
+    setPreviewOpen(false);
+  };
+
   return (
     <>
       <div
@@ -200,7 +204,7 @@ const DragDropArea2: React.FC = () => {
           visible={previewOpen}
           title={previewTitle}
           footer={null}
-          onCancel={() => setPreviewOpen(false)} // Handle cancel directly inline
+          onCancel={handleCancel}
         >
           {previewImage && (
             <div style={{ position: "relative" }}>
@@ -208,6 +212,11 @@ const DragDropArea2: React.FC = () => {
                 alt="example"
                 style={{
                   width: "100%",
+                  filter:
+                    fileList.find((file) => file.url === previewImage)
+                      ?.status === "error"
+                      ? "brightness(80%) contrast(90%) sepia(100%) saturate(10000%) hue-rotate(10deg)"
+                      : "",
                 }}
                 src={previewImage}
               />
@@ -221,7 +230,6 @@ const DragDropArea2: React.FC = () => {
                     width: "100%",
                     height: "100%",
                     backgroundColor: "rgba(255, 0, 0, 0.5)",
-                    mixBlendMode: "multiply",
                   }}
                 />
               )}
