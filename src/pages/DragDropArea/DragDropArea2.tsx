@@ -168,8 +168,8 @@ const DragDropArea2: React.FC = () => {
         Click or drag file to this area to upload
       </p>
       <p className="ant-upload-hint">
-        Support for a single or bulk upload. Strictly prohibited from uploading
-        company data or other banned files.
+        Support for a single or bulk upload. Please upload the necessary # of
+        files.
       </p>
     </div>
   );
@@ -213,6 +213,8 @@ const DragDropArea2: React.FC = () => {
             {fileList.length >= 8 ? null : uploadButton}
           </div>
         </Upload.Dragger>
+
+        {fileCounter}
 
         {isErrorMessageVisible && (
           <IWillFollowYou errorMessage={errorMessage} />
