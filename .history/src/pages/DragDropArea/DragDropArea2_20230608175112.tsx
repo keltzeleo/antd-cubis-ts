@@ -61,7 +61,6 @@ const DragDropArea2: React.FC = () => {
   const handlePreview = async (file: UploadFile<any>) => {
     if (file.status === "error") {
       // handleError(`File '${file.name}' encountered an error during upload.`);
-
       return;
     }
 
@@ -105,6 +104,7 @@ const DragDropArea2: React.FC = () => {
         fileList = fileList.filter(
           (existingFile) => existingFile.uid !== file.uid
         );
+      }
         setFileList(fileList);
         return;
       }

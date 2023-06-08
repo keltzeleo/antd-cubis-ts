@@ -1,3 +1,4 @@
+import { CloseOutlined } from "@ant-design/icons";
 import { Modal, Upload } from "antd";
 import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
@@ -61,6 +62,12 @@ const DragDropArea2: React.FC = () => {
   const handlePreview = async (file: UploadFile<any>) => {
     if (file.status === "error") {
       // handleError(`File '${file.name}' encountered an error during upload.`);
+      file.preview = (
+        <div className="error-thumbnail">
+          {file.name}
+          <CloseOutlined className="error-icon" />
+        </div>
+      );
 
       return;
     }
