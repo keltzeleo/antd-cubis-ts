@@ -156,6 +156,7 @@ const DragDropArea2: React.FC = () => {
         }}
       >
         <Upload.Dragger
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}

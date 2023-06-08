@@ -82,7 +82,7 @@ const DragDropArea2: React.FC = () => {
     );
 
     if (isFileRedundant) {
-      const redundantFileErrorMsg = `File '${file.name}' is redundant. Please double-check.`;
+      const redundantFileErrorMsg = `File '${file.name' is redundant. Please double-check.`;
       handleError(redundantFileErrorMsg);
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
@@ -156,6 +156,7 @@ const DragDropArea2: React.FC = () => {
         }}
       >
         <Upload.Dragger
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}
