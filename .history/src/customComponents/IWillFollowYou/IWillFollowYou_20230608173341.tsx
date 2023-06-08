@@ -10,7 +10,7 @@ interface IWillFollowYouProps {
 }
 
 const IWillFollowYou: React.FC<IWillFollowYouProps> = ({ errorMessage }) => {
-  const [position, setPosition] = useState({ x: -5000, y: -5000 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(true);
   const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls("message");

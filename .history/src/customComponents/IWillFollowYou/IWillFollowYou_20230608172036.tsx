@@ -10,7 +10,7 @@ interface IWillFollowYouProps {
 }
 
 const IWillFollowYou: React.FC<IWillFollowYouProps> = ({ errorMessage }) => {
-  const [position, setPosition] = useState({ x: -5000, y: -5000 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(true);
   const { getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls("message");
@@ -37,6 +37,15 @@ const IWillFollowYou: React.FC<IWillFollowYouProps> = ({ errorMessage }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (position.x === 0 && position.y === 0) {
+      setPosition({
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
+      });
+    }
+  }, [position]);
+
   return (
     <CSSTransition
       in={isVisible}
@@ -49,8 +58,8 @@ const IWillFollowYou: React.FC<IWillFollowYouProps> = ({ errorMessage }) => {
         style={{
           position: "fixed",
           fontFamily: "Mulish",
-          left: position.x + 32,
-          top: position.y - 32,
+          left: position.x + 10,
+          top: position.y,
           zIndex: 9999,
           padding: "10px 16px",
           borderRadius: "8px",
@@ -59,7 +68,6 @@ const IWillFollowYou: React.FC<IWillFollowYouProps> = ({ errorMessage }) => {
           color: light["red"],
           display: "flex",
           alignItems: "center",
-          maxWidth: 500,
         }}
         className={`${prefixCls}-notice ${prefixCls}-notice-closable`}
       >
