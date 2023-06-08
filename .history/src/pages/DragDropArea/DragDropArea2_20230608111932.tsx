@@ -48,6 +48,7 @@ const handleFileUpload = (files: File[]) => {
 };
 
 const DragDropArea2: React.FC = () => {
+  const [errorFiles, setErrorFiles] = useState<string[]>([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -63,6 +64,8 @@ const DragDropArea2: React.FC = () => {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
 
+    const hasError = errorFiles.includes(file.name);
+
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
     setPreviewTitle(
@@ -70,9 +73,13 @@ const DragDropArea2: React.FC = () => {
     );
   };
 
-  const handleError = (errorMsg: string) => {
+  const [previewHasError, setPreviewHasError] = useState(false);
+
+  const handleError = (errorMsg: string, file: UploadFile<any>) => {
     setErrorMessage(errorMsg);
     setIsErrorMessageVisible(true);
+
+    setErrorFiles((prevErrorFiles) => [...prevErrorFiles, file.name]);
 
     setTimeout(() => {
       setIsErrorMessageVisible(false);
@@ -88,16 +95,20 @@ const DragDropArea2: React.FC = () => {
         existingFile.name === file.name && existingFile.uid !== file.uid
     );
 
+    // Update the handleError function calls
+
     if (isFileRedundant) {
-      handleError(`File '${file.name}' is redundant. Please double-check.`);
+      handleError(
+        `File '${file.name}' is redundant. Please double-check.`,
+        file
+      );
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
     }
 
-    // Check for unsupported file types
     if (file.type && !acceptedFileTypes.includes(file.type)) {
-      handleError("Unsupported file type. Please upload a valid file.");
+      handleError("Unsupported file type. Please upload a valid file.", file);
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
@@ -120,7 +131,8 @@ const DragDropArea2: React.FC = () => {
 
     if (duplicateFiles.length > 0) {
       handleError(
-        `${duplicateFiles[0].file.name} is duplicated. Removed redundant file(s). Please double-check.`
+        `${duplicateFiles[0].file.name} is duplicated. Removed redundant file(s). Please double-check.`,
+        duplicateFiles[0].file
       );
       fileList = fileList.filter(
         (file) => file.uid !== duplicateFiles[0].file.uid
@@ -173,7 +185,10 @@ const DragDropArea2: React.FC = () => {
               (file) => !acceptedFileTypes.includes(file.type)
             );
             if (unsupportedFiles.length > 0) {
-              handleError("Unsupported file type. Please upload a valid file.");
+              handleError(
+                "Unsupported file type. Please upload a valid file.",
+                unsupportedFiles[0]
+              );
             }
           }}
           listType="picture-card"
@@ -203,6 +218,28 @@ const DragDropArea2: React.FC = () => {
           footer={null}
           onCancel={handleCancel}
         >
+          {previewHasError && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                width: 24,
+                height: 24,
+                backgroundColor: "red",
+                borderRadius: "50%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src="../../../public/icons/icon_error_sm.png"
+                alt="Error Icon"
+                style={{ width: 16, height: 16 }}
+              />
+            </div>
+          )}
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
       </div>

@@ -89,7 +89,7 @@ const DragDropArea2: React.FC = () => {
     );
 
     if (isFileRedundant) {
-      handleError(`File '${file.name}' is redundant. Please double-check.`);
+      handleError(`File '${file.name}' already exist. Please delete.`);
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
@@ -194,7 +194,20 @@ const DragDropArea2: React.FC = () => {
         </Upload.Dragger>
 
         {isErrorMessageVisible && (
-          <IWillFollowYou errorMessage={errorMessage} />
+          <div style={{ position: "relative" }}>
+            <img
+              src="../icons/icon_error_sm.png"
+              alt="Error Icon"
+              style={{
+                position: "absolute",
+                top: -16,
+                left: 0,
+                width: 16,
+                height: 16,
+              }}
+            />
+            <IWillFollowYou errorMessage={errorMessage} />
+          </div>
         )}
 
         <Modal

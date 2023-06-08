@@ -3,7 +3,7 @@ import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
-import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
+import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou"; // Import the IWillFollowYou component
 
 const acceptedFileTypes = [
   ".pdf",
@@ -126,6 +126,18 @@ const DragDropArea2: React.FC = () => {
         (file) => file.uid !== duplicateFiles[0].file.uid
       );
     }
+
+    // Replace thumbnail with Ant Design's FileExcelOutlined for files with errors
+    fileList = fileList.map((file) => {
+      if (file.status === "error") {
+        return {
+          ...file,
+          thumbUrl: "../../../icons/icon_error.png",
+          style: { width: 16, height: 16 },
+        };
+      }
+      return file;
+    });
 
     setFileList(fileList);
   };

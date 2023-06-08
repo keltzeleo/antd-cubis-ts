@@ -3,7 +3,7 @@ import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
-import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
+import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou"; // Import the IWillFollowYou component
 
 const acceptedFileTypes = [
   ".pdf",
@@ -40,13 +40,6 @@ const getChecksum = (file: RcFile): Promise<number> =>
     reader.readAsArrayBuffer(file);
   });
 
-const handleFileUpload = (files: File[]) => {
-  files.forEach((file) => {
-    // Handle the file upload logic for each file here
-    console.log(file);
-  });
-};
-
 const DragDropArea2: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -58,25 +51,31 @@ const DragDropArea2: React.FC = () => {
 
   const handleCancel = () => setPreviewOpen(false);
 
-  const handlePreview = async (file: UploadFile<any>) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
-    }
-
-    setPreviewImage(file.url || (file.preview as string));
-    setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
-    );
+  const handleError = (errorMsg: string, file: UploadFile<any>) => {
+    const updatedFileList = fileList.map((item) => {
+      if (item.uid === file.uid) {
+        return { ...item, status: "error", errorMsg };
+      }
+      return item;
+    });
+    setFileList(updatedFileList);
   };
 
-  const handleError = (errorMsg: string) => {
-    setErrorMessage(errorMsg);
-    setIsErrorMessageVisible(true);
+  const handlePreview = async (file: UploadFile<any>) => {
+    if (file.status === "error") {
+      setPreviewImage("");
+      setPreviewTitle(file.name || "");
+    } else {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj as RcFile);
+      }
 
-    setTimeout(() => {
-      setIsErrorMessageVisible(false);
-    }, 5000); // Show error message for 5 seconds
+      setPreviewImage(file.url || (file.preview as string));
+      setPreviewTitle(
+        file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
+      );
+    }
+    setPreviewOpen(true);
   };
 
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
@@ -89,7 +88,10 @@ const DragDropArea2: React.FC = () => {
     );
 
     if (isFileRedundant) {
-      handleError(`File '${file.name}' is redundant. Please double-check.`);
+      handleError(
+        `File '${file.name}' is redundant. Please double-check.`,
+        file
+      );
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
@@ -97,7 +99,7 @@ const DragDropArea2: React.FC = () => {
 
     // Check for unsupported file types
     if (file.type && !acceptedFileTypes.includes(file.type)) {
-      handleError("Unsupported file type. Please upload a valid file.");
+      handleError("Unsupported file type. Please upload a valid file.", file);
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
@@ -120,7 +122,8 @@ const DragDropArea2: React.FC = () => {
 
     if (duplicateFiles.length > 0) {
       handleError(
-        `${duplicateFiles[0].file.name} is duplicated. Removed redundant file(s). Please double-check.`
+        `${duplicateFiles[0].file.name} is duplicated. Removed redundant file(s). Please double-check.`,
+        duplicateFiles[0].file
       );
       fileList = fileList.filter(
         (file) => file.uid !== duplicateFiles[0].file.uid
@@ -133,8 +136,8 @@ const DragDropArea2: React.FC = () => {
   const uploadButton = (
     <div
       style={{
-        width: "auto",
-        height: "auto",
+        width: "450px",
+        height: "450px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -157,10 +160,11 @@ const DragDropArea2: React.FC = () => {
     <>
       <div
         style={{
-          width: 400,
-          display: "inline-block",
+          width: "450px",
+          height: "450px",
+          display: "flex",
           flexDirection: "column",
-          height: 400,
+          justifyContent: "center",
         }}
       >
         <Upload.Dragger
@@ -173,7 +177,10 @@ const DragDropArea2: React.FC = () => {
               (file) => !acceptedFileTypes.includes(file.type)
             );
             if (unsupportedFiles.length > 0) {
-              handleError("Unsupported file type. Please upload a valid file.");
+              handleError(
+                "Unsupported file type. Please upload a valid file.",
+                fileList[0]
+              );
             }
           }}
           listType="picture-card"
@@ -187,6 +194,7 @@ const DragDropArea2: React.FC = () => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              overflow: "auto",
             }}
           >
             {fileList.length >= 8 ? null : uploadButton}

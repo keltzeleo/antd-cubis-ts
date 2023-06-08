@@ -194,6 +194,18 @@ const DragDropArea2: React.FC = () => {
         </Upload.Dragger>
 
         {isErrorMessageVisible && (
+           <div style={{ position: "relative" }}>
+           <img
+             src="../icons/icon_error_sm.png"
+             alt="Error Icon"
+             style={{
+               position: "absolute",
+               top: -16,
+               left: 0,
+               width: 16,
+               height: 16,
+             }}
+           />
           <IWillFollowYou errorMessage={errorMessage} />
         )}
 

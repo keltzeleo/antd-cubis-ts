@@ -48,6 +48,7 @@ const handleFileUpload = (files: File[]) => {
 };
 
 const DragDropArea2: React.FC = () => {
+  const [errorFiles, setErrorFiles] = useState<string[]>([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -63,6 +64,8 @@ const DragDropArea2: React.FC = () => {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
 
+    const hasError = errorFiles.includes(file.name);
+
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
     setPreviewTitle(
@@ -70,9 +73,13 @@ const DragDropArea2: React.FC = () => {
     );
   };
 
-  const handleError = (errorMsg: string) => {
+  const [previewHasError, setPreviewHasError] = useState(false);
+
+  const handleError = (errorMsg: string, file: UploadFile<any>) => {
     setErrorMessage(errorMsg);
     setIsErrorMessageVisible(true);
+
+    setErrorFiles((prevErrorFiles) => [...prevErrorFiles, file.name]);
 
     setTimeout(() => {
       setIsErrorMessageVisible(false);
@@ -203,6 +210,28 @@ const DragDropArea2: React.FC = () => {
           footer={null}
           onCancel={handleCancel}
         >
+          {previewHasError && (
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                width: 24,
+                height: 24,
+                backgroundColor: "red",
+                borderRadius: "50%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src="../../../public/icons/icon_error_sm.png"
+                alt="Error Icon"
+                style={{ width: 16, height: 16 }}
+              />
+            </div>
+          )}
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
       </div>

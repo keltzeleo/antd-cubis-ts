@@ -40,6 +40,8 @@ const getChecksum = (file: RcFile): Promise<number> =>
     reader.readAsArrayBuffer(file);
   });
 
+const [errorFiles, setErrorFiles] = useState<string[]>([]);
+
 const handleFileUpload = (files: File[]) => {
   files.forEach((file) => {
     // Handle the file upload logic for each file here
@@ -63,6 +65,8 @@ const DragDropArea2: React.FC = () => {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
 
+    const hasError = errorFiles.includes(file.name);
+
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
     setPreviewTitle(
@@ -70,9 +74,11 @@ const DragDropArea2: React.FC = () => {
     );
   };
 
-  const handleError = (errorMsg: string) => {
+  const handleError = (errorMsg: string, file: UploadFile<any>) => {
     setErrorMessage(errorMsg);
     setIsErrorMessageVisible(true);
+
+    setErrorFiles((prevErrorFiles) => [...prevErrorFiles, file.name]);
 
     setTimeout(() => {
       setIsErrorMessageVisible(false);

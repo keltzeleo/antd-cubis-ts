@@ -3,7 +3,8 @@ import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
-import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
+import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou"; // Import the IWillFollowYou component
+import "./DragDropArea2.css";
 
 const acceptedFileTypes = [
   ".pdf",
@@ -127,6 +128,24 @@ const DragDropArea2: React.FC = () => {
       );
     }
 
+    // Replace thumbnail with error icon (icon_error_sm) for files with errors
+    fileList = fileList.map((file) => {
+      if (file.status === "error") {
+        return {
+          ...file,
+          thumbOverlay: (
+            <img
+              src="../../../icons/icon_error_overlay.png"
+              alt="Error Overlay"
+              className="thumb-overlay"
+            />
+          ),
+          style: { width: 16, height: 16 },
+        };
+      }
+      return file;
+    });
+
     setFileList(fileList);
   };
 
@@ -166,6 +185,7 @@ const DragDropArea2: React.FC = () => {
         <Upload.Dragger
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
           fileList={fileList}
+          listType="picture-card"
           onPreview={handlePreview}
           onChange={handleChange}
           onDrop={(e) => {
@@ -191,6 +211,22 @@ const DragDropArea2: React.FC = () => {
           >
             {fileList.length >= 8 ? null : uploadButton}
           </div>
+          {fileList.map((file) => (
+            <div className="thumb-wrapper" key={file.uid}>
+              {file.thumbUrl ? (
+                <>
+                  <img
+                    src={file.thumbUrl}
+                    alt="Thumbnail"
+                    className="thumb-image"
+                  />
+                  {file.thumbOverlay}
+                </>
+              ) : (
+                uploadButton
+              )}
+            </div>
+          ))}
         </Upload.Dragger>
 
         {isErrorMessageVisible && (

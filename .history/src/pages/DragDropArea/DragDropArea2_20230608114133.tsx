@@ -53,7 +53,7 @@ const DragDropArea2: React.FC = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
 
-  const [errorMessage, setErrorMessage] = useState(""); // Error message state
+  const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false); // Visibility state of error message
 
   const handleCancel = () => setPreviewOpen(false);
@@ -70,8 +70,8 @@ const DragDropArea2: React.FC = () => {
     );
   };
 
-  const handleError = (errorMsg: string) => {
-    setErrorMessage(errorMsg);
+  const handleError = (errorMessage: string) => {
+    setErrorMessage([errorMessage]);
     setIsErrorMessageVisible(true);
 
     setTimeout(() => {
@@ -82,28 +82,15 @@ const DragDropArea2: React.FC = () => {
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     let { file, fileList } = info;
 
-    // Check for redundant files in the new fileList
-    const isFileRedundant = fileList.some(
+    const redundantFiles = fileList.filter(
       (existingFile) =>
         existingFile.name === file.name && existingFile.uid !== file.uid
     );
 
-    if (isFileRedundant) {
-      handleError(`File '${file.name}' is redundant. Please double-check.`);
-      fileList = fileList.filter(
-        (existingFile) => existingFile.uid !== file.uid
-      );
-    }
+    const unsupportedFileTypeFiles = fileList.filter(
+      (existingFile) => file.type && !acceptedFileTypes.includes(file.type)
+    );
 
-    // Check for unsupported file types
-    if (file.type && !acceptedFileTypes.includes(file.type)) {
-      handleError("Unsupported file type. Please upload a valid file.");
-      fileList = fileList.filter(
-        (existingFile) => existingFile.uid !== file.uid
-      );
-    }
-
-    // Calculate checksum for each file
     const checksumPromises = fileList.map(async (file) => {
       const checksum = await getChecksum(file.originFileObj as RcFile);
       return { file, checksum };
@@ -111,23 +98,63 @@ const DragDropArea2: React.FC = () => {
 
     const checksumResults = await Promise.all(checksumPromises);
 
-    // Check for duplicates based on checksum
     const duplicateFiles = checksumResults.filter(
       ({ checksum }, index) =>
         checksumResults.findIndex((result) => result.checksum === checksum) !==
         index
     );
 
-    if (duplicateFiles.length > 0) {
-      handleError(
-        `${duplicateFiles[0].file.name} is duplicated. Removed redundant file(s). Please double-check.`
+    const errorMessages = [];
+
+    if (redundantFiles.length > 0) {
+      const redundantFileNames = redundantFiles.map((file) => file.name);
+      errorMessages.push(
+        `Files '${redundantFileNames.join(
+          ", "
+        )}' already exist. To reupload the files, please delete the existing ones.`
       );
       fileList = fileList.filter(
-        (file) => file.uid !== duplicateFiles[0].file.uid
+        (existingFile) =>
+          !redundantFileNames.includes(existingFile.name) ||
+          existingFile.uid === file.uid
+      );
+    }
+
+    if (unsupportedFileTypeFiles.length > 0) {
+      const unsupportedFileNames = unsupportedFileTypeFiles.map(
+        (file) => file.name
+      );
+      handleError(
+        `Unsupported file type. Please upload valid files. Unsupported files: ${unsupportedFileNames.join(
+          ", "
+        )}`
+      );
+      fileList = fileList.filter(
+        (existingFile) =>
+          !unsupportedFileNames.includes(existingFile.name) ||
+          existingFile.uid === file.uid
+      );
+    }
+
+    if (duplicateFiles.length > 0) {
+      const duplicateFileNames = duplicateFiles.map((file) => file.file.name);
+      handleError(
+        `Duplicate files found. Removed redundant file(s): ${duplicateFileNames.join(
+          ", "
+        )}. Please double-check.`
+      );
+      fileList = fileList.filter(
+        (existingFile) =>
+          !duplicateFileNames.includes(existingFile.name) ||
+          existingFile.uid === file.uid
       );
     }
 
     setFileList(fileList);
+
+    if (errorMessages.length > 0) {
+      handleError(errorMessages);
+    }
   };
 
   const uploadButton = (
@@ -194,7 +221,20 @@ const DragDropArea2: React.FC = () => {
         </Upload.Dragger>
 
         {isErrorMessageVisible && (
-          <IWillFollowYou errorMessage={errorMessage} />
+          <div style={{ position: "relative" }}>
+            <img
+              src="../icons/icon_error_sm.png"
+              alt="Error Icon"
+              style={{
+                position: "absolute",
+                top: -16,
+                left: 0,
+                width: 16,
+                height: 16,
+              }}
+            />
+            <IWillFollowYou errorMessage={errorMessage[0]} />
+          </div>
         )}
 
         <Modal

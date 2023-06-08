@@ -79,6 +79,16 @@ const DragDropArea2: React.FC = () => {
     }, 5000); // Show error message for 5 seconds
   };
 
+  const renderErrorMessage = () => {
+    return (
+      <div>
+        {errorMessage.map((msg, index) => (
+          <p key={index}>{msg}</p>
+        ))}
+      </div>
+    );
+  };
+
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     let { file, fileList } = info;
 
@@ -89,7 +99,14 @@ const DragDropArea2: React.FC = () => {
     );
 
     if (isFileRedundant) {
-      handleError(`File '${file.name}' is redundant. Please double-check.`);
+      const redundantFileNames = fileList
+        .filter((existingFile) => existingFile.name === file.name)
+        .map((redundantFile) => redundantFile.name);
+      handleError(
+        `File '${redundantFileNames.join(
+          ", "
+        )}' already exists. To reupload the file, please delete the existing one.`
+      );
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
@@ -97,7 +114,12 @@ const DragDropArea2: React.FC = () => {
 
     // Check for unsupported file types
     if (file.type && !acceptedFileTypes.includes(file.type)) {
-      handleError("Unsupported file type. Please upload a valid file.");
+      const unsupportedFileNames = [file.name];
+      handleError(
+        `Unsupported file type. File(s) '${unsupportedFileNames.join(
+          ", "
+        )}' is/are not allowed. Please upload a valid file.`
+      );
       fileList = fileList.filter(
         (existingFile) => existingFile.uid !== file.uid
       );
@@ -119,8 +141,13 @@ const DragDropArea2: React.FC = () => {
     );
 
     if (duplicateFiles.length > 0) {
+      const duplicatedFileNames = duplicateFiles.map(
+        (duplicate) => duplicate.file.name
+      );
       handleError(
-        `${duplicateFiles[0].file.name} is duplicated. Removed redundant file(s). Please double-check.`
+        `${duplicatedFileNames.join(", ")} ${
+          duplicatedFileNames.length > 1 ? "are" : "is"
+        } duplicated. Removed redundant file(s). Please double-check.`
       );
       fileList = fileList.filter(
         (file) => file.uid !== duplicateFiles[0].file.uid
@@ -194,7 +221,20 @@ const DragDropArea2: React.FC = () => {
         </Upload.Dragger>
 
         {isErrorMessageVisible && (
-          <IWillFollowYou errorMessage={errorMessage} />
+          <div style={{ position: "relative" }}>
+            <img
+              src="../icons/icon_error_sm.png"
+              alt="Error Icon"
+              style={{
+                position: "absolute",
+                top: -16,
+                left: 0,
+                width: 16,
+                height: 16,
+              }}
+            />
+            <IWillFollowYou errorMessage={errorMessage} />
+          </div>
         )}
 
         <Modal
