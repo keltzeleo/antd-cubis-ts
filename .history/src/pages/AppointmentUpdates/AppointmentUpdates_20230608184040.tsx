@@ -924,7 +924,7 @@ const AppointmentUpdates: React.FC = () => {
               </div>
             </div>
           }
-          width={980}
+          width={880}
           placement="right"
           closable={false}
           onClose={closeDrawer}
@@ -1011,7 +1011,7 @@ const AppointmentUpdates: React.FC = () => {
               </div>
             </div>
           }
-          width={910}
+          width={810}
           placement="right"
           closable={true}
           onClose={() => setAddAppointmentDrawerVisible(false)}
