@@ -145,21 +145,23 @@ const DragDropArea2: React.FC = () => {
 
   const handlePreview = async (file: UploadFile<any>) => {
     if (file.status === "error") {
-      setPreviewImage("../../../public/icons/icon_error_sm.png");
-      setPreviewTitle("");
-      return;
-    }
-
-    if (!file.url && !file.preview) {
       file.preview = await getCroppedImage(file.originFileObj as File);
+    } else {
+      if (!file.url && !file.preview) {
+        file.preview = await getCroppedImage(file.originFileObj as File);
+      }
     }
 
     setPreviewImage(file.preview || file.url || "");
     setPreviewTitle(file.name || "");
-  };
 
-  const handleCancel = () => {
-    setPreviewOpen(false);
+    if (file.status === "error") {
+      const errorImage = document.getElementById(`error-image-${file.uid}`);
+      if (errorImage) {
+        errorImage.style.backgroundColor = "rgba(255, 0, 0, 0.5)";
+        errorImage.style.mixBlendMode = "multiply";
+      }
+    }
   };
 
   return (
@@ -206,10 +208,18 @@ const DragDropArea2: React.FC = () => {
           visible={previewOpen}
           title={previewTitle}
           footer={null}
-          onCancel={handleCancel}
+          onCancel={() => setPreviewOpen(false)} // Handle cancel directly inline
         >
           {previewImage && (
             <div style={{ position: "relative" }}>
+              <img
+                alt="example"
+                style={{
+                  width: "100%",
+                }}
+                src={previewImage}
+                id={`error-image-${file.uid}`} // Add this line to assign id
+              />
               {fileList.find((file) => file.url === previewImage)?.status ===
                 "error" && (
                 <div
@@ -220,10 +230,10 @@ const DragDropArea2: React.FC = () => {
                     width: "100%",
                     height: "100%",
                     backgroundColor: "rgba(255, 0, 0, 0.5)",
+                    mixBlendMode: "multiply",
                   }}
                 />
               )}
-              <img alt="example" style={{ width: "100%" }} src={previewImage} />
             </div>
           )}
         </Modal>

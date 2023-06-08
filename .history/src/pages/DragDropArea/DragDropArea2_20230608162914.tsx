@@ -145,21 +145,22 @@ const DragDropArea2: React.FC = () => {
 
   const handlePreview = async (file: UploadFile<any>) => {
     if (file.status === "error") {
-      setPreviewImage("../../../public/icons/icon_error_sm.png");
-      setPreviewTitle("");
-      return;
-    }
-
-    if (!file.url && !file.preview) {
       file.preview = await getCroppedImage(file.originFileObj as File);
+    } else {
+      if (!file.url && !file.preview) {
+        file.preview = await getCroppedImage(file.originFileObj as File);
+      }
     }
 
     setPreviewImage(file.preview || file.url || "");
     setPreviewTitle(file.name || "");
-  };
 
-  const handleCancel = () => {
-    setPreviewOpen(false);
+    if (file.status === "error") {
+      file.customStyles = {
+        backgroundColor: "rgba(255, 0, 0, 0.5)",
+        mixBlendMode: "multiply",
+      };
+    }
   };
 
   return (
@@ -206,24 +207,19 @@ const DragDropArea2: React.FC = () => {
           visible={previewOpen}
           title={previewTitle}
           footer={null}
-          onCancel={handleCancel}
+          onCancel={() => setPreviewOpen(false)} // Handle cancel directly inline
         >
           {previewImage && (
             <div style={{ position: "relative" }}>
-              {fileList.find((file) => file.url === previewImage)?.status ===
-                "error" && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(255, 0, 0, 0.5)",
-                  }}
-                />
-              )}
-              <img alt="example" style={{ width: "100%" }} src={previewImage} />
+              <img
+                alt="example"
+                style={{
+                  width: "100%",
+                  ...(fileList.find((file) => file.url === previewImage)
+                    ?.status === "error" && file.customStyles), // Apply custom styles for error file
+                }}
+                src={previewImage}
+              />
             </div>
           )}
         </Modal>

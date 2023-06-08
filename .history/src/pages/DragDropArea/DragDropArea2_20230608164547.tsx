@@ -144,22 +144,12 @@ const DragDropArea2: React.FC = () => {
   );
 
   const handlePreview = async (file: UploadFile<any>) => {
-    if (file.status === "error") {
-      setPreviewImage("../../../public/icons/icon_error_sm.png");
-      setPreviewTitle("");
-      return;
-    }
-
     if (!file.url && !file.preview) {
       file.preview = await getCroppedImage(file.originFileObj as File);
     }
 
     setPreviewImage(file.preview || file.url || "");
     setPreviewTitle(file.name || "");
-  };
-
-  const handleCancel = () => {
-    setPreviewOpen(false);
   };
 
   return (
@@ -210,8 +200,15 @@ const DragDropArea2: React.FC = () => {
         >
           {previewImage && (
             <div style={{ position: "relative" }}>
-              {fileList.find((file) => file.url === previewImage)?.status ===
-                "error" && (
+              <img
+                alt="example"
+                style={{
+                  width: "100%",
+                }}
+                src={previewImage}
+              />
+              {fileList.find((file) => file.uid === previewImage.uid)
+                ?.status === "error" && (
                 <div
                   style={{
                     position: "absolute",
@@ -220,10 +217,10 @@ const DragDropArea2: React.FC = () => {
                     width: "100%",
                     height: "100%",
                     backgroundColor: "rgba(255, 0, 0, 0.5)",
+                    mixBlendMode: "multiply",
                   }}
                 />
               )}
-              <img alt="example" style={{ width: "100%" }} src={previewImage} />
             </div>
           )}
         </Modal>

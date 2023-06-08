@@ -145,7 +145,7 @@ const DragDropArea2: React.FC = () => {
 
   const handlePreview = async (file: UploadFile<any>) => {
     if (file.status === "error") {
-      setPreviewImage("../../../public/icons/icon_error_sm.png");
+      setPreviewImage("../../icons/icon_error_sm.png");
       setPreviewTitle("");
       return;
     }

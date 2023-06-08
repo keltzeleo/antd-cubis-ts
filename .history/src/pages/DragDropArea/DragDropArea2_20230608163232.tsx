@@ -36,6 +36,10 @@ interface ErrorItem {
   message: string;
 }
 
+interface CustomUploadFile<T = any> extends UploadFile<T> {
+  customStyles?: React.CSSProperties;
+}
+
 const acceptedFileTypes = [
   ".pdf",
   ".doc",
@@ -50,7 +54,7 @@ const DragDropArea2: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState<boolean>(false);
   const [previewImage, setPreviewImage] = useState<string>("");
   const [previewTitle, setPreviewTitle] = useState<string>("");
-  const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
+  const [fileList, setFileList] = useState<CustomUploadFile<any>[]>([]);
 
   const [errorMessages, setErrorMessages] = useState<ErrorItem[]>([]);
   const [isErrorMessageVisible, setIsErrorMessageVisible] =
@@ -71,7 +75,9 @@ const DragDropArea2: React.FC = () => {
     }, 5000); // Show error messages for 5 seconds
   };
 
-  const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
+  const handleChange = async (
+    info: UploadChangeParam<CustomUploadFile<any>>
+  ) => {
     let { file, fileList } = info;
 
     const isFileRedundant = fileList.some(
@@ -143,23 +149,87 @@ const DragDropArea2: React.FC = () => {
     </div>
   );
 
-  const handlePreview = async (file: UploadFile<any>) => {
+  const handlePreview = async (file: CustomUploadFile<any>) => {
     if (file.status === "error") {
-      setPreviewImage("../../../public/icons/icon_error_sm.png");
-      setPreviewTitle("");
-      return;
-    }
-
-    if (!file.url && !file.preview) {
       file.preview = await getCroppedImage(file.originFileObj as File);
+    } else {
+      if (!file.url && !file.preview) {
+        file.preview = await getCroppedImage(file.originFileObj as File);
+      }
     }
 
     setPreviewImage(file.preview || file.url || "");
     setPreviewTitle(file.name || "");
+
+    if (file.status === "error") {
+      file.customStyles = {
+        backgroundColor: "rgba(255, 0, 0, 0.5)",
+        mixBlendMode: "multiply",
+      };
+    }
   };
 
-  const handleCancel = () => {
-    setPreviewOpen(false);
+  const renderUploadList = {
+    showPreviewIcon: true,
+    showRemoveIcon: true,
+    showDownloadIcon: true,
+    renderItem: (file: CustomUploadFile<any>) => {
+      if (file.status === "error") {
+        return (
+          <div className="ant-upload-list-item ant-upload-list-item-error">
+            <div className="ant-upload-list-item-info">
+              <span>
+                <span className="ant-upload-list-item-thumbnail">
+                  <i className="anticon anticon-file" />
+                </span>
+                <span className="ant-upload-list-item-name">{file.name}</span>
+                <span className="ant-upload-list-item-card-actions">
+                  <a href={file.url} target="_blank" rel="noopener noreferrer">
+                    View
+                  </a>
+                  <a
+                    href={file.url}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Download
+                  </a>
+                  <a onClick={() => handleRemove(file)}>{removeIcon}</a>
+                </span>
+              </span>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div className="ant-upload-list-item">
+            <div className="ant-upload-list-item-info">
+              <span>
+                <span className="ant-upload-list-item-thumbnail">
+                  <img src={file.url} alt={file.name} />
+                </span>
+                <span className="ant-upload-list-item-name">{file.name}</span>
+                <span className="ant-upload-list-item-actions">
+                  <a href={file.url} target="_blank" rel="noopener noreferrer">
+                    View
+                  </a>
+                  <a
+                    href={file.url}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Download
+                  </a>
+                  <a onClick={() => handleRemove(file)}>{removeIcon}</a>
+                </span>
+              </span>
+            </div>
+          </div>
+        );
+      }
+    },
   };
 
   return (
@@ -177,11 +247,11 @@ const DragDropArea2: React.FC = () => {
           onPreview={handlePreview}
           onChange={handleChange}
           listType="picture-card"
-          showUploadList={{ showRemoveIcon: true }}
           className="custom-upload-dragger"
           accept=".pdf,.doc,.docx,.csv,image/*"
           style={{ marginRight: 16, position: "relative" }}
           multiple
+          {...renderUploadList} // Add the custom renderUploadList prop
         >
           <div
             style={{
@@ -206,24 +276,21 @@ const DragDropArea2: React.FC = () => {
           visible={previewOpen}
           title={previewTitle}
           footer={null}
-          onCancel={handleCancel}
+          onCancel={() => setPreviewOpen(false)} // Handle cancel directly inline
         >
           {previewImage && (
             <div style={{ position: "relative" }}>
-              {fileList.find((file) => file.url === previewImage)?.status ===
-                "error" && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(255, 0, 0, 0.5)",
-                  }}
-                />
-              )}
-              <img alt="example" style={{ width: "100%" }} src={previewImage} />
+              <img
+                alt="example"
+                style={{
+                  width: "100%",
+                  ...(fileList.find((file) => file.url === previewImage)
+                    ?.status === "error" &&
+                    fileList.find((file) => file.url === previewImage)
+                      ?.customStyles), // Apply custom styles for error file
+                }}
+                src={previewImage}
+              />
             </div>
           )}
         </Modal>
