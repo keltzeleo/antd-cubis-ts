@@ -131,15 +131,7 @@ const DragDropArea2: React.FC = () => {
   };
 
   const uploadButton = (
-    <div
-      style={{
-        width: "auto",
-        height: "auto",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
+    <div style={{}}>
       <p className="ant-upload-drag-icon">
         <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
       </p>
@@ -157,10 +149,10 @@ const DragDropArea2: React.FC = () => {
     <>
       <div
         style={{
-          width: 400,
-          display: "inline-block",
+          width: 350,
+          display: "flex",
           flexDirection: "column",
-          height: 400,
+          height: 450,
         }}
       >
         <Upload.Dragger

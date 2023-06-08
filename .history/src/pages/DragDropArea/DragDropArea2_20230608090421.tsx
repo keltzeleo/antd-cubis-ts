@@ -133,8 +133,8 @@ const DragDropArea2: React.FC = () => {
   const uploadButton = (
     <div
       style={{
-        width: "auto",
-        height: "auto",
+        width: "450px",
+        height: "450px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -157,10 +157,10 @@ const DragDropArea2: React.FC = () => {
     <>
       <div
         style={{
-          width: 400,
+          width: 450,
           display: "inline-block",
           flexDirection: "column",
-          height: 400,
+          height: 450,
         }}
       >
         <Upload.Dragger

@@ -157,10 +157,10 @@ const DragDropArea2: React.FC = () => {
     <>
       <div
         style={{
-          width: 400,
+          width: 350,
           display: "inline-block",
           flexDirection: "column",
-          height: 400,
+          height: 350,
         }}
       >
         <Upload.Dragger
