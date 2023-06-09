@@ -46,7 +46,7 @@
 
 .ant-upload-list-item-error {
   border: 8px dotted #00a991;
-  background-color: rgba(167, 66, 76, 0.07);
+  background-color: rgba(166, 63, 75, 0.1);
 }
 
 .ant-upload-list-item-done {
