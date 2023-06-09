@@ -40,19 +40,42 @@ const getChecksum = (file: RcFile): Promise<number> =>
     reader.readAsArrayBuffer(file);
   });
 
+const handleFileUpload = (file: RcFile): boolean | PromiseLike<boolean> => {
+  return new Promise<boolean>((resolve) => {
+    if (fileList.length >= 8) {
+      resolve(false); // Disable file upload when maximum limit is reached
+    } else {
+      // Handle the file upload logic for the single file here
+      // Example: Call an API to upload the file
+      // Replace the setTimeout with your file upload logic
+      setTimeout(() => {
+        resolve(true); // Allow file upload
+      }, 1000); // Simulating asynchronous file upload
+    }
+  });
+};
+
 const DragDropArea2: React.FC = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
 
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // Error message state
+  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false); // Visibility state of error message
 
   const handleCancel = () => setPreviewOpen(false);
 
+  const handleRemove = (file: UploadFile<any>) => {
+    // Remove the file from the fileList
+    setFileList((prevFileList) =>
+      prevFileList.filter((item) => item.uid !== file.uid)
+    );
+  };
+
   const handlePreview = async (file: UploadFile<any>) => {
     if (file.status === "error") {
+      // handleError(`File '${file.name}' encountered an error during upload.`);
       return;
     }
 
@@ -74,22 +97,23 @@ const DragDropArea2: React.FC = () => {
 
     setTimeout(() => {
       setIsErrorMessageVisible(false);
-    }, 5000);
+    }, 5000); // Show error message for 5 seconds
   };
 
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     const newFileList = [...info.fileList];
 
     if (newFileList.length > 8) {
-      newFileList.splice(8);
+      newFileList.splice(8); // Limit the fileList to 8 files
     }
 
     newFileList.forEach((file) => {
       if (file.status === "error" && !file.url && !file.preview) {
-        file.preview = "placeholder.png";
+        file.preview = "placeholder.png"; // Set a default thumbnail for error files
       }
     });
 
+    // Calculate checksum for each file
     const checksumPromises = newFileList.map(async (file) => {
       const checksum = await getChecksum(file.originFileObj as RcFile);
       return { file, checksum };
@@ -97,6 +121,7 @@ const DragDropArea2: React.FC = () => {
 
     const checksumResults = await Promise.all(checksumPromises);
 
+    // Check for duplicates based on checksum
     const duplicateFiles = checksumResults.filter(
       (result, index) =>
         checksumResults.findIndex(
@@ -112,14 +137,9 @@ const DragDropArea2: React.FC = () => {
         prevFileList.filter((file) => file.uid !== duplicateFiles[0].file.uid)
       );
     } else {
+      // Update the fileList state with the newFileList
       setFileList(newFileList);
     }
-  };
-
-  const handleRemove = (file: UploadFile<any>) => {
-    setFileList((prevFileList) =>
-      prevFileList.filter((item) => item.uid !== file.uid)
-    );
   };
 
   const fileCounter = (
@@ -160,7 +180,7 @@ const DragDropArea2: React.FC = () => {
           bottom: "2",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          height: "auto",
+          height: "32px",
           width: "auto",
           padding: "0 8px",
           borderRadius: 8,
@@ -189,7 +209,9 @@ const DragDropArea2: React.FC = () => {
           fileList={fileList}
           onPreview={handlePreview}
           onChange={handleChange}
-          onRemove={handleRemove}
+          // disabled={isUploadDisabled} // Disable the upload area when maximum limit is reached
+          onRemove={handleRemove} // Allow removing files from the fileList
+          beforeUpload={handleFileUpload} // Handle file upload logic
           onDrop={(e) => {
             const unsupportedFiles = Array.from(e.dataTransfer.files).filter(
               (file) => !acceptedFileTypes.includes(file.type)
@@ -200,9 +222,9 @@ const DragDropArea2: React.FC = () => {
           }}
           listType="picture-card"
           showUploadList={{ showRemoveIcon: true }}
-          accept=".pdf,.doc,.docx,.csv,image/*"
+          accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types
           style={{ marginRight: 16 }}
-          multiple
+          multiple // Enable multiple file upload
         >
           <div
             style={{

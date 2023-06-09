@@ -160,7 +160,7 @@ const DragDropArea2: React.FC = () => {
           bottom: "2",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          height: "auto",
+          height: "32px",
           width: "auto",
           padding: "0 8px",
           borderRadius: 8,
