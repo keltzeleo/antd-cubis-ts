@@ -46,12 +46,12 @@
 
 .ant-upload-list-item-error {
   border: 1px dotted #00a991;
-  background-color: rgba(167, 66, 76, 0.02);
+  background-color: rgba(244, 97, 112, 0.02);
 }
 
 .ant-upload-list-item-done {
   border: 1px dotted #00a991;
-  background-color: rgba(30, 123, 65, 0.04);
+  background-color: rgba(49, 200, 106, 0.02);
 }
 
 .ant-upload-list-item {

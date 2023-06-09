@@ -4,7 +4,6 @@ import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou"; // Import the IWillFollowYou component
-import "./DragDropArea2.css";
 
 const acceptedFileTypes = [
   ".pdf",
@@ -173,9 +172,8 @@ const DragDropArea2: React.FC = () => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           height: "auto",
-          width: "80%",
-          margin: "0 0 0 4px",
-          padding: "0px 8px",
+          width: "auto",
+          padding: "0 8px",
           borderRadius: 8,
           border: "1px dashed #00a991",
           opacity: isUploadDisabled ? 0.5 : 1,
@@ -191,17 +189,16 @@ const DragDropArea2: React.FC = () => {
     if (file.status === "done") {
       return "ant-upload-list-item-done"; // Apply the desired CSS class for files with status "done"
     }
-    return "";
   };
 
   return (
     <>
       <div
         style={{
-          width: 320,
+          width: 380,
           display: "inline-block",
           flexDirection: "column",
-          height: 400,
+          height: 450,
         }}
       >
         <Upload.Dragger

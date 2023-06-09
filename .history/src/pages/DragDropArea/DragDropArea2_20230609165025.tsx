@@ -173,9 +173,8 @@ const DragDropArea2: React.FC = () => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           height: "auto",
-          width: "80%",
-          margin: "0 0 0 4px",
-          padding: "0px 8px",
+          width: "auto",
+          padding: "0 8px",
           borderRadius: 8,
           border: "1px dashed #00a991",
           opacity: isUploadDisabled ? 0.5 : 1,
@@ -189,7 +188,7 @@ const DragDropArea2: React.FC = () => {
 
   const getListItemClassName = (file: UploadFile<any>): string => {
     if (file.status === "done") {
-      return "ant-upload-list-item-done"; // Apply the desired CSS class for files with status "done"
+      return "ant-upload-list-item-doneKel"; // Apply the desired CSS class for files with status "done"
     }
     return "";
   };
@@ -198,10 +197,10 @@ const DragDropArea2: React.FC = () => {
     <>
       <div
         style={{
-          width: 320,
+          width: 380,
           display: "inline-block",
           flexDirection: "column",
-          height: 400,
+          height: 450,
         }}
       >
         <Upload.Dragger
