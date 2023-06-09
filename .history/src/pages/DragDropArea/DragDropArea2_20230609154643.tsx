@@ -3,7 +3,7 @@ import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
-import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou"; // Import the IWillFollowYou component
+import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
 
 const acceptedFileTypes = [
   ".pdf",
@@ -106,25 +106,14 @@ const DragDropArea2: React.FC = () => {
 
     if (duplicateFiles.length > 0) {
       handleError(
-        `${duplicateFiles[0].file.name} already exists. For security reasons,  please delete the file manually & reupload a new version.`
+        `${duplicateFiles[0].file.name} already exists. For security reasons, please delete the file manually & reupload a new version.`
       );
       setFileList((prevFileList) =>
         prevFileList.filter((file) => file.uid !== duplicateFiles[0].file.uid)
       );
+    } else {
+      setFileList(newFileList);
     }
-
-    setFileList(
-      newFileList.map((file) => {
-        // Set a custom error icon for files with status 'error'
-        if (file.status === "error") {
-          return {
-            ...file,
-            thumbUrl: "../../icons/icon_error_sm.png", // Replace 'error.png' with the path to your error icon
-          };
-        }
-        return file;
-      })
-    );
   };
 
   const handleRemove = (file: UploadFile<any>) => {
@@ -216,7 +205,7 @@ const DragDropArea2: React.FC = () => {
               handleError("Unsupported file type. Please upload a valid file.");
             }
           }}
-          listType="picture-card"
+          listType="text" // Set the listType to "text"
           showUploadList={{ showRemoveIcon: true }}
           accept=".pdf,.doc,.docx,.csv,image/*"
           style={{ marginRight: 16 }}

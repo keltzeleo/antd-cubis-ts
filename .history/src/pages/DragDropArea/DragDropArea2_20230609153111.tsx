@@ -106,25 +106,14 @@ const DragDropArea2: React.FC = () => {
 
     if (duplicateFiles.length > 0) {
       handleError(
-        `${duplicateFiles[0].file.name} already exists. For security reasons,  please delete the file manually & reupload a new version.`
+        `${duplicateFiles[0].file.name} already exists. For security reasons, please delete the file manually & reupload a new version.`
       );
       setFileList((prevFileList) =>
         prevFileList.filter((file) => file.uid !== duplicateFiles[0].file.uid)
       );
+    } else {
+      setFileList(newFileList);
     }
-
-    setFileList(
-      newFileList.map((file) => {
-        // Set a custom error icon for files with status 'error'
-        if (file.status === "error") {
-          return {
-            ...file,
-            thumbUrl: "../../icons/icon_error_sm.png", // Replace 'error.png' with the path to your error icon
-          };
-        }
-        return file;
-      })
-    );
   };
 
   const handleRemove = (file: UploadFile<any>) => {
@@ -184,13 +173,6 @@ const DragDropArea2: React.FC = () => {
       </div>
     </div>
   );
-
-  const getListItemClassName = (file: UploadFile<any>): string => {
-    if (file.status === "done") {
-      return "ant-upload-list-item-done"; // Apply the desired CSS class for files with status "done"
-    }
-    return "";
-  };
 
   return (
     <>

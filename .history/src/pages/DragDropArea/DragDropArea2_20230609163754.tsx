@@ -112,9 +112,8 @@ const DragDropArea2: React.FC = () => {
         prevFileList.filter((file) => file.uid !== duplicateFiles[0].file.uid)
       );
     }
-
     setFileList(
-      newFileList.map((file) => {
+      fileList.map((file) => {
         // Set a custom error icon for files with status 'error'
         if (file.status === "error") {
           return {

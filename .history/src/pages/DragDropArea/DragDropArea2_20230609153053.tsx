@@ -45,6 +45,7 @@ const DragDropArea2: React.FC = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
+  const [uploadDone, setUploadDone] = useState(false); // New state for tracking upload status
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
@@ -77,6 +78,18 @@ const DragDropArea2: React.FC = () => {
     }, 5000);
   };
 
+  const handleFileUpload = async (file: RcFile): Promise<boolean> => {
+    return new Promise<boolean>((resolve) => {
+      setTimeout(() => {
+        // Simulating asynchronous file upload
+        // Replace with your actual file upload logic
+        // After the upload is done, set uploadDone to true
+        resolve(true);
+        setUploadDone(true);
+      }, 2000);
+    });
+  };
+
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     const newFileList = [...info.fileList];
 
@@ -106,25 +119,14 @@ const DragDropArea2: React.FC = () => {
 
     if (duplicateFiles.length > 0) {
       handleError(
-        `${duplicateFiles[0].file.name} already exists. For security reasons,  please delete the file manually & reupload a new version.`
+        `${duplicateFiles[0].file.name} already exists. For security reasons, please delete the file manually & reupload a new version.`
       );
       setFileList((prevFileList) =>
         prevFileList.filter((file) => file.uid !== duplicateFiles[0].file.uid)
       );
+    } else {
+      setFileList(newFileList);
     }
-
-    setFileList(
-      newFileList.map((file) => {
-        // Set a custom error icon for files with status 'error'
-        if (file.status === "error") {
-          return {
-            ...file,
-            thumbUrl: "../../icons/icon_error_sm.png", // Replace 'error.png' with the path to your error icon
-          };
-        }
-        return file;
-      })
-    );
   };
 
   const handleRemove = (file: UploadFile<any>) => {
@@ -171,7 +173,7 @@ const DragDropArea2: React.FC = () => {
           bottom: "2",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          height: "auto",
+          height: "32px",
           width: "auto",
           padding: "0 8px",
           borderRadius: 8,
@@ -184,13 +186,6 @@ const DragDropArea2: React.FC = () => {
       </div>
     </div>
   );
-
-  const getListItemClassName = (file: UploadFile<any>): string => {
-    if (file.status === "done") {
-      return "ant-upload-list-item-done"; // Apply the desired CSS class for files with status "done"
-    }
-    return "";
-  };
 
   return (
     <>
@@ -245,6 +240,18 @@ const DragDropArea2: React.FC = () => {
         >
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
+      </div>
+
+      <div>
+        {fileList.map((file) => (
+          <div
+            key={file.uid}
+            className={`file-item ${uploadDone ? "color-success" : ""}`}
+          >
+            <span>{file.name}</span>
+            <button onClick={() => handleRemove(file)}>Delete</button>
+          </div>
+        ))}
       </div>
     </>
   );
