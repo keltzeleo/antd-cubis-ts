@@ -3,7 +3,7 @@ import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
-import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
+import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou"; // Import the IWillFollowYou component
 import "./DragDropArea2.css";
 
 const acceptedFileTypes = [
@@ -99,7 +99,7 @@ const DragDropArea2: React.FC = () => {
       const checksum = await getChecksum(file.originFileObj as RcFile);
       if (checksumMap.has(checksum)) {
         const duplicateFile = checksumMap.get(checksum);
-        if (duplicateFile && !duplicateFiles.includes(duplicateFile)) {
+        if (!duplicateFiles.includes(duplicateFile)) {
           duplicateFiles.push(duplicateFile);
         }
         duplicateFiles.push(file);
@@ -112,14 +112,18 @@ const DragDropArea2: React.FC = () => {
       handleError(
         `${duplicateFiles[0].name} already exists. For security reasons, please delete the file manually and reupload a new version.`
       );
-      return;
+      setFileList((prevFileList) =>
+        prevFileList.filter((file) => !duplicateFiles.includes(file))
+      );
     }
 
     if (redundantFiles.length > 0) {
       handleError(
         `${redundantFiles[0].name} is redundant. Please remove the duplicate file.`
       );
-      return;
+      setFileList((prevFileList) =>
+        prevFileList.filter((file) => !redundantFiles.includes(file))
+      );
     }
 
     setFileList(
@@ -141,68 +145,6 @@ const DragDropArea2: React.FC = () => {
     setFileList((prevFileList) =>
       prevFileList.filter((item) => item.uid !== file.uid)
     );
-  };
-
-  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    const files = e.dataTransfer.files;
-
-    const unsupportedFiles: File[] = [];
-    const validFiles: RcFile[] = [];
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (acceptedFileTypes.includes(file.type)) {
-        validFiles.push(file as RcFile);
-      } else {
-        unsupportedFiles.push(file);
-      }
-    }
-
-    if (unsupportedFiles.length > 0) {
-      handleError("Unsupported file type. Please upload a valid file.");
-      return;
-    }
-
-    const newFileList: UploadFile<any>[] = [];
-    const duplicateFiles: UploadFile<any>[] = [];
-    const checksumMap: Map<number, UploadFile<any>> = new Map();
-
-    for (const file of validFiles) {
-      const checksum = await getChecksum(file);
-      if (checksumMap.has(checksum)) {
-        const duplicateFile = checksumMap.get(checksum);
-        if (duplicateFile && !duplicateFiles.includes(duplicateFile)) {
-          duplicateFiles.push(duplicateFile);
-        }
-        duplicateFiles.push(file);
-      } else {
-        checksumMap.set(checksum, file as UploadFile<any>);
-        const uploadFile: UploadFile<any> = {
-          uid: file.name,
-          name: file.name,
-          status: "done",
-          size: file.size,
-          type: file.type,
-          originFileObj: file as RcFile,
-        };
-        newFileList.push(uploadFile);
-      }
-    }
-
-    if (duplicateFiles.length > 0) {
-      handleError(
-        `${duplicateFiles[0].name} already exists. For security reasons, please delete the file manually and reupload a new version.`
-      );
-      return;
-    }
-
-    const updatedFileList = [...fileList, ...newFileList];
-
-    if (updatedFileList.length > 8) {
-      updatedFileList.splice(8);
-    }
-
-    setFileList(updatedFileList);
   };
 
   const fileCounter = (
@@ -274,8 +216,6 @@ const DragDropArea2: React.FC = () => {
           flexDirection: "column",
           height: 400,
         }}
-        onDrop={handleDrop} // Add the handleDrop event handler
-        onDragOver={(e) => e.preventDefault()} // Prevent default drag over behavior
       >
         <Upload.Dragger
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -283,6 +223,14 @@ const DragDropArea2: React.FC = () => {
           onPreview={handlePreview}
           onChange={handleChange}
           onRemove={handleRemove}
+          onDrop={(e) => {
+            const unsupportedFiles = Array.from(e.dataTransfer.files).filter(
+              (file) => !acceptedFileTypes.includes(file.type)
+            );
+            if (unsupportedFiles.length > 0) {
+              handleError("Unsupported file type. Please upload a valid file.");
+            }
+          }}
           listType="picture-card"
           showUploadList={{ showRemoveIcon: true }}
           accept=".pdf,.doc,.docx,.csv,image/*"

@@ -147,17 +147,9 @@ const DragDropArea2: React.FC = () => {
     e.preventDefault();
     const files = e.dataTransfer.files;
 
-    const unsupportedFiles: File[] = [];
-    const validFiles: RcFile[] = [];
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      if (acceptedFileTypes.includes(file.type)) {
-        validFiles.push(file as RcFile);
-      } else {
-        unsupportedFiles.push(file);
-      }
-    }
-
+    const unsupportedFiles = Array.from(files).filter(
+      (file) => !acceptedFileTypes.includes(file.type)
+    );
     if (unsupportedFiles.length > 0) {
       handleError("Unsupported file type. Please upload a valid file.");
       return;
@@ -167,8 +159,8 @@ const DragDropArea2: React.FC = () => {
     const duplicateFiles: UploadFile<any>[] = [];
     const checksumMap: Map<number, UploadFile<any>> = new Map();
 
-    for (const file of validFiles) {
-      const checksum = await getChecksum(file);
+    for (const file of files) {
+      const checksum = await getChecksum(file as RcFile);
       if (checksumMap.has(checksum)) {
         const duplicateFile = checksumMap.get(checksum);
         if (duplicateFile && !duplicateFiles.includes(duplicateFile)) {
@@ -183,7 +175,7 @@ const DragDropArea2: React.FC = () => {
           status: "done",
           size: file.size,
           type: file.type,
-          originFileObj: file as RcFile,
+          originFileObj: file,
         };
         newFileList.push(uploadFile);
       }
