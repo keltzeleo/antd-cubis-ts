@@ -61,6 +61,7 @@ const DragDropArea2: React.FC = () => {
   const handlePreview = async (file: UploadFile<any>) => {
     if (file.status === "error") {
       // handleError(`File '${file.name}' encountered an error during upload.`);
+
       return;
     }
 
@@ -86,17 +87,28 @@ const DragDropArea2: React.FC = () => {
   };
 
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
-    const newFileList = [...info.fileList];
-
-    if (newFileList.length > 8) {
-      newFileList.splice(8); // Limit the fileList to 8 files
+    if (fileList.length >= 8) {
+      return; // Return early if maximum upload file number is reached
     }
 
-    newFileList.forEach((file) => {
-      if (file.status === "error" && !file.url && !file.preview) {
-        file.preview = "placeholder.png"; // Set a default thumbnail for error files
+    let { file, fileList } = info;
+    // Check for redundant files and unsupported file types
+    if (file && file.status === "done") {
+      const isFileRedundant = newFileList.some(
+        (existingFile) =>
+          existingFile.name === file.name && existingFile.uid !== file.uid
+      );
+      if (
+        isFileRedundant ||
+        (file.type && !acceptedFileTypes.includes(file.type))
+      ) {
+        handleError(`File '${file.name}' is redundant. Please double-check.`);
+        setFileList((prevFileList) =>
+          prevFileList.filter((existingFile) => existingFile.uid !== file.uid)
+        );
+        return;
       }
-    });
+    }
 
     // Calculate checksum for each file
     const checksumPromises = newFileList.map(async (file) => {
@@ -108,10 +120,9 @@ const DragDropArea2: React.FC = () => {
 
     // Check for duplicates based on checksum
     const duplicateFiles = checksumResults.filter(
-      (result, index) =>
-        checksumResults.findIndex(
-          (item) => item.checksum === result.checksum
-        ) !== index
+      ({ checksum }, index) =>
+        checksumResults.findIndex((result) => result.checksum === checksum) !==
+        index
     );
 
     if (duplicateFiles.length > 0) {
@@ -136,49 +147,52 @@ const DragDropArea2: React.FC = () => {
 
   const isUploadDisabled = fileList.length >= 8;
 
-  const uploadButton =
-    fileList.length >= 8 ? null : (
+  const uploadButton = (
+    <div
+      style={{
+        width: "auto",
+        height: "auto",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <p className="ant-upload-drag-icon">
+        <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
+      </p>
+      <p className="ant-upload-text">
+        Click or drag file to this area to upload
+      </p>
+      <p className="ant-upload-hint" style={{ padding: 16 }}>
+        Support individual and bulk file uploads, please submit the required
+        files as needed.
+      </p>
       <div
         style={{
-          width: "auto",
-          height: "auto",
           display: "flex",
-          flexDirection: "column",
           justifyContent: "center",
+          alignItems: "center",
+          position: "absolute",
+          bottom: "2",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          height: "32px",
+          width: "auto",
+          padding: "0 8px",
+          borderRadius: 8,
+          border: "1px dashed #00a991",
+          opacity: isUploadDisabled ? 0.5 : 1,
+          pointerEvents: isUploadDisabled ? "none" : "auto",
         }}
       >
-        <p className="ant-upload-drag-icon">
-          <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
-        </p>
-        <p className="ant-upload-text">
-          Click or drag file to this area to upload
-        </p>
-        <p className="ant-upload-hint" style={{ padding: 16 }}>
-          Support individual and bulk file uploads, please submit the required
-          files as needed.
-        </p>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "absolute",
-            bottom: "2",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            height: "32px",
-            width: "auto",
-            padding: "0 8px",
-            borderRadius: 8,
-            border: "1px dashed #00a991",
-            opacity: isUploadDisabled ? 0.5 : 1,
-            pointerEvents: isUploadDisabled ? "none" : "auto",
-          }}
-        >
-          {fileCounter}
-        </div>
+        {fileList.length >= 8 ? (
+          <p style={{ margin: 0, fontSize: "32px" }}>FULL</p>
+        ) : (
+          fileCounter
+        )}
       </div>
-    );
+    </div>
+  );
 
   return (
     <>
@@ -216,7 +230,7 @@ const DragDropArea2: React.FC = () => {
               justifyContent: "center",
             }}
           >
-            {uploadButton}
+            {fileList.length >= 8 ? null : uploadButton}
           </div>
         </Upload.Dragger>
 

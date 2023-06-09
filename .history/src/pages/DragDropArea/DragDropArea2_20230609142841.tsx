@@ -136,49 +136,52 @@ const DragDropArea2: React.FC = () => {
 
   const isUploadDisabled = fileList.length >= 8;
 
-  const uploadButton =
-    fileList.length >= 8 ? null : (
+  const uploadButton = (
+    <div
+      style={{
+        width: "auto",
+        height: "auto",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <p className="ant-upload-drag-icon">
+        <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
+      </p>
+      <p className="ant-upload-text">
+        Click or drag file to this area to upload
+      </p>
+      <p className="ant-upload-hint" style={{ padding: 16 }}>
+        Support individual and bulk file uploads, please submit the required
+        files as needed.
+      </p>
       <div
         style={{
-          width: "auto",
-          height: "auto",
           display: "flex",
-          flexDirection: "column",
           justifyContent: "center",
+          alignItems: "center",
+          position: "absolute",
+          bottom: "2",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          height: "32px",
+          width: "auto",
+          padding: "0 8px",
+          borderRadius: 8,
+          border: "1px dashed #00a991",
+          opacity: isUploadDisabled ? 0.5 : 1,
+          pointerEvents: isUploadDisabled ? "none" : "auto",
         }}
       >
-        <p className="ant-upload-drag-icon">
-          <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
-        </p>
-        <p className="ant-upload-text">
-          Click or drag file to this area to upload
-        </p>
-        <p className="ant-upload-hint" style={{ padding: 16 }}>
-          Support individual and bulk file uploads, please submit the required
-          files as needed.
-        </p>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "absolute",
-            bottom: "2",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            height: "32px",
-            width: "auto",
-            padding: "0 8px",
-            borderRadius: 8,
-            border: "1px dashed #00a991",
-            opacity: isUploadDisabled ? 0.5 : 1,
-            pointerEvents: isUploadDisabled ? "none" : "auto",
-          }}
-        >
-          {fileCounter}
-        </div>
+        {fileList.length >= 8 ? (
+          <p style={{ margin: 0, fontSize: "50px" }}>FULL</p>
+        ) : (
+          fileCounter
+        )}
       </div>
-    );
+    </div>
+  );
 
   return (
     <>
@@ -216,7 +219,7 @@ const DragDropArea2: React.FC = () => {
               justifyContent: "center",
             }}
           >
-            {uploadButton}
+            {fileList.length >= 8 ? null : uploadButton}
           </div>
         </Upload.Dragger>
 

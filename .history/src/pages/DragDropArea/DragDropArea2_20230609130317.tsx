@@ -61,6 +61,7 @@ const DragDropArea2: React.FC = () => {
   const handlePreview = async (file: UploadFile<any>) => {
     if (file.status === "error") {
       // handleError(`File '${file.name}' encountered an error during upload.`);
+
       return;
     }
 
@@ -86,20 +87,34 @@ const DragDropArea2: React.FC = () => {
   };
 
   const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
-    const newFileList = [...info.fileList];
-
-    if (newFileList.length > 8) {
-      newFileList.splice(8); // Limit the fileList to 8 files
+    let { file, fileList } = info;
+    if (file.status === "error" && !file.url && !file.preview) {
+      // Handle the case where the error file has no thumbnail
+      // You can set a default thumbnail image or handle it as per your needs
+      // For example, set a placeholder image
+      file.preview = "placeholder.png";
+    }
+    // Check for redundant files and unsupported file types
+    if (file.status === "done") {
+      const isFileRedundant = fileList.some(
+        (existingFile) =>
+          existingFile.name === file.name && existingFile.uid !== file.uid
+      );
+      if (
+        isFileRedundant ||
+        (file.type && !acceptedFileTypes.includes(file.type))
+      ) {
+        handleError(`File '${file.name}' is redundant. Please double-check.`);
+        fileList = fileList.filter(
+          (existingFile) => existingFile.uid !== file.uid
+        );
+        setFileList(fileList);
+        return;
+      }
     }
 
-    newFileList.forEach((file) => {
-      if (file.status === "error" && !file.url && !file.preview) {
-        file.preview = "placeholder.png"; // Set a default thumbnail for error files
-      }
-    });
-
     // Calculate checksum for each file
-    const checksumPromises = newFileList.map(async (file) => {
+    const checksumPromises = fileList.map(async (file) => {
       const checksum = await getChecksum(file.originFileObj as RcFile);
       return { file, checksum };
     });
@@ -108,23 +123,32 @@ const DragDropArea2: React.FC = () => {
 
     // Check for duplicates based on checksum
     const duplicateFiles = checksumResults.filter(
-      (result, index) =>
-        checksumResults.findIndex(
-          (item) => item.checksum === result.checksum
-        ) !== index
+      ({ checksum }, index) =>
+        checksumResults.findIndex((result) => result.checksum === checksum) !==
+        index
     );
 
     if (duplicateFiles.length > 0) {
       handleError(
-        `${duplicateFiles[0].file.name} already exists. For security reasons, please delete the file manually & reupload a new version.`
+        `${duplicateFiles[0].file.name} already exists. For security reasons,  please delete the file manually & reupload a new version.`
       );
-      setFileList((prevFileList) =>
-        prevFileList.filter((file) => file.uid !== duplicateFiles[0].file.uid)
+      fileList = fileList.filter(
+        (file) => file.uid !== duplicateFiles[0].file.uid
       );
-    } else {
-      // Update the fileList state with the newFileList
-      setFileList(newFileList);
     }
+
+    setFileList(
+      fileList.map((file) => {
+        // Set a custom error icon for files with status 'error'
+        if (file.status === "error") {
+          return {
+            ...file,
+            thumbUrl: "../../icons/icon_error_sm.png", // Replace 'error.png' with the path to your error icon
+          };
+        }
+        return file;
+      })
+    );
   };
 
   const fileCounter = (
@@ -134,51 +158,43 @@ const DragDropArea2: React.FC = () => {
     </p>
   );
 
-  const isUploadDisabled = fileList.length >= 8;
-
-  const uploadButton =
-    fileList.length >= 8 ? null : (
-      <div
+  const uploadButton = (
+    <div
+      style={{
+        width: "auto",
+        height: "auto",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <p className="ant-upload-drag-icon">
+        <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
+      </p>
+      <p className="ant-upload-text">
+        Click or drag file to this area to upload
+      </p>
+      <p className="ant-upload-hint" style={{ padding: 16 }}>
+        Support individual and bulk file uploads, please submit the required
+        files as needed.
+      </p>
+      <p
         style={{
+          position: "absolute",
+          bottom: "2",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          height: "32px",
           width: "auto",
-          height: "auto",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
+
+          borderRadius: 8,
+          border: "1px dashed",
         }}
       >
-        <p className="ant-upload-drag-icon">
-          <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
-        </p>
-        <p className="ant-upload-text">
-          Click or drag file to this area to upload
-        </p>
-        <p className="ant-upload-hint" style={{ padding: 16 }}>
-          Support individual and bulk file uploads, please submit the required
-          files as needed.
-        </p>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            position: "absolute",
-            bottom: "2",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            height: "32px",
-            width: "auto",
-            padding: "0 8px",
-            borderRadius: 8,
-            border: "1px dashed #00a991",
-            opacity: isUploadDisabled ? 0.5 : 1,
-            pointerEvents: isUploadDisabled ? "none" : "auto",
-          }}
-        >
-          {fileCounter}
-        </div>
-      </div>
-    );
+        {fileCounter}
+      </p>
+    </div>
+  );
 
   return (
     <>
@@ -187,6 +203,7 @@ const DragDropArea2: React.FC = () => {
           width: 380,
           display: "inline-block",
           flexDirection: "column",
+
           height: 450,
         }}
       >
@@ -216,7 +233,7 @@ const DragDropArea2: React.FC = () => {
               justifyContent: "center",
             }}
           >
-            {uploadButton}
+            {fileList.length >= 8 ? null : uploadButton}
           </div>
         </Upload.Dragger>
 

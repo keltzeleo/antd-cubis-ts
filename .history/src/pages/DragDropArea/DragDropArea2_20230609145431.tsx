@@ -136,103 +136,100 @@ const DragDropArea2: React.FC = () => {
 
   const isUploadDisabled = fileList.length >= 8;
 
-  const uploadButton =
-    fileList.length >= 8 ? null : (
+  const uploadButton = (
+    <div
+      style={{
+        width: "auto",
+        height: "auto",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <p className="ant-upload-drag-icon">
+        <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
+      </p>
+      <p className="ant-upload-text">
+        Click or drag file to this area to upload
+      </p>
+      <p className="ant-upload-hint" style={{ padding: 16 }}>
+        Support individual and bulk file uploads, please submit the required
+        files as needed.
+      </p>
       <div
         style={{
-          width: "auto",
-          height: "auto",
           display: "flex",
-          flexDirection: "column",
           justifyContent: "center",
+          alignItems: "center",
+          position: "absolute",
+          bottom: "2",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          height: "32px",
+          width: "auto",
+          padding: "0 8px",
+          borderRadius: 8,
+          border: "1px dashed #00a991",
+          opacity: isUploadDisabled ? 0.5 : 1,
+          pointerEvents: isUploadDisabled ? "none" : "auto",
         }}
       >
-        <p className="ant-upload-drag-icon">
-          <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
-        </p>
-        <p className="ant-upload-text">
-          Click or drag file to this area to upload
-        </p>
-        <p className="ant-upload-hint" style={{ padding: 16 }}>
-          Support individual and bulk file uploads, please submit the required
-          files as needed.
-        </p>
+        {fileList.length >= 8 ? (
+          <p style={{ margin: 0, fontSize: "50px" }}>FULL</p>
+        ) : (
+          fileCounter
+        )}
+      </div>
+    </div>
+  );
+
+  const uploadDragger =
+    fileList.length < 8 ? (
+      <Upload.Dragger
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        fileList={fileList}
+        onPreview={handlePreview}
+        onChange={handleChange}
+        onDrop={(e) => {
+          const unsupportedFiles = Array.from(e.dataTransfer.files).filter(
+            (file) => !acceptedFileTypes.includes(file.type)
+          );
+          if (unsupportedFiles.length > 0) {
+            handleError("Unsupported file type. Please upload a valid file.");
+          }
+        }}
+        listType="picture-card"
+        showUploadList={{ showRemoveIcon: true }}
+        accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types
+        style={{ marginRight: 16 }}
+        multiple // Enable multiple file upload
+      >
         <div
           style={{
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center",
-            position: "absolute",
-            bottom: "2",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            height: "32px",
-            width: "auto",
-            padding: "0 8px",
-            borderRadius: 8,
-            border: "1px dashed #00a991",
-            opacity: isUploadDisabled ? 0.5 : 1,
-            pointerEvents: isUploadDisabled ? "none" : "auto",
           }}
         >
-          {fileCounter}
+          {uploadButton}
         </div>
-      </div>
-    );
+      </Upload.Dragger>
+    ) : null;
 
   return (
     <>
-      <div
-        style={{
-          width: 380,
-          display: "inline-block",
-          flexDirection: "column",
-          height: 450,
-        }}
+      {uploadDragger}
+
+      {isErrorMessageVisible && <IWillFollowYou errorMessage={errorMessage} />}
+
+      <Modal
+        visible={previewOpen}
+        title={previewTitle}
+        footer={null}
+        onCancel={handleCancel}
       >
-        <Upload.Dragger
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          fileList={fileList}
-          onPreview={handlePreview}
-          onChange={handleChange}
-          onDrop={(e) => {
-            const unsupportedFiles = Array.from(e.dataTransfer.files).filter(
-              (file) => !acceptedFileTypes.includes(file.type)
-            );
-            if (unsupportedFiles.length > 0) {
-              handleError("Unsupported file type. Please upload a valid file.");
-            }
-          }}
-          listType="picture-card"
-          showUploadList={{ showRemoveIcon: true }}
-          accept=".pdf,.doc,.docx,.csv,image/*" // Accepted file types
-          style={{ marginRight: 16 }}
-          multiple // Enable multiple file upload
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-            }}
-          >
-            {uploadButton}
-          </div>
-        </Upload.Dragger>
-
-        {isErrorMessageVisible && (
-          <IWillFollowYou errorMessage={errorMessage} />
-        )}
-
-        <Modal
-          visible={previewOpen}
-          title={previewTitle}
-          footer={null}
-          onCancel={handleCancel}
-        >
-          <img alt="example" style={{ width: "100%" }} src={previewImage} />
-        </Modal>
-      </div>
+        <img alt="example" style={{ width: "100%" }} src={previewImage} />
+      </Modal>
     </>
   );
 };
