@@ -207,11 +207,8 @@ const DragDropArea2: React.FC = () => {
 
   const fileCounter = (
     <p>
-      {fileList.length}{" "}
-      {fileList.length < 8
-        ? "out of 8 files uploaded."
-        : "files finished uploading. "}{" "}
-      {fileList.length === 8 && " Please review the file lists below."}
+      {fileList.length} out of{" "}
+      {fileList.length >= 8 ? "Maximum limit reached" : "8"} files uploaded
     </p>
   );
 
@@ -243,12 +240,13 @@ const DragDropArea2: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           position: "absolute",
-          bottom: "0",
+          bottom: "2",
           left: "50%",
           transform: "translate(-50%, -50%)",
           height: "auto",
-          padding: "0 16",
           width: "80%",
+          margin: "0 0 0 4px",
+          padding: "0px 8px",
           borderRadius: 8,
           border: "1px dashed #00a991",
           opacity: isUploadDisabled ? 0.5 : 1,
@@ -271,10 +269,10 @@ const DragDropArea2: React.FC = () => {
     <>
       <div
         style={{
-          width: 300,
-          display: "inline-list-item",
+          width: 380,
+          display: "inline-block",
           flexDirection: "column",
-          height: "450",
+          height: 450,
         }}
         onDrop={handleDrop} // Add the handleDrop event handler
         onDragOver={(e) => e.preventDefault()} // Prevent default drag over behavior
@@ -293,7 +291,7 @@ const DragDropArea2: React.FC = () => {
         >
           <div
             style={{
-              display: "block",
+              display: "flex",
               flexDirection: "column",
               justifyContent: "center",
             }}

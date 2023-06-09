@@ -210,7 +210,7 @@ const DragDropArea2: React.FC = () => {
       {fileList.length}{" "}
       {fileList.length < 8
         ? "out of 8 files uploaded."
-        : "files finished uploading. "}{" "}
+        : "files finished uploading"}{" "}
       {fileList.length === 8 && " Please review the file lists below."}
     </p>
   );

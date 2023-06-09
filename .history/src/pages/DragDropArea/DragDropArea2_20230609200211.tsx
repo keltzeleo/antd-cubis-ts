@@ -207,11 +207,8 @@ const DragDropArea2: React.FC = () => {
 
   const fileCounter = (
     <p>
-      {fileList.length}{" "}
-      {fileList.length < 8
-        ? "out of 8 files uploaded."
-        : "files finished uploading. "}{" "}
-      {fileList.length === 8 && " Please review the file lists below."}
+      {fileList.length} out of{" "}
+      {fileList.length >= 8 ? "Maximum limit reached" : "8"} files uploaded
     </p>
   );
 
@@ -243,11 +240,10 @@ const DragDropArea2: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           position: "absolute",
-          bottom: "0",
+          // bottom: "2",
           left: "50%",
           transform: "translate(-50%, -50%)",
           height: "auto",
-          padding: "0 16",
           width: "80%",
           borderRadius: 8,
           border: "1px dashed #00a991",
