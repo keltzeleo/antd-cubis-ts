@@ -1,0 +1,20 @@
+.ant-upload-list-item-uploading {
+  border: "1px dashed";
+  color: rgba (20, 29, 29, 0.4);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.ant-upload-list-item-error {
+  border: 1px solid #f99ba5 !important;
+  background-color: rgba(244, 97, 112, 0.03);
+}
+
+.ant-upload-list-item-done {
+  border: 1px solid #96c587 !important;
+  background-color: rgba(51, 200, 106, 0.07);
+}
+
+.ant-upload-list-item {
+  border-color: rgba(166, 73, 82, 0);
+  border: 0px;
+}
