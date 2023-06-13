@@ -211,8 +211,7 @@ const DragDropArea2: React.FC = () => {
       {fileList.length < 8
         ? "out of 8 files uploaded."
         : "files finished uploading. "}{" "}
-      {fileList.length === 8 &&
-        " Please review & confirm the file lists below."}
+      {fileList.length === 8 && " Please review the file lists below."}
     </p>
   );
 
@@ -272,7 +271,7 @@ const DragDropArea2: React.FC = () => {
     <>
       <div
         style={{
-          width: "300",
+          width: "100%",
           display: "inline-list-item",
           flexDirection: "column",
           height: "450",
