@@ -293,7 +293,7 @@ const DragDropArea2: React.FC = () => {
   return (
     <>
       <IdType onChange={handleOptionChange} />
-      <p></p>
+
       <div
         style={{
           width: "300",

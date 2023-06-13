@@ -1,11 +1,11 @@
-import { Modal, Upload } from "antd";
+import { ProFormItem } from "@ant-design/pro-form";
+import { Input, Modal, Space, Upload } from "antd";
 import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
-import IdType from "../../customComponents/Select/IdType";
-import "../../customComponents/Select/IdType.css";
+import "../../customComponents/Select/IdType";
 import "./DragDropArea2.css";
 
 const acceptedFileTypes = [
@@ -270,30 +270,8 @@ const DragDropArea2: React.FC = () => {
     return "";
   };
 
-  const handleOptionChange = (value: string) => {
-    // Perform actions based on the selected option
-    if (value === "MyKad") {
-      // Handle MyKad option
-      console.log("MyKad selected");
-    } else if (value === "MyTentera") {
-      // Handle MyTentera option
-      console.log("MyTentera selected");
-    } else if (value === "MyPR") {
-      // Handle MyPR option
-      console.log("MyPR selected");
-    } else if (value === "MyKAS") {
-      // Handle MyKAS option
-      console.log("MyKAS selected");
-    } else if (value === "Commercial") {
-      // Handle Commercial option
-      console.log("Commercial selected");
-    }
-  };
-
   return (
     <>
-      <IdType onChange={handleOptionChange} />
-      <p></p>
       <div
         style={{
           width: "300",
@@ -326,11 +304,9 @@ const DragDropArea2: React.FC = () => {
             {uploadButton}
           </div>
         </Upload.Dragger>
-
         {isErrorMessageVisible && (
           <IWillFollowYou errorMessage={errorMessage} />
         )}
-
         <Modal
           visible={previewOpen}
           title={previewTitle}
@@ -339,6 +315,34 @@ const DragDropArea2: React.FC = () => {
         >
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
+        const idType = (
+        <Space direction="vertical" className="font-Mulish space-wrapper">
+          {/* ... */}
+          <ProFormItem
+            label="ID"
+            tooltip="select relevant ID type"
+            name="idNumberType"
+          >
+            <Input
+              style={{
+                width: "100%", // adjust the width according to your layout
+              }}
+              addonBefore={
+                <IdType
+                  selectedOption={selectedOption}
+                  onChange={handleOptionChange}
+                />
+              }
+              placeholder="12-digit number on ID Card"
+              maxLength={14}
+              pattern="^[0-9-]*$"
+              title="ID number must contain only digits"
+              onKeyDown={/* ... */}
+            />
+          </ProFormItem>
+          {/* ... */}
+        </Space>
+        );
       </div>
     </>
   );

@@ -5,7 +5,6 @@ import { crc32 } from "crc";
 import React, { useState } from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
 import IdType from "../../customComponents/Select/IdType";
-import "../../customComponents/Select/IdType.css";
 import "./DragDropArea2.css";
 
 const acceptedFileTypes = [
@@ -293,7 +292,7 @@ const DragDropArea2: React.FC = () => {
   return (
     <>
       <IdType onChange={handleOptionChange} />
-      <p></p>
+
       <div
         style={{
           width: "300",

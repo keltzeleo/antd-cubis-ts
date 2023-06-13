@@ -1,11 +1,11 @@
-import { Modal, Upload } from "antd";
+import { ProFormItem } from "@ant-design/pro-form";
+import { Input, Modal, Space, Upload } from "antd";
 import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
-import IdType from "../../customComponents/Select/IdType";
-import "../../customComponents/Select/IdType.css";
+import "../../customComponents/Select/IdType";
 import "./DragDropArea2.css";
 
 const acceptedFileTypes = [
@@ -270,30 +270,8 @@ const DragDropArea2: React.FC = () => {
     return "";
   };
 
-  const handleOptionChange = (value: string) => {
-    // Perform actions based on the selected option
-    if (value === "MyKad") {
-      // Handle MyKad option
-      console.log("MyKad selected");
-    } else if (value === "MyTentera") {
-      // Handle MyTentera option
-      console.log("MyTentera selected");
-    } else if (value === "MyPR") {
-      // Handle MyPR option
-      console.log("MyPR selected");
-    } else if (value === "MyKAS") {
-      // Handle MyKAS option
-      console.log("MyKAS selected");
-    } else if (value === "Commercial") {
-      // Handle Commercial option
-      console.log("Commercial selected");
-    }
-  };
-
   return (
     <>
-      <IdType onChange={handleOptionChange} />
-      <p></p>
       <div
         style={{
           width: "300",
@@ -326,11 +304,9 @@ const DragDropArea2: React.FC = () => {
             {uploadButton}
           </div>
         </Upload.Dragger>
-
         {isErrorMessageVisible && (
           <IWillFollowYou errorMessage={errorMessage} />
         )}
-
         <Modal
           visible={previewOpen}
           title={previewTitle}
@@ -339,6 +315,73 @@ const DragDropArea2: React.FC = () => {
         >
           <img alt="example" style={{ width: "100%" }} src={previewImage} />
         </Modal>
+        const idType = (
+        <Space direction="vertical" className="font-Mulish space-wrapper">
+          {/* ... */}
+          <ProFormItem
+            label="ID"
+            tooltip="select relevant ID type"
+            name="idNumberType"
+          >
+            <Input
+              style={{
+                width: "100%", // adjust the width according to your layout
+              }}
+              addonBefore={
+                <IdType
+                  selectedOption={selectedOption}
+                  onChange={handleOptionChange}
+                />
+              }
+              placeholder="12-digit number on ID Card"
+              maxLength={14}
+              pattern="^[0-9-]*$"
+              title="ID number must contain only digits"
+              onKeyDown=onKeyDown={(event) => {
+                const key = event.key;
+                const allowedKeys = [
+                  "Backspace",
+                  "Delete",
+                  "ArrowLeft",
+                  "ArrowRight",
+                ];
+                const input = event.target as HTMLInputElement;
+                const selectionStart = input.selectionStart || 0;
+                const selectionEnd = input.selectionEnd || 0;
+                const value = input.value;
+
+                if (
+                  !/^\d*$/.test(key) && // Check if the key is a digit
+                  !allowedKeys.includes(key) && // Check if the key is allowed (e.g., Backspace, Delete, Arrow keys)
+                  !(key === "Control" && navigator.platform.match("Mac")
+                    ? event.metaKey
+                    : event.ctrlKey) // Check if it's a control key combination (e.g., Ctrl+C, Ctrl+V)
+                ) {
+                  event.preventDefault();
+                }
+
+                // Automatically format the input by adding dashes
+                if (!allowedKeys.includes(key)) {
+                  let formattedValue = value;
+                  if (selectionStart === selectionEnd) {
+                    if (selectionStart === 6 || selectionStart === 9) {
+                      formattedValue += "-";
+                    }
+                  } else {
+                    formattedValue =
+                      value.slice(0, selectionStart) +
+                      "-" +
+                      value.slice(selectionStart, selectionEnd) +
+                      value.slice(selectionEnd);
+                  }
+                  input.value = formattedValue;
+                }
+              }}
+            />
+          </ProFormItem>
+          {/* ... */}
+        </Space>
+        );
       </div>
     </>
   );

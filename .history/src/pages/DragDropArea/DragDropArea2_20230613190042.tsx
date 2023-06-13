@@ -5,7 +5,6 @@ import { crc32 } from "crc";
 import React, { useState } from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
 import IdType from "../../customComponents/Select/IdType";
-import "../../customComponents/Select/IdType.css";
 import "./DragDropArea2.css";
 
 const acceptedFileTypes = [
@@ -270,30 +269,10 @@ const DragDropArea2: React.FC = () => {
     return "";
   };
 
-  const handleOptionChange = (value: string) => {
-    // Perform actions based on the selected option
-    if (value === "MyKad") {
-      // Handle MyKad option
-      console.log("MyKad selected");
-    } else if (value === "MyTentera") {
-      // Handle MyTentera option
-      console.log("MyTentera selected");
-    } else if (value === "MyPR") {
-      // Handle MyPR option
-      console.log("MyPR selected");
-    } else if (value === "MyKAS") {
-      // Handle MyKAS option
-      console.log("MyKAS selected");
-    } else if (value === "Commercial") {
-      // Handle Commercial option
-      console.log("Commercial selected");
-    }
-  };
-
   return (
     <>
-      <IdType onChange={handleOptionChange} />
-      <p></p>
+      <IdType />
+
       <div
         style={{
           width: "300",

@@ -4,8 +4,7 @@ import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
-import IdType from "../../customComponents/Select/IdType";
-import "../../customComponents/Select/IdType.css";
+import "../../customComponents/Select/IdType";
 import "./DragDropArea2.css";
 
 const acceptedFileTypes = [
@@ -271,29 +270,13 @@ const DragDropArea2: React.FC = () => {
   };
 
   const handleOptionChange = (value: string) => {
-    // Perform actions based on the selected option
-    if (value === "MyKad") {
-      // Handle MyKad option
-      console.log("MyKad selected");
-    } else if (value === "MyTentera") {
-      // Handle MyTentera option
-      console.log("MyTentera selected");
-    } else if (value === "MyPR") {
-      // Handle MyPR option
-      console.log("MyPR selected");
-    } else if (value === "MyKAS") {
-      // Handle MyKAS option
-      console.log("MyKAS selected");
-    } else if (value === "Commercial") {
-      // Handle Commercial option
-      console.log("Commercial selected");
-    }
+    setSelectedOption(value);
   };
 
   return (
     <>
       <IdType onChange={handleOptionChange} />
-      <p></p>
+
       <div
         style={{
           width: "300",

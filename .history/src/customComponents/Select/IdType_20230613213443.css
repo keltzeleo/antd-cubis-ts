@@ -1,0 +1,140 @@
+.two-column-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.custom-radio-group {
+  .ant-radio-wrapper {
+  }
+
+  .ant-radio-wrapper:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.textEffect {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.textEffect:hover {
+  border-radius: 8px;
+  border: dashed 0.5px #00a991;
+  padding: 2 8 2 8;
+  justify-content: center;
+  background: #fff;
+  text-decoration: none;
+}
+
+.id-type-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.id-type-option {
+  display: flex;
+  align-items: center;
+}
+
+.id-type-option label {
+  margin-right: 8px;
+}
+
+.myKad-select .ant-select-selector {
+  z-index: 0;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  background-color: rgba(222, 231, 241, 0.5) !important;
+  color: #131213;
+}
+
+.myTentera-select .ant-select-selector {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-color: grey;
+  background-color: #f1eff2 !important;
+  color: #131213;
+}
+
+.myPR-select .ant-select-selector {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-color: grey;
+  background-color: #eedcde !important;
+  color: #131213;
+}
+
+.myKAS-select .ant-select-selector {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-color: grey;
+  background-color: #e7eee6 !important;
+  color: #131213;
+}
+
+.forCommercial-select .ant-select-selector {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-color: grey;
+  background-color: #faeadf !important;
+  color: #131213;
+}
+
+.input-option {
+  border: 0px !important;
+}
+
+.myKad-option {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #f3f6f9;
+  color: #131213;
+}
+
+.myTentera-option {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #f3f6f9;
+  color: #131213;
+}
+
+.myPR-option {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #f3f6f9;
+  color: #131213;
+}
+
+.myKAS-option {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #f3f6f9;
+  color: #131213;
+}
+
+.forCommercial-option {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #f3f6f9;
+  color: #131213;
+}
+
+.myKad-select .ant-select-selector .ant-select-selection-item,
+.myTentera-select .ant-select-selector .ant-select-selection-item,
+.myPR-select .ant-select-selector .ant-select-selection-item,
+.myKAS-select .ant-select-selector .ant-select-selection-item,
+.forCommercial-select .ant-select-selector .ant-select-selection-item {
+  background-color: none;
+  color: #131213;
+}
