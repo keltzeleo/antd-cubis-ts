@@ -299,12 +299,6 @@ const DragDropArea2: React.FC = () => {
         <div className="left-section">
           <div
             className="upload-area"
-            style={{
-              width: "300",
-              display: "inline-list-item",
-              flexDirection: "column",
-              height: "450",
-            }}
             onDrop={handleDrop}
             onDragOver={(e) => e.preventDefault()}
           >
