@@ -22,13 +22,11 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
     boardClassName += " forCommercial-board";
   }
   return (
-    <div className={boardClassName} style={{ padding: "20px", width: "90%" }}>
-      <h2>{selectedOption} Board</h2>
+    <div className={boardClassName} style={{ padding: "20px" }}>
+      <h2>Notification Board</h2>
       <p>
-        This is the<b> {selectedOption} </b>board. The background color changes
-        based on the selected option in the IdType component. It also will
-        notify user whether the form below will be a new registration form or an
-        account registration.
+        This is the {selectedOption} board. The background color changes based
+        on the selected option in the IdType component.
       </p>
     </div>
   );

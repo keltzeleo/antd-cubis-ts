@@ -44,8 +44,9 @@
 }
 
 .left-section {
-  flex: 0.3;
+  flex: 1;
   padding: 16px;
+  width: 300px;
 }
 
 .right-section {

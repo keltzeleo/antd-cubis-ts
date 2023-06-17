@@ -22,7 +22,7 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
     boardClassName += " forCommercial-board";
   }
   return (
-    <div className={boardClassName} style={{ padding: "20px", width: "90%" }}>
+    <div className={boardClassName} style={{ padding: "8px", width: "100%" }}>
       <h2>{selectedOption} Board</h2>
       <p>
         This is the<b> {selectedOption} </b>board. The background color changes

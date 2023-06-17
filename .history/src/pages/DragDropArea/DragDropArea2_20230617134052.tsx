@@ -281,12 +281,12 @@ const DragDropArea2: React.FC = () => {
       <div className="top-section">
         <IdType onChange={handleOptionChange} />
       </div>
-      <div className="content-container" style={{ display: "flex" }}>
-        <div className="left-section" style={{}}>
+      <div className="content-container">
+        <div className="left-section" style={{ width: 0 }}>
           <div
             className="upload-area"
             style={{
-              width: "250",
+              width: "0 !important",
               display: "inline-block",
               flexDirection: "column",
               height: "450",
@@ -321,10 +321,7 @@ const DragDropArea2: React.FC = () => {
             <IWillFollowYou errorMessage={errorMessage} />
           )}
         </div>
-        <div
-          className="right-section"
-          style={{ flex: 1, boxSizing: "border-box" }}
-        >
+        <div className="right-section">
           {/* Form fill-in section */}
           <div style={{ height: "100vh" }}>
             <IdTypeBoard selectedOption={selectedIdType} />

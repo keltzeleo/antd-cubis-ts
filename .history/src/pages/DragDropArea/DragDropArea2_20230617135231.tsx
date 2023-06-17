@@ -282,7 +282,10 @@ const DragDropArea2: React.FC = () => {
         <IdType onChange={handleOptionChange} />
       </div>
       <div className="content-container" style={{ display: "flex" }}>
-        <div className="left-section" style={{}}>
+        <div
+          className="left-section"
+          style={{ width: 50, boxSizing: "border-box" }}
+        >
           <div
             className="upload-area"
             style={{

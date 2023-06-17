@@ -44,7 +44,7 @@
 }
 
 .left-section {
-  flex: 0.3;
+  width: 350px;
   padding: 16px;
 }
 
