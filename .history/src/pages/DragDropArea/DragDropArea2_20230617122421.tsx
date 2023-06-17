@@ -51,8 +51,8 @@ const DragDropArea2: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
   const [selectedIdType, setSelectedIdType] = useState("");
 
-  const handleOptionChange = (value: string) => {
-    setSelectedIdType(value);
+  const handleIdTypeChange = (idType: string) => {
+    setSelectedIdType(idType);
   };
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -276,6 +276,26 @@ const DragDropArea2: React.FC = () => {
     return "";
   };
 
+  const handleOptionChange = (value: string) => {
+    // Perform actions based on the selected option
+    if (value === "MyKad") {
+      // Handle MyKad option
+      console.log("MyKad selected");
+    } else if (value === "MyTentera") {
+      // Handle MyTentera option
+      console.log("MyTentera selected");
+    } else if (value === "MyPR") {
+      // Handle MyPR option
+      console.log("MyPR selected");
+    } else if (value === "MyKAS") {
+      // Handle MyKAS option
+      console.log("MyKAS selected");
+    } else if (value === "Commercial") {
+      // Handle Commercial option
+      console.log("Commercial selected");
+    }
+  };
+
   return (
     <div className="drag-drop-container">
       <div className="top-section">
@@ -323,9 +343,16 @@ const DragDropArea2: React.FC = () => {
         </div>
         <div className="right-section">
           {/* Form fill-in section */}
-          <div style={{ height: "100vh" }}>
-            <IdTypeBoard selectedOption={selectedIdType} />
+
+          <div>
+            <IdType onChange={handleIdTypeChange} />
           </div>
+          <>
+            <IdTypeBoard
+              selectedOption={selectedIdType}
+              style={{ height: "100vh" }};
+            />
+          </>
         </div>
       </div>
       <Modal
