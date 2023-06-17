@@ -267,10 +267,13 @@ const DragDropArea2: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           position: "absolute",
-          bottom: "10",
+          bottom: "0",
           left: "50%",
-          transform: "translate(-50%, 0%)",
+          transform: "translate(-50%, -20%)",
           height: "auto",
+          padding: "4px", // Modify the padding value here
+
+          padding: "0",
           width: "80%",
           borderRadius: 8,
           border: "1px dashed #00a991",

@@ -267,7 +267,7 @@ const DragDropArea2: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           position: "absolute",
-          bottom: "10",
+          bottom: "0",
           left: "50%",
           transform: "translate(-50%, 0%)",
           height: "auto",

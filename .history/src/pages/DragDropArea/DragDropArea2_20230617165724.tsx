@@ -4,7 +4,6 @@ import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
-import IdTypeBoard from "../../customComponents/Notification/IdTypeBoard";
 import IdType from "../../customComponents/Select/IdType";
 import "../../customComponents/Select/IdType.css";
 import "./DragDropArea2.css";
@@ -49,11 +48,6 @@ const DragDropArea2: React.FC = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
-  const [selectedIdType, setSelectedIdType] = useState("");
-
-  const handleOptionChange = (value: string) => {
-    setSelectedIdType(value);
-  };
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
@@ -214,16 +208,14 @@ const DragDropArea2: React.FC = () => {
   };
 
   const fileCounter = (
-    <div style={{ marginTop: 8 }}>
-      <p>
-        {fileList.length}{" "}
-        {fileList.length < 8
-          ? "out of 8 files uploaded."
-          : "files finished uploading. "}{" "}
-        {fileList.length === 8 &&
-          " Please review & confirm the file lists below."}
-      </p>
-    </div>
+    <p>
+      {fileList.length}{" "}
+      {fileList.length < 8
+        ? "out of 8 files uploaded."
+        : "files finished uploading. "}{" "}
+      {fileList.length === 8 &&
+        " Please review & confirm the file lists below."}
+    </p>
   );
 
   const isUploadDisabled = fileList.length >= 8;
@@ -238,45 +230,32 @@ const DragDropArea2: React.FC = () => {
         justifyContent: "center",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "0 16",
-          marginTop: -48,
-        }}
-      >
-        <p className="ant-upload-drag-icon">
-          <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
-        </p>
-
-        <p className="ant-upload-text">
-          Click or drag file to this area to upload
-        </p>
-
-        <p className="ant-upload-hint" style={{ padding: 16 }}>
-          Support individual and bulk file uploads, please submit the required
-          files as needed.
-        </p>
-      </div>
+      <p className="ant-upload-drag-icon">
+        <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
+      </p>
+      <p className="ant-upload-text">
+        Click or drag file to this area to upload
+      </p>
+      <p className="ant-upload-hint" style={{ padding: 16 }}>
+        Support individual and bulk file uploads, please submit the required
+        files as needed.
+      </p>
       <div
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           position: "absolute",
-          bottom: "10",
+          bottom: "0",
           left: "50%",
-          transform: "translate(-50%, 0%)",
+          transform: "translate(-50%, -50%)",
           height: "auto",
+          padding: "0 16",
           width: "80%",
           borderRadius: 8,
           border: "1px dashed #00a991",
           opacity: isUploadDisabled ? 0.5 : 1,
           pointerEvents: isUploadDisabled ? "none" : "auto",
-          marginTop: -10,
         }}
       >
         {fileCounter}
@@ -291,70 +270,77 @@ const DragDropArea2: React.FC = () => {
     return "";
   };
 
+  const handleOptionChange = (value: string) => {
+    // Perform actions based on the selected option
+    if (value === "MyKad") {
+      // Handle MyKad option
+      console.log("MyKad selected");
+    } else if (value === "MyTentera") {
+      // Handle MyTentera option
+      console.log("MyTentera selected");
+    } else if (value === "MyPR") {
+      // Handle MyPR option
+      console.log("MyPR selected");
+    } else if (value === "MyKAS") {
+      // Handle MyKAS option
+      console.log("MyKAS selected");
+    } else if (value === "Commercial") {
+      // Handle Commercial option
+      console.log("Commercial selected");
+    }
+  };
+
   return (
-    <div className="drag-drop-container">
-      <div className="top-section">
-        <IdType onChange={handleOptionChange} />
-      </div>
-      <div className="content-container" style={{ display: "flex" }}>
-        <div className="left-section" style={{}}>
-          <div
-            className="upload-area"
-            style={{
-              width: "250",
-              display: "inline-block",
-              flexDirection: "column",
-              height: "450",
-            }}
-            onDrop={handleDrop}
-            onDragOver={(e) => e.preventDefault()}
-          >
-            <Upload.Dragger
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              fileList={fileList}
-              onPreview={handlePreview}
-              onChange={handleChange}
-              onRemove={handleRemove}
-              listType="picture-card"
-              showUploadList={{ showRemoveIcon: true }}
-              accept=".pdf,.doc,.docx,.csv,image/*"
-              style={{ marginRight: 8 }}
-              multiple
-            >
-              <div
-                style={{
-                  display: "block",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                {uploadButton}
-              </div>
-            </Upload.Dragger>
-          </div>
-          {isErrorMessageVisible && (
-            <IWillFollowYou errorMessage={errorMessage} />
-          )}
-        </div>
-        <div
-          className="right-section"
-          style={{ flex: 1, boxSizing: "border-box" }}
-        >
-          {/* Form fill-in section */}
-          <div style={{ height: "100vh" }}>
-            <IdTypeBoard selectedOption={selectedIdType} />
-          </div>
-        </div>
-      </div>
-      <Modal
-        visible={previewOpen}
-        title={previewTitle}
-        footer={null}
-        onCancel={handleCancel}
+    <>
+      <IdType onChange={handleOptionChange} />
+      <p></p>
+      <div
+        style={{
+          width: "300",
+          display: "inline-list-item",
+          flexDirection: "column",
+          height: "450",
+        }}
+        onDrop={handleDrop} // Add the handleDrop event handler
+        onDragOver={(e) => e.preventDefault()} // Prevent default drag over behavior
       >
-        <img alt="example" style={{ width: "100%" }} src={previewImage} />
-      </Modal>
-    </div>
+        <Upload.Dragger
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          fileList={fileList}
+          onPreview={handlePreview}
+          onChange={handleChange}
+          onRemove={handleRemove}
+          listType="picture-card"
+          showUploadList={{ showRemoveIcon: true }}
+          accept=".pdf,.doc,.docx,.csv,image/*"
+          style={{ marginRight: 8 }}
+          multiple
+        >
+          <div
+            style={{
+              display: "block",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            {uploadButton}
+          </div>
+        </Upload.Dragger>
+
+        {isErrorMessageVisible && (
+          <IWillFollowYou errorMessage={errorMessage} />
+        )}
+
+        <Modal
+          visible={previewOpen}
+          title={previewTitle}
+          footer={null}
+          onCancel={handleCancel}
+        >
+          <img alt="example" style={{ width: "100%" }} src={previewImage} />
+        </Modal>
+      </div>
+    </>
   );
 };
 

@@ -20,11 +20,10 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
     boardClassName += " myKAS-board";
   } else if (selectedOption === "Commercial") {
     boardClassName += " forCommercial-board";
+
+    // Add the initial color class
+    boardClassName += " myKad-board";
   }
-
-  // Add the initial color class
-  boardClassName += " myKad-board";
-
   return (
     <div className={boardClassName} style={{ padding: "20px", width: "90%" }}>
       <h2>{selectedOption} Notification Board</h2>

@@ -244,8 +244,7 @@ const DragDropArea2: React.FC = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          padding: "0 16",
-          marginTop: -48,
+          marginTop: 8,
         }}
       >
         <p className="ant-upload-drag-icon">
@@ -267,10 +266,11 @@ const DragDropArea2: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           position: "absolute",
-          bottom: "10",
+          bottom: "0",
           left: "50%",
-          transform: "translate(-50%, 0%)",
+          transform: "translate(-50%, -20%)",
           height: "auto",
+          padding: "-8 -8",
           width: "80%",
           borderRadius: 8,
           border: "1px dashed #00a991",

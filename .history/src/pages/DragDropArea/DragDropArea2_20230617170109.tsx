@@ -214,16 +214,14 @@ const DragDropArea2: React.FC = () => {
   };
 
   const fileCounter = (
-    <div style={{ marginTop: 8 }}>
-      <p>
-        {fileList.length}{" "}
-        {fileList.length < 8
-          ? "out of 8 files uploaded."
-          : "files finished uploading. "}{" "}
-        {fileList.length === 8 &&
-          " Please review & confirm the file lists below."}
-      </p>
-    </div>
+    <p>
+      {fileList.length}{" "}
+      {fileList.length < 8
+        ? "out of 8 files uploaded."
+        : "files finished uploading. "}{" "}
+      {fileList.length === 8 &&
+        " Please review & confirm the file lists below."}
+    </p>
   );
 
   const isUploadDisabled = fileList.length >= 8;
@@ -238,45 +236,32 @@ const DragDropArea2: React.FC = () => {
         justifyContent: "center",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "0 16",
-          marginTop: -48,
-        }}
-      >
-        <p className="ant-upload-drag-icon">
-          <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
-        </p>
-
-        <p className="ant-upload-text">
-          Click or drag file to this area to upload
-        </p>
-
-        <p className="ant-upload-hint" style={{ padding: 16 }}>
-          Support individual and bulk file uploads, please submit the required
-          files as needed.
-        </p>
-      </div>
+      <p className="ant-upload-drag-icon">
+        <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
+      </p>
+      <p className="ant-upload-text">
+        Click or drag file to this area to upload
+      </p>
+      <p className="ant-upload-hint" style={{ padding: 16 }}>
+        Support individual and bulk file uploads, please submit the required
+        files as needed.
+      </p>
       <div
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           position: "absolute",
-          bottom: "10",
+          bottom: "0",
           left: "50%",
-          transform: "translate(-50%, 0%)",
+          transform: "translate(-50%, -50%)",
           height: "auto",
+          padding: "0 16",
           width: "80%",
           borderRadius: 8,
           border: "1px dashed #00a991",
           opacity: isUploadDisabled ? 0.5 : 1,
           pointerEvents: isUploadDisabled ? "none" : "auto",
-          marginTop: -10,
         }}
       >
         {fileCounter}
