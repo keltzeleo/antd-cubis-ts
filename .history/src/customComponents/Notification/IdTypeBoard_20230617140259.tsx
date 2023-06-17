@@ -28,18 +28,7 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
         This is the<b> {selectedOption} notificaton </b>board. The background
         color changes based on the selected option in the IdType component. It
         also will notify user whether the form below will be a new registration
-        form or an account registration:
-        <p></p>
-        <b>
-          {" "}
-          "This I/C number is not currently registered in our system. Please
-          proceed with the New Registration process." <p></p>
-        </b>
-        or<p></p>
-        <b>
-          "This I/C number is currently registered in our system with x number
-          of account(s). Please proceed with the New Registration process."
-        </b>
+        form or an account registration.
       </p>
     </div>
   );
