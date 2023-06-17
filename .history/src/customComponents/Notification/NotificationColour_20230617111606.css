@@ -1,0 +1,27 @@
+.notification-container {
+  padding: 10px;
+}
+
+.myKad-notification {
+  background-color: green;
+}
+
+.myTentera-notification {
+  background-color: blue;
+}
+
+.myPR-notification {
+  background-color: orange;
+}
+
+.myKAS-notification {
+  background-color: yellow;
+}
+
+.forCommercial-notification {
+  background-color: pink;
+}
+
+.default-notification {
+  background-color: gray;
+}

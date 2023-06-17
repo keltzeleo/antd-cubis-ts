@@ -4,6 +4,7 @@ import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
+import IdTypeNotification from "../../customComponents/Notification/IdTypeNotification";
 import IdType from "../../customComponents/Select/IdType";
 import "../../customComponents/Select/IdType.css";
 import "./DragDropArea2.css";
@@ -50,7 +51,7 @@ const DragDropArea2: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
   const [selectedIdType, setSelectedIdType] = useState("");
 
-  const handleIdTypeChange = (idType: string) => {
+  const handleIdTypeChange = (idType) => {
     setSelectedIdType(idType);
   };
 
@@ -344,6 +345,7 @@ const DragDropArea2: React.FC = () => {
           {/* Form fill-in section */}
           <div>
             <IdType onChange={handleIdTypeChange} />
+            <IdTypeNotification selectedIdType={selectedIdType} />
           </div>
         </div>
       </div>
