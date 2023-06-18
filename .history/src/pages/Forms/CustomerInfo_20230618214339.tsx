@@ -45,7 +45,7 @@ const CustomerInfo = () => {
               margin: "-20px 0px 0px 10px",
             }}
           >
-            010180-14-1010 // {name}
+            // {name} //
           </div>
         </div>
         <p></p>
@@ -63,7 +63,6 @@ const CustomerInfo = () => {
             rules={[{ required: true, message: "Please enter Name" }]}
             fieldProps={{
               onChange: handleNameChange,
-              placeholder: "data fr Consumer table, editable if newCustomer",
             }}
           />
         </ProForm.Group>

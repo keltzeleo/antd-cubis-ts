@@ -1,16 +1,9 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { useState } from "react";
 
 const CustomerInfo = () => {
-  const [name, setName] = useState("");
-
   const onFinish = (values: any) => {
     console.log("Form values:", values);
     return Promise.resolve();
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
   };
 
   return (
@@ -45,7 +38,7 @@ const CustomerInfo = () => {
               margin: "-20px 0px 0px 10px",
             }}
           >
-            010180-14-1010 // {name}
+            010180-14-1010 //
           </div>
         </div>
         <p></p>
@@ -61,10 +54,6 @@ const CustomerInfo = () => {
             name="name"
             label="Name"
             rules={[{ required: true, message: "Please enter Name" }]}
-            fieldProps={{
-              onChange: handleNameChange,
-              placeholder: "data fr Consumer table, editable if newCustomer",
-            }}
           />
         </ProForm.Group>
         <ProForm.Group>

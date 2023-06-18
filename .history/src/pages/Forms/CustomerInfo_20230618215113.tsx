@@ -63,7 +63,7 @@ const CustomerInfo = () => {
             rules={[{ required: true, message: "Please enter Name" }]}
             fieldProps={{
               onChange: handleNameChange,
-              placeholder: "data fr Consumer table, editable if newCustomer",
+              placeholder: "data from Consumer table, editable if new customer",
             }}
           />
         </ProForm.Group>

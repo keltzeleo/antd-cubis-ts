@@ -9,8 +9,8 @@ const CustomerInfo = () => {
     return Promise.resolve();
   };
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+  const handleNameChange = (value: string) => {
+    setName(value);
   };
 
   return (
@@ -45,7 +45,7 @@ const CustomerInfo = () => {
               margin: "-20px 0px 0px 10px",
             }}
           >
-            010180-14-1010 // {name}
+            {name} //
           </div>
         </div>
         <p></p>
@@ -61,10 +61,7 @@ const CustomerInfo = () => {
             name="name"
             label="Name"
             rules={[{ required: true, message: "Please enter Name" }]}
-            fieldProps={{
-              onChange: handleNameChange,
-              placeholder: "data fr Consumer table, editable if newCustomer",
-            }}
+            onChange={handleNameChange}
           />
         </ProForm.Group>
         <ProForm.Group>

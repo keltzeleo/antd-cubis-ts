@@ -60,10 +60,10 @@ const CustomerInfo = () => {
             width="md"
             name="name"
             label="Name"
+            placeholder={miao}
             rules={[{ required: true, message: "Please enter Name" }]}
             fieldProps={{
               onChange: handleNameChange,
-              placeholder: "data fr Consumer table, editable if newCustomer",
             }}
           />
         </ProForm.Group>
