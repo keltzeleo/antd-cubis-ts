@@ -42,7 +42,8 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
         or<p></p>
         <b>
           "This I/C number is currently registered in our system with x number
-          of account(s). Please proceed with the New Registration process."
+          of account(s). Please proceed with the Additional Account Registration
+          process."
         </b>
       </p>
     </div>

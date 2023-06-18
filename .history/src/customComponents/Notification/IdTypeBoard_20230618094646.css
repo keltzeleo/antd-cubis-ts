@@ -1,0 +1,33 @@
+/* Add the common styles for the board */
+.id-type-board {
+  border-radius: 8px;
+
+  /* Define the common styles for the board */
+  /* Add any additional common styles here */
+}
+
+/* Define the specific styles for each option */
+.myKad-board {
+  background-color: #e6edf4;
+  /* Add any specific styles for MyKad option */
+}
+
+.myTentera-board {
+  background-color: #f1eff2;
+  /* Add any specific styles for MyTentera option */
+}
+
+.myPR-board {
+  background-color: #eedcde;
+  /* Add any specific styles for MyPR option */
+}
+
+.myKAS-board {
+  background-color: #e7eee6;
+  /* Add any specific styles for MyKAS option */
+}
+
+.forCommercial-board {
+  background-color: #faeadf;
+  /* Add any specific styles for Commercial option */
+}

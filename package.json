@@ -21,7 +21,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@umijs/max": "^4.0.68",
-    "antd": "^5.5.1",
+    "antd": "^5.6.1",
     "craco-antd": "^2.0.0",
     "craco-less": "^2.0.0",
     "crc": "^4.3.2",
