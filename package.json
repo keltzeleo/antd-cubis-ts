@@ -91,5 +91,6 @@
     "storybook-dark-mode": "^3.0.0",
     "webpack": "5.82.0"
   },
-  "keywords": []
+  "keywords": [],
+  "packageManager": "yarn@3.6.0"
 }
