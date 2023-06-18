@@ -7,17 +7,18 @@ import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou
 import IdTypeBoard from "../../customComponents/Notification/IdTypeBoard";
 import IdType from "../../customComponents/Select/IdType";
 import "../../customComponents/Select/IdType.css";
+import { acceptedFileTypes } from "../../customConstants/dragDropFileTypes";
 import "./DragDropArea2.css";
 
-const acceptedFileTypes = [
-  ".pdf",
-  ".doc",
-  ".docx",
-  ".csv",
-  "image/jpeg",
-  "image/png",
-  "image/jpg",
-];
+// const acceptedFileTypes = [
+//   ".pdf",
+//   ".doc",
+//   ".docx",
+//   ".csv",
+//   "image/jpeg",
+//   "image/png",
+//   "image/jpg",
+// ];
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
