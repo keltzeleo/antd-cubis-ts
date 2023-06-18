@@ -77,7 +77,7 @@ const CustomerInfo = () => {
               value={name}
               onChange={handleNameChange}
               placeholder="Full Name"
-              style={{ minWidth: 330 }} // Set a minimum width for the input
+              style={{ flex: 1, minWidth: 340 }} // Set a minimum width for the input
             />
           </div>
         </ProForm.Group>

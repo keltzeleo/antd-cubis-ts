@@ -64,7 +64,7 @@ const CustomerInfo = () => {
             label="ID"
             rules={[{ required: true, message: "Please enter ID" }]}
           />
-          <div style={{}}>
+          <div style={{ flex: 1 }}>
             <div style={{ marginBottom: 8 }}>Enter Name</div>
             <Input
               addonBefore={
@@ -77,7 +77,6 @@ const CustomerInfo = () => {
               value={name}
               onChange={handleNameChange}
               placeholder="Full Name"
-              style={{ minWidth: 330 }} // Set a minimum width for the input
             />
           </div>
         </ProForm.Group>

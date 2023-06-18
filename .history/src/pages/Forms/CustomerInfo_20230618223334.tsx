@@ -64,11 +64,17 @@ const CustomerInfo = () => {
             label="ID"
             rules={[{ required: true, message: "Please enter ID" }]}
           />
-          <div style={{}}>
-            <div style={{ marginBottom: 8 }}>Enter Name</div>
+          <div style={{ flex: 1, marginLeft: 16 }}>
+            <div style={{ marginBottom: 8, fontWeight: "bold" }}>
+              Enter Name
+            </div>
             <Input
               addonBefore={
-                <Select defaultValue="Mr." onChange={handleNamePrefixChange}>
+                <Select
+                  style={{ width: 70 }}
+                  defaultValue="Mr."
+                  onChange={handleNamePrefixChange}
+                >
                   <Option value="Mr.">Mr.</Option>
                   <Option value="Ms.">Ms.</Option>
                   <Option value="Mdm.">Mdm.</Option>
@@ -77,7 +83,6 @@ const CustomerInfo = () => {
               value={name}
               onChange={handleNameChange}
               placeholder="Full Name"
-              style={{ minWidth: 330 }} // Set a minimum width for the input
             />
           </div>
         </ProForm.Group>

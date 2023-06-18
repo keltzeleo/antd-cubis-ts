@@ -1,24 +1,19 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Input, Select } from "antd";
+import { Input } from "antd";
 import { useState } from "react";
 
-const { Option } = Select;
+const { Search } = Input;
 
 const CustomerInfo = () => {
-  const [namePrefix, setNamePrefix] = useState<string | undefined>(undefined);
-  const [name, setName] = useState("");
+  const [fullName, setFullName] = useState("");
 
   const onFinish = (values: any) => {
     console.log("Form values:", values);
     return Promise.resolve();
   };
 
-  const handleNamePrefixChange = (value: string | undefined) => {
-    setNamePrefix(value);
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+  const handleFullNameChange = (value: string) => {
+    setFullName(value);
   };
 
   return (
@@ -53,33 +48,38 @@ const CustomerInfo = () => {
               margin: "-20px 0px 0px 10px",
             }}
           >
-            I/C Number // {namePrefix} {name} //
+            I/C Number // {fullName} //
           </div>
         </div>
         <p></p>
-        <ProForm.Group style={{ display: "flex" }}>
+        <ProForm.Group>
           <ProFormText
             width="md"
             name="id"
             label="ID"
             rules={[{ required: true, message: "Please enter ID" }]}
           />
-          <div style={{}}>
-            <div style={{ marginBottom: 8 }}>Enter Name</div>
-            <Input
-              addonBefore={
-                <Select defaultValue="Mr." onChange={handleNamePrefixChange}>
-                  <Option value="Mr.">Mr.</Option>
-                  <Option value="Ms.">Ms.</Option>
-                  <Option value="Mdm.">Mdm.</Option>
-                </Select>
-              }
-              value={name}
-              onChange={handleNameChange}
-              placeholder="Full Name"
-              style={{ minWidth: 330 }} // Set a minimum width for the input
-            />
-          </div>
+          <ProFormText
+            width="md"
+            name="fullName"
+            label="Full Name"
+            rules={[{ required: true, message: "Please enter Full Name" }]}
+            fieldProps={{
+              component: (
+                <Search
+                  enterButton
+                  addonBefore={
+                    <ProFormText
+                      width="xs"
+                      name="namePrefix"
+                      label="Name Prefix"
+                    />
+                  }
+                  onSearch={handleFullNameChange}
+                />
+              ),
+            }}
+          />
         </ProForm.Group>
         <ProForm.Group>
           <ProFormText width="md" name="branch" label="Branch" disabled />

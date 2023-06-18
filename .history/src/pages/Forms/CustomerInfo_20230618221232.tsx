@@ -1,8 +1,6 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Input, Select } from "antd";
+import { Input } from "antd";
 import { useState } from "react";
-
-const { Option } = Select;
 
 const CustomerInfo = () => {
   const [namePrefix, setNamePrefix] = useState<string | undefined>(undefined);
@@ -57,29 +55,29 @@ const CustomerInfo = () => {
           </div>
         </div>
         <p></p>
-        <ProForm.Group style={{ display: "flex" }}>
+        <ProForm.Group>
           <ProFormText
             width="md"
             name="id"
             label="ID"
             rules={[{ required: true, message: "Please enter ID" }]}
           />
-          <div style={{}}>
-            <div style={{ marginBottom: 8 }}>Enter Name</div>
+          <Input.Group compact style={{ width: "auto" }}>
             <Input
-              addonBefore={
-                <Select defaultValue="Mr." onChange={handleNamePrefixChange}>
-                  <Option value="Mr.">Mr.</Option>
-                  <Option value="Ms.">Ms.</Option>
-                  <Option value="Mdm.">Mdm.</Option>
-                </Select>
-              }
-              value={name}
-              onChange={handleNameChange}
-              placeholder="Full Name"
-              style={{ minWidth: 330 }} // Set a minimum width for the input
+              style={{ width: 70 }}
+              defaultValue="Mr."
+              onChange={(e) => handleNamePrefixChange(e.target.value)}
             />
-          </div>
+            <ProFormText
+              width="md"
+              name="fullName"
+              label="Full Name"
+              rules={[{ required: true, message: "Please enter Full Name" }]}
+              fieldProps={{
+                onChange: handleNameChange,
+              }}
+            />
+          </Input.Group>
         </ProForm.Group>
         <ProForm.Group>
           <ProFormText width="md" name="branch" label="Branch" disabled />

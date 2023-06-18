@@ -57,28 +57,33 @@ const CustomerInfo = () => {
           </div>
         </div>
         <p></p>
-        <ProForm.Group style={{ display: "flex" }}>
-          <ProFormText
-            width="md"
-            name="id"
-            label="ID"
-            rules={[{ required: true, message: "Please enter ID" }]}
-          />
-          <div style={{}}>
-            <div style={{ marginBottom: 8 }}>Enter Name</div>
-            <Input
-              addonBefore={
-                <Select defaultValue="Mr." onChange={handleNamePrefixChange}>
+        <ProForm.Group>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <ProFormText
+              width="md"
+              name="id"
+              label="ID"
+              rules={[{ required: true, message: "Please enter ID" }]}
+            />
+            <div style={{ flex: 1 }}>
+              <div style={{ marginBottom: 8 }}>Enter Name</div>
+              <div style={{ display: "flex" }}>
+                <Select
+                  defaultValue="Mr."
+                  onChange={handleNamePrefixChange}
+                  style={{ width: 70, marginRight: 8 }}
+                >
                   <Option value="Mr.">Mr.</Option>
                   <Option value="Ms.">Ms.</Option>
                   <Option value="Mdm.">Mdm.</Option>
                 </Select>
-              }
-              value={name}
-              onChange={handleNameChange}
-              placeholder="Full Name"
-              style={{ minWidth: 330 }} // Set a minimum width for the input
-            />
+                <Input
+                  value={name}
+                  onChange={handleNameChange}
+                  placeholder="Full Name"
+                />
+              </div>
+            </div>
           </div>
         </ProForm.Group>
         <ProForm.Group>
@@ -103,4 +108,4 @@ const CustomerInfo = () => {
   );
 };
 
-export default CustomerInfo;
+export default Customer;

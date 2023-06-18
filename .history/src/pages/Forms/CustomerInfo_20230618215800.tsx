@@ -1,20 +1,12 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Input, Select } from "antd";
 import { useState } from "react";
 
-const { Option } = Select;
-
 const CustomerInfo = () => {
-  const [namePrefix, setNamePrefix] = useState<string | undefined>(undefined);
   const [name, setName] = useState("");
 
   const onFinish = (values: any) => {
     console.log("Form values:", values);
     return Promise.resolve();
-  };
-
-  const handleNamePrefixChange = (value: string | undefined) => {
-    setNamePrefix(value);
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,34 +45,10 @@ const CustomerInfo = () => {
               margin: "-20px 0px 0px 10px",
             }}
           >
-            I/C Number // {namePrefix} {name} //
+            010180-14-1010 // {name}
           </div>
         </div>
         <p></p>
-        <ProForm.Group style={{ display: "flex" }}>
-          <ProFormText
-            width="md"
-            name="id"
-            label="ID"
-            rules={[{ required: true, message: "Please enter ID" }]}
-          />
-          <div style={{}}>
-            <div style={{ marginBottom: 8 }}>Enter Name</div>
-            <Input
-              addonBefore={
-                <Select defaultValue="Mr." onChange={handleNamePrefixChange}>
-                  <Option value="Mr.">Mr.</Option>
-                  <Option value="Ms.">Ms.</Option>
-                  <Option value="Mdm.">Mdm.</Option>
-                </Select>
-              }
-              value={name}
-              onChange={handleNameChange}
-              placeholder="Full Name"
-              style={{ minWidth: 330 }} // Set a minimum width for the input
-            />
-          </div>
-        </ProForm.Group>
         <ProForm.Group>
           <ProFormText width="md" name="branch" label="Branch" disabled />
           <ProFormText
@@ -90,6 +58,25 @@ const CustomerInfo = () => {
             disabled
           />
         </ProForm.Group>
+        <ProForm.Group>
+          <ProFormText
+            width="md"
+            name="id"
+            label="ID"
+            rules={[{ required: true, message: "Please enter ID" }]}
+          />
+          <ProFormText
+            width="md"
+            name="name"
+            label="Name"
+            rules={[{ required: true, message: "Please enter Name" }]}
+            fieldProps={{
+              onChange: handleNameChange,
+              placeholder: "data fr Consumer table, editable if newCustomer",
+            }}
+          />
+        </ProForm.Group>
+
         <ProForm.Group>
           <ProFormText
             width="md"

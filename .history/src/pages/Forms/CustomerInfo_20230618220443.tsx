@@ -1,8 +1,5 @@
-import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Input, Select } from "antd";
+import { ProForm, ProFormSelect, ProFormText } from "@ant-design/pro-form";
 import { useState } from "react";
-
-const { Option } = Select;
 
 const CustomerInfo = () => {
   const [namePrefix, setNamePrefix] = useState<string | undefined>(undefined);
@@ -53,33 +50,40 @@ const CustomerInfo = () => {
               margin: "-20px 0px 0px 10px",
             }}
           >
-            I/C Number // {namePrefix} {name} //
+            {namePrefix} {name} //
           </div>
         </div>
         <p></p>
-        <ProForm.Group style={{ display: "flex" }}>
+        <ProForm.Group>
           <ProFormText
             width="md"
             name="id"
             label="ID"
             rules={[{ required: true, message: "Please enter ID" }]}
           />
-          <div style={{}}>
-            <div style={{ marginBottom: 8 }}>Enter Name</div>
-            <Input
-              addonBefore={
-                <Select defaultValue="Mr." onChange={handleNamePrefixChange}>
-                  <Option value="Mr.">Mr.</Option>
-                  <Option value="Ms.">Ms.</Option>
-                  <Option value="Mdm.">Mdm.</Option>
-                </Select>
-              }
-              value={name}
-              onChange={handleNameChange}
-              placeholder="Full Name"
-              style={{ minWidth: 330 }} // Set a minimum width for the input
-            />
-          </div>
+          <ProFormSelect
+            width={70}
+            name="namePrefix"
+            label="Name Prefix"
+            fieldProps={{
+              value: namePrefix,
+              onChange: handleNamePrefixChange,
+            }}
+            options={[
+              { value: "Mr.", label: "Mr." },
+              { value: "Ms.", label: "Ms." },
+              { value: "Mdm.", label: "Mdm." },
+            ]}
+          />
+          <ProFormText
+            width="md"
+            name="fullName"
+            label="Full Name"
+            rules={[{ required: true, message: "Please enter Full Name" }]}
+            fieldProps={{
+              onChange: handleNameChange,
+            }}
+          />
         </ProForm.Group>
         <ProForm.Group>
           <ProFormText width="md" name="branch" label="Branch" disabled />

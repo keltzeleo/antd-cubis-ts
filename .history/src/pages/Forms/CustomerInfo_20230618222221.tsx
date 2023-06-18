@@ -1,5 +1,5 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Input, Select } from "antd";
+import { Select } from "antd";
 import { useState } from "react";
 
 const { Option } = Select;
@@ -57,31 +57,22 @@ const CustomerInfo = () => {
           </div>
         </div>
         <p></p>
-        <ProForm.Group style={{ display: "flex" }}>
+        <ProForm.Group>
           <ProFormText
             width="md"
             name="id"
             label="ID"
             rules={[{ required: true, message: "Please enter ID" }]}
           />
-          <div style={{}}>
-            <div style={{ marginBottom: 8 }}>Enter Name</div>
-            <Input
-              addonBefore={
-                <Select defaultValue="Mr." onChange={handleNamePrefixChange}>
-                  <Option value="Mr.">Mr.</Option>
-                  <Option value="Ms.">Ms.</Option>
-                  <Option value="Mdm.">Mdm.</Option>
-                </Select>
-              }
-              value={name}
-              onChange={handleNameChange}
-              placeholder="Full Name"
-              style={{ minWidth: 330 }} // Set a minimum width for the input
-            />
-          </div>
-        </ProForm.Group>
-        <ProForm.Group>
+          <ProFormText
+            width="md"
+            name="fullName"
+            label="Full Name"
+            rules={[{ required: true, message: "Please enter Full Name" }]}
+            fieldProps={{
+              onChange: handleNameChange,
+            }}
+          />
           <ProFormText width="md" name="branch" label="Branch" disabled />
           <ProFormText
             width="md"
@@ -89,14 +80,23 @@ const CustomerInfo = () => {
             label="Customer No"
             disabled
           />
-        </ProForm.Group>
-        <ProForm.Group>
           <ProFormText
             width="md"
             name="race"
             label="Race"
             rules={[{ required: true, message: "Please enter Race" }]}
           />
+        </ProForm.Group>
+        <ProForm.Group>
+          <Select
+            style={{ width: 70 }}
+            defaultValue="Mr."
+            onChange={handleNamePrefixChange}
+          >
+            <Option value="Mr.">Mr.</Option>
+            <Option value="Ms.">Ms.</Option>
+            <Option value="Mdm.">Mdm.</Option>
+          </Select>
         </ProForm.Group>
       </ProForm>
     </div>

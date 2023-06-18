@@ -57,29 +57,30 @@ const CustomerInfo = () => {
           </div>
         </div>
         <p></p>
-        <ProForm.Group style={{ display: "flex" }}>
+        <ProForm.Group>
           <ProFormText
             width="md"
             name="id"
             label="ID"
             rules={[{ required: true, message: "Please enter ID" }]}
           />
-          <div style={{}}>
-            <div style={{ marginBottom: 8 }}>Enter Name</div>
-            <Input
-              addonBefore={
-                <Select defaultValue="Mr." onChange={handleNamePrefixChange}>
-                  <Option value="Mr.">Mr.</Option>
-                  <Option value="Ms.">Ms.</Option>
-                  <Option value="Mdm.">Mdm.</Option>
-                </Select>
-              }
-              value={name}
-              onChange={handleNameChange}
-              placeholder="Full Name"
-              style={{ minWidth: 330 }} // Set a minimum width for the input
-            />
-          </div>
+          <div style={{ marginBottom: 8, fontWeight: "bold" }}>Enter Name</div>
+          <Input
+            addonBefore={
+              <Select
+                style={{ width: 70 }}
+                defaultValue="Mr."
+                onChange={handleNamePrefixChange}
+              >
+                <Option value="Mr.">Mr.</Option>
+                <Option value="Ms.">Ms.</Option>
+                <Option value="Mdm.">Mdm.</Option>
+              </Select>
+            }
+            value={name}
+            onChange={handleNameChange}
+            placeholder="Full Name"
+          />
         </ProForm.Group>
         <ProForm.Group>
           <ProFormText width="md" name="branch" label="Branch" disabled />
