@@ -343,9 +343,8 @@ const DragDropArea2: React.FC = () => {
           style={{ flex: 1, boxSizing: "border-box" }}
         >
           {/* Form fill-in section */}
-          <div style={{ flex: 1, height: "" }}>
+          <div style={{ width: "300", flex: 1, height: "" }}>
             <IdTypeBoard selectedOption={selectedIdType} />
-            &nbsp;
             <CustomerInfo />
           </div>
         </div>

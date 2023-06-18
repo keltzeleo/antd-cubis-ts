@@ -47,7 +47,7 @@ const CustomerInfo = () => {
         >
           <div
             style={{
-              fontSize: 35,
+              fontSize: 25,
               alignContent: "center",
               justifyContent: "center",
               margin: "-10px 0px 0px 10px",

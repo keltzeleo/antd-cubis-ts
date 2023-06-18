@@ -10,7 +10,7 @@ import ReactDOM from "react-dom";
 //import DragDropArea from "./pages/DragDropArea/DragDropArea";
 // import DragDropArea2 from "./pages/DragDropArea/DragDropArea2";
 // import IWillFollowYou from "../src/customComponents/IWillFollowYou/IWillFollowYou";
-import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
+// import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
 // import CustomerInfo from "./pages/Forms/CustomerInfo";
 // import MyForm from "./pages/MyForm";
 

@@ -50,7 +50,7 @@ const CustomerInfo = () => {
               fontSize: 35,
               alignContent: "center",
               justifyContent: "center",
-              margin: "-10px 0px 0px 10px",
+              margin: "-20px 0px 0px 10px",
             }}
           >
             I/C Number // {namePrefix} {name} //

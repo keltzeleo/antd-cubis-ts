@@ -8,7 +8,6 @@ import IdTypeBoard from "../../customComponents/Notification/IdTypeBoard";
 import IdType from "../../customComponents/Select/IdType";
 import "../../customComponents/Select/IdType.css";
 import { acceptedFileTypes } from "../../customConstants/dragDropFileTypes";
-import CustomerInfo from "../Forms/CustomerInfo";
 import "./DragDropArea2.css";
 
 // const acceptedFileTypes = [
@@ -343,10 +342,8 @@ const DragDropArea2: React.FC = () => {
           style={{ flex: 1, boxSizing: "border-box" }}
         >
           {/* Form fill-in section */}
-          <div style={{ flex: 1, height: "" }}>
+          <div style={{ height: "100vh" }}>
             <IdTypeBoard selectedOption={selectedIdType} />
-            &nbsp;
-            <CustomerInfo />
           </div>
         </div>
       </div>
