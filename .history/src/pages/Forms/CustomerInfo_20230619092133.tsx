@@ -50,7 +50,7 @@ const CustomerInfo = () => {
               alignContent: "center",
               justifyContent: "center",
               margin: "-10px 0px 0px 10px",
-              opacity: 0.12, // Set the opacity value to make the text translucent
+              opacity: 0.4, // Set the opacity value to make the text translucent
             }}
           >
             I/C Number // {namePrefix} {name} //

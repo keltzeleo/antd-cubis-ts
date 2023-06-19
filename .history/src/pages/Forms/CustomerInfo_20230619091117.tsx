@@ -24,10 +24,10 @@ const CustomerInfo = () => {
   return (
     <div
       style={{
-        border: "0",
+        border: "1px solid #ccc",
         borderRadius: 8,
         padding: 16,
-        backgroundColor: "",
+        backgroundColor: "#e6edf4",
       }}
     >
       <ProForm onFinish={onFinish}>
@@ -40,8 +40,9 @@ const CustomerInfo = () => {
             justifyContent: "center",
             fontWeight: "bold",
             borderRadius: 16,
-            background: "#e7eee6",
+            background: "#6d8099",
             overflow: "hidden",
+            color: "#f3f3f3",
           }}
         >
           <div
@@ -50,7 +51,6 @@ const CustomerInfo = () => {
               alignContent: "center",
               justifyContent: "center",
               margin: "-10px 0px 0px 10px",
-              opacity: 0.12, // Set the opacity value to make the text translucent
             }}
           >
             I/C Number // {namePrefix} {name} //
@@ -95,7 +95,7 @@ const CustomerInfo = () => {
                 value={name}
                 onChange={handleNameChange}
                 placeholder="Full Name"
-                style={{ minWidth: 300 }} // Set a minimum width for the input
+                style={{ minWidth: 330 }} // Set a minimum width for the input
               />
             </Col>
           </Row>
