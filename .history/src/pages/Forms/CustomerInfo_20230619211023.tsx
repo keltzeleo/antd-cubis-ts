@@ -91,7 +91,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               <Input
                 addonBefore={
                   <Select
-                    style={{ width: 85 }}
+                    style={{ width: 80 }}
                     defaultValue=""
                     onChange={handleNamePrefixChange}
                   >
@@ -104,6 +104,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 value={customerName}
                 onChange={handleNameChange}
                 placeholder="Full Name"
+                style={{ minWidth: 300 }}
               />
             </Col>
           </Row>

@@ -24,8 +24,8 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
     idTypeBgColour = "#faeadf"; // Set background color for Commercial option
   }
 
-  const greyColour = "rgba(20,15,20, 0.30)"; // Replace with your desired grey color value
-  const darkerColour = mix(0.35, idTypeBgColour, greyColour); // Adjust the darkness level (0.2) as per your preference
+  const greyColour = "rgba(20,15,20, 0.35)"; // Replace with your desired grey color value
+  const darkerColour = mix(0.45, idTypeBgColour, greyColour); // Adjust the darkness level (0.2) as per your preference
 
   return (
     <div
