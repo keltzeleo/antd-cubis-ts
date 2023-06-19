@@ -53,18 +53,6 @@ const DragDropArea2: React.FC = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
   const [selectedIdType, setSelectedIdType] = useState("");
-  const [customerTitle, setCustomerTitle] = useState<string | undefined>(
-    undefined
-  );
-  const [customerName, setCustomerName] = useState("");
-
-  const handleCustomerTitleChange = (value: string | undefined) => {
-    setCustomerTitle(value);
-  };
-
-  const handleCustomerNameChange = (value: string) => {
-    setCustomerName(value);
-  };
 
   const handleOptionChange = (value: string) => {
     setSelectedIdType(value);
@@ -363,12 +351,7 @@ const DragDropArea2: React.FC = () => {
             />
             <IdTypeBoard selectedOption={selectedIdType} />
             &nbsp;
-            <CustomerInfo
-              customerTitle={customerTitle}
-              customerName={customerName}
-              onCustomerTitleChange={handleCustomerTitleChange}
-              onCustomerNameChange={handleCustomerNameChange}
-            />{" "}
+            <CustomerInfo />
           </div>
         </div>
       </div>

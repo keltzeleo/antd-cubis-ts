@@ -1,66 +1,31 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
 import { Col, Input, Row, Select } from "antd";
+import React from "react";
 
 const { Option } = Select;
 
 interface CustomerInfoProps {
-  customerTitle: string | undefined;
-  customerName: string;
-  onCustomerTitleChange: (value: string | undefined) => void;
-  onCustomerNameChange: (value: string) => void;
+  namePrefix: string | undefined;
+  name: string;
+  onNamePrefixChange: (value: string | undefined) => void;
+  onNameChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
-  customerTitle,
-  customerName,
-  onCustomerTitleChange,
-  onCustomerNameChange,
+  namePrefix,
+  name,
+  onNamePrefixChange,
+  onNameChange,
 }) => {
-  const handleNamePrefixChange = (value: string | undefined) => {
-    onCustomerTitleChange(value);
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onCustomerNameChange(e.target.value);
+  const onFinish = (values: any) => {
+    console.log("Form values:", values);
+    return Promise.resolve();
   };
 
   return (
-    <div
-      style={{
-        border: "0",
-        borderRadius: 8,
-        padding: 16,
-        backgroundColor: "",
-      }}
-    >
-      <ProForm>
-        <div
-          style={{
-            height: 30,
-            width: "100%",
-            padding: "1px 4px 1px 4px",
-            alignContent: "center",
-            justifyContent: "center",
-            fontWeight: "bold",
-            borderRadius: 16,
-            background: "#e7eee6",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              fontSize: 35,
-              alignContent: "center",
-              justifyContent: "center",
-              margin: "-10px 0px 0px 10px",
-              opacity: 0.12,
-            }}
-          >
-            I/C Number // {customerTitle} {customerName} //
-          </div>
-        </div>
-        &nbsp;
-        <p></p>
+    <div>
+      <ProForm onFinish={onFinish}>
+        {/* ... */}
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={12}>
@@ -90,14 +55,14 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               <div style={{ marginBottom: 8 }}>Enter Name</div>
               <Input
                 addonBefore={
-                  <Select defaultValue="Mr." onChange={handleNamePrefixChange}>
+                  <Select defaultValue="Mr." onChange={onNamePrefixChange}>
                     <Option value="Mr.">Mr.</Option>
                     <Option value="Ms.">Ms.</Option>
                     <Option value="Mdm.">Mdm.</Option>
                   </Select>
                 }
-                value={customerName}
-                onChange={handleNameChange}
+                value={name}
+                onChange={onNameChange}
                 placeholder="Full Name"
                 style={{ minWidth: 300 }}
               />

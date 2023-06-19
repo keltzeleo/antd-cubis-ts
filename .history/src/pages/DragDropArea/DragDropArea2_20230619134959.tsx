@@ -4,23 +4,13 @@ import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
-import CustomerIcNameBoard from "../../customComponents/Notification/CustomerIcNameBoard";
+import CustomerDisplayHub from "../../customComponents/Notification/CustomerDisplayHub";
 import IdTypeBoard from "../../customComponents/Notification/IdTypeBoard";
 import IdType from "../../customComponents/Select/IdType";
 import "../../customComponents/Select/IdType.css";
 import { acceptedFileTypes } from "../../customConstants/dragDropFileTypes";
 import CustomerInfo from "../Forms/CustomerInfo";
 import "./DragDropArea2.css";
-
-// const acceptedFileTypes = [
-//   ".pdf",
-//   ".doc",
-//   ".docx",
-//   ".csv",
-//   "image/jpeg",
-//   "image/png",
-//   "image/jpg",
-// ];
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -48,23 +38,14 @@ const getChecksum = (file: RcFile): Promise<number> =>
   });
 
 const DragDropArea2: React.FC = () => {
+  const [customerTitle, setCustomerTitle] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
+  const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
   const [selectedIdType, setSelectedIdType] = useState("");
-  const [customerTitle, setCustomerTitle] = useState<string | undefined>(
-    undefined
-  );
-  const [customerName, setCustomerName] = useState("");
-
-  const handleCustomerTitleChange = (value: string | undefined) => {
-    setCustomerTitle(value);
-  };
-
-  const handleCustomerNameChange = (value: string) => {
-    setCustomerName(value);
-  };
 
   const handleOptionChange = (value: string) => {
     setSelectedIdType(value);
@@ -357,18 +338,19 @@ const DragDropArea2: React.FC = () => {
         >
           {/* Form fill-in section */}
           <div style={{ flex: 1, height: "" }}>
-            <CustomerIcNameBoard
+            <CustomerDisplayHub
               customerTitle={customerTitle}
               customerName={customerName}
+              selectedOption={selectedOption}
             />
             <IdTypeBoard selectedOption={selectedIdType} />
             &nbsp;
             <CustomerInfo
-              customerTitle={customerTitle}
-              customerName={customerName}
-              onCustomerTitleChange={handleCustomerTitleChange}
-              onCustomerNameChange={handleCustomerNameChange}
-            />{" "}
+              namePrefix="" // Add the appropriate value for namePrefix
+              name="" // Add the appropriate value for name
+              onNamePrefixChange={() => {}} // Add the appropriate function for onNamePrefixChange
+              onNameChange={() => {}} // Add the appropriate function for onNameChange
+            />
           </div>
         </div>
       </div>

@@ -62,8 +62,8 @@ const DragDropArea2: React.FC = () => {
     setCustomerTitle(value);
   };
 
-  const handleCustomerNameChange = (value: string) => {
-    setCustomerName(value);
+  const handleCustomerNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomerName(e.target.value);
   };
 
   const handleOptionChange = (value: string) => {
@@ -364,8 +364,6 @@ const DragDropArea2: React.FC = () => {
             <IdTypeBoard selectedOption={selectedIdType} />
             &nbsp;
             <CustomerInfo
-              customerTitle={customerTitle}
-              customerName={customerName}
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
             />{" "}

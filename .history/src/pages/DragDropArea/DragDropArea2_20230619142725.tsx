@@ -1,26 +1,13 @@
-import { Modal, Upload } from "antd";
+import { Modal } from "antd";
 import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
-import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
-import CustomerIcNameBoard from "../../customComponents/Notification/CustomerIcNameBoard";
-import IdTypeBoard from "../../customComponents/Notification/IdTypeBoard";
-import IdType from "../../customComponents/Select/IdType";
+import CustomerIcNameBoard from "../../customComponents/CustomerIcNameBoard/CustomerIcNameBoard";
 import "../../customComponents/Select/IdType.css";
 import { acceptedFileTypes } from "../../customConstants/dragDropFileTypes";
 import CustomerInfo from "../Forms/CustomerInfo";
 import "./DragDropArea2.css";
-
-// const acceptedFileTypes = [
-//   ".pdf",
-//   ".doc",
-//   ".docx",
-//   ".csv",
-//   "image/jpeg",
-//   "image/png",
-//   "image/jpg",
-// ];
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -53,25 +40,16 @@ const DragDropArea2: React.FC = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
   const [selectedIdType, setSelectedIdType] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
   const [customerTitle, setCustomerTitle] = useState<string | undefined>(
     undefined
   );
   const [customerName, setCustomerName] = useState("");
 
-  const handleCustomerTitleChange = (value: string | undefined) => {
-    setCustomerTitle(value);
-  };
-
-  const handleCustomerNameChange = (value: string) => {
-    setCustomerName(value);
-  };
-
   const handleOptionChange = (value: string) => {
     setSelectedIdType(value);
   };
-
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -308,67 +286,22 @@ const DragDropArea2: React.FC = () => {
 
   return (
     <div className="drag-drop-container">
-      <div className="top-section">
-        <IdType onChange={handleOptionChange} />
-      </div>
       <div className="content-container" style={{ display: "flex" }}>
-        <div className="left-section" style={{}}>
-          <div
-            className="upload-area"
-            style={{
-              width: "250",
-              display: "inline-block",
-              flexDirection: "column",
-              height: "450",
-            }}
-            onDrop={handleDrop}
-            onDragOver={(e) => e.preventDefault()}
-          >
-            <Upload.Dragger
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              fileList={fileList}
-              onPreview={handlePreview}
-              onChange={handleChange}
-              onRemove={handleRemove}
-              listType="picture-card"
-              showUploadList={{ showRemoveIcon: true }}
-              accept=".pdf,.doc,.docx,.csv,image/*"
-              style={{ marginRight: 8 }}
-              multiple
-            >
-              <div
-                style={{
-                  display: "block",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                {uploadButton}
-              </div>
-            </Upload.Dragger>
-          </div>
-          {isErrorMessageVisible && (
-            <IWillFollowYou errorMessage={errorMessage} />
-          )}
-        </div>
         <div
           className="right-section"
           style={{ flex: 1, boxSizing: "border-box" }}
         >
-          {/* Form fill-in section */}
           <div style={{ flex: 1, height: "" }}>
             <CustomerIcNameBoard
               customerTitle={customerTitle}
               customerName={customerName}
             />
-            <IdTypeBoard selectedOption={selectedIdType} />
-            &nbsp;
             <CustomerInfo
               customerTitle={customerTitle}
               customerName={customerName}
-              onCustomerTitleChange={handleCustomerTitleChange}
-              onCustomerNameChange={handleCustomerNameChange}
-            />{" "}
+              onCustomerTitleChange={setCustomerTitle}
+              onCustomerNameChange={setCustomerName}
+            />
           </div>
         </div>
       </div>

@@ -4,7 +4,6 @@ import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
-import CustomerIcNameBoard from "../../customComponents/Notification/CustomerIcNameBoard";
 import IdTypeBoard from "../../customComponents/Notification/IdTypeBoard";
 import IdType from "../../customComponents/Select/IdType";
 import "../../customComponents/Select/IdType.css";
@@ -53,18 +52,6 @@ const DragDropArea2: React.FC = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
   const [selectedIdType, setSelectedIdType] = useState("");
-  const [customerTitle, setCustomerTitle] = useState<string | undefined>(
-    undefined
-  );
-  const [customerName, setCustomerName] = useState("");
-
-  const handleCustomerTitleChange = (value: string | undefined) => {
-    setCustomerTitle(value);
-  };
-
-  const handleCustomerNameChange = (value: string) => {
-    setCustomerName(value);
-  };
 
   const handleOptionChange = (value: string) => {
     setSelectedIdType(value);
@@ -357,10 +344,6 @@ const DragDropArea2: React.FC = () => {
         >
           {/* Form fill-in section */}
           <div style={{ flex: 1, height: "" }}>
-            <CustomerIcNameBoard
-              customerTitle={customerTitle}
-              customerName={customerName}
-            />
             <IdTypeBoard selectedOption={selectedIdType} />
             &nbsp;
             <CustomerInfo

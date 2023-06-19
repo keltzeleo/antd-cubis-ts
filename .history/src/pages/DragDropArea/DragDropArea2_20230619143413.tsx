@@ -58,14 +58,6 @@ const DragDropArea2: React.FC = () => {
   );
   const [customerName, setCustomerName] = useState("");
 
-  const handleCustomerTitleChange = (value: string | undefined) => {
-    setCustomerTitle(value);
-  };
-
-  const handleCustomerNameChange = (value: string) => {
-    setCustomerName(value);
-  };
-
   const handleOptionChange = (value: string) => {
     setSelectedIdType(value);
   };
@@ -363,12 +355,7 @@ const DragDropArea2: React.FC = () => {
             />
             <IdTypeBoard selectedOption={selectedIdType} />
             &nbsp;
-            <CustomerInfo
-              customerTitle={customerTitle}
-              customerName={customerName}
-              onCustomerTitleChange={handleCustomerTitleChange}
-              onCustomerNameChange={handleCustomerNameChange}
-            />{" "}
+            <CustomerInfo />
           </div>
         </div>
       </div>

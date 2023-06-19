@@ -1,65 +1,42 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
 import { Col, Input, Row, Select } from "antd";
+import React, { useState } from "react";
+import CustomerIcNameBoard from "../../customComponents/Notification/CustomerIcNameBoard";
 
 const { Option } = Select;
 
-interface CustomerInfoProps {
-  customerTitle: string | undefined;
-  customerName: string;
-  onCustomerTitleChange: (value: string | undefined) => void;
-  onCustomerNameChange: (value: string) => void;
-}
+const CustomerInfo = () => {
+  const [namePrefix, setNamePrefix] = useState<string | undefined>(undefined);
+  const [name, setName] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
 
-const CustomerInfo: React.FC<CustomerInfoProps> = ({
-  customerTitle,
-  customerName,
-  onCustomerTitleChange,
-  onCustomerNameChange,
-}) => {
+  const onFinish = (values: any) => {
+    console.log("Form values:", values);
+    return Promise.resolve();
+  };
+
   const handleNamePrefixChange = (value: string | undefined) => {
-    onCustomerTitleChange(value);
+    setNamePrefix(value);
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onCustomerNameChange(e.target.value);
+    setName(e.target.value);
+  };
+
+  const handleSelectedOptionChange = (value: string) => {
+    setSelectedOption(value);
   };
 
   return (
-    <div
-      style={{
-        border: "0",
-        borderRadius: 8,
-        padding: 16,
-        backgroundColor: "",
-      }}
-    >
-      <ProForm>
-        <div
-          style={{
-            height: 30,
-            width: "100%",
-            padding: "1px 4px 1px 4px",
-            alignContent: "center",
-            justifyContent: "center",
-            fontWeight: "bold",
-            borderRadius: 16,
-            background: "#e7eee6",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              fontSize: 35,
-              alignContent: "center",
-              justifyContent: "center",
-              margin: "-10px 0px 0px 10px",
-              opacity: 0.12,
-            }}
-          >
-            I/C Number // {customerTitle} {customerName} //
-          </div>
+    <div>
+      <ProForm onFinish={onFinish}>
+        <div style={{ height: 30, width: "100%" }}>
+          <CustomerIcNameBoard
+            selectedOption={selectedOption}
+            namePrefix={namePrefix}
+            name={name}
+          />
         </div>
-        &nbsp;
         <p></p>
         <ProForm.Group>
           <Row gutter={16}>
@@ -96,7 +73,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     <Option value="Mdm.">Mdm.</Option>
                   </Select>
                 }
-                value={customerName}
+                value={name}
                 onChange={handleNameChange}
                 placeholder="Full Name"
                 style={{ minWidth: 300 }}

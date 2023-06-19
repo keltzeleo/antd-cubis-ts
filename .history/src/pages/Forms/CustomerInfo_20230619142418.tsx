@@ -16,10 +16,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   onCustomerTitleChange,
   onCustomerNameChange,
 }) => {
-  const handleNamePrefixChange = (value: string | undefined) => {
-    onCustomerTitleChange(value);
-  };
-
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCustomerNameChange(e.target.value);
   };
@@ -33,7 +29,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
         backgroundColor: "",
       }}
     >
-      <ProForm>
+      <ProForm onFinish={onFinish}>
         <div
           style={{
             height: 30,
@@ -90,7 +86,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               <div style={{ marginBottom: 8 }}>Enter Name</div>
               <Input
                 addonBefore={
-                  <Select defaultValue="Mr." onChange={handleNamePrefixChange}>
+                  <Select defaultValue="Mr." onChange={onCustomerTitleChange}>
                     <Option value="Mr.">Mr.</Option>
                     <Option value="Ms.">Ms.</Option>
                     <Option value="Mdm.">Mdm.</Option>

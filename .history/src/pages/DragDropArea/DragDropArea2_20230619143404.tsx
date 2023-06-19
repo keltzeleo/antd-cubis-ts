@@ -364,11 +364,9 @@ const DragDropArea2: React.FC = () => {
             <IdTypeBoard selectedOption={selectedIdType} />
             &nbsp;
             <CustomerInfo
-              customerTitle={customerTitle}
-              customerName={customerName}
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
-            />{" "}
+            />
           </div>
         </div>
       </div>

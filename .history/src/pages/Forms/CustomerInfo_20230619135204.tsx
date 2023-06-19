@@ -1,27 +1,24 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
 import { Col, Input, Row, Select } from "antd";
+import { useState } from "react";
 
 const { Option } = Select;
 
-interface CustomerInfoProps {
-  customerTitle: string | undefined;
-  customerName: string;
-  onCustomerTitleChange: (value: string | undefined) => void;
-  onCustomerNameChange: (value: string) => void;
-}
+const CustomerInfo = () => {
+  const [namePrefix, setNamePrefix] = useState<string | undefined>(undefined);
+  const [name, setName] = useState("");
 
-const CustomerInfo: React.FC<CustomerInfoProps> = ({
-  customerTitle,
-  customerName,
-  onCustomerTitleChange,
-  onCustomerNameChange,
-}) => {
+  const onFinish = (values: any) => {
+    console.log("Form values:", values);
+    return Promise.resolve();
+  };
+
   const handleNamePrefixChange = (value: string | undefined) => {
-    onCustomerTitleChange(value);
+    setNamePrefix(value);
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onCustomerNameChange(e.target.value);
+    setName(e.target.value);
   };
 
   return (
@@ -33,7 +30,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
         backgroundColor: "",
       }}
     >
-      <ProForm>
+      <ProForm onFinish={onFinish}>
         <div
           style={{
             height: 30,
@@ -53,13 +50,12 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               alignContent: "center",
               justifyContent: "center",
               margin: "-10px 0px 0px 10px",
-              opacity: 0.12,
+              opacity: 0.12, // Set the opacity value to make the text translucent
             }}
           >
-            I/C Number // {customerTitle} {customerName} //
+            I/C Number // {namePrefix} {name} //
           </div>
         </div>
-        &nbsp;
         <p></p>
         <ProForm.Group>
           <Row gutter={16}>
@@ -96,14 +92,15 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     <Option value="Mdm.">Mdm.</Option>
                   </Select>
                 }
-                value={customerName}
+                value={name}
                 onChange={handleNameChange}
                 placeholder="Full Name"
-                style={{ minWidth: 300 }}
+                style={{ minWidth: 300 }} // Set a minimum width for the input
               />
             </Col>
           </Row>
         </ProForm.Group>
+
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={12}>
