@@ -304,7 +304,7 @@ const DragDropArea2: React.FC = () => {
             className="upload-area"
             style={{
               width: "250",
-              display: "inline-block",
+              display: "inline-block",yarn
               flexDirection: "column",
               height: "450",
             }}
