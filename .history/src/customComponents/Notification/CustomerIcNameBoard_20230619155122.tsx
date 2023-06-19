@@ -43,8 +43,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
       <div
         style={{
           fontSize: 35,
-          opacity: 0.12,
-          // Set the opacity value to make the text translucent
+          opacity: 0.12, // Set the opacity value to make the text translucent
         }}
       >
         I/C Number //

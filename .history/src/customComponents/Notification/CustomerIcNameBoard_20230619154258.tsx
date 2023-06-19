@@ -32,8 +32,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
         display: "flex",
         flexWrap: "wrap",
         alignItems: "center",
-        paddingLeft: 16,
-        justifyContent: "flex-start", // Align content to the left
+        justifyContent: "center",
         fontWeight: "bold",
         borderRadius: 16,
         background: backgroundColor,
@@ -43,22 +42,11 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
       <div
         style={{
           fontSize: 35,
-          opacity: 0.12,
-          // Set the opacity value to make the text translucent
-        }}
-      >
-        I/C Number //
-      </div>
-      <div
-        style={{
-          fontSize: 35,
           opacity: 0.12, // Set the opacity value to make the text translucent
-          overflowWrap: "break-word", // Allow long words to break
-          wordWrap: "break-word", // Allow long words to break
-          whiteSpace: "pre-wrap", // Prevent line breaks
+          whiteSpace: "nowrap", // Prevent line breaks
         }}
       >
-        &nbsp; {customerTitle} {customerName} //
+        I/C Number // {customerTitle} {customerName} //
       </div>
     </div>
   );

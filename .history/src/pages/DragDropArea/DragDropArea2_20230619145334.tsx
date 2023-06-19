@@ -367,7 +367,6 @@ const DragDropArea2: React.FC = () => {
             <CustomerIcNameBoard
               customerTitle={customerTitle}
               customerName={customerName}
-              selectedOption={selectedIdType} // Pass the selectedIdType state as the selectedOption prop
             />
             &nbsp;
             <div

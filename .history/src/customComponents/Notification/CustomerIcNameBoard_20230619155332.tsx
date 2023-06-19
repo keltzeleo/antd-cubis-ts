@@ -44,6 +44,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
         style={{
           fontSize: 35,
           opacity: 0.12,
+          width: "100%",
           // Set the opacity value to make the text translucent
         }}
       >

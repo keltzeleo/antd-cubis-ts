@@ -367,19 +367,9 @@ const DragDropArea2: React.FC = () => {
             <CustomerIcNameBoard
               customerTitle={customerTitle}
               customerName={customerName}
-              selectedOption={selectedIdType} // Pass the selectedIdType state as the selectedOption prop
             />
             &nbsp;
-            <div
-              style={{
-                flex: 1,
-                boxSizing: "border-box",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <div style={{ alignContent: "center" }}>
               <IdTypeBoard selectedOption={selectedIdType} />
             </div>
             &nbsp;
