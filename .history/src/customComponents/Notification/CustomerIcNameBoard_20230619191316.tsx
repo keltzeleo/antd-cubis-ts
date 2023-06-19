@@ -1,4 +1,3 @@
-import { mix } from "polished";
 import React from "react";
 
 interface CustomerIcNameBoardProps {
@@ -24,9 +23,6 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
     idTypeBgColour = "#faeadf"; // Set background color for Commercial option
   }
 
-  const greyColour = "rgba(20,15,20, 0.65)"; // Replace with your desired grey color value
-  const darkerColour = mix(0.65, idTypeBgColour, greyColour); // Adjust the darkness level (0.2) as per your preference
-
   return (
     <div
       style={{
@@ -47,7 +43,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
       <div
         style={{
           fontSize: 35,
-          color: darkerColour,
+          opacity: 0.12,
           // Set the opacity value to make the text translucent
         }}
       >
@@ -56,7 +52,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
       <div
         style={{
           fontSize: 35,
-          color: darkerColour, // Set the opacity value to make the text translucent
+          opacity: 0.12, // Set the opacity value to make the text translucent
           overflowWrap: "break-word", // Allow long words to break
           wordWrap: "break-word", // Allow long words to break
           whiteSpace: "pre-wrap", // Prevent line breaks
