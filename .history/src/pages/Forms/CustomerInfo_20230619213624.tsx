@@ -88,9 +88,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               />
             </Col>
             <Col span={12}>
-              <div style={{ marginBottom: 8 }}>
-                <span style={{ color: "red" }}>*</span> Enter Name
-              </div>
+              <div style={{ marginBottom: 8 }}>* Enter Name</div>
               <Input
                 addonBefore={
                   <Select
