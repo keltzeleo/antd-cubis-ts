@@ -3,7 +3,6 @@ import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
-import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
 import CustomerIcNameBoard from "../../customComponents/Notification/CustomerIcNameBoard";
 import IdTypeBoard from "../../customComponents/Notification/IdTypeBoard";
 import IdType from "../../customComponents/Select/IdType";
@@ -11,6 +10,8 @@ import "../../customComponents/Select/IdType.css";
 import { acceptedFileTypes } from "../../customConstants/dragDropFileTypes";
 import CustomerInfo from "../Forms/CustomerInfo";
 import "./DragDropArea2.css";
+
+const { Option } = Select;
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -324,36 +325,28 @@ const DragDropArea2: React.FC = () => {
                 {uploadButton}
               </div>
             </Upload.Dragger>
+            <Modal
+              visible={previewOpen}
+              title={previewTitle}
+              footer={null}
+              onCancel={handleCancel}
+            >
+              <img alt="Preview" style={{ width: "100%" }} src={previewImage} />
+            </Modal>
           </div>
-          {isErrorMessageVisible && (
-            <IWillFollowYou errorMessage={errorMessage} />
-          )}
         </div>
-        <div
-          className="right-section"
-          style={{ flex: 1, boxSizing: "border-box" }}
-        >
-          {/* Form fill-in section */}
-          <div style={{ flex: 1, height: "" }}>
-            <CustomerIcNameBoard
-              selectedOption={selectedIdType}
-              namePrefix={selectedIdType}
-              name=""
-            />
-            <IdTypeBoard selectedOption={selectedIdType} />
-            &nbsp;
-            <CustomerInfo />
-          </div>
+        <div style={{ flex: 1, height: "" }}>
+          <CustomerIcNameBoard namePrefix={selectedIdType} name={name} />
+          <IdTypeBoard selectedOption={selectedIdType} />
+          &nbsp;
+          <CustomerInfo
+            namePrefix={selectedIdType}
+            onNameChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
+          />
         </div>
       </div>
-      <Modal
-        visible={previewOpen}
-        title={previewTitle}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <img alt="example" style={{ width: "100%" }} src={previewImage} />
-      </Modal>
     </div>
   );
 };

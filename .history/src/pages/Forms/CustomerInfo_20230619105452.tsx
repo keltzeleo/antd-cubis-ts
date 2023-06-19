@@ -8,9 +8,18 @@ import CustomerIcNameBoard from "../../customComponents/Notification/CustomerIcN
 import IdTypeBoard from "../../customComponents/Notification/IdTypeBoard";
 import IdType from "../../customComponents/Select/IdType";
 import "../../customComponents/Select/IdType.css";
-import { acceptedFileTypes } from "../../customConstants/dragDropFileTypes";
 import CustomerInfo from "../Forms/CustomerInfo";
 import "./DragDropArea2.css";
+
+// const acceptedFileTypes = [
+//   ".pdf",
+//   ".doc",
+//   ".docx",
+//   ".csv",
+//   "image/jpeg",
+//   "image/png",
+//   "image/jpg",
+// ];
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -335,14 +344,15 @@ const DragDropArea2: React.FC = () => {
         >
           {/* Form fill-in section */}
           <div style={{ flex: 1, height: "" }}>
-            <CustomerIcNameBoard
-              selectedOption={selectedIdType}
-              namePrefix={selectedIdType}
-              name=""
-            />
+            <CustomerIcNameBoard namePrefix={namePrefix} name={name} />
             <IdTypeBoard selectedOption={selectedIdType} />
             &nbsp;
-            <CustomerInfo />
+            <CustomerInfo
+              namePrefix={namePrefix}
+              name={name}
+              onNamePrefixChange={handleNamePrefixChange}
+              onNameChange={handleNameChange}
+            />
           </div>
         </div>
       </div>

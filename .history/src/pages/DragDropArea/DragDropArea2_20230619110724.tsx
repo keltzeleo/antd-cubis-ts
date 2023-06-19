@@ -1,16 +1,26 @@
-import { Modal, Upload } from "antd";
+import { Modal, Select, Upload } from "antd";
 import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
 import React, { useState } from "react";
-import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
 import CustomerIcNameBoard from "../../customComponents/Notification/CustomerIcNameBoard";
 import IdTypeBoard from "../../customComponents/Notification/IdTypeBoard";
 import IdType from "../../customComponents/Select/IdType";
 import "../../customComponents/Select/IdType.css";
 import { acceptedFileTypes } from "../../customConstants/dragDropFileTypes";
-import CustomerInfo from "../Forms/CustomerInfo";
 import "./DragDropArea2.css";
+
+const { Option } = Select;
+
+const acceptedFileTypes = [
+  ".pdf",
+  ".doc",
+  ".docx",
+  ".csv",
+  "image/jpeg",
+  "image/png",
+  "image/jpg",
+];
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -316,7 +326,9 @@ const DragDropArea2: React.FC = () => {
             >
               <div
                 style={{
-                  display: "block",
+                  height: 200,
+                  textAlign: "center",
+                  display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
                 }}
@@ -325,25 +337,10 @@ const DragDropArea2: React.FC = () => {
               </div>
             </Upload.Dragger>
           </div>
-          {isErrorMessageVisible && (
-            <IWillFollowYou errorMessage={errorMessage} />
-          )}
         </div>
-        <div
-          className="right-section"
-          style={{ flex: 1, boxSizing: "border-box" }}
-        >
-          {/* Form fill-in section */}
-          <div style={{ flex: 1, height: "" }}>
-            <CustomerIcNameBoard
-              selectedOption={selectedIdType}
-              namePrefix={selectedIdType}
-              name=""
-            />
-            <IdTypeBoard selectedOption={selectedIdType} />
-            &nbsp;
-            <CustomerInfo />
-          </div>
+        <div style={{ flex: 1, height: "" }}>
+          <CustomerIcNameBoard namePrefix={selectedIdType} name="" />
+          <IdTypeBoard selectedOption={selectedIdType} />
         </div>
       </div>
       <Modal
@@ -352,7 +349,7 @@ const DragDropArea2: React.FC = () => {
         footer={null}
         onCancel={handleCancel}
       >
-        <img alt="example" style={{ width: "100%" }} src={previewImage} />
+        <img alt="Preview" style={{ width: "100%" }} src={previewImage} />
       </Modal>
     </div>
   );

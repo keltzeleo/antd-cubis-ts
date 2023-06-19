@@ -43,9 +43,14 @@ const DragDropArea2: React.FC = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
   const [selectedIdType, setSelectedIdType] = useState("");
+  const [name, setName] = useState("");
 
   const handleOptionChange = (value: string) => {
     setSelectedIdType(value);
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
   };
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -337,12 +342,12 @@ const DragDropArea2: React.FC = () => {
           <div style={{ flex: 1, height: "" }}>
             <CustomerIcNameBoard
               selectedOption={selectedIdType}
-              namePrefix={selectedIdType}
-              name=""
+              namePrefix={selectedIdType}<
+              name={name}
             />
             <IdTypeBoard selectedOption={selectedIdType} />
             &nbsp;
-            <CustomerInfo />
+            <CustomerInfo name={name} onNameChange={handleNameChange} />
           </div>
         </div>
       </div>

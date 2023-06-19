@@ -12,6 +12,8 @@ import { acceptedFileTypes } from "../../customConstants/dragDropFileTypes";
 import CustomerInfo from "../Forms/CustomerInfo";
 import "./DragDropArea2.css";
 
+const { Option } = Select;
+
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -335,14 +337,13 @@ const DragDropArea2: React.FC = () => {
         >
           {/* Form fill-in section */}
           <div style={{ flex: 1, height: "" }}>
-            <CustomerIcNameBoard
-              selectedOption={selectedIdType}
-              namePrefix={selectedIdType}
-              name=""
-            />
+            <CustomerIcNameBoard namePrefix={selectedIdType} name={name} />
             <IdTypeBoard selectedOption={selectedIdType} />
             &nbsp;
-            <CustomerInfo />
+            <CustomerInfo
+              namePrefix={selectedIdType}
+              onNameChange={handleNameChange}
+            />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Modal, Upload } from "antd";
+import { Modal, Select, Upload } from "antd";
 import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { crc32 } from "crc";
@@ -11,6 +11,8 @@ import "../../customComponents/Select/IdType.css";
 import { acceptedFileTypes } from "../../customConstants/dragDropFileTypes";
 import CustomerInfo from "../Forms/CustomerInfo";
 import "./DragDropArea2.css";
+
+const { Option } = Select;
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -335,14 +337,13 @@ const DragDropArea2: React.FC = () => {
         >
           {/* Form fill-in section */}
           <div style={{ flex: 1, height: "" }}>
-            <CustomerIcNameBoard
-              selectedOption={selectedIdType}
-              namePrefix={selectedIdType}
-              name=""
-            />
+            <CustomerIcNameBoard namePrefix={selectedIdType} name={name} />
             <IdTypeBoard selectedOption={selectedIdType} />
             &nbsp;
-            <CustomerInfo />
+            <CustomerInfo
+              namePrefix={selectedIdType}
+              onNameChange={handleNameChange}
+            />
           </div>
         </div>
       </div>

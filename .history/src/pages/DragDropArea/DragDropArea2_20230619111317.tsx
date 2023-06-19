@@ -206,84 +206,6 @@ const DragDropArea2: React.FC = () => {
     setFileList(updatedFileList);
   };
 
-  const fileCounter = (
-    <div style={{ marginTop: 8 }}>
-      <p>
-        {fileList.length}{" "}
-        {fileList.length < 8
-          ? "out of 8 files uploaded."
-          : "files finished uploading. "}{" "}
-        {fileList.length === 8 &&
-          " Please review & confirm the file lists below."}
-      </p>
-    </div>
-  );
-
-  const isUploadDisabled = fileList.length >= 8;
-
-  const uploadButton = (
-    <div
-      style={{
-        width: "auto",
-        height: "auto",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "0 16",
-          marginTop: -48,
-        }}
-      >
-        <p className="ant-upload-drag-icon">
-          <img src="../icons/icon_upload.png" alt="Drag and Drop Icon" />
-        </p>
-
-        <p className="ant-upload-text">
-          Click or drag file to this area to upload
-        </p>
-
-        <p className="ant-upload-hint" style={{ padding: 16 }}>
-          Support individual and bulk file uploads, please submit the required
-          files as needed.
-        </p>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          position: "absolute",
-          bottom: "10",
-          left: "50%",
-          transform: "translate(-50%, 0%)",
-          height: "auto",
-          width: "80%",
-          borderRadius: 8,
-          border: "1px dashed #00a991",
-          opacity: isUploadDisabled ? 0.5 : 1,
-          pointerEvents: isUploadDisabled ? "none" : "auto",
-          marginTop: -10,
-        }}
-      >
-        {fileCounter}
-      </div>
-    </div>
-  );
-
-  const getListItemClassName = (file: UploadFile<any>): string => {
-    if (file.status === "done") {
-      return "ant-upload-list-item-done"; // Apply the desired CSS class for files with status "done"
-    }
-    return "";
-  };
-
   return (
     <div className="drag-drop-container">
       <div className="top-section">
@@ -335,14 +257,15 @@ const DragDropArea2: React.FC = () => {
         >
           {/* Form fill-in section */}
           <div style={{ flex: 1, height: "" }}>
-            <CustomerIcNameBoard
-              selectedOption={selectedIdType}
-              namePrefix={selectedIdType}
-              name=""
-            />
+            <CustomerIcNameBoard namePrefix={namePrefix} name={name} />
             <IdTypeBoard selectedOption={selectedIdType} />
             &nbsp;
-            <CustomerInfo />
+            <CustomerInfo
+              namePrefix={namePrefix}
+              name={name}
+              onNamePrefixChange={handleNamePrefixChange}
+              onNameChange={handleNameChange}
+            />
           </div>
         </div>
       </div>
