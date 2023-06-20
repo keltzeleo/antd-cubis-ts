@@ -1,23 +1,25 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
 import { Col, Input, Row, Select } from "antd";
+import React from "react";
 
 const { Option } = Select;
 
 interface CustomerInfoProps {
   customerTitle: string | undefined;
   customerName: string;
-  inputIcNumber: string; // Add inputIcNumber prop
+  icNumber: string; // Add icNumber property
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
+  onICNumberChange: (value: string) => void; // Add onICNumberChange property
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
-  inputIcNumber,
-
+  icNumber,
   onCustomerTitleChange,
   onCustomerNameChange,
+  onICNumberChange,
 }) => {
   const handleNamePrefixChange = (value: string | undefined) => {
     onCustomerTitleChange(value);
@@ -25,6 +27,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCustomerNameChange(e.target.value);
+  };
+
+  const handleICNumberChange = (value: string) => {
+    onICNumberChange(value); // Call the onICNumberChange callback
   };
 
   return (
@@ -37,48 +43,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
       }}
     >
       <ProForm>
-        {/* <div
-          style={{
-            height: 30,
-            width: "100%",
-            padding: "1px 4px 1px 4px",
-            alignContent: "center",
-            justifyContent: "center",
-            fontWeight: "bold",
-            borderRadius: 16,
-            background: "#e7eee6",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              fontSize: 35,
-              alignContent: "center",
-              justifyContent: "center",
-              margin: "-10px 0px 0px 10px",
-              opacity: 0.12,
-            }}
-          >
-            I/C Number // {customerTitle} {customerName} //
-          </div>
-        </div> */}
-        &nbsp;
-        <p></p>
-        <ProForm.Group>
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProFormText width="md" name="branch" label="Branch" disabled />
-            </Col>
-            <Col span={12}>
-              <ProFormText
-                width="md"
-                name="customerNo"
-                label="Customer No"
-                disabled
-              />
-            </Col>
-          </Row>
-        </ProForm.Group>
+        {/* Rest of the code */}
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={12}>
@@ -87,9 +52,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="id"
                 label="ID"
                 disabled
-                placeholder={inputIcNumber} // Use inputIcNumber prop value
-
-                // rules={[{ required: true, message: "Please enter ID" }]}
+                fieldProps={{ value: icNumber }} // Display icNumber in the ID field
               />
             </Col>
             <Col span={12}>
@@ -116,18 +79,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             </Col>
           </Row>
         </ProForm.Group>
-        <ProForm.Group>
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProFormText
-                width="md"
-                name="race"
-                label="Race"
-                rules={[{ required: true, message: "Please enter Race" }]}
-              />
-            </Col>
-          </Row>
-        </ProForm.Group>
+        {/* Rest of the code */}
       </ProForm>
     </div>
   );

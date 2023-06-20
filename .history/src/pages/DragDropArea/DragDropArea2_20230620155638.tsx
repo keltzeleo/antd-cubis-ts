@@ -72,8 +72,9 @@ const DragDropArea2: React.FC = () => {
     setSelectedIdType(value);
   };
 
+  const [icNumber, setICNumber] = useState("");
   const handleInputIcChange = (value: string) => {
-    setInputIcValue(value);
+    setICNumber(value);
   };
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -377,7 +378,7 @@ const DragDropArea2: React.FC = () => {
               customerTitle={customerTitle}
               customerName={customerName}
               selectedOption={selectedIdType} // Pass the selectedIdType state as the selectedOption prop
-              inputIcNumber={inputIcValue} // Use inputIcValue state here
+              inputIcNumber={inputIcValue} //  inputIcNumber to pass icNumber
             />
             &nbsp;
             <div
@@ -396,7 +397,6 @@ const DragDropArea2: React.FC = () => {
             <CustomerInfo
               customerTitle={customerTitle}
               customerName={customerName}
-              inputIcNumber={inputIcValue} // Use inputIcValue state here
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
             />{" "}

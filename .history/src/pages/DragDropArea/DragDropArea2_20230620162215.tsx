@@ -72,7 +72,12 @@ const DragDropArea2: React.FC = () => {
     setSelectedIdType(value);
   };
 
+  const [icNumber, setICNumber] = useState("");
   const handleInputIcChange = (value: string) => {
+    setICNumber(value);
+  };
+
+  const handleICNumberChange = (value: string) => {
     setInputIcValue(value);
   };
 
@@ -80,6 +85,7 @@ const DragDropArea2: React.FC = () => {
   const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
 
   const handleCancel = () => setPreviewOpen(false);
+
 
   const handlePreview = async (file: UploadFile<any>) => {
     if (file.status === "error") {
@@ -374,10 +380,13 @@ const DragDropArea2: React.FC = () => {
           {/* Form fill-in section */}
           <div style={{ flex: 1, height: "" }}>
             <CustomerIcNameBoard
-              customerTitle={customerTitle}
-              customerName={customerName}
-              selectedOption={selectedIdType} // Pass the selectedIdType state as the selectedOption prop
-              inputIcNumber={inputIcValue} // Use inputIcValue state here
+                 customerTitle={customerTitle}
+                 customerName={customerName}
+                 icNumber={icNumber}
+                 onCustomerTitleChange={handleCustomerTitleChange}
+                 onCustomerNameChange={handleCustomerNameChange}
+                 onICNumberChange={handleICNumberChange}
+               />
             />
             &nbsp;
             <div
@@ -396,9 +405,10 @@ const DragDropArea2: React.FC = () => {
             <CustomerInfo
               customerTitle={customerTitle}
               customerName={customerName}
-              inputIcNumber={inputIcValue} // Use inputIcValue state here
+              icNumber={inputIcValue} // Pass inputIcValue as icNumber
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
+              onICNumberChange={handleICNumberChange} // Pass handleICNumberChange as onICNumberChange
             />{" "}
           </div>
         </div>

@@ -399,6 +399,7 @@ const DragDropArea2: React.FC = () => {
               inputIcNumber={inputIcValue} // Use inputIcValue state here
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
+              onIdChange={handleInputIcChange}
             />{" "}
           </div>
         </div>

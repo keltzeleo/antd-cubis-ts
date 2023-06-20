@@ -6,7 +6,7 @@ const { Option } = Select;
 interface CustomerInfoProps {
   customerTitle: string | undefined;
   customerName: string;
-  inputIcNumber: string; // Add inputIcNumber prop
+  inputIcNumber: string; // Add the inputIcNumber prop
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
 }
@@ -14,8 +14,6 @@ interface CustomerInfoProps {
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
-  inputIcNumber,
-
   onCustomerTitleChange,
   onCustomerNameChange,
 }) => {

@@ -6,7 +6,6 @@ const { Option } = Select;
 interface CustomerInfoProps {
   customerTitle: string | undefined;
   customerName: string;
-  inputIcNumber: string; // Add inputIcNumber prop
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
 }
@@ -14,8 +13,6 @@ interface CustomerInfoProps {
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
-  inputIcNumber,
-
   onCustomerTitleChange,
   onCustomerNameChange,
 }) => {
@@ -87,7 +84,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="id"
                 label="ID"
                 disabled
-                placeholder={inputIcNumber} // Use inputIcNumber prop value
+                value={customerId} // Use customerId (inputIcNumber) prop value
 
                 // rules={[{ required: true, message: "Please enter ID" }]}
               />

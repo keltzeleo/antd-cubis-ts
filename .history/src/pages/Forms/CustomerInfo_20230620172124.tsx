@@ -9,15 +9,15 @@ interface CustomerInfoProps {
   inputIcNumber: string; // Add inputIcNumber prop
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
-}
+  onIdChange: (value: string) => void; // Add onIdChange prop
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
   inputIcNumber,
-
   onCustomerTitleChange,
   onCustomerNameChange,
+  onIdChange,
 }) => {
   const handleNamePrefixChange = (value: string | undefined) => {
     onCustomerTitleChange(value);
@@ -87,7 +87,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="id"
                 label="ID"
                 disabled
-                placeholder={inputIcNumber} // Use inputIcNumber prop value
+                defaultValue={inputIcNumber} // Use defaultValue instead of value
 
                 // rules={[{ required: true, message: "Please enter ID" }]}
               />

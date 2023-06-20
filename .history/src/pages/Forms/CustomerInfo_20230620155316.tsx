@@ -6,18 +6,18 @@ const { Option } = Select;
 interface CustomerInfoProps {
   customerTitle: string | undefined;
   customerName: string;
-  inputIcNumber: string; // Add inputIcNumber prop
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
+  onICNumberChange: (value: string) => void; // Add onICNumberChange prop
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
-  inputIcNumber,
-
+  icNumber,
   onCustomerTitleChange,
   onCustomerNameChange,
+  onICNumberChange,
 }) => {
   const handleNamePrefixChange = (value: string | undefined) => {
     onCustomerTitleChange(value);
@@ -25,6 +25,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCustomerNameChange(e.target.value);
+  };
+
+  const handleICNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onICNumberChange(e.target.value);
   };
 
   return (
@@ -87,7 +91,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="id"
                 label="ID"
                 disabled
-                placeholder={inputIcNumber} // Use inputIcNumber prop value
+                value={icNumber} // Display icNumber in the ID field
 
                 // rules={[{ required: true, message: "Please enter ID" }]}
               />

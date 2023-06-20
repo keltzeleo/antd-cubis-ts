@@ -9,7 +9,7 @@ interface CustomerInfoProps {
   inputIcNumber: string; // Add inputIcNumber prop
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
-}
+  onIdChange: (value: string) => void; // Add onIdChange prop
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
