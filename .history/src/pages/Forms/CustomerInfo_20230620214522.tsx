@@ -1,5 +1,5 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Col, Input, Row, Select } from "antd";
+import { Col, Row, Select } from "antd";
 
 const { Option } = Select;
 
@@ -20,7 +20,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   onCustomerNameChange,
 }) => {
   const extractDobFromIcNumber = (icNumber: string): string => {
-    const dob = icNumber.substr(0, 6); // Extract the DDMMYY portion from the icNumber
+    // Extract the DDMMYY portion from the icNumber
+    const dob = icNumber.substr(0, 6);
     const day = dob.substr(0, 2);
     const month = dob.substr(2, 2);
     const year = dob.substr(4, 2); // Extract the year part from the dob
@@ -85,85 +86,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
       }}
     >
       <ProForm>
-        {/* <div
-          style={{
-            height: 30,
-            width: "100%",
-            padding: "1px 4px 1px 4px",
-            alignContent: "center",
-            justifyContent: "center",
-            fontWeight: "bold",
-            borderRadius: 16,
-            background: "#e7eee6",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              fontSize: 35,
-              alignContent: "center",
-              justifyContent: "center",
-              margin: "-10px 0px 0px 10px",
-              opacity: 0.12,
-            }}
-          >
-            I/C Number // {customerTitle} {customerName} //
-          </div>
-        </div> */}
-        &nbsp;
-        <p></p>
-        <ProForm.Group>
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProFormText width="md" name="branch" label="Branch" disabled />
-            </Col>
-            <Col span={12}>
-              <ProFormText
-                width="md"
-                name="customerNo"
-                label="Customer No"
-                disabled
-              />
-            </Col>
-          </Row>
-        </ProForm.Group>
-        <ProForm.Group>
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProFormText
-                width="md"
-                name="id"
-                label="ID"
-                disabled
-                placeholder={inputIcNumber} // Use inputIcNumber prop value
-
-                // rules={[{ required: true, message: "Please enter ID" }]}
-              />
-            </Col>
-            <Col span={12}>
-              <div style={{ marginBottom: 8 }}>
-                <span style={{ color: "red" }}>*</span> Enter Name
-              </div>
-              <Input
-                addonBefore={
-                  <Select
-                    style={{ width: 85 }}
-                    defaultValue=""
-                    onChange={handleNamePrefixChange}
-                  >
-                    <Option value="">Select</Option>
-                    <Option value="Mr.">Mr.</Option>
-                    <Option value="Ms.">Ms.</Option>
-                    <Option value="Mdm.">Mdm.</Option>
-                  </Select>
-                }
-                value={customerName}
-                onChange={handleNameChange}
-                placeholder="Full Name"
-              />
-            </Col>
-          </Row>
-        </ProForm.Group>
+        {/* Rest of the code */}
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={8}>
@@ -173,8 +96,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 label="D.O.B"
                 disabled
                 placeholder={formattedDob}
-
-                // rules={[{ required: true, message: "Please enter Race" }]}
               />
             </Col>
             <Col span={8}>
@@ -183,8 +104,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="age"
                 label="Age"
                 disabled
-                placeholder={age.toString()} // Set the initial value of age
-                // rules={[{ required: true, message: "Please enter Race" }]}
+                initialValue={age.toString()} // Set the initial value of age
               />
             </Col>
             <Col span={8}>

@@ -51,10 +51,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDifference = today.getMonth() - birthDate.getMonth();
 
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < birthDate.getDate())
-    ) {
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
 
@@ -73,7 +70,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     ? extractDobFromIcNumber(inputIcNumber)
     : "";
 
-  const age = formattedDob ? calculateAge(formattedDob) : 0;
+    const age = formattedDob ? calculateAge(formattedDob) : -;
+
 
   return (
     <div
@@ -183,7 +181,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="age"
                 label="Age"
                 disabled
-                placeholder={age.toString()} // Set the initial value of age
                 // rules={[{ required: true, message: "Please enter Race" }]}
               />
             </Col>

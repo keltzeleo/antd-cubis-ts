@@ -44,23 +44,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     return formattedDob;
   };
 
-  const calculateAge = (dob: string): number => {
-    const today = new Date();
-    const birthDate = new Date(dob);
-
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-
-    if (
-      monthDifference < 0 ||
-      (monthDifference === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-
-    return age;
-  };
-
   const handleNamePrefixChange = (value: string | undefined) => {
     onCustomerTitleChange(value);
   };
@@ -72,8 +55,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const formattedDob = inputIcNumber
     ? extractDobFromIcNumber(inputIcNumber)
     : "";
-
-  const age = formattedDob ? calculateAge(formattedDob) : 0;
 
   return (
     <div
@@ -183,7 +164,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="age"
                 label="Age"
                 disabled
-                placeholder={age.toString()} // Set the initial value of age
                 // rules={[{ required: true, message: "Please enter Race" }]}
               />
             </Col>

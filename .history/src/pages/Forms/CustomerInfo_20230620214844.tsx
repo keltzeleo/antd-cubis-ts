@@ -183,7 +183,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="age"
                 label="Age"
                 disabled
-                placeholder={age.toString()} // Set the initial value of age
                 // rules={[{ required: true, message: "Please enter Race" }]}
               />
             </Col>
