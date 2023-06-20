@@ -58,7 +58,6 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
         return; // Return early to prevent further execution
       } else if (combinedMonth === 2 && parseInt(day, 10) > 28) {
         setErrorMessage("Invalid Day for February");
-        setInputValue(value.slice(0, 3)); // Update input value until the third digit (day) only
         return; // Return early to prevent further execution
       } else if (
         (combinedMonth === 4 ||
@@ -68,7 +67,6 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
         parseInt(day, 10) > 30
       ) {
         setErrorMessage("Invalid Day for the Selected Month");
-        setInputValue(value.slice(0, 3)); // Update input value until the third digit (day) only
         return; // Return early to prevent further execution
       } else {
         setErrorMessage("");

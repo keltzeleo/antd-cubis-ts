@@ -157,14 +157,9 @@
   color: #131213;
 }
 
-.error-row {
-  display: flex;
-  flex-direction: row;
-  margin-top: 10px; /* Adjust the margin-top value as needed */
-}
-
 .error-message {
-  font-size: 12px;
+  flexdirection: column;
   color: red;
-  margin-left: 8;
+  font-size: 12px;
+  margin-top: 5px;
 }

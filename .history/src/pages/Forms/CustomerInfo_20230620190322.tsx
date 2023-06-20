@@ -19,31 +19,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   onCustomerTitleChange,
   onCustomerNameChange,
 }) => {
-  const extractDobFromIcNumber = (icNumber: string): string => {
-    const dob = icNumber.substr(0, 6); // Extract the DDMMYY portion from the icNumber
-    const day = dob.substr(0, 2);
-    const month = dob.substr(2, 2);
-    const year = dob.substr(4, 2); // Extract the year part from the dob
-
-    const currentYear = new Date().getFullYear(); // Get the current year
-
-    let centuryPrefix = ""; // Determine the century prefix dynamically
-
-    if (parseInt(year, 10) > currentYear % 100) {
-      // If the year is greater than the last two digits of the current year, assume it belongs to the previous century
-      centuryPrefix = (currentYear - 100).toString().substr(0, 2);
-    } else {
-      // Otherwise, assume it belongs to the current century
-      centuryPrefix = currentYear.toString().substr(0, 2);
-    }
-
-    const formattedDob = `${dob.substr(0, 2)}-${dob.substr(
-      2,
-      2
-    )}-${centuryPrefix}${year}`;
-    return formattedDob;
-  };
-
   const handleNamePrefixChange = (value: string | undefined) => {
     onCustomerTitleChange(value);
   };
@@ -51,10 +26,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCustomerNameChange(e.target.value);
   };
-
-  const formattedDob = inputIcNumber
-    ? extractDobFromIcNumber(inputIcNumber)
-    : "";
 
   return (
     <div
@@ -150,12 +121,17 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <Col span={8}>
               <ProFormText
                 width="md"
+                name="race"
+                label="Race"
+                rules={[{ required: true, message: "Please enter Race" }]}
+              />
+            </Col>
+            <Col span={8}>
+              <ProFormText
+                width="md"
                 name="dob"
                 label="D.O.B"
-                disabled
-                placeholder={formattedDob}
-
-                // rules={[{ required: true, message: "Please enter Race" }]}
+                rules={[{ required: true, message: "Please enter Race" }]}
               />
             </Col>
             <Col span={8}>
@@ -163,15 +139,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 width="md"
                 name="age"
                 label="Age"
-                disabled
-                // rules={[{ required: true, message: "Please enter Race" }]}
-              />
-            </Col>
-            <Col span={8}>
-              <ProFormText
-                width="md"
-                name="race"
-                label="Race"
                 rules={[{ required: true, message: "Please enter Race" }]}
               />
             </Col>

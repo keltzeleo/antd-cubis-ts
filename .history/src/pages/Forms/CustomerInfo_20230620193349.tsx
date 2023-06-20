@@ -11,6 +11,8 @@ interface CustomerInfoProps {
   onCustomerNameChange: (value: string) => void;
 }
 
+
+
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
@@ -19,10 +21,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   onCustomerTitleChange,
   onCustomerNameChange,
 }) => {
-  const extractDobFromIcNumber = (icNumber: string): string => {
+
+   // Function to extract D.O.B from inputIcNumber
+   const extractDobFromIcNumber = (icNumber: string): string => {
     const dob = icNumber.substr(0, 6); // Extract the DDMMYY portion from the icNumber
-    const day = dob.substr(0, 2);
-    const month = dob.substr(2, 2);
     const year = dob.substr(4, 2); // Extract the year part from the dob
 
     const currentYear = new Date().getFullYear(); // Get the current year
@@ -37,13 +39,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
       centuryPrefix = currentYear.toString().substr(0, 2);
     }
 
-    const formattedDob = `${dob.substr(0, 2)}-${dob.substr(
-      2,
-      2
-    )}-${centuryPrefix}${year}`;
+    const formattedDob = `${dob.substr(0, 2)}-${dob.substr(2, 2)}-${centuryPrefix}${year}`;
     return formattedDob;
-  };
-
+    
   const handleNamePrefixChange = (value: string | undefined) => {
     onCustomerTitleChange(value);
   };
@@ -52,9 +50,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     onCustomerNameChange(e.target.value);
   };
 
-  const formattedDob = inputIcNumber
-    ? extractDobFromIcNumber(inputIcNumber)
-    : "";
+  const formattedDob = extractDobFromIcNumber(inputIcNumber);
 
   return (
     <div
@@ -153,7 +149,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="dob"
                 label="D.O.B"
                 disabled
-                placeholder={formattedDob}
+               placeholder={formattedDob}
 
                 // rules={[{ required: true, message: "Please enter Race" }]}
               />

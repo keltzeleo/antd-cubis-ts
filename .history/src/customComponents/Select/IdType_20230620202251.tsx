@@ -13,7 +13,6 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
   const [icNumber, setIcNumber] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [inputValue, setInputValue] = useState("");
 
   const handleOptionChange = (value: string) => {
     setSelectedOption(value);
@@ -54,22 +53,7 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
         isValidDay && isValidThirdDigit && isValidMonth && isValidYear;
 
       if (!isDateValid) {
-        setErrorMessage("Invalid Format");
-        return; // Return early to prevent further execution
-      } else if (combinedMonth === 2 && parseInt(day, 10) > 28) {
-        setErrorMessage("Invalid Day for February");
-        setInputValue(value.slice(0, 3)); // Update input value until the third digit (day) only
-        return; // Return early to prevent further execution
-      } else if (
-        (combinedMonth === 4 ||
-          combinedMonth === 6 ||
-          combinedMonth === 9 ||
-          combinedMonth === 11) &&
-        parseInt(day, 10) > 30
-      ) {
-        setErrorMessage("Invalid Day for the Selected Month");
-        setInputValue(value.slice(0, 3)); // Update input value until the third digit (day) only
-        return; // Return early to prevent further execution
+        setErrorMessage("Invalid date");
       } else {
         setErrorMessage("");
       }
@@ -77,7 +61,7 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
       setErrorMessage("");
     }
 
-    setInputValue(value);
+    setIcNumber(value);
     onInputChange(value);
   };
 
@@ -99,8 +83,7 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
       event.preventDefault();
     }
 
-    // Automatically format the input by
-    // adding dashes
+    // Automatically format the input by adding dashes
     if (!allowedKeys.includes(key)) {
       let formattedValue = value;
       if (selectionStart === selectionEnd) {
@@ -114,7 +97,7 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
           value.slice(selectionStart, selectionEnd) +
           value.slice(selectionEnd);
       }
-      setInputValue(formattedValue);
+      input.value = formattedValue;
     }
   };
 
@@ -122,56 +105,49 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
     <div className="id-type-container">
       <div className="id-type-option">
         <label htmlFor="idType">ID :</label>
-        <div className="input-error-container">
-          <div className="input-button-row">
-            <Select
-              id="idType"
-              value={selectedOption}
-              onChange={handleOptionChange}
-              className={
-                selectedOption === "MyKad"
-                  ? "myKad-select"
-                  : selectedOption === "MyTentera"
-                  ? "myTentera-select"
-                  : selectedOption === "MyPR"
-                  ? "myPR-select"
-                  : selectedOption === "MyKAS"
-                  ? "myKAS-select"
-                  : "forCommercial-select"
-              }
-            >
-              <Option value="MyKad" className="myKad-option">
-                MyKad
-              </Option>
-              <Option value="MyTentera" className="myTentera-option">
-                MyTentera
-              </Option>
-              <Option value="MyPR" className="myPR-option">
-                MyPR
-              </Option>
-              <Option value="MyKAS" className="myKAS-option">
-                MyKAS
-              </Option>
-              <Option value="Commercial" className="forCommercial-option">
-                Commercial
-              </Option>
-            </Select>
-            <Input
-              style={{
-                width: "250px", // adjust the width according to your layout
-              }}
-              placeholder="12-digit number on ID Card"
-              maxLength={14} // Increased maxLength to accommodate dashes
-              pattern="^[0-9-]*$" // Updated pattern to allow dashes as well
-              title="ID number must contain only digits"
-              onKeyDown={handleInputKeyDown} // Updated event handler for input keydown
-              onChange={handleIcNumberChange} // Updated event handler for IC number change
-              value={inputValue}
-            />
-          </div>
-        </div>
-      </div>
-      <div style={{ marginLeft: 8 }} className="search-button-container">
+        <Select
+          id="idType"
+          value={selectedOption}
+          onChange={handleOptionChange}
+          className={
+            selectedOption === "MyKad"
+              ? "myKad-select"
+              : selectedOption === "MyTentera"
+              ? "myTentera-select"
+              : selectedOption === "MyPR"
+              ? "myPR-select"
+              : selectedOption === "MyKAS"
+              ? "myKAS-select"
+              : "forCommercial-select"
+          }
+        >
+          <Option value="MyKad" className="myKad-option">
+            MyKad
+          </Option>
+          <Option value="MyTentera" className="myTentera-option">
+            MyTentera
+          </Option>
+          <Option value="MyPR" className="myPR-option">
+            MyPR
+          </Option>
+          <Option value="MyKAS" className="myKAS-option">
+            MyKAS
+          </Option>
+          <Option value="Commercial" className="forCommercial-option">
+            Commercial
+          </Option>
+        </Select>
+        <Input
+          style={{
+            width: "250px", // adjust the width according to your layout
+          }}
+          placeholder="12-digit number on ID Card"
+          maxLength={14} // Increased maxLength to accommodate dashes
+          pattern="^[0-9-]*$" // Updated pattern to allow dashes as well
+          title="ID number must contain only digits"
+          onKeyDown={handleInputKeyDown} // Updated event handler for input keydown
+          onChange={handleIcNumberChange} // Updated event handler for IC number change
+        />
         <Button type="primary">Search</Button>
       </div>
       {errorMessage && <div className="error-message">{errorMessage}</div>}

@@ -55,21 +55,6 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
 
       if (!isDateValid) {
         setErrorMessage("Invalid Format");
-        return; // Return early to prevent further execution
-      } else if (combinedMonth === 2 && parseInt(day, 10) > 28) {
-        setErrorMessage("Invalid Day for February");
-        setInputValue(value.slice(0, 3)); // Update input value until the third digit (day) only
-        return; // Return early to prevent further execution
-      } else if (
-        (combinedMonth === 4 ||
-          combinedMonth === 6 ||
-          combinedMonth === 9 ||
-          combinedMonth === 11) &&
-        parseInt(day, 10) > 30
-      ) {
-        setErrorMessage("Invalid Day for the Selected Month");
-        setInputValue(value.slice(0, 3)); // Update input value until the third digit (day) only
-        return; // Return early to prevent further execution
       } else {
         setErrorMessage("");
       }
@@ -168,13 +153,13 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
               onChange={handleIcNumberChange} // Updated event handler for IC number change
               value={inputValue}
             />
+            <div className="search-button-container">
+              <Button type="primary">Search</Button>
+            </div>
           </div>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
         </div>
       </div>
-      <div style={{ marginLeft: 8 }} className="search-button-container">
-        <Button type="primary">Search</Button>
-      </div>
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );
 };

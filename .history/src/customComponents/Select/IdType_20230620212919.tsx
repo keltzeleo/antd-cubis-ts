@@ -40,7 +40,6 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
       const month = value.slice(2, 4);
       const year = value.slice(4, 6);
 
-      const thirdDigit = value.charAt(2);
       const combinedMonth = parseInt(month, 10);
       const combinedYear = parseInt(year, 10) + 2000;
 
@@ -56,20 +55,7 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
       if (!isDateValid) {
         setErrorMessage("Invalid Format");
         return; // Return early to prevent further execution
-      } else if (combinedMonth === 2 && parseInt(day, 10) > 28) {
-        setErrorMessage("Invalid Day for February");
-        setInputValue(value.slice(0, 3)); // Update input value until the third digit (day) only
-        return; // Return early to prevent further execution
-      } else if (
-        (combinedMonth === 4 ||
-          combinedMonth === 6 ||
-          combinedMonth === 9 ||
-          combinedMonth === 11) &&
-        parseInt(day, 10) > 30
-      ) {
-        setErrorMessage("Invalid Day for the Selected Month");
-        setInputValue(value.slice(0, 3)); // Update input value until the third digit (day) only
-        return; // Return early to prevent further execution
+        // return; // Return early to prevent further execution
       } else {
         setErrorMessage("");
       }
