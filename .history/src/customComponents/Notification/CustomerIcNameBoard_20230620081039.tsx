@@ -25,7 +25,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
   }
 
   const backgroundHue = adjustHue(0.6, idTypeBgColour); // Extract the hue from the background color
-  const greyColour = "rgba(10,15,30, 0.75)"; // Replace with your desired grey color value
+  const greyColour = "rgba(20,15,20, 0.75)"; // Replace with your desired grey color value
   const darkerColour = mix(0.5, backgroundHue, greyColour); // Adjust the darkness level (0.2) as per your preference
 
   return (
