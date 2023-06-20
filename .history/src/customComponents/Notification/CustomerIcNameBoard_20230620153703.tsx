@@ -54,7 +54,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
           // Set the opacity value to make the text translucent
         }}
       >
-        {inputIcNumber} //&nbsp;{/* Updated variable name */}
+        {inputIcNumber} // &nbsp; {/* Updated variable name */}
       </div>
       <div
         style={{
