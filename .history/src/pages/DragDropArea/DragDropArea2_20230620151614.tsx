@@ -315,10 +315,7 @@ const DragDropArea2: React.FC = () => {
   return (
     <div className="drag-drop-container">
       <div className="top-section">
-        <IdType
-          onChange={handleOptionChange}
-          onInputChange={handleInputIcChange}
-        />
+        <IdType onChange={handleOptionChange} />
       </div>
       <div className="content-container" style={{ display: "flex" }}>
         <div className="left-section" style={{}}>

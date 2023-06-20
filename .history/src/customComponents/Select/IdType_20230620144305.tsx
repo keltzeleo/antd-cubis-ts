@@ -6,22 +6,21 @@ import "./IdType.css";
 const { Option } = Select;
 
 interface IdTypeProps {
-  onChange: (option: string, value: string) => void;
-  onInputChange: (value: string) => void; // Add onInputChange prop
+  onChange: (value: string) => void;
 }
 
-const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
+const IdType: React.FC<IdTypeProps> = ({ onChange }) => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
-  const [icNumber, setIcNumber] = useState(""); // Updated variable name
+  const [value, setValue] = useState("");
 
   const handleOptionChange = (value: string) => {
     setSelectedOption(value);
-    onChange(value, ""); // Pass value and empty string as arguments
+    onChange(value);
   };
 
-  const handleIcNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    onInputChange(value); // Call onInputChange with the new value
+  const handleIcInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputIcValue = event.target.value;
+    setValue(inputIcValue);
   };
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -105,7 +104,7 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
           pattern="^[0-9-]*$" // Updated pattern to allow dashes as well
           title="ID number must contain only digits"
           onKeyDown={handleInputKeyDown} // Updated event handler for input keydown
-          onChange={handleIcNumberChange} // Updated event handler for IC number change
+          onChange={handleIcInputChange} // New event handler for input change
         />
         <Button type="primary">Search</Button>
       </div>

@@ -27,8 +27,8 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
   }
 
   const backgroundHue = adjustHue(0.6, idTypeBgColour); // Extract the hue from the background color
-  const greyColour = "rgba(23,18,20, 0.22)"; // Replace with your desired grey color value
-  const darkerColour = mix(0.28, backgroundHue, greyColour); // Adjust the darkness level (0.2) as per your preference
+  const greyColour = "rgba(20,15,30, 0.35)"; // Replace with your desired grey color value
+  const darkerColour = mix(0.58, backgroundHue, greyColour); // Adjust the darkness level (0.2) as per your preference
 
   return (
     <div
@@ -54,7 +54,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
           // Set the opacity value to make the text translucent
         }}
       >
-        {inputIcNumber} //&nbsp; {/* Updated variable name */}
+        {inputIcNumber} // {/* Updated variable name */}
       </div>
       <div
         style={{
@@ -65,7 +65,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
           whiteSpace: "pre-wrap", // Prevent line breaks
         }}
       >
-        {customerTitle} {customerName}
+        &nbsp; {customerTitle} {customerName}
       </div>
     </div>
   );

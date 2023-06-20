@@ -54,7 +54,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
           // Set the opacity value to make the text translucent
         }}
       >
-        {inputIcNumber} //&nbsp; {/* Updated variable name */}
+        {inputIcNumber} // {/* Updated variable name */}
       </div>
       <div
         style={{
@@ -65,7 +65,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
           whiteSpace: "pre-wrap", // Prevent line breaks
         }}
       >
-        {customerTitle} {customerName}
+        &nbsp; {customerTitle} {customerName}
       </div>
     </div>
   );

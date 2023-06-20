@@ -7,10 +7,9 @@ const { Option } = Select;
 
 interface IdTypeProps {
   onChange: (option: string, value: string) => void;
-  onInputChange: (value: string) => void; // Add onInputChange prop
 }
 
-const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
+const IdType: React.FC<IdTypeProps> = ({ onChange }) => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
   const [icNumber, setIcNumber] = useState(""); // Updated variable name
 
@@ -20,8 +19,8 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
   };
 
   const handleIcNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    onInputChange(value); // Call onInputChange with the new value
+    const inputValue = event.target.value;
+    setIcNumber(inputValue);
   };
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

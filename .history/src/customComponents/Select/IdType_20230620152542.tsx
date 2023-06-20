@@ -16,7 +16,7 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
 
   const handleOptionChange = (value: string) => {
     setSelectedOption(value);
-    onChange(value, ""); // Pass value and empty string as arguments
+    onChange(value); // Pass value and empty string as arguments
   };
 
   const handleIcNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
