@@ -1,34 +1,23 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Col, Form, Input, Row, Select } from "antd";
+import { Col, Input, Row, Select } from "antd";
 
 const { Option } = Select;
 
 interface CustomerInfoProps {
   customerTitle: string | undefined;
   customerName: string;
-  inputIcNumber: string;
-  mobileNumber: string;
-  homeNumber: string;
-  alternativeNumber: string;
+  inputIcNumber: string; // Add inputIcNumber prop
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
-  onMobileNumberChange: (value: string) => void;
-  onHomeNumberChange: (value: string) => void;
-  onAlternativeNumberChange: (value: string) => void;
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
   inputIcNumber,
-  mobileNumber,
-  homeNumber,
-  alternativeNumber,
+
   onCustomerTitleChange,
   onCustomerNameChange,
-  onMobileNumberChange,
-  onHomeNumberChange,
-  onAlternativeNumberChange,
 }) => {
   const extractDobFromIcNumber = (icNumber: string): string => {
     const dob = icNumber.substr(0, 6); // Extract the DDMMYY portion from the icNumber
@@ -83,20 +72,46 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const formattedDob = inputIcNumber
     ? extractDobFromIcNumber(inputIcNumber)
     : "";
-  const age = formattedDob ? calculateAge(formattedDob) : 0;
 
-  const validateDigitsOnly = (_: any, value: string) => {
-    if (value && !/^\d+$/.test(value)) {
-      return Promise.reject(new Error("Please enter digits only."));
-    }
-    return Promise.resolve();
-  };
+  const age = formattedDob ? calculateAge(formattedDob) : 0;
 
   return (
     <div
-      style={{ border: "0", borderRadius: 8, padding: 16, backgroundColor: "" }}
+      style={{
+        border: "0",
+        borderRadius: 8,
+        padding: 16,
+        backgroundColor: "",
+      }}
     >
       <ProForm>
+        {/* <div
+          style={{
+            height: 30,
+            width: "100%",
+            padding: "1px 4px 1px 4px",
+            alignContent: "center",
+            justifyContent: "center",
+            fontWeight: "bold",
+            borderRadius: 16,
+            background: "#e7eee6",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 35,
+              alignContent: "center",
+              justifyContent: "center",
+              margin: "-10px 0px 0px 10px",
+              opacity: 0.12,
+            }}
+          >
+            I/C Number // {customerTitle} {customerName} //
+          </div>
+        </div> */}
+        &nbsp;
+        <p></p>
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={12}>
@@ -120,7 +135,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="id"
                 label="ID"
                 disabled
-                placeholder={inputIcNumber}
+                placeholder={inputIcNumber} // Use inputIcNumber prop value
+
+                // rules={[{ required: true, message: "Please enter ID" }]}
               />
             </Col>
             <Col span={12}>
@@ -156,6 +173,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 label="D.O.B"
                 disabled
                 placeholder={formattedDob}
+
+                // rules={[{ required: true, message: "Please enter Race" }]}
               />
             </Col>
             <Col span={8}>
@@ -164,14 +183,15 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="age"
                 label="Age"
                 disabled
-                placeholder={age.toString()}
+                placeholder={age.toString()} // Set the initial value of age
+                // rules={[{ required: true, message: "Please enter Race" }]}
               />
             </Col>
             <Col span={8}>
               <ProFormText
                 width="md"
                 name="race"
-                label="Race"
+                label=" Race"
                 rules={[{ required: true, message: "Please enter Race" }]}
               />
             </Col>
@@ -180,67 +200,75 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={8}>
-              <Form.Item
-                label="Mobile Number"
-                name="mobileNumber"
-                tooltip="Valid and contactable mobile number"
-                rules={[{ validator: validateDigitsOnly }]}
-              >
-                <Input
-                  style={{
-                    width: "",
-                    minWidth: "",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                  addonBefore="+60"
-                  placeholder="Contactable number"
-                />
-              </Form.Item>
+              <ProFormText
+                width="md"
+                name="mobileNo"
+                label="Mobile No."
+                disabled
+                placeholder={formattedDob}
+
+                // rules={[{ required: true, message: "Please enter Race" }]}
+              />
             </Col>
             <Col span={8}>
-              <Form.Item
-                label="Home Use No."
-                name="homeUseNumber"
-                tooltip="Valid home use contact number"
-                rules={[{ validator: validateDigitsOnly }]}
-              >
-                <Input
-                  style={{
-                    width: "",
-                    minWidth: "",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                  addonBefore="+60"
-                  placeholder="Home use number"
-                />
-              </Form.Item>
+              <ProFormText
+                width="md"
+                name="age"
+                label="Age"
+                disabled
+                placeholder={age.toString()} // Set the initial value of age
+                // rules={[{ required: true, message: "Please enter Race" }]}
+              />
             </Col>
             <Col span={8}>
-              <Form.Item
-                label="Alternative Contact No."
-                name="alternativeNumber"
-                tooltip="Valid alternative contact number"
-                rules={[{ validator: validateDigitsOnly }]}
-              >
-                <Input
-                  style={{
-                    width: "",
-                    minWidth: "",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                  addonBefore="+60"
-                  placeholder="Alternative contact number"
-                />
-              </Form.Item>
+              <ProFormText
+                width="md"
+                name="race"
+                label=" Race"
+                rules={[{ required: true, message: "Please enter Race" }]}
+              />
             </Col>
           </Row>
         </ProForm.Group>
+        <div>
+                  <Form.Item
+                    label="Mobile Number"
+                    name="mobileNumber"
+                    tooltip="valid and contactable mobile number"
+                  >
+                    <Input
+                      style={{
+                        width: "", // not setting any value for having the same width as "name"
+                        minWidth: "", // not setting any value for having the same width as "name"
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                      addonBefore="+60"
+                      placeholder="contactable number"
+                    />
+                  </Form.Item>
+                </div>
+                <div>
+                  <Form.Item
+                    label="Email Address"
+                    name="emailAdd"
+                    tooltip="valid and contactable email address"
+                  >
+                    <Input
+                      style={{
+                        width: "", // not setting any value for having the same width as "name"
+                        minWidth: "", // not setting any value for having the same width as "name"
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                      placeholder="id@emailDomain.com"
+                    />
+                  </Form.Item>
+                </div>
+              </div>
+
       </ProForm>
     </div>
   );

@@ -7,23 +7,11 @@ const { Option } = Select;
 interface IdTypeProps {
   onChange: (option: string, value: string) => void;
   onInputChange: (value: string) => void;
-  onMobileNumberChange: (value: string) => void;
-  onHomeNumberChange: (value: string) => void;
-  onAlternativeNumberChange: (value: string) => void;
 }
 
-const IdType: React.FC<IdTypeProps> = ({
-  onChange,
-  onInputChange,
-  onMobileNumberChange,
-  onHomeNumberChange,
-  onAlternativeNumberChange,
-}) => {
+const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
   const [icNumber, setIcNumber] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [homeNumber, setHomeNumber] = useState("");
-  const [alternativeNumber, setAlternativeNumber] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [inputValue, setInputValue] = useState("");
 
@@ -113,7 +101,23 @@ const IdType: React.FC<IdTypeProps> = ({
       return; // Return early to prevent further execution
     }
 
-    // Rest of the code...
+    // Automatically format the input by
+    // adding dashes
+    if (!allowedKeys.includes(key)) {
+      let formattedValue = value;
+      if (selectionStart === selectionEnd) {
+        if (selectionStart === 6 || selectionStart === 9) {
+          formattedValue += "-";
+        }
+      } else {
+        formattedValue =
+          value.slice(0, selectionStart) +
+          "-" +
+          value.slice(selectionStart, selectionEnd) +
+          value.slice(selectionEnd);
+      }
+      setInputValue(formattedValue);
+    }
   };
 
   return (
@@ -168,63 +172,6 @@ const IdType: React.FC<IdTypeProps> = ({
             />
           </div>
         </div>
-      </div>
-      <div className="id-type-option">
-        <label htmlFor="mobileNumber">Mobile Number :</label>
-        <Input
-          id="mobileNumber"
-          style={{
-            width: "250px", // adjust the width according to your layout
-          }}
-          placeholder="Enter mobile number"
-          maxLength={10}
-          pattern="^\d*$"
-          title="Mobile number must contain only digits"
-          onKeyDown={handleInputKeyDown}
-          onChange={(e) => {
-            setMobileNumber(e.target.value);
-            onMobileNumberChange(e.target.value);
-          }}
-          value={mobileNumber}
-        />
-      </div>
-      <div className="id-type-option">
-        <label htmlFor="homeNumber">Home Number :</label>
-        <Input
-          id="homeNumber"
-          style={{
-            width: "250px", // adjust the width according to your layout
-          }}
-          placeholder="Enter home number"
-          maxLength={10}
-          pattern="^\d*$"
-          title="Home number must contain only digits"
-          onKeyDown={handleInputKeyDown}
-          onChange={(e) => {
-            setHomeNumber(e.target.value);
-            onHomeNumberChange(e.target.value);
-          }}
-          value={homeNumber}
-        />
-      </div>
-      <div className="id-type-option">
-        <label htmlFor="alternativeNumber">Alternative Number :</label>
-        <Input
-          id="alternativeNumber"
-          style={{
-            width: "250px", // adjust the width according to your layout
-          }}
-          placeholder="Enter alternative number"
-          maxLength={10}
-          pattern="^\d*$"
-          title="Alternative number must contain only digits"
-          onKeyDown={handleInputKeyDown}
-          onChange={(e) => {
-            setAlternativeNumber(e.target.value);
-            onAlternativeNumberChange(e.target.value);
-          }}
-          value={alternativeNumber}
-        />
       </div>
       <div style={{ marginLeft: 8 }} className="search-button-container">
         <Button type="primary">Search</Button>

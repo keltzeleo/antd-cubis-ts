@@ -9,26 +9,16 @@ interface CustomerInfoProps {
   inputIcNumber: string;
   mobileNumber: string;
   homeNumber: string;
-  alternativeNumber: string;
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
-  onMobileNumberChange: (value: string) => void;
-  onHomeNumberChange: (value: string) => void;
-  onAlternativeNumberChange: (value: string) => void;
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
   inputIcNumber,
-  mobileNumber,
-  homeNumber,
-  alternativeNumber,
   onCustomerTitleChange,
   onCustomerNameChange,
-  onMobileNumberChange,
-  onHomeNumberChange,
-  onAlternativeNumberChange,
 }) => {
   const extractDobFromIcNumber = (icNumber: string): string => {
     const dob = icNumber.substr(0, 6); // Extract the DDMMYY portion from the icNumber

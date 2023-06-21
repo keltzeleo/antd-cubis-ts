@@ -7,23 +7,11 @@ const { Option } = Select;
 interface IdTypeProps {
   onChange: (option: string, value: string) => void;
   onInputChange: (value: string) => void;
-  onMobileNumberChange: (value: string) => void;
-  onHomeNumberChange: (value: string) => void;
-  onAlternativeNumberChange: (value: string) => void;
 }
 
-const IdType: React.FC<IdTypeProps> = ({
-  onChange,
-  onInputChange,
-  onMobileNumberChange,
-  onHomeNumberChange,
-  onAlternativeNumberChange,
-}) => {
+const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
   const [icNumber, setIcNumber] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [homeNumber, setHomeNumber] = useState("");
-  const [alternativeNumber, setAlternativeNumber] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [inputValue, setInputValue] = useState("");
 
@@ -32,19 +20,14 @@ const IdType: React.FC<IdTypeProps> = ({
     onChange(value, "");
   };
 
-  const isValidDayOfMonth = (dateString: string): boolean => {
-    const dateParts = dateString.split(" ");
-    const day = parseInt(dateParts[0], 10);
-    const month = parseInt(dateParts[1], 10);
-    const year = parseInt(dateParts[2], 10);
+  const isValidDayOfMonth = (day: string): boolean => {
+    const dayOfMonth = parseInt(day, 10);
+    return dayOfMonth >= 1 && dayOfMonth <= 31;
+  };
 
-    // Create a new Date object and check if it represents a valid date
-    const date = new Date(year, month - 1, day);
-    return (
-      date.getFullYear() === year &&
-      date.getMonth() === month - 1 &&
-      date.getDate() === day
-    );
+  const isValidMonthOfYear = (month: string): boolean => {
+    const monthOfYear = parseInt(month, 10);
+    return monthOfYear >= 1 && monthOfYear <= 12;
   };
 
   const handleIcNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,11 +54,12 @@ const IdType: React.FC<IdTypeProps> = ({
         isValidDay && isValidThirdDigit && isValidMonth && isValidYear;
 
       if (!isDateValid) {
-        setErrorMessage("Invalid Date Format Detected");
+        setErrorMessage("Invalid Date");
         return; // Return early to prevent further execution
       } else if (
         combinedMonth === 2 &&
-        isValidDayOfMonth(day + " " + month + " " + combinedYear)
+        isValidDayOfMonth(day) &&
+        !isValidDayOfMonth(day + " " + month + " " + combinedYear)
       ) {
         setErrorMessage("Invalid Day for February");
         return; // Return early to prevent further execution
@@ -84,7 +68,7 @@ const IdType: React.FC<IdTypeProps> = ({
           combinedMonth === 6 ||
           combinedMonth === 9 ||
           combinedMonth === 11) &&
-        !isValidDayOfMonth(day + " " + month + " " + combinedYear)
+        !isValidDayOfMonth(day)
       ) {
         setErrorMessage("Invalid Day for the Selected Month");
         return; // Return early to prevent further execution
@@ -99,21 +83,55 @@ const IdType: React.FC<IdTypeProps> = ({
     onInputChange(value);
   };
 
+  const isValidDayOfMonth = (dateString: string): boolean => {
+    const dateParts = dateString.split(" ");
+    const day = parseInt(dateParts[0], 10);
+    const month = parseInt(dateParts[1], 10);
+    const year = parseInt(dateParts[2], 10);
+
+    // Create a new Date object and check if it represents a valid date
+    const date = new Date(year, month - 1, day);
+    return (
+      date.getFullYear() === year &&
+      date.getMonth() === month - 1 &&
+      date.getDate() === day
+    );
+  };
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const key = event.key;
-    const inputId = event.currentTarget.id;
+    const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight"];
+    const input = event.target as HTMLInputElement;
+    const selectionStart = input.selectionStart || 0;
+    const selectionEnd = input.selectionEnd || 0;
+    const value = input.value;
 
     if (
-      (inputId === "idType" && !/^[A-Za-z]*$/.test(key)) || // Allow only alphabetic characters for idType input
-      (inputId === "mobileNumber" && !/^\d*$/.test(key)) || // Allow only digits for mobileNumber input
-      (inputId === "homeNumber" && !/^\d*$/.test(key)) || // Allow only digits for homeNumber input
-      (inputId === "alternativeNumber" && !/^\d*$/.test(key)) // Allow only digits for alternativeNumber input
+      !/^\d*$/.test(key) && // Check if the key is a digit
+      !allowedKeys.includes(key) && // Check if the key is allowed (e.g., Backspace, Delete, Arrow keys)
+      !(key === "Control" && navigator.platform.match("Mac")
+        ? event.metaKey
+        : event.ctrlKey) // Check if it's a control key combination (e.g., Ctrl+C, Ctrl+V)
     ) {
       event.preventDefault();
-      return; // Return early to prevent further execution
     }
 
-    // Rest of the code...
+    // Automatically format the input by
+    // adding dashes
+    if (!allowedKeys.includes(key)) {
+      let formattedValue = value;
+      if (selectionStart === selectionEnd) {
+        if (selectionStart === 6 || selectionStart === 9) {
+          formattedValue += "-";
+        }
+      } else {
+        formattedValue =
+          value.slice(0, selectionStart) +
+          "-" +
+          value.slice(selectionStart, selectionEnd) +
+          value.slice(selectionEnd);
+      }
+      setInputValue(formattedValue);
+    }
   };
 
   return (
@@ -168,63 +186,6 @@ const IdType: React.FC<IdTypeProps> = ({
             />
           </div>
         </div>
-      </div>
-      <div className="id-type-option">
-        <label htmlFor="mobileNumber">Mobile Number :</label>
-        <Input
-          id="mobileNumber"
-          style={{
-            width: "250px", // adjust the width according to your layout
-          }}
-          placeholder="Enter mobile number"
-          maxLength={10}
-          pattern="^\d*$"
-          title="Mobile number must contain only digits"
-          onKeyDown={handleInputKeyDown}
-          onChange={(e) => {
-            setMobileNumber(e.target.value);
-            onMobileNumberChange(e.target.value);
-          }}
-          value={mobileNumber}
-        />
-      </div>
-      <div className="id-type-option">
-        <label htmlFor="homeNumber">Home Number :</label>
-        <Input
-          id="homeNumber"
-          style={{
-            width: "250px", // adjust the width according to your layout
-          }}
-          placeholder="Enter home number"
-          maxLength={10}
-          pattern="^\d*$"
-          title="Home number must contain only digits"
-          onKeyDown={handleInputKeyDown}
-          onChange={(e) => {
-            setHomeNumber(e.target.value);
-            onHomeNumberChange(e.target.value);
-          }}
-          value={homeNumber}
-        />
-      </div>
-      <div className="id-type-option">
-        <label htmlFor="alternativeNumber">Alternative Number :</label>
-        <Input
-          id="alternativeNumber"
-          style={{
-            width: "250px", // adjust the width according to your layout
-          }}
-          placeholder="Enter alternative number"
-          maxLength={10}
-          pattern="^\d*$"
-          title="Alternative number must contain only digits"
-          onKeyDown={handleInputKeyDown}
-          onChange={(e) => {
-            setAlternativeNumber(e.target.value);
-            onAlternativeNumberChange(e.target.value);
-          }}
-          value={alternativeNumber}
-        />
       </div>
       <div style={{ marginLeft: 8 }} className="search-button-container">
         <Button type="primary">Search</Button>

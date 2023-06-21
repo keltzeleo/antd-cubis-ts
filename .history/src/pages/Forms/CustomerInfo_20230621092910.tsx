@@ -6,29 +6,17 @@ const { Option } = Select;
 interface CustomerInfoProps {
   customerTitle: string | undefined;
   customerName: string;
-  inputIcNumber: string;
-  mobileNumber: string;
-  homeNumber: string;
-  alternativeNumber: string;
+  inputIcNumber: string; // Add inputIcNumber prop
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
-  onMobileNumberChange: (value: string) => void;
-  onHomeNumberChange: (value: string) => void;
-  onAlternativeNumberChange: (value: string) => void;
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
   inputIcNumber,
-  mobileNumber,
-  homeNumber,
-  alternativeNumber,
   onCustomerTitleChange,
   onCustomerNameChange,
-  onMobileNumberChange,
-  onHomeNumberChange,
-  onAlternativeNumberChange,
 }) => {
   const extractDobFromIcNumber = (icNumber: string): string => {
     const dob = icNumber.substr(0, 6); // Extract the DDMMYY portion from the icNumber
@@ -83,9 +71,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const formattedDob = inputIcNumber
     ? extractDobFromIcNumber(inputIcNumber)
     : "";
+
   const age = formattedDob ? calculateAge(formattedDob) : 0;
 
-  const validateDigitsOnly = (_: any, value: string) => {
+  const validateDigitsOnly = (_, value) => {
     if (value && !/^\d+$/.test(value)) {
       return Promise.reject(new Error("Please enter digits only."));
     }
@@ -94,9 +83,16 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
 
   return (
     <div
-      style={{ border: "0", borderRadius: 8, padding: 16, backgroundColor: "" }}
+      style={{
+        border: "0",
+        borderRadius: 8,
+        padding: 16,
+        backgroundColor: "",
+      }}
     >
       <ProForm>
+        &nbsp;
+        <p></p>
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={12}>
@@ -188,8 +184,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               >
                 <Input
                   style={{
-                    width: "",
-                    minWidth: "",
+                    width: "", // not setting any value for having the same width as "name"
+                    minWidth: "", // not setting any value for having the same width as "name"
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
@@ -208,8 +204,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               >
                 <Input
                   style={{
-                    width: "",
-                    minWidth: "",
+                    width: "", // not setting any value for having the same width as "name"
+                    minWidth: "", // not setting any value for having the same width as "name"
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
@@ -228,8 +224,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               >
                 <Input
                   style={{
-                    width: "",
-                    minWidth: "",
+                    width: "", // not setting any value for having the same width as "name"
+                    minWidth: "", // not setting any value for having the same width as "name"
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
