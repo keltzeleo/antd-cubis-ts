@@ -201,7 +201,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             </Col>
             <Col span={8}>
               <Form.Item
-                label="Home Number"
+                label="Home Number."
                 name="homeUseNumber"
                 tooltip="Valid home use contact number"
                 rules={[{ validator: validateDigitsOnly }]}
