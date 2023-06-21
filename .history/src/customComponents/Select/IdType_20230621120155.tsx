@@ -40,41 +40,12 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
 
     if (value === "") {
       setErrorMessage("");
-    } else if (value.length === 6) {
-      const day = value.slice(0, 2);
-      const month = value.slice(2, 4);
-      const year = value.slice(4, 6);
+    } else if (value.length === 12) {
+      // Perform your validation checks here
+      const isValid = true; // Replace with your validation logic
 
-      const thirdDigit = value.charAt(2);
-      const combinedMonth = parseInt(month, 10);
-      const combinedYear = parseInt(year, 10) + 2000;
-
-      const isValidDay = parseInt(day, 10) >= 1 && parseInt(day, 10) <= 31;
-      const isValidThirdDigit =
-        thirdDigit === "" || parseInt(thirdDigit, 10) <= 1;
-      const isValidMonth = combinedMonth >= 1 && combinedMonth <= 12;
-      const isValidYear = combinedYear >= 1900 && combinedYear <= 2099;
-
-      const isDateValid =
-        isValidDay && isValidThirdDigit && isValidMonth && isValidYear;
-
-      if (!isDateValid) {
+      if (!isValid) {
         setErrorMessage("Invalid Format Detected");
-        return; // Return early to prevent further execution
-      } else if (
-        combinedMonth === 2 &&
-        isValidDayOfMonth(day + " " + month + " " + combinedYear)
-      ) {
-        setErrorMessage("Invalid Day for February");
-        return; // Return early to prevent further execution
-      } else if (
-        (combinedMonth === 4 ||
-          combinedMonth === 6 ||
-          combinedMonth === 9 ||
-          combinedMonth === 11) &&
-        !isValidDayOfMonth(day + " " + month + " " + combinedYear)
-      ) {
-        setErrorMessage("Invalid Day for the Selected Month");
         return; // Return early to prevent further execution
       } else {
         setErrorMessage("");
@@ -103,10 +74,10 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
         : event.ctrlKey) // Check if it's a control key combination (e.g., Ctrl+C, Ctrl+V)
     ) {
       event.preventDefault();
+      return; // Return early to prevent further execution
     }
 
-    // Automatically format the input by
-    // adding dashes
+    // Automatically format the input by adding dashes
     if (!allowedKeys.includes(key)) {
       let formattedValue = value;
       if (selectionStart === selectionEnd) {
