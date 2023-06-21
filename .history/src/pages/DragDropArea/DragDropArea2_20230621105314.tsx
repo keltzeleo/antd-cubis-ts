@@ -394,9 +394,6 @@ const DragDropArea2: React.FC = () => {
               customerTitle={customerTitle}
               customerName={customerName}
               inputIcNumber={inputIcValue}
-              mobileNumber={mobileNumber}
-              homeNumber={homeNumber}
-              alternativeNumber={alternativeNumber}
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
               onMobileNumberChange={setMobileNumber}

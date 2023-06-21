@@ -14,10 +14,6 @@ import "./DragDropArea2.css";
 
 const { Dragger } = Upload;
 
-interface FileListProps extends UploadFile<any> {
-  className?: string;
-}
-
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -49,7 +45,7 @@ const DragDropArea2: React.FC = () => {
   const [previewTitle, setPreviewTitle] = useState("");
   const [inputIcValue, setInputIcValue] = useState("");
 
-  const [fileList, setFileList] = useState<FileListProps[]>([]);
+  const [fileList, setFileList] = useState<UploadFile<any>[]>([]);
   const [selectedIdType, setSelectedIdType] = useState("");
   const [customerTitle, setCustomerTitle] = useState<string | undefined>(
     undefined
@@ -80,7 +76,7 @@ const DragDropArea2: React.FC = () => {
 
   const handleCancel = () => setPreviewOpen(false);
 
-  const handlePreview = async (file: FileListProps) => {
+  const handlePreview = async (file: UploadFile<any>) => {
     if (file.status === "error") {
       return;
     }
@@ -106,7 +102,7 @@ const DragDropArea2: React.FC = () => {
     }, 5000);
   };
 
-  const handleChange = async (info: UploadChangeParam<FileListProps>) => {
+  const handleChange = async (info: UploadChangeParam<UploadFile<any>>) => {
     const newFileList = [...info.fileList];
 
     if (newFileList.length > 8) {
@@ -119,9 +115,9 @@ const DragDropArea2: React.FC = () => {
       }
     });
 
-    const duplicateFiles: FileListProps[] = [];
-    const redundantFiles: FileListProps[] = [];
-    const checksumMap: Map<number, FileListProps> = new Map();
+    const duplicateFiles: UploadFile<any>[] = [];
+    const redundantFiles: UploadFile<any>[] = [];
+    const checksumMap: Map<number, UploadFile<any>> = new Map();
 
     for (const file of newFileList) {
       const checksum = await getChecksum(file.originFileObj as RcFile);
@@ -152,6 +148,7 @@ const DragDropArea2: React.FC = () => {
 
     setFileList(
       newFileList.map((file) => {
+        // Set a custom error icon for files with status 'error'
         if (file.status === "error") {
           return {
             ...file,
@@ -164,7 +161,7 @@ const DragDropArea2: React.FC = () => {
     );
   };
 
-  const handleRemove = (file: FileListProps) => {
+  const handleRemove = (file: UploadFile<any>) => {
     setFileList((prevFileList) =>
       prevFileList.filter((item) => item.uid !== file.uid)
     );
@@ -190,9 +187,9 @@ const DragDropArea2: React.FC = () => {
       return;
     }
 
-    const newFileList: FileListProps[] = [];
-    const duplicateFiles: FileListProps[] = [];
-    const checksumMap: Map<number, FileListProps> = new Map();
+    const newFileList: UploadFile<any>[] = [];
+    const duplicateFiles: UploadFile<any>[] = [];
+    const checksumMap: Map<number, UploadFile<any>> = new Map();
 
     for (const file of validFiles) {
       const checksum = await getChecksum(file);
@@ -201,10 +198,10 @@ const DragDropArea2: React.FC = () => {
         if (duplicateFile && !duplicateFiles.includes(duplicateFile)) {
           duplicateFiles.push(duplicateFile);
         }
-        duplicateFiles.push(file as FileListProps);
+        duplicateFiles.push(file);
       } else {
-        checksumMap.set(checksum, file as FileListProps);
-        const uploadFile: FileListProps = {
+        checksumMap.set(checksum, file as UploadFile<any>);
+        const uploadFile: UploadFile<any> = {
           uid: file.name,
           name: file.name,
           status: "done",
@@ -303,9 +300,9 @@ const DragDropArea2: React.FC = () => {
     </div>
   );
 
-  const getListItemClassName = (file: FileListProps): string => {
+  const getListItemClassName = (file: UploadFile<any>): string => {
     if (file.status === "done") {
-      return "ant-upload-list-item-done";
+      return "ant-upload-list-item-done"; // Apply the desired CSS class for files with status "done"
     }
     return "";
   };
@@ -316,6 +313,9 @@ const DragDropArea2: React.FC = () => {
         <IdType
           onChange={handleOptionChange}
           onInputChange={handleInputIcChange}
+          onMobileNumberChange={setMobileNumber}
+          onHomeNumberChange={setHomeNumber}
+          onAlternativeNumberChange={setAlternativeNumber}
         />
       </div>
       <div className="content-container" style={{ display: "flex" }}>
@@ -369,12 +369,13 @@ const DragDropArea2: React.FC = () => {
             alignItems: "center",
           }}
         >
+          {/* Form fill-in section */}
           <div style={{ flex: 1, height: "" }}>
             <CustomerIcNameBoard
               customerTitle={customerTitle}
               customerName={customerName}
-              selectedOption={selectedIdType}
-              inputIcNumber={inputIcValue}
+              selectedOption={selectedIdType} // Pass the selectedIdType state as the selectedOption prop
+              inputIcNumber={inputIcValue} // Use inputIcValue state here
             />
             &nbsp;
             <div
@@ -393,15 +394,15 @@ const DragDropArea2: React.FC = () => {
             <CustomerInfo
               customerTitle={customerTitle}
               customerName={customerName}
-              inputIcNumber={inputIcValue}
-              mobileNumber={mobileNumber}
-              homeNumber={homeNumber}
-              alternativeNumber={alternativeNumber}
+              inputIcNumber={inputIcValue} // Use inputIcValue state here
+              mobileNumber={mobileNumber} // Add mobileNumber prop
+              homeNumber={homeNumber} // Add homeNumber prop
+              alternativeNumber={alternativeNumber} // Add alternativeNumber prop
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
-              onMobileNumberChange={setMobileNumber}
-              onHomeNumberChange={setHomeNumber}
-              onAlternativeNumberChange={setAlternativeNumber}
+              onMobileNumberChange={setMobileNumber} // Set mobileNumber state
+              onHomeNumberChange={setHomeNumber} // Set homeNumber state
+              onAlternativeNumberChange={setAlternativeNumber} // Set alternativeNumber state
             />
           </div>
         </div>

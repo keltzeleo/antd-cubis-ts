@@ -20,21 +20,6 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
     onChange(value, "");
   };
 
-  const isValidDayOfMonth = (dateString: string): boolean => {
-    const dateParts = dateString.split(" ");
-    const day = parseInt(dateParts[0], 10);
-    const month = parseInt(dateParts[1], 10);
-    const year = parseInt(dateParts[2], 10);
-
-    // Create a new Date object and check if it represents a valid date
-    const date = new Date(year, month - 1, day);
-    return (
-      date.getFullYear() === year &&
-      date.getMonth() === month - 1 &&
-      date.getDate() === day
-    );
-  };
-
   const handleIcNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
@@ -59,7 +44,7 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
         isValidDay && isValidThirdDigit && isValidMonth && isValidYear;
 
       if (!isDateValid) {
-        setErrorMessage("Invalid Date");
+        setErrorMessage("Invalid Date Format Detected");
         return; // Return early to prevent further execution
       } else if (
         combinedMonth === 2 &&
@@ -103,24 +88,16 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
         : event.ctrlKey) // Check if it's a control key combination (e.g., Ctrl+C, Ctrl+V)
     ) {
       event.preventDefault();
+      return; // Return early to prevent further execution
     }
 
     // Automatically format the input by
     // adding dashes
+  
+    ...
+
     if (!allowedKeys.includes(key)) {
-      let formattedValue = value;
-      if (selectionStart === selectionEnd) {
-        if (selectionStart === 6 || selectionStart === 9) {
-          formattedValue += "-";
-        }
-      } else {
-        formattedValue =
-          value.slice(0, selectionStart) +
-          "-" +
-          value.slice(selectionStart, selectionEnd) +
-          value.slice(selectionEnd);
-      }
-      setInputValue(formattedValue);
+      input.value = value.slice(0, selectionStart);
     }
   };
 
@@ -158,7 +135,7 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
               <Option value="MyKAS" className="myKAS-option">
                 MyKAS
               </Option>
-              <Option value="Commercial" className="forCommercial-option">
+              <Option value="Commercial" className="forCommercial-select">
                 Commercial
               </Option>
             </Select>

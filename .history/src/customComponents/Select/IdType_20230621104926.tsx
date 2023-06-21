@@ -59,7 +59,7 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
         isValidDay && isValidThirdDigit && isValidMonth && isValidYear;
 
       if (!isDateValid) {
-        setErrorMessage("Invalid Date");
+        setErrorMessage("Invalid Date Format Detected");
         return; // Return early to prevent further execution
       } else if (
         combinedMonth === 2 &&
