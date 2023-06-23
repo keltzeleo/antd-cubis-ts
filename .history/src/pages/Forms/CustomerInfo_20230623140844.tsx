@@ -191,45 +191,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 placeholder="Full Name"
               />
             </Col>
-            <Col span={12}>
-              <div style={{ marginBottom: 8 }}>
-                <span style={{ color: "red" }}>*</span> Citizenship
-              </div>
-              <Radio.Group
-                value={citizenship}
-                onChange={(e) => onCitizenshipChange(e.target.value)}
-              >
-                <Radio value="Malaysian">Malaysian</Radio>
-                <Radio value="Non-Malaysian">Non-Malaysian</Radio>
-              </Radio.Group>
-            </Col>
-            <Col span={12}>
-              <div style={{ marginBottom: 8 }}>
-                <span style={{ color: "red" }}>*</span> Nationality
-              </div>
-              <Select
-                showSearch
-                style={{ width: 300, marginBottom: 16 }} // Set the desired width, such as 200px
-                placeholder="Select Nationality"
-                value={selectedCountry}
-                onChange={handleCountryChange}
-                optionFilterProp="label"
-                filterOption={(input, option) =>
-                  (option?.label?.toString() ?? "")
-                    .toLowerCase()
-                    .indexOf(input.toLowerCase()) >= 0
-                }
-              >
-                {countries.map((country) => (
-                  <Option key={country.value} value={country.value}>
-                    {country.label}
-                  </Option>
-                ))}
-              </Select>
-            </Col>
           </Row>
         </ProForm.Group>
-
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={8}>
@@ -260,7 +223,45 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             </Col>
           </Row>
         </ProForm.Group>
-
+        <ProForm.Group>
+          <Row gutter={16}>
+            <Col span={12}>
+              <div style={{ marginBottom: 8 }}>
+                <span style={{ color: "red" }}>*</span> Citizenship
+              </div>
+              <Radio.Group
+                value={citizenship}
+                onChange={(e) => onCitizenshipChange(e.target.value)}
+              >
+                <Radio value="Malaysian">Malaysian</Radio>
+                <Radio value="Non-Malaysian">Non-Malaysian</Radio>
+              </Radio.Group>
+            </Col>
+            <Col span={12}>
+              <div style={{ marginBottom: 8 }}>
+                <span style={{ color: "red" }}>*</span> Nationality
+              </div>
+              <Select
+                showSearch
+                placeholder="Select Nationality"
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                optionFilterProp="label"
+                filterOption={(input, option) =>
+                  (option?.label?.toString() ?? "")
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0
+                }
+              >
+                {countries.map((country) => (
+                  <Option key={country.value} value={country.value}>
+                    {country.label}
+                  </Option>
+                ))}
+              </Select>
+            </Col>
+          </Row>
+        </ProForm.Group>
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={8}>

@@ -191,6 +191,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 placeholder="Full Name"
               />
             </Col>
+          </Row>
+        </ProForm.Group>
+        <ProForm.Group>
+          <Row gutter={16}>
             <Col span={12}>
               <div style={{ marginBottom: 8 }}>
                 <span style={{ color: "red" }}>*</span> Citizenship
@@ -209,7 +213,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               </div>
               <Select
                 showSearch
-                style={{ width: 300, marginBottom: 16 }} // Set the desired width, such as 200px
+                width="md"
                 placeholder="Select Nationality"
                 value={selectedCountry}
                 onChange={handleCountryChange}
@@ -229,7 +233,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             </Col>
           </Row>
         </ProForm.Group>
-
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={8}>

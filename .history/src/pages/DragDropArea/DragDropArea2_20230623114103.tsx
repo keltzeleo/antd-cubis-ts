@@ -59,9 +59,6 @@ const DragDropArea2: React.FC = () => {
   const [homeNumber, setHomeNumber] = useState("");
   const [alternativeNumber, setAlternativeNumber] = useState("");
 
-  const [citizenship, setCitizenship] = useState<string>("");
-  const [nationality, setNationality] = useState<string | null>(null);
-
   const handleCustomerTitleChange = (value: string | undefined) => {
     setCustomerTitle(value);
   };
@@ -76,14 +73,6 @@ const DragDropArea2: React.FC = () => {
 
   const handleInputIcChange = (value: string) => {
     setInputIcValue(value);
-  };
-
-  const handleCitizenshipChange = (value: string) => {
-    setCitizenship(value);
-  };
-
-  const handleNationalityChange = (value: string | null) => {
-    setNationality(value);
   };
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -408,15 +397,11 @@ const DragDropArea2: React.FC = () => {
               mobileNumber={mobileNumber}
               homeNumber={homeNumber}
               alternativeNumber={alternativeNumber}
-              citizenship={citizenship}
-              nationality={nationality}
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
               onMobileNumberChange={setMobileNumber}
               onHomeNumberChange={setHomeNumber}
               onAlternativeNumberChange={setAlternativeNumber}
-              onCitizenshipChange={handleCitizenshipChange}
-              onNationalityChange={handleNationalityChange}
             />
           </div>
         </div>

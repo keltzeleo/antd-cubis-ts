@@ -1,5 +1,5 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Col, Form, Input, Radio, Row, Select } from "antd";
+import { Col, Form, Input, Row, Select } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -193,23 +193,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             </Col>
             <Col span={12}>
               <div style={{ marginBottom: 8 }}>
-                <span style={{ color: "red" }}>*</span> Citizenship
-              </div>
-              <Radio.Group
-                value={citizenship}
-                onChange={(e) => onCitizenshipChange(e.target.value)}
-              >
-                <Radio value="Malaysian">Malaysian</Radio>
-                <Radio value="Non-Malaysian">Non-Malaysian</Radio>
-              </Radio.Group>
-            </Col>
-            <Col span={12}>
-              <div style={{ marginBottom: 8 }}>
                 <span style={{ color: "red" }}>*</span> Nationality
               </div>
               <Select
                 showSearch
-                style={{ width: 300, marginBottom: 16 }} // Set the desired width, such as 200px
                 placeholder="Select Nationality"
                 value={selectedCountry}
                 onChange={handleCountryChange}
@@ -226,6 +213,14 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   </Option>
                 ))}
               </Select>
+            </Col>
+            <Col span={12}>
+              <ProFormText
+                width="md"
+                name="customerNo"
+                label="Customer No"
+                disabled
+              />
             </Col>
           </Row>
         </ProForm.Group>

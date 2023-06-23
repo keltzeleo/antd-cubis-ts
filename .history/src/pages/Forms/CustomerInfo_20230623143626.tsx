@@ -209,7 +209,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               </div>
               <Select
                 showSearch
-                style={{ width: 300, marginBottom: 16 }} // Set the desired width, such as 200px
+                style={{ width: 200 }} // Set the desired width, such as 200px
                 placeholder="Select Nationality"
                 value={selectedCountry}
                 onChange={handleCountryChange}

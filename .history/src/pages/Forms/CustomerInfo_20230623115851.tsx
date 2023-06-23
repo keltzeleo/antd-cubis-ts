@@ -1,7 +1,6 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
 import { Col, Form, Input, Radio, Row, Select } from "antd";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { countries } from "countries-list";
 
 const { Option } = Select;
 
@@ -12,20 +11,11 @@ interface CustomerInfoProps {
   mobileNumber: string;
   homeNumber: string;
   alternativeNumber: string;
-  citizenship: string;
-  nationality: string | null;
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
   onMobileNumberChange: (value: string) => void;
   onHomeNumberChange: (value: string) => void;
   onAlternativeNumberChange: (value: string) => void;
-  onCitizenshipChange: (value: string) => void;
-  onNationalityChange: (value: string | null) => void;
-}
-
-interface Country {
-  label: string;
-  value: string;
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
@@ -35,55 +25,12 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   mobileNumber,
   homeNumber,
   alternativeNumber,
-  citizenship,
-  nationality,
   onCustomerTitleChange,
   onCustomerNameChange,
   onMobileNumberChange,
   onHomeNumberChange,
   onAlternativeNumberChange,
-  onCitizenshipChange,
-  onNationalityChange,
 }) => {
-  const [countries, setCountries] = useState<Country[]>([]);
-  const [selectedCountry, setSelectedCountry] = useState<
-    Country | string | null
-  >(null);
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await axios.get("https://restcountries.com/v2/all");
-        const countriesData = response.data.map((country: any) => ({
-          label: country.name,
-          value: country.alpha2Code,
-        }));
-        setCountries(countriesData);
-      } catch (error) {
-        console.log("Error fetching countries:", error);
-      }
-    };
-
-    fetchCountries();
-  }, []);
-
-  const handleCountryChange = (selectedOption: Country | string | null) => {
-    setSelectedCountry(selectedOption);
-    onNationalityChange(
-      typeof selectedOption === "object"
-        ? (selectedOption as Country).value
-        : null
-    );
-  };
-
-  const handleNamePrefixChange = (value: string | undefined) => {
-    onCustomerTitleChange(value);
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onCustomerNameChange(e.target.value);
-  };
-
   const extractDobFromIcNumber = (icNumber: string): string => {
     const dob = icNumber.substr(0, 6); // Extract the DDMMYY portion from the icNumber
     const day = dob.substr(0, 2);
@@ -124,6 +71,14 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     }
 
     return age;
+  };
+
+  const handleNamePrefixChange = (value: string | undefined) => {
+    onCustomerTitleChange(value);
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onCustomerNameChange(e.target.value);
   };
 
   const formattedDob = inputIcNumber
@@ -191,45 +146,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 placeholder="Full Name"
               />
             </Col>
-            <Col span={12}>
-              <div style={{ marginBottom: 8 }}>
-                <span style={{ color: "red" }}>*</span> Citizenship
-              </div>
-              <Radio.Group
-                value={citizenship}
-                onChange={(e) => onCitizenshipChange(e.target.value)}
-              >
-                <Radio value="Malaysian">Malaysian</Radio>
-                <Radio value="Non-Malaysian">Non-Malaysian</Radio>
-              </Radio.Group>
-            </Col>
-            <Col span={12}>
-              <div style={{ marginBottom: 8 }}>
-                <span style={{ color: "red" }}>*</span> Nationality
-              </div>
-              <Select
-                showSearch
-                style={{ width: 300, marginBottom: 16 }} // Set the desired width, such as 200px
-                placeholder="Select Nationality"
-                value={selectedCountry}
-                onChange={handleCountryChange}
-                optionFilterProp="label"
-                filterOption={(input, option) =>
-                  (option?.label?.toString() ?? "")
-                    .toLowerCase()
-                    .indexOf(input.toLowerCase()) >= 0
-                }
-              >
-                {countries.map((country) => (
-                  <Option key={country.value} value={country.value}>
-                    {country.label}
-                  </Option>
-                ))}
-              </Select>
-            </Col>
           </Row>
         </ProForm.Group>
-
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={8}>
@@ -260,7 +178,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             </Col>
           </Row>
         </ProForm.Group>
-
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={8}>
@@ -306,7 +223,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <Col span={8}>
               <Form.Item
                 label="Other Contact Number"
-                name="otherContact"
+                name="otherContactNumber"
                 tooltip="Valid alternative contact number"
                 rules={[{ validator: validateDigitsOnly }]}
               >
@@ -321,6 +238,51 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   addonBefore="+60"
                   placeholder="Alternative contact number"
                 />
+              </Form.Item>
+            </Col>
+          </Row>
+        </ProForm.Group>
+        <ProForm.Group>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item
+                label="Citizenship"
+                name="citizenship"
+                rules={[
+                  { required: true, message: "Please select Citizenship" },
+                ]}
+              >
+                <Radio.Group>
+                  <Radio value="Malaysian">Malaysian</Radio>
+                  <Radio value="Non-Malaysian">Non-Malaysian</Radio>
+                </Radio.Group>
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                label="Nationality"
+                name="nationality"
+                rules={[
+                  { required: true, message: "Please select Nationality" },
+                ]}
+              >
+                <Select
+                  showSearch
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    option?.children
+                      ? option.children
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      : false
+                  }
+                >
+                  {Object.keys(countries).map((code) => (
+                    <Option key={code} value={code}>
+                      {countries[code as keyof typeof countries]}
+                    </Option>
+                  ))}
+                </Select>
               </Form.Item>
             </Col>
           </Row>

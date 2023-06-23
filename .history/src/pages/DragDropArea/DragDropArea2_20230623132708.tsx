@@ -9,7 +9,7 @@ import IdTypeBoard from "../../customComponents/Notification/IdTypeBoard";
 import IdType from "../../customComponents/Select/IdType";
 import "../../customComponents/Select/IdType.css";
 import { acceptedFileTypes } from "../../customConstants/dragDropFileTypes";
-import CustomerInfo from "../Forms/CustomerInfo";
+import CustomerInfo, { Country } from "../Forms/CustomerInfo";
 import "./DragDropArea2.css";
 
 const { Dragger } = Upload;
@@ -58,9 +58,7 @@ const DragDropArea2: React.FC = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [homeNumber, setHomeNumber] = useState("");
   const [alternativeNumber, setAlternativeNumber] = useState("");
-
-  const [citizenship, setCitizenship] = useState<string>("");
-  const [nationality, setNationality] = useState<string | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
 
   const handleCustomerTitleChange = (value: string | undefined) => {
     setCustomerTitle(value);
@@ -78,34 +76,8 @@ const DragDropArea2: React.FC = () => {
     setInputIcValue(value);
   };
 
-  const handleCitizenshipChange = (value: string) => {
-    setCitizenship(value);
-  };
-
-  const handleNationalityChange = (value: string | null) => {
-    setNationality(value);
-  };
-
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
-
-  const handleCancel = () => setPreviewOpen(false);
-
-  const handlePreview = async (file: FileListProps) => {
-    if (file.status === "error") {
-      return;
-    }
-
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
-    }
-
-    setPreviewImage(file.url || (file.preview as string));
-    setPreviewOpen(true);
-    setPreviewTitle(
-      file.name ||
-        (file.url ? file.url.substring(file.url.lastIndexOf("/") + 1) : "")
-    );
+  const handleCountryChange = (selectedOption: Country | null) => {
+    setSelectedCountry(selectedOption);
   };
 
   const handleError = (errorMsg: string) => {
@@ -408,15 +380,13 @@ const DragDropArea2: React.FC = () => {
               mobileNumber={mobileNumber}
               homeNumber={homeNumber}
               alternativeNumber={alternativeNumber}
-              citizenship={citizenship}
-              nationality={nationality}
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
               onMobileNumberChange={setMobileNumber}
               onHomeNumberChange={setHomeNumber}
               onAlternativeNumberChange={setAlternativeNumber}
-              onCitizenshipChange={handleCitizenshipChange}
-              onNationalityChange={handleNationalityChange}
+              selectedCountry={selectedCountry}
+              onCountryChange={handleCountryChange}
             />
           </div>
         </div>
