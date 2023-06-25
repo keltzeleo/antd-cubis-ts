@@ -1,5 +1,5 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Col, Form, Input, Radio, Row, Select } from "antd";
+import { Col, Form, Input, Radio, Row, Select, Space } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import light from "../../../src/tokens/light.json";
@@ -202,16 +202,14 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <Col span={12}>
               <Form.Item label="Citizenship">
                 <Radio.Group
+                  style={{ width: "110%" }}
                   value={citizenship}
                   onChange={(e) => onCitizenshipChange(e.target.value)}
                 >
-                  <Radio style={{ marginLeft: 16 }} value="Malaysian">
-                    Malaysian
-                  </Radio>
-
-                  <Radio style={{ marginLeft: 16 }} value="Non-Malaysian">
-                    Non-Malaysian
-                  </Radio>
+                  <Space>
+                    <Radio value="Malaysian">Malaysian</Radio>
+                    <Radio value="Non-Malaysian">Non-Malaysian</Radio>
+                  </Space>
                 </Radio.Group>
               </Form.Item>
             </Col>

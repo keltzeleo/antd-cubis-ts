@@ -209,7 +209,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     Malaysian
                   </Radio>
 
-                  <Radio style={{ marginLeft: 16 }} value="Non-Malaysian">
+                  <Radio style={{ marginLeft: 8 }} value="Non-Malaysian">
                     Non-Malaysian
                   </Radio>
                 </Radio.Group>

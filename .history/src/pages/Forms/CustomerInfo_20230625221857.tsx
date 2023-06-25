@@ -199,19 +199,14 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
 
         <ProForm.Group>
           <Row gutter={16}>
-            <Col span={12}>
+            <Col span={14}>
               <Form.Item label="Citizenship">
                 <Radio.Group
                   value={citizenship}
                   onChange={(e) => onCitizenshipChange(e.target.value)}
                 >
-                  <Radio style={{ marginLeft: 16 }} value="Malaysian">
-                    Malaysian
-                  </Radio>
-
-                  <Radio style={{ marginLeft: 16 }} value="Non-Malaysian">
-                    Non-Malaysian
-                  </Radio>
+                  <Radio value="Malaysian">Malaysian</Radio>
+                  <Radio value="Non-Malaysian">Non-Malaysian</Radio>
                 </Radio.Group>
               </Form.Item>
             </Col>
@@ -219,7 +214,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               <Form.Item label="Nationality">
                 <Select
                   showSearch
-                  style={{ width: 300, marginBottom: 16 }}
                   placeholder="Select a Nationality"
                   value={selectedCountry}
                   onChange={handleCountryChange}

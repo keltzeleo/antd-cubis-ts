@@ -205,13 +205,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   value={citizenship}
                   onChange={(e) => onCitizenshipChange(e.target.value)}
                 >
-                  <Radio style={{ marginLeft: 16 }} value="Malaysian">
-                    Malaysian
-                  </Radio>
-
-                  <Radio style={{ marginLeft: 16 }} value="Non-Malaysian">
-                    Non-Malaysian
-                  </Radio>
+                  <Radio value="Malaysian">Malaysian</Radio>
+                  <Radio value="Non-Malaysian">Non-Malaysian</Radio>
                 </Radio.Group>
               </Form.Item>
             </Col>
@@ -243,7 +238,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                         <img
                           src={country.flag}
                           alt={`${country.label} Flag`}
-                          style={{ width: "20px", marginRight: "12px" }}
+                          style={{ width: "20px", marginRight: "8px" }}
                         />
                         {country.label}
                       </div>
@@ -288,7 +283,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                       <SquircleBorder
                         size={20}
                         curvature={0.43}
-                        backgroundColor={light["magenta.1"]}
+                        backgroundColor={light["magenta.2"]}
                         rotate={0}
                         borderType="dashed"
                         borderWidth={1}

@@ -205,13 +205,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   value={citizenship}
                   onChange={(e) => onCitizenshipChange(e.target.value)}
                 >
-                  <Radio style={{ marginLeft: 16 }} value="Malaysian">
-                    Malaysian
-                  </Radio>
-
-                  <Radio style={{ marginLeft: 16 }} value="Non-Malaysian">
-                    Non-Malaysian
-                  </Radio>
+                  <Col span={6}>
+                    <Radio value="Malaysian">Malaysian</Radio>
+                  </Col>
+                  <Radio value="Non-Malaysian">Non-Malaysian</Radio>
                 </Radio.Group>
               </Form.Item>
             </Col>
