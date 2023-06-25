@@ -3,6 +3,7 @@ import { Col, Form, Input, Radio, Row, Select } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import light from "../../../src/tokens/light.json";
+
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 
 const { Option } = Select;
@@ -28,6 +29,7 @@ interface CustomerInfoProps {
 interface Country {
   label: string;
   value: string;
+  flag: string; // Add the flag property of type string
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
@@ -48,18 +50,23 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   onNationalityChange,
 }) => {
   const [countries, setCountries] = useState<Country[]>([]);
-  const [selectedCountry, setSelectedCountry] = useState<
-    Country | string | null
-  >(null);
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
 
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get("https://restcountries.com/v2/all");
+        const response = await axios.get("https://restcountries.com/v3.1/all");
         const countriesData = response.data.map((country: any) => ({
-          label: country.name,
-          value: country.alpha2Code,
+          label: country.name.common,
+          value: country.name.common,
+          flag: country.flags.png,
         }));
+
+        // Sort the countriesData array alphabetically by country name
+        countriesData.sort((a: Country, b: Country) =>
+          a.label.localeCompare(b.label)
+        );
+
         setCountries(countriesData);
       } catch (error) {
         console.log("Error fetching countries:", error);
@@ -69,13 +76,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     fetchCountries();
   }, []);
 
-  const handleCountryChange = (selectedOption: Country | string | null) => {
+  const handleCountryChange = (selectedOption: Country | null) => {
     setSelectedCountry(selectedOption);
-    onNationalityChange(
-      typeof selectedOption === "object"
-        ? (selectedOption as Country).value
-        : null
-    );
+    onNationalityChange(selectedOption?.value ?? null);
   };
 
   const handleNamePrefixChange = (value: string | undefined) => {
@@ -141,9 +144,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   };
 
   return (
-    <div
-      style={{ border: "0", borderRadius: 8, padding: 16, backgroundColor: "" }}
-    >
+    <div style={{ padding: "16px" }}>
       <ProForm>
         <ProForm.Group>
           <Row gutter={16}>
@@ -163,27 +164,26 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={12}>
-              <div style={{ marginBottom: 8 }}>
-                <span style={{ color: "red" }}>*</span> Enter Name
-              </div>
-              <Input
-                addonBefore={
-                  <Select
-                    style={{ width: 85 }}
-                    defaultValue=""
-                    onChange={handleNamePrefixChange}
-                  >
-                    <Option value="">Title</Option>
-                    <Option value="Mr.">Mr.</Option>
-                    <Option value="Ms.">Ms.</Option>
-                    <Option value="Mdm.">Mdm.</Option>
-                    <Option value="Dr.">Dr.</Option>
-                  </Select>
-                }
-                value={customerName}
-                onChange={handleNameChange}
-                placeholder="Full Name"
-              />
+              <Form.Item label="Enter Name">
+                <Input
+                  addonBefore={
+                    <Select
+                      style={{ width: 85 }}
+                      defaultValue=""
+                      onChange={handleNamePrefixChange}
+                    >
+                      <Option value="">Title</Option>
+                      <Option value="Mr.">Mr.</Option>
+                      <Option value="Ms.">Ms.</Option>
+                      <Option value="Mdm.">Mdm.</Option>
+                      <Option value="Dr.">Dr.</Option>
+                    </Select>
+                  }
+                  value={customerName}
+                  onChange={handleNameChange}
+                  placeholder="Full Name"
+                />
+              </Form.Item>
             </Col>
             <Col span={12}>
               <ProFormText
@@ -194,42 +194,58 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 placeholder={inputIcNumber}
               />
             </Col>
+          </Row>
+        </ProForm.Group>
 
+        <ProForm.Group>
+          <Row gutter={16}>
             <Col span={12}>
-              <div style={{ marginBottom: 8 }}>
-                <span style={{ color: "red" }}>*</span> Citizenship
-              </div>
-              <Radio.Group
-                value={citizenship}
-                onChange={(e) => onCitizenshipChange(e.target.value)}
-              >
-                <Radio value="Malaysian">Malaysian</Radio>
-                <Radio value="Non-Malaysian">Non-Malaysian</Radio>
-              </Radio.Group>
+              <Form.Item label="Citizenship">
+                <Radio.Group
+                  value={citizenship}
+                  onChange={(e) => onCitizenshipChange(e.target.value)}
+                >
+                  <Radio value="Malaysian">Malaysian</Radio>
+                  <Radio value="Non-Malaysian">Non-Malaysian</Radio>
+                </Radio.Group>
+              </Form.Item>
             </Col>
             <Col span={12}>
-              <div style={{ marginBottom: 8 }}>
-                <span style={{ color: "red" }}>*</span> Nationality
-              </div>
-              <Select
-                showSearch
-                style={{ width: 300, marginBottom: 16 }} // Set the desired width, such as 200px
-                placeholder="Select Nationality"
-                value={selectedCountry}
-                onChange={handleCountryChange}
-                optionFilterProp="label"
-                filterOption={(input, option) =>
-                  (option?.label?.toString() ?? "")
-                    .toLowerCase()
-                    .indexOf(input.toLowerCase()) >= 0
-                }
-              >
-                {countries.map((country) => (
-                  <Option key={country.value} value={country.value}>
-                    {country.label}
-                  </Option>
-                ))}
-              </Select>
+              <Form.Item label="Nationality">
+                <Select
+                  showSearch
+                  style={{ width: 300, marginBottom: 16 }}
+                  placeholder="Select a Nationality"
+                  value={selectedCountry}
+                  onChange={handleCountryChange}
+                  optionFilterProp="children"
+                  filterOption={(input, option) => {
+                    const countryLabel =
+                      option?.label?.toString()?.toLowerCase() ?? "";
+                    const countryValue =
+                      option?.value?.toString()?.toLowerCase() ?? "";
+                    const inputValue = input?.toString()?.toLowerCase() ?? "";
+
+                    return (
+                      countryLabel.includes(inputValue) ||
+                      countryValue.includes(inputValue)
+                    );
+                  }}
+                >
+                  {countries.map((country) => (
+                    <Option key={country.value} value={country.value}>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <img
+                          src={country.flag}
+                          alt={`${country.label} Flag`}
+                          style={{ width: "20px", marginRight: "8px" }}
+                        />
+                        {country.label}
+                      </div>
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
             </Col>
           </Row>
         </ProForm.Group>
@@ -353,6 +369,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   }}
                   addonBefore="+60"
                   placeholder="Contactable number"
+                  value={mobileNumber}
+                  onChange={(e) => onMobileNumberChange(e.target.value)}
                 />
               </Form.Item>
             </Col>
@@ -373,6 +391,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   }}
                   addonBefore="+60"
                   placeholder="Home use number"
+                  value={homeNumber}
+                  onChange={(e) => onHomeNumberChange(e.target.value)}
                 />
               </Form.Item>
             </Col>
@@ -393,6 +413,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   }}
                   addonBefore="+60"
                   placeholder="Alternative contact number"
+                  value={alternativeNumber}
+                  onChange={(e) => onAlternativeNumberChange(e.target.value)}
                 />
               </Form.Item>
             </Col>

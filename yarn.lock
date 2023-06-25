@@ -6298,6 +6298,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-world-flags@npm:^1.4.2":
+  version: 1.4.2
+  resolution: "@types/react-world-flags@npm:1.4.2"
+  dependencies:
+    "@types/react": "*"
+  checksum: f30a31e28217d147dbcbaeb47ac2f611fb3d39e62ef0201c539c4e40b31bfc8d429b35cc05914d727f872222bd63fca79ad29cd749be0d92cf6973e43c740254
+  languageName: node
+  linkType: hard
+
 "@types/react@npm:*, @types/react@npm:>=16, @types/react@npm:^18.0.0":
   version: 18.2.6
   resolution: "@types/react@npm:18.2.6"
@@ -7667,6 +7676,7 @@ __metadata:
     "@types/react": ^18.0.0
     "@types/react-dom": ^18.0.0
     "@types/react-transition-group": ^4.4.6
+    "@types/react-world-flags": ^1.4.2
     "@umijs/max": ^4.0.68
     antd: ^5.6.2
     axios: ^1.4.0
@@ -7684,11 +7694,13 @@ __metadata:
     prop-types: 15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-flags-select: ^2.2.3
     react-highlight-words: ^0.20.0
     react-router-dom: ^6.11.2
     react-scripts: ^5.0.1
     react-select: ^5.7.3
     react-transition-group: ^4.4.5
+    react-world-flags: ^1.5.1
     sass: ^1.62.1
     storybook: 7.0.10
     storybook-dark-mode: ^3.0.0
@@ -20416,6 +20428,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-flags-select@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "react-flags-select@npm:2.2.3"
+  dependencies:
+    classnames: ^2.2.6
+    sass: ^1.49.7
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 5e7fe62fd336803738d4d4edb521a7f0cb79f6963b640afeb75a604c4e25d6a109113e4fc5b5d3c46567e9b7afcf8d54a5ee68d08ac2776ae9c7c832dbe63211
+  languageName: node
+  linkType: hard
+
 "react-helmet-async@npm:1.3.0":
   version: 1.3.0
   resolution: "react-helmet-async@npm:1.3.0"
@@ -20726,6 +20751,19 @@ __metadata:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 75602840106aa9c6545149d6d7ae1502fb7b7abadcce70a6954c4b64a438ff1cd16fc77a0a1e5197cdd72da398f39eb929ea06f9005c45b132ed34e056ebdeb1
+  languageName: node
+  linkType: hard
+
+"react-world-flags@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "react-world-flags@npm:1.5.1"
+  dependencies:
+    svg-country-flags: ^1.2.10
+    svgo: ^2.8.0
+    world-countries: ^4.0.0
+  peerDependencies:
+    react: ">=0.14"
+  checksum: fc5ea86686dd40d93bc207f53ee093a83715947cc11830995fdfb82efbf02b3ecdc4215e0e341c04d2140b9f94e1ecfaa6735716381e50dd2b5eb3680b4454bb
   languageName: node
   linkType: hard
 
@@ -21433,6 +21471,19 @@ __metadata:
     sass-embedded:
       optional: true
   checksum: 5d73a428588150f704016aa27397941bb9246cecd2ee083b573e95d969fc080ac6a16f2fe1cc64aca08f6e70da6f3c586ee68f0efc9f527fecc360e5f1c299ec
+  languageName: node
+  linkType: hard
+
+"sass@npm:^1.49.7":
+  version: 1.63.6
+  resolution: "sass@npm:1.63.6"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+    immutable: ^4.0.0
+    source-map-js: ">=0.6.2 <2.0.0"
+  bin:
+    sass: sass.js
+  checksum: 3372319904658eeafaf78a09a6fcb3368a68e6d76fe3c43c2d009f4f72e475ab22b82ef483ef5c00fcda3ab00066846c0bd88c36b42771b855f6ab80c7eda541
   languageName: node
   linkType: hard
 
@@ -22661,6 +22712,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 53b1e247e68e05db7b3808b99b892bd36fb096e6fba213a06da7fab22045e97597db425c724f2bbd6c99a3c295e1e73f3e4de78592289f38431049e1277ca0ae
+  languageName: node
+  linkType: hard
+
+"svg-country-flags@npm:^1.2.10":
+  version: 1.2.10
+  resolution: "svg-country-flags@npm:1.2.10"
+  checksum: 52e8a946d5f9edb8f52b2b98754943604e82b465009a01774310b15be018b749ffa8b600b0c78ad18a4efd7c247e80c0cee33ef3930a60b18f751c587706cbdd
   languageName: node
   linkType: hard
 
@@ -24609,6 +24667,13 @@ __metadata:
     "@types/trusted-types": ^2.0.2
     workbox-core: 6.5.4
   checksum: bc43c8d31908ab564d740eb1041180c0b0ca4d1f0a3ccde59c5764a8f96d7b08edb7df975360fd37c2bec9f3f57ca9de6c7e34fd252aa1a4a075b5b002f74f60
+  languageName: node
+  linkType: hard
+
+"world-countries@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "world-countries@npm:4.0.0"
+  checksum: 2c66e29f7e99d8dbc0fe6cb46a9a9fd039c1c3ed531cae234aa07585b75b2af545741ba669f455123dd6a99c06b61c61177d8a6bf342b6403456e8dea9801c8f
   languageName: node
   linkType: hard
 
