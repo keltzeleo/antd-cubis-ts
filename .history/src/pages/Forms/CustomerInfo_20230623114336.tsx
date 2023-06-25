@@ -1,11 +1,12 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Col, Form, Input, Radio, Row, Select } from "antd";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import light from "../../../src/tokens/light.json";
-import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
+import { Col, Form, Input, Row, Select } from "antd";
+import countries from "countries-list";
 
 const { Option } = Select;
+
+const nationalities = Object.values(countries.countries).map(
+  (country: any) => country.nationality
+);
 
 interface CustomerInfoProps {
   customerTitle: string | undefined;
@@ -14,20 +15,13 @@ interface CustomerInfoProps {
   mobileNumber: string;
   homeNumber: string;
   alternativeNumber: string;
-  citizenship: string;
-  nationality: string | null;
+  nationality: string;
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
   onMobileNumberChange: (value: string) => void;
   onHomeNumberChange: (value: string) => void;
   onAlternativeNumberChange: (value: string) => void;
-  onCitizenshipChange: (value: string) => void;
-  onNationalityChange: (value: string | null) => void;
-}
-
-interface Country {
-  label: string;
-  value: string;
+  onNationalityChange: (value: string) => void;
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
@@ -37,55 +31,14 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   mobileNumber,
   homeNumber,
   alternativeNumber,
-  citizenship,
   nationality,
   onCustomerTitleChange,
   onCustomerNameChange,
   onMobileNumberChange,
   onHomeNumberChange,
   onAlternativeNumberChange,
-  onCitizenshipChange,
   onNationalityChange,
 }) => {
-  const [countries, setCountries] = useState<Country[]>([]);
-  const [selectedCountry, setSelectedCountry] = useState<
-    Country | string | null
-  >(null);
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await axios.get("https://restcountries.com/v2/all");
-        const countriesData = response.data.map((country: any) => ({
-          label: country.name,
-          value: country.alpha2Code,
-        }));
-        setCountries(countriesData);
-      } catch (error) {
-        console.log("Error fetching countries:", error);
-      }
-    };
-
-    fetchCountries();
-  }, []);
-
-  const handleCountryChange = (selectedOption: Country | string | null) => {
-    setSelectedCountry(selectedOption);
-    onNationalityChange(
-      typeof selectedOption === "object"
-        ? (selectedOption as Country).value
-        : null
-    );
-  };
-
-  const handleNamePrefixChange = (value: string | undefined) => {
-    onCustomerTitleChange(value);
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onCustomerNameChange(e.target.value);
-  };
-
   const extractDobFromIcNumber = (icNumber: string): string => {
     const dob = icNumber.substr(0, 6); // Extract the DDMMYY portion from the icNumber
     const day = dob.substr(0, 2);
@@ -128,6 +81,18 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     return age;
   };
 
+  const handleNamePrefixChange = (value: string | undefined) => {
+    onCustomerTitleChange(value);
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onCustomerNameChange(e.target.value);
+  };
+
+  const handleNationalityChange = (value: string) => {
+    onNationalityChange(value);
+  };
+
   const formattedDob = inputIcNumber
     ? extractDobFromIcNumber(inputIcNumber)
     : "";
@@ -163,6 +128,15 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={12}>
+              <ProFormText
+                width="md"
+                name="id"
+                label="ID"
+                disabled
+                placeholder={inputIcNumber}
+              />
+            </Col>
+            <Col span={12}>
               <div style={{ marginBottom: 8 }}>
                 <span style={{ color: "red" }}>*</span> Enter Name
               </div>
@@ -173,11 +147,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     defaultValue=""
                     onChange={handleNamePrefixChange}
                   >
-                    <Option value="">Title</Option>
+                    <Option value="">Select</Option>
                     <Option value="Mr.">Mr.</Option>
                     <Option value="Ms.">Ms.</Option>
                     <Option value="Mdm.">Mdm.</Option>
-                    <Option value="Dr.">Dr.</Option>
                   </Select>
                 }
                 value={customerName}
@@ -185,134 +158,42 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 placeholder="Full Name"
               />
             </Col>
-            <Col span={12}>
-              <ProFormText
-                width="md"
-                name="id"
-                label="ID"
-                disabled
-                placeholder={inputIcNumber}
-              />
-            </Col>
-
-            <Col span={12}>
-              <div style={{ marginBottom: 8 }}>
-                <span style={{ color: "red" }}>*</span> Citizenship
-              </div>
-              <Radio.Group
-                value={citizenship}
-                onChange={(e) => onCitizenshipChange(e.target.value)}
-              >
-                <Radio value="Malaysian">Malaysian</Radio>
-                <Radio value="Non-Malaysian">Non-Malaysian</Radio>
-              </Radio.Group>
-            </Col>
+          </Row>
+        </ProForm.Group>
+        <ProForm.Group>
+          <Row gutter={16}>
             <Col span={12}>
               <div style={{ marginBottom: 8 }}>
                 <span style={{ color: "red" }}>*</span> Nationality
               </div>
               <Select
                 showSearch
-                style={{ width: 300, marginBottom: 16 }} // Set the desired width, such as 200px
+                value={nationality}
+                onChange={handleNationalityChange}
                 placeholder="Select Nationality"
-                value={selectedCountry}
-                onChange={handleCountryChange}
-                optionFilterProp="label"
                 filterOption={(input, option) =>
-                  (option?.label?.toString() ?? "")
+                  option &&
+                  option.children &&
+                  (option.children as string)
                     .toLowerCase()
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
-                {countries.map((country) => (
-                  <Option key={country.value} value={country.value}>
-                    {country.label}
+                <Option value="">-- select one --</Option>
+                {nationalities.map((nationality) => (
+                  <Option key={nationality} value={nationality}>
+                    {nationality}
                   </Option>
                 ))}
               </Select>
             </Col>
+            <Col span={12}>
+              {/* Add Radio button component for citizenship here */}
+            </Col>
           </Row>
         </ProForm.Group>
-
         <ProForm.Group>
           <Row gutter={16}>
-            <Col span={8}>
-              <Form.Item
-                label="Race"
-                name="race"
-                rules={[{ required: true, message: "Please select Race" }]}
-              >
-                <Select
-                  style={{ width: "md" }}
-                  placeholder="Please select a Race"
-                >
-                  <Select.Option value="C">
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <SquircleBorder
-                        size={20}
-                        curvature={0.43}
-                        backgroundColor={light["volcano.2"]}
-                        rotate={0}
-                        borderType="dashed"
-                        borderWidth={1}
-                        borderColor="transparent"
-                        fontWeight={700}
-                        character="C"
-                      />
-                      <span style={{ marginLeft: "8px" }}>Chinese</span>
-                    </div>
-                  </Select.Option>
-                  <Select.Option value="I">
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <SquircleBorder
-                        size={20}
-                        curvature={0.43}
-                        backgroundColor={light["purple.2"]}
-                        rotate={0}
-                        borderType="dashed"
-                        borderWidth={1}
-                        borderColor="transparent"
-                        fontWeight={700}
-                        character="I"
-                      />
-                      <span style={{ marginLeft: "8px" }}>Indian</span>
-                    </div>
-                  </Select.Option>
-                  <Select.Option value="M">
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <SquircleBorder
-                        size={20}
-                        curvature={0.43}
-                        backgroundColor={light["grass.2"]}
-                        rotate={0}
-                        borderType="dashed"
-                        borderWidth={1}
-                        borderColor="transparent"
-                        fontWeight={700}
-                        character="M"
-                      />
-                      <span style={{ marginLeft: "8px" }}>Malay</span>
-                    </div>
-                  </Select.Option>
-                  <Select.Option value="O">
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <SquircleBorder
-                        size={20}
-                        curvature={0.43}
-                        backgroundColor={light["yellow.2"]}
-                        rotate={0}
-                        borderType="dashed"
-                        borderWidth={1}
-                        borderColor="transparent"
-                        fontWeight={700}
-                        character="O"
-                      />
-                      <span style={{ marginLeft: "8px" }}>Others</span>
-                    </div>
-                  </Select.Option>
-                </Select>
-              </Form.Item>
-            </Col>
             <Col span={8}>
               <ProFormText
                 width="md"
@@ -331,9 +212,16 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 placeholder={age.toString()}
               />
             </Col>
+            <Col span={8}>
+              <ProFormText
+                width="md"
+                name="race"
+                label="Race"
+                rules={[{ required: true, message: "Please enter Race" }]}
+              />
+            </Col>
           </Row>
         </ProForm.Group>
-
         <ProForm.Group>
           <Row gutter={16}>
             <Col span={8}>
@@ -379,7 +267,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <Col span={8}>
               <Form.Item
                 label="Other Contact Number"
-                name="otherContact"
+                name="otherContactNumber"
                 tooltip="Valid alternative contact number"
                 rules={[{ validator: validateDigitsOnly }]}
               >

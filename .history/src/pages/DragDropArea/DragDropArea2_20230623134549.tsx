@@ -60,7 +60,7 @@ const DragDropArea2: React.FC = () => {
   const [alternativeNumber, setAlternativeNumber] = useState("");
 
   const [citizenship, setCitizenship] = useState<string>("");
-  const [nationality, setNationality] = useState<string | null>(null);
+  const [nationality, setNationality] = useState<string>("");
 
   const handleCustomerTitleChange = (value: string | undefined) => {
     setCustomerTitle(value);
@@ -82,7 +82,7 @@ const DragDropArea2: React.FC = () => {
     setCitizenship(value);
   };
 
-  const handleNationalityChange = (value: string | null) => {
+  const handleNationalityChange = (value: string) => {
     setNationality(value);
   };
 
