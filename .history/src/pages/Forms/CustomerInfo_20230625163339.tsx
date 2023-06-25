@@ -176,16 +176,13 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="race"
                 rules={[{ required: true, message: "Please select Race" }]}
               >
-                <Select
-                  style={{ width: "md" }}
-                  placeholder="Please select a Race"
-                >
+                <Select style={{ width: "md" }} placeholder="Select Race">
                   <Select.Option value="C">
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <SquircleBorder
-                        size={20}
+                        size={25}
                         curvature={0.43}
-                        backgroundColor={light["volcano.2"]}
+                        backgroundColor={light["red.1"]}
                         rotate={0}
                         borderType="dashed"
                         borderWidth={1}
@@ -199,9 +196,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   <Select.Option value="I">
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <SquircleBorder
-                        size={20}
+                        size={25}
                         curvature={0.43}
-                        backgroundColor={light["purple.2"]}
+                        backgroundColor={light["shades.1"]}
                         rotate={0}
                         borderType="dashed"
                         borderWidth={1}
@@ -215,9 +212,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   <Select.Option value="M">
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <SquircleBorder
-                        size={20}
+                        size={25}
                         curvature={0.43}
-                        backgroundColor={light["grass.2"]}
+                        backgroundColor={light["lime.1"]}
                         rotate={0}
                         borderType="dashed"
                         borderWidth={1}
@@ -231,9 +228,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   <Select.Option value="O">
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <SquircleBorder
-                        size={20}
+                        size={25}
                         curvature={0.43}
-                        backgroundColor={light["yellow.2"]}
+                        backgroundColor={light["yellow.1"]}
                         rotate={0}
                         borderType="dashed"
                         borderWidth={1}

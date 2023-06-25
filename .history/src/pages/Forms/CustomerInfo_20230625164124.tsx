@@ -176,16 +176,13 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="race"
                 rules={[{ required: true, message: "Please select Race" }]}
               >
-                <Select
-                  style={{ width: "md" }}
-                  placeholder="Please select a Race"
-                >
+                <Select style={{ width: "md" }} placeholder="Select Race">
                   <Select.Option value="C">
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <SquircleBorder
                         size={20}
                         curvature={0.43}
-                        backgroundColor={light["volcano.2"]}
+                        backgroundColor={light["volcano.1"]}
                         rotate={0}
                         borderType="dashed"
                         borderWidth={1}
