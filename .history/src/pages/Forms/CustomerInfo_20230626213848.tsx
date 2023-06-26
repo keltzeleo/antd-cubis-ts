@@ -295,7 +295,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                       <SquircleBorder
                         size={20}
                         curvature={0.43}
-                        backgroundColor={light["magenta.2"]}
+                        backgroundColor={light["purple.1"]}
                         rotate={0}
                         borderType="dashed"
                         borderWidth={1}
