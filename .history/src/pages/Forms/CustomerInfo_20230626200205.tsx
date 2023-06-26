@@ -8,12 +8,6 @@ import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder
 
 const { Option } = Select;
 
-interface Country {
-  label: string;
-  value: string;
-  flag: string;
-}
-
 interface CustomerInfoProps {
   customerTitle: string | undefined;
   customerName: string;
@@ -30,6 +24,12 @@ interface CustomerInfoProps {
   onAlternativeNumberChange: (value: string) => void;
   onCitizenshipChange: (value: string) => void;
   onNationalityChange: (value: string | null) => void;
+}
+
+interface Country {
+  label: string;
+  value: string;
+  flag: string; // Add the flag property of type string
 }
 
 const CustomerInfo: React.FC<CustomerInfoProps> = ({
@@ -51,8 +51,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
 }) => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-  const [dobFromId, setDobFromId] = useState<string>("");
-  const [age, setAge] = useState<number>(0);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -64,6 +62,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
           flag: country.flags.png,
         }));
 
+        // Sort the countriesData array alphabetically by country name
         countriesData.sort((a: Country, b: Country) =>
           a.label.localeCompare(b.label)
         );
@@ -76,51 +75,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
 
     fetchCountries();
   }, []);
-
-  const extractDobFromIcNumber = (icNumber: string): string => {
-    const year = icNumber.substr(0, 2);
-    const month = icNumber.substr(2, 2);
-    const date = icNumber.substr(4, 2);
-    const currentYear = new Date().getFullYear();
-    const centuryPrefix = (
-      currentYear - (parseInt(year, 10) > currentYear % 100 ? 100 : 0)
-    )
-      .toString()
-      .substr(0, 2);
-
-    const formattedDob = `${date}-${month}-${centuryPrefix}${year}`;
-    return formattedDob;
-  };
-
-  const calculateAge = (dob: string): number => {
-    const today = new Date();
-    const birthDate = new Date(
-      parseInt(dob.substring(6, 10), 10),
-      parseInt(dob.substring(3, 5), 10) - 1,
-      parseInt(dob.substring(0, 2), 10)
-    );
-
-    let age = today.getFullYear() - birthDate.getFullYear();
-
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-    const dayDifference = today.getDate() - birthDate.getDate();
-
-    if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
-      age--;
-    }
-
-    return age;
-  };
-
-  useEffect(() => {
-    const formattedDob = inputIcNumber
-      ? extractDobFromIcNumber(inputIcNumber)
-      : "";
-    const age = formattedDob ? calculateAge(formattedDob) : 0;
-
-    setDobFromId(formattedDob);
-    setAge(age);
-  }, [inputIcNumber]);
 
   const handleCountryChange = (selectedOption: Country | null) => {
     setSelectedCountry(selectedOption);
@@ -135,20 +89,58 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     onCustomerNameChange(e.target.value);
   };
 
+  const extractDobFromIcNumber = (icNumber: string): string => {
+    const dob = icNumber.substr(0, 6); // Extract the DDMMYY portion from the icNumber
+    const year = dob.substr(0, 2);
+    const month = dob.substr(2, 2);
+    const date = dob.substr(4, 2); // Extract the year part from the dob
+
+    const currentYear = new Date().getFullYear(); // Get the current year
+
+    let centuryPrefix = ""; // Determine the century prefix dynamically
+
+    if (parseInt(year, 10) > currentYear % 100) {
+      // If the year is greater than the last two digits of the current year, assume it belongs to the previous century
+      centuryPrefix = (currentYear - 100).toString().substr(0, 2);
+    } else {
+      // Otherwise, assume it belongs to the current century
+      centuryPrefix = currentYear.toString().substr(0, 2);
+    }
+
+    const formattedDob = `${dob.substr(4, 2)}-${dob.substr(
+      2,
+      2
+    )}-${centuryPrefix}${year}`;
+    return formattedDob;
+  };
+
+  const calculateAge = (dob: string): number => {
+    const today = new Date();
+    const birthDate = new Date(dob);
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  const formattedDob = inputIcNumber
+    ? extractDobFromIcNumber(inputIcNumber)
+    : "";
+  const age = formattedDob ? calculateAge(formattedDob) : 0;
+
   const validateDigitsOnly = (_: any, value: string) => {
     if (value && !/^\d+$/.test(value)) {
       return Promise.reject(new Error("Please enter digits only."));
     }
     return Promise.resolve();
-  };
-
-  const formatDob = (dob: string): string => {
-    const dateParts = dob.split("-");
-    if (dateParts.length === 3) {
-      const [day, month, year] = dateParts;
-      return `${day}-${month}-${year}`;
-    }
-    return dob;
   };
 
   return (
@@ -216,6 +208,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   <Radio style={{ marginLeft: 16 }} value="Malaysian">
                     Malaysian
                   </Radio>
+
                   <Radio style={{ marginLeft: 16 }} value="Non-Malaysian">
                     Non-Malaysian
                   </Radio>
@@ -347,11 +340,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="dob"
                 label="D.O.B"
                 disabled
-                placeholder={
-                  inputIcNumber
-                    ? formatDob(extractDobFromIcNumber(inputIcNumber))
-                    : ""
-                }
+                placeholder={formattedDob}
               />
             </Col>
             <Col span={8}>

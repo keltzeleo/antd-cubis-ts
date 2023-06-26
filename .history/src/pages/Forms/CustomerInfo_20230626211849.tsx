@@ -113,14 +113,20 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   };
 
   useEffect(() => {
+    if (errorMessage !== "") {
+      setDobFromId("");
+      setAge(NaN);
+      return;
+    }
+
     const formattedDob = inputIcNumber
       ? extractDobFromIcNumber(inputIcNumber)
       : "";
-    const age = formattedDob ? calculateAge(formattedDob) : 0;
+    const age = formattedDob ? calculateAge(formattedDob) : NaN;
 
     setDobFromId(formattedDob);
     setAge(age);
-  }, [inputIcNumber]);
+  }, [inputIcNumber, errorMessage]);
 
   const handleCountryChange = (selectedOption: Country | null) => {
     setSelectedCountry(selectedOption);

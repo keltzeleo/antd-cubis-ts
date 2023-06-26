@@ -94,12 +94,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
 
   const calculateAge = (dob: string): number => {
     const today = new Date();
-    const birthDate = new Date(
-      parseInt(dob.substring(6, 10), 10),
-      parseInt(dob.substring(3, 5), 10) - 1,
-      parseInt(dob.substring(0, 2), 10)
-    );
-
+    const birthDate = new Date(dob);
     let age = today.getFullYear() - birthDate.getFullYear();
 
     const monthDifference = today.getMonth() - birthDate.getMonth();
@@ -140,15 +135,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
       return Promise.reject(new Error("Please enter digits only."));
     }
     return Promise.resolve();
-  };
-
-  const formatDob = (dob: string): string => {
-    const dateParts = dob.split("-");
-    if (dateParts.length === 3) {
-      const [day, month, year] = dateParts;
-      return `${day}-${month}-${year}`;
-    }
-    return dob;
   };
 
   return (
@@ -347,11 +333,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="dob"
                 label="D.O.B"
                 disabled
-                placeholder={
-                  inputIcNumber
-                    ? formatDob(extractDobFromIcNumber(inputIcNumber))
-                    : ""
-                }
+                placeholder={dobFromId}
               />
             </Col>
             <Col span={8}>
@@ -360,7 +342,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="age"
                 label="Age"
                 disabled
-                placeholder={age.toString()}
+                placeholder={isNaN(age) ? "" : age.toString()}
               />
             </Col>
           </Row>

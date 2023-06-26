@@ -51,7 +51,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
 }) => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-  const [dobFromId, setDobFromId] = useState<string>("");
   const [age, setAge] = useState<number>(0);
 
   useEffect(() => {
@@ -77,29 +76,31 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     fetchCountries();
   }, []);
 
-  const extractDobFromIcNumber = (icNumber: string): string => {
-    const year = icNumber.substr(0, 2);
-    const month = icNumber.substr(2, 2);
-    const date = icNumber.substr(4, 2);
-    const currentYear = new Date().getFullYear();
-    const centuryPrefix = (
-      currentYear - (parseInt(year, 10) > currentYear % 100 ? 100 : 0)
-    )
-      .toString()
-      .substr(0, 2);
+  const handleCountryChange = (selectedOption: Country | null) => {
+    setSelectedCountry(selectedOption);
+    onNationalityChange(selectedOption?.value ?? null);
+  };
 
-    const formattedDob = `${date}-${month}-${centuryPrefix}${year}`;
+  const handleNamePrefixChange = (value: string | undefined) => {
+    onCustomerTitleChange(value);
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onCustomerNameChange(e.target.value);
+  };
+
+  const extractDobFromIcNumber = (icNumber: string): string => {
+    const date = icNumber.substr(0, 2);
+    const month = icNumber.substr(2, 2);
+    const year = icNumber.substr(4, 4);
+
+    const formattedDob = `${date}-${month}-${year}`;
     return formattedDob;
   };
 
   const calculateAge = (dob: string): number => {
     const today = new Date();
-    const birthDate = new Date(
-      parseInt(dob.substring(6, 10), 10),
-      parseInt(dob.substring(3, 5), 10) - 1,
-      parseInt(dob.substring(0, 2), 10)
-    );
-
+    const birthDate = new Date(dob);
     let age = today.getFullYear() - birthDate.getFullYear();
 
     const monthDifference = today.getMonth() - birthDate.getMonth();
@@ -118,37 +119,14 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
       : "";
     const age = formattedDob ? calculateAge(formattedDob) : 0;
 
-    setDobFromId(formattedDob);
     setAge(age);
   }, [inputIcNumber]);
-
-  const handleCountryChange = (selectedOption: Country | null) => {
-    setSelectedCountry(selectedOption);
-    onNationalityChange(selectedOption?.value ?? null);
-  };
-
-  const handleNamePrefixChange = (value: string | undefined) => {
-    onCustomerTitleChange(value);
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onCustomerNameChange(e.target.value);
-  };
 
   const validateDigitsOnly = (_: any, value: string) => {
     if (value && !/^\d+$/.test(value)) {
       return Promise.reject(new Error("Please enter digits only."));
     }
     return Promise.resolve();
-  };
-
-  const formatDob = (dob: string): string => {
-    const dateParts = dob.split("-");
-    if (dateParts.length === 3) {
-      const [day, month, year] = dateParts;
-      return `${day}-${month}-${year}`;
-    }
-    return dob;
   };
 
   return (
@@ -348,10 +326,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 label="D.O.B"
                 disabled
                 placeholder={
-                  inputIcNumber
-                    ? formatDob(extractDobFromIcNumber(inputIcNumber))
-                    : ""
-                }
+                  inputIcNumber ? extractDobFromIcNumber(inputIcNumber) : ""
+                  fieldProps={{
+                    format: "DD-MM-YYYY", // Set the format to DD-MM-YYYY
+                  }}}
               />
             </Col>
             <Col span={8}>

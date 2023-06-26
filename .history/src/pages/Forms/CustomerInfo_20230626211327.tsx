@@ -78,38 +78,11 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   }, []);
 
   const extractDobFromIcNumber = (icNumber: string): string => {
-    const year = icNumber.substr(0, 2);
-    const month = icNumber.substr(2, 2);
-    const date = icNumber.substr(4, 2);
-    const currentYear = new Date().getFullYear();
-    const centuryPrefix = (
-      currentYear - (parseInt(year, 10) > currentYear % 100 ? 100 : 0)
-    )
-      .toString()
-      .substr(0, 2);
-
-    const formattedDob = `${date}-${month}-${centuryPrefix}${year}`;
-    return formattedDob;
+    // ... existing code ...
   };
 
   const calculateAge = (dob: string): number => {
-    const today = new Date();
-    const birthDate = new Date(
-      parseInt(dob.substring(6, 10), 10),
-      parseInt(dob.substring(3, 5), 10) - 1,
-      parseInt(dob.substring(0, 2), 10)
-    );
-
-    let age = today.getFullYear() - birthDate.getFullYear();
-
-    const monthDifference = today.getMonth() - birthDate.getMonth();
-    const dayDifference = today.getDate() - birthDate.getDate();
-
-    if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
-      age--;
-    }
-
-    return age;
+    // ... existing code ...
   };
 
   useEffect(() => {
@@ -140,15 +113,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
       return Promise.reject(new Error("Please enter digits only."));
     }
     return Promise.resolve();
-  };
-
-  const formatDob = (dob: string): string => {
-    const dateParts = dob.split("-");
-    if (dateParts.length === 3) {
-      const [day, month, year] = dateParts;
-      return `${day}-${month}-${year}`;
-    }
-    return dob;
   };
 
   return (
@@ -347,11 +311,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="dob"
                 label="D.O.B"
                 disabled
-                placeholder={
-                  inputIcNumber
-                    ? formatDob(extractDobFromIcNumber(inputIcNumber))
-                    : ""
-                }
+                placeholder={dobFromId}
               />
             </Col>
             <Col span={8}>
@@ -360,7 +320,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 name="age"
                 label="Age"
                 disabled
-                placeholder={age.toString()}
+                placeholder={isNaN(age) ? "" : age.toString()}
               />
             </Col>
           </Row>
