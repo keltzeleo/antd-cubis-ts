@@ -56,7 +56,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
           marginRight: 8, // Add some spacing between the bullet point and text
         }}
       >
-        &bull; {inputIcNumber} &bull; {/* Updated variable name */}
+        {inputIcNumber} &bull; &nbsp;{/* Updated variable name */}
       </div>
       <div
         style={{
@@ -67,7 +67,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
           whiteSpace: "pre-wrap", // Prevent line breaks
         }}
       >
-        {customerTitle} {customerName} &bull;
+        {customerTitle} {customerName}
       </div>
     </div>
   );

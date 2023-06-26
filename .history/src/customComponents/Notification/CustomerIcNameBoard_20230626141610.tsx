@@ -50,13 +50,11 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
       <div
         style={{
           fontSize: 35,
-          color: darkerColour, // Set the opacity value to make the text translucent
-          display: "flex",
-          alignItems: "center", // Align items vertically in the middle
-          marginRight: 8, // Add some spacing between the bullet point and text
+          color: darkerColour,
+          // Set the opacity value to make the text translucent
         }}
       >
-        &bull; {inputIcNumber} &bull; {/* Updated variable name */}
+        {inputIcNumber} &bull; &nbsp;{/* Updated variable name */}
       </div>
       <div
         style={{
@@ -67,7 +65,7 @@ const CustomerIcNameBoard: React.FC<CustomerIcNameBoardProps> = ({
           whiteSpace: "pre-wrap", // Prevent line breaks
         }}
       >
-        {customerTitle} {customerName} &bull;
+        {customerTitle} {customerName}
       </div>
     </div>
   );
