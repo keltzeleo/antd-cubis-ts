@@ -1,5 +1,4 @@
 import { Button, Input, Select } from "antd";
-import moment from "moment";
 import React, { useState } from "react";
 import "./IdType.css";
 
@@ -20,75 +19,32 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
     onChange(value, "");
   };
 
+  const validateDate = (value: string): boolean => {
+    const regex =
+      /^(0[1-9]|1[0-2])(0[1-9]|1\d|2[0-8]|29(?=-\d{4}(0[48]|[2468][048]|[13579][26]))|30(?=-\d{4}(0[13-9]|1[0-2]))|31(?=-\d{4}(0[13578]|1[02])))-(?=(19|20)\d\d)\d{2}$/;
+    return regex.test(value);
+  };
+
   const handleIcNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     let errorMessage = "";
 
     if (value === "") {
       setErrorMessage("");
-    } else if (value.length >= 4) {
-      const yearValue = value.substring(0, 2); // Extract the year value
-      const monthValue = value.substring(2, 4); // Extract the month value
-
-      const isValidYear =
-        /^0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9]$/.test(
-          yearValue
-        );
-      const isValidMonth = /^0[1-9]|1[0-2]$/.test(monthValue);
-
-      if (!isValidYear || !isValidMonth) {
-        errorMessage = "Invalid Format";
-      } else if (value.length >= 6) {
-        const dateValue = value.substring(4, 6); // Extract the date value
-        const month = parseInt(monthValue, 10);
-        const year = parseInt(yearValue, 10);
-
-        const isLeapYear = moment().year(year).isLeapYear();
-        let maxDaysInMonth;
-
-        if (month === 2) {
-          maxDaysInMonth = isLeapYear ? 29 : 28;
-        } else if ([4, 6, 9, 11].includes(month)) {
-          maxDaysInMonth = 30;
-        } else {
-          maxDaysInMonth = 31;
-        }
-
-        const isValidDate =
-          parseInt(dateValue, 10) >= 1 &&
-          parseInt(dateValue, 10) <= maxDaysInMonth;
-
-        if (!isValidDate) {
-          errorMessage = "Invalid Format";
-        }
+    } else if (value.length >= 6) {
+      if (!validateDate(value.slice(0, 6))) {
+        errorMessage = "Invalid Date";
       }
     }
 
     setErrorMessage(errorMessage);
     setInputValue(value);
-    if (errorMessage === "") {
-      onInputChange(value);
-    }
-  };
-
-  const isValidDate = (value: string): boolean => {
-    const year = value.substring(0, 2);
-    const month = value.substring(2, 4);
-    const date = value.substring(5, 6);
-
-    const formattedDate = moment(`${year}-${month}-${date}`, "YY-MM-DD", true);
-
-    return (
-      formattedDate.isValid() &&
-      formattedDate.format("YY") === year &&
-      formattedDate.format("MM") === month &&
-      formattedDate.format("DD") === date
-    );
+    onInputChange(value);
   };
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const key = event.key;
-    const allowedKeys = ["Backspace", "ArrowLeft", "ArrowRight"];
+    const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight"];
     const input = event.target as HTMLInputElement;
     const selectionStart = input.selectionStart || 0;
     const selectionEnd = input.selectionEnd || 0;
@@ -112,10 +68,6 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
           value.slice(selectionEnd);
       }
       setInputValue(formattedValue);
-    }
-
-    if (errorMessage !== "" && key !== "Backspace" && key !== "Delete") {
-      event.preventDefault();
     }
   };
 

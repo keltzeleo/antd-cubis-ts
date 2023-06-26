@@ -26,41 +26,11 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
 
     if (value === "") {
       setErrorMessage("");
-    } else if (value.length >= 4) {
-      const yearValue = value.substring(0, 2); // Extract the year value
-      const monthValue = value.substring(2, 4); // Extract the month value
+    } else if (value.length >= 6) {
+      const isValid = isValidDate(value);
 
-      const isValidYear =
-        /^0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9]$/.test(
-          yearValue
-        );
-      const isValidMonth = /^0[1-9]|1[0-2]$/.test(monthValue);
-
-      if (!isValidYear || !isValidMonth) {
+      if (!isValid) {
         errorMessage = "Invalid Format";
-      } else if (value.length >= 6) {
-        const dateValue = value.substring(4, 6); // Extract the date value
-        const month = parseInt(monthValue, 10);
-        const year = parseInt(yearValue, 10);
-
-        const isLeapYear = moment().year(year).isLeapYear();
-        let maxDaysInMonth;
-
-        if (month === 2) {
-          maxDaysInMonth = isLeapYear ? 29 : 28;
-        } else if ([4, 6, 9, 11].includes(month)) {
-          maxDaysInMonth = 30;
-        } else {
-          maxDaysInMonth = 31;
-        }
-
-        const isValidDate =
-          parseInt(dateValue, 10) >= 1 &&
-          parseInt(dateValue, 10) <= maxDaysInMonth;
-
-        if (!isValidDate) {
-          errorMessage = "Invalid Format";
-        }
       }
     }
 
@@ -72,18 +42,10 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
   };
 
   const isValidDate = (value: string): boolean => {
-    const year = value.substring(0, 2);
-    const month = value.substring(2, 4);
-    const date = value.substring(5, 6);
+    const formattedDate = moment(value, "YYMMDD", true);
+    const month = formattedDate.month() + 1; // moment's month index is zero-based
 
-    const formattedDate = moment(`${year}-${month}-${date}`, "YY-MM-DD", true);
-
-    return (
-      formattedDate.isValid() &&
-      formattedDate.format("YY") === year &&
-      formattedDate.format("MM") === month &&
-      formattedDate.format("DD") === date
-    );
+    return formattedDate.isValid() && month >= 1 && month <= 12;
   };
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

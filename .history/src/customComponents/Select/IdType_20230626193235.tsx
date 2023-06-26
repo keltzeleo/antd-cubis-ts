@@ -26,41 +26,38 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
 
     if (value === "") {
       setErrorMessage("");
-    } else if (value.length >= 4) {
-      const yearValue = value.substring(0, 2); // Extract the year value
+    } else if (value.length >= 6) {
       const monthValue = value.substring(2, 4); // Extract the month value
+      const dateValue = value.substring(4, 6); // Extract the date value
 
-      const isValidYear =
-        /^0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9]$/.test(
-          yearValue
-        );
-      const isValidMonth = /^0[1-9]|1[0-2]$/.test(monthValue);
+      const isValidMonth =
+        parseInt(monthValue, 10) >= 1 && parseInt(monthValue, 10) <= 12;
 
-      if (!isValidYear || !isValidMonth) {
-        errorMessage = "Invalid Format";
-      } else if (value.length >= 6) {
-        const dateValue = value.substring(4, 6); // Extract the date value
+      const monthHas31Days = [1, 3, 5, 7, 8, 10, 12]; // Months with 31 days
+      const monthHas30Days = [4, 6, 9, 11]; // Months with 30 days
+      const monthHas28or29Days = 2; // February with either 28 or 29 days (leap year)
+
+      let isValidDate = false;
+
+      if (isValidMonth) {
         const month = parseInt(monthValue, 10);
-        const year = parseInt(yearValue, 10);
+        const date = parseInt(dateValue, 10);
 
-        const isLeapYear = moment().year(year).isLeapYear();
-        let maxDaysInMonth;
-
-        if (month === 2) {
-          maxDaysInMonth = isLeapYear ? 29 : 28;
-        } else if ([4, 6, 9, 11].includes(month)) {
-          maxDaysInMonth = 30;
-        } else {
-          maxDaysInMonth = 31;
+        if (monthHas31Days.includes(month)) {
+          isValidDate = date >= 1 && date <= 31;
+        } else if (monthHas30Days.includes(month)) {
+          isValidDate = date >= 1 && date <= 30;
+        } else if (month === monthHas28or29Days) {
+          const yearValue = value.substring(0, 2); // Extract the year value
+          const isLeapYear = moment(yearValue, "YY").isLeapYear();
+          isValidDate =
+            (isLeapYear && date >= 1 && date <= 29) ||
+            (!isLeapYear && date >= 1 && date <= 28);
         }
+      }
 
-        const isValidDate =
-          parseInt(dateValue, 10) >= 1 &&
-          parseInt(dateValue, 10) <= maxDaysInMonth;
-
-        if (!isValidDate) {
-          errorMessage = "Invalid Format";
-        }
+      if (!isValidMonth || !isValidDate) {
+        errorMessage = "Invalid Format";
       }
     }
 

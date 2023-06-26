@@ -1,5 +1,4 @@
 import { Button, Input, Select } from "antd";
-import moment from "moment";
 import React, { useState } from "react";
 import "./IdType.css";
 
@@ -12,6 +11,7 @@ interface IdTypeProps {
 
 const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
+  const [icNumber, setIcNumber] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [inputValue, setInputValue] = useState("");
 
@@ -20,107 +20,90 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
     onChange(value, "");
   };
 
+  const isValidDayOfMonth = (
+    year: number,
+    month: number,
+    day: number
+  ): boolean => {
+    const daysInMonth = new Date(year, month, 0).getDate();
+    return day >= 1 && day <= daysInMonth;
+  };
+
   const handleIcNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     let errorMessage = "";
 
     if (value === "") {
       setErrorMessage("");
-    } else if (value.length >= 4) {
-      const yearValue = value.substring(0, 2); // Extract the year value
-      const monthValue = value.substring(2, 4); // Extract the month value
+    } else if (value.length === 6) {
+      const year = parseInt(value.slice(0, 2), 10) + 2000;
+      const month = parseInt(value.slice(2, 4), 10);
+      const day = parseInt(value.slice(4, 6), 10);
 
-      const isValidYear =
-        /^0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|6[0-9]|7[0-9]|8[0-9]|9[0-9]$/.test(
-          yearValue
-        );
-      const isValidMonth = /^0[1-9]|1[0-2]$/.test(monthValue);
+      if (isNaN(year) || isNaN(month) || isNaN(day)) {
+        errorMessage = "Invalid Format Detected";
+      } else {
+        const isValidDay = isValidDayOfMonth(year, month, day);
+        const isValidMonth = month >= 1 && month <= 12;
 
-      if (!isValidYear || !isValidMonth) {
-        errorMessage = "Invalid Format";
-      } else if (value.length >= 6) {
-        const dateValue = value.substring(4, 6); // Extract the date value
-        const month = parseInt(monthValue, 10);
-        const year = parseInt(yearValue, 10);
-
-        const isLeapYear = moment().year(year).isLeapYear();
-        let maxDaysInMonth;
-
-        if (month === 2) {
-          maxDaysInMonth = isLeapYear ? 29 : 28;
-        } else if ([4, 6, 9, 11].includes(month)) {
-          maxDaysInMonth = 30;
-        } else {
-          maxDaysInMonth = 31;
-        }
-
-        const isValidDate =
-          parseInt(dateValue, 10) >= 1 &&
-          parseInt(dateValue, 10) <= maxDaysInMonth;
-
-        if (!isValidDate) {
-          errorMessage = "Invalid Format";
+        if (!isValidMonth) {
+          errorMessage = "Invalid Month";
+        } else if (!isValidDay) {
+          errorMessage = "Invalid Day for the Selected Month";
         }
       }
     }
 
     setErrorMessage(errorMessage);
     setInputValue(value);
-    if (errorMessage === "") {
-      onInputChange(value);
-    }
-  };
-
-  const isValidDate = (value: string): boolean => {
-    const year = value.substring(0, 2);
-    const month = value.substring(2, 4);
-    const date = value.substring(5, 6);
-
-    const formattedDate = moment(`${year}-${month}-${date}`, "YY-MM-DD", true);
-
-    return (
-      formattedDate.isValid() &&
-      formattedDate.format("YY") === year &&
-      formattedDate.format("MM") === month &&
-      formattedDate.format("DD") === date
-    );
+    onInputChange(value);
   };
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const key = event.key;
-    const allowedKeys = ["Backspace", "ArrowLeft", "ArrowRight"];
     const input = event.target as HTMLInputElement;
-    const selectionStart = input.selectionStart || 0;
-    const selectionEnd = input.selectionEnd || 0;
     const value = input.value;
+    const cursorPosition = input.selectionStart || 0;
+    let errorMessage = "";
 
-    if (!/^\d*$/.test(key) && !allowedKeys.includes(key)) {
+    if (value.length === 6 && key !== "Backspace" && key !== "Delete") {
+      // Prevent input when value length is already 6, except for Backspace and Delete keys
       event.preventDefault();
+      return;
     }
 
-    if (!allowedKeys.includes(key)) {
-      let formattedValue = value;
-      if (selectionStart === selectionEnd) {
-        if (selectionStart === 6 || selectionStart === 9) {
-          formattedValue += "-";
-        }
-      } else {
-        formattedValue =
-          value.slice(0, selectionStart) +
-          "-" +
-          value.slice(selectionStart, selectionEnd) +
-          value.slice(selectionEnd);
+    if (key === "Backspace" || key === "Delete") {
+      // Allow Backspace and Delete keys for input deletion
+      setInputValue(value); // Update input value without formatting
+      setErrorMessage("");
+      return;
+    }
+
+    if (!/^\d$/.test(key)) {
+      // Allow only digits
+      event.preventDefault();
+      return;
+    }
+
+    const updatedValue =
+      value.slice(0, cursorPosition) + key + value.slice(cursorPosition);
+    const year = parseInt(updatedValue.slice(0, 2), 10) + 2000;
+    const month = parseInt(updatedValue.slice(2, 4), 10);
+    const day = parseInt(updatedValue.slice(4, 6), 10);
+
+    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+      errorMessage = "Invalid Format Detected";
+    } else if (month >= 1 && month <= 12) {
+      const isValidDay = isValidDayOfMonth(year, month, day);
+      if (!isValidDay) {
+        errorMessage = "Invalid Day for the Selected Month";
       }
-      setInputValue(formattedValue);
+    } else {
+      errorMessage = "Invalid Month";
     }
 
-    if (errorMessage !== "" && key !== "Backspace" && key !== "Delete") {
-      event.preventDefault();
-    }
-  };
-
-  const handleSearch = () => {
-    // Perform search based on the selectedOption and inputValue
+    setInputValue(updatedValue);
+    setErrorMessage(errorMessage);
   };
 
   return (
@@ -163,23 +146,21 @@ const IdType: React.FC<IdTypeProps> = ({ onChange, onInputChange }) => {
             </Select>
             <Input
               style={{
-                width: "250px",
+                width: "250px", // adjust the width according to your layout
               }}
               placeholder="12-digit number on ID Card"
-              maxLength={14}
-              pattern="^[0-9-]*$"
+              maxLength={14} // Increased maxLength to accommodate dashes
+              pattern="^[0-9-]*$" // Updated pattern to allow dashes as well
               title="ID number must contain only digits"
-              onKeyDown={handleInputKeyDown}
-              onChange={handleIcNumberChange}
+              onKeyDown={handleInputKeyDown} // Updated event handler for input keydown
+              onChange={handleIcNumberChange} // Updated event handler for IC number change
               value={inputValue}
             />
           </div>
         </div>
       </div>
       <div style={{ marginLeft: 8 }} className="search-button-container">
-        <Button type="primary" onClick={handleSearch}>
-          Search
-        </Button>
+        <Button type="primary">Search</Button>
       </div>
       {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
