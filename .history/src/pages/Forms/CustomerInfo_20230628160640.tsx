@@ -226,7 +226,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               <Form.Item label="Nationality">
                 <Select
                   showSearch
-                  style={{ width: 300, marginBottom: 0 }}
+                  style={{ width: 300, marginBottom: 16 }}
                   placeholder="Select a Nationality"
                   value={selectedCountry}
                   onChange={handleCountryChange}
@@ -433,37 +433,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   onChange={(e) => onAlternativeNumberChange(e.target.value)}
                 />
               </Form.Item>
-            </Col>
-          </Row>
-        </ProForm.Group>
-        <ProForm.Group>
-          <Row gutter={16}>
-            <Col span={8}>
-              <ProFormText
-                width="md"
-                name="email"
-                label="Customer Email"
-                //disabled
-                placeholder="Contactable Email Address"
-              />
-            </Col>
-            <Col span={8}>
-              <ProFormText
-                width="md"
-                name="faxNumber"
-                label="Fax Number"
-                //disabled
-                placeholder="Fax Number if Available"
-              />
-            </Col>
-            <Col span={8}>
-              <ProFormText
-                width="md"
-                name="preferContactChannel"
-                label="Prefer Contact Channel"
-                disabled
-                placeholder={age.toString()}
-              />
             </Col>
           </Row>
         </ProForm.Group>

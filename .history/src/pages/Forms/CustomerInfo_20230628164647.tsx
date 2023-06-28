@@ -226,7 +226,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               <Form.Item label="Nationality">
                 <Select
                   showSearch
-                  style={{ width: 300, marginBottom: 0 }}
+                  style={{ width: 300, marginBottom: 8 }}
                   placeholder="Select a Nationality"
                   value={selectedCountry}
                   onChange={handleCountryChange}
@@ -459,8 +459,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <Col span={8}>
               <ProFormText
                 width="md"
-                name="preferContactChannel"
-                label="Prefer Contact Channel"
+                name="age"
+                label="Age"
                 disabled
                 placeholder={age.toString()}
               />

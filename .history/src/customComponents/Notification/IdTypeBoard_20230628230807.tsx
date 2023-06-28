@@ -1,6 +1,4 @@
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { Collapse, Switch } from "antd";
-
 import React, { useState } from "react";
 import "./IdTypeBoard.css";
 
@@ -35,26 +33,23 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
   boardClassName += " myKad-board";
 
   return (
-    <div className={boardClassName} style={{ padding: "20px", width: "100%" }}>
-      <h2
+    <div>
+      <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          justifyContent: "flex-end",
+          marginBottom: "8px",
         }}
       >
-        {selectedOption} Notification Board
-        <Switch
-          checked={!collapsed}
-          checkedChildren={<EyeOutlined />}
-          unCheckedChildren={<EyeInvisibleOutlined />}
-          defaultChecked
-          onChange={toggleCollapse}
-        />
-      </h2>
-      {!collapsed && (
-        <Collapse bordered={false} defaultActiveKey="1">
-          <Panel header={null} key="1">
+        <Switch checked={!collapsed} onChange={toggleCollapse} />
+      </div>
+      <div
+        className={`${boardClassName} ${collapsed ? "collapsed" : ""}`}
+        style={{ padding: "20px", width: "100%" }}
+      >
+        <h2>{selectedOption} Notification Board</h2>
+        <Collapse activeKey={collapsed ? ["1"] : []}>
+          <Panel key="1" header={null} showArrow={false}>
             <p>
               This is the <b>{selectedOption} notification</b> board. The
               background color changes based on the selected option in the
@@ -76,7 +71,7 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
             </p>
           </Panel>
         </Collapse>
-      )}
+      </div>
     </div>
   );
 };

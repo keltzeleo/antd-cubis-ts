@@ -1,5 +1,5 @@
 import { Alert, Collapse } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import "./IdTypeNotification.css";
 
 const { Panel } = Collapse;

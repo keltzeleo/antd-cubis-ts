@@ -459,8 +459,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <Col span={8}>
               <ProFormText
                 width="md"
-                name="preferContactChannel"
-                label="Prefer Contact Channel"
+                name="age"
+                label="Age"
                 disabled
                 placeholder={age.toString()}
               />
