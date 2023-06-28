@@ -1,6 +1,4 @@
-import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Button, Col, Form, Input, Radio, Row, Select, Steps } from "antd";
-
+import { Button, Form, Input, Radio, Select, Steps } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import light from "../../../src/tokens/light.json";
