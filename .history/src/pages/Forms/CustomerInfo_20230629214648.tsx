@@ -1,5 +1,5 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import { Button, Col, Form, Input, Radio, Row, Select, Steps, Tag } from "antd";
+import { Button, Col, Form, Input, Radio, Row, Select, Steps } from "antd";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -40,6 +40,8 @@ interface CustomerInfoProps {
   alternativeNumber: string;
   citizenship: string;
   nationality: string | null;
+  currentStep: number;
+  onStepChange: (step: number) => void;
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
   onMobileNumberChange: (value: string) => void;
@@ -49,7 +51,7 @@ interface CustomerInfoProps {
   onNationalityChange: (value: string | null) => void;
 }
 
-const CustomerForm: React.FC<CustomerInfoProps> = ({
+const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
   inputIcNumber,
@@ -58,6 +60,8 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
   alternativeNumber,
   citizenship,
   nationality,
+  currentStep,
+  onStepChange,
   onCustomerTitleChange,
   onCustomerNameChange,
   onMobileNumberChange,
@@ -71,6 +75,8 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
   const [dobFromId, setDobFromId] = useState<string>("");
   const [age, setAge] = useState<number>(0);
   const [currentStep, setCurrentStep] = useState(0);
+  const handleStepChange = (step: number) => {
+    onStepChange(step);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -183,12 +189,20 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
 
   return (
     <div style={{ padding: "16px" }}>
-      <div style={{ marginBottom: "16px" }}>
+    <div>
         {steps.map((step, index) => (
           <Tag
             key={index}
-            color={currentStep === index ? light["cyan.6"] : "gray"}
-            onClick={() => setCurrentStep(index)}
+            color={index < currentStep ? "green" : "blue"}
+            style={{
+              marginBottom: "8px",
+              marginRight: "8px",
+              fontSize: "14px",
+              borderRadius: "16px",
+              padding: "4px 12px",
+              cursor: "pointer",
+            }}
+            onClick={() => handleStepChange(index)}
           >
             {step.title}
           </Tag>
@@ -614,4 +628,4 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
   );
 };
 
-export default CustomerForm;
+export default CustomerInfo;

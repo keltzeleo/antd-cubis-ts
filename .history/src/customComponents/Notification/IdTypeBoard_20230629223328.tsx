@@ -1,6 +1,7 @@
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { Collapse, Switch } from "antd";
-
 import React, { useState } from "react";
+import ConsumerIcNameBoard from "../../customComponents/Notification/ConsumerIcNameBoard";
 import "./IdTypeBoard.css";
 
 const { Panel } = Collapse;
@@ -30,9 +31,6 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
     boardClassName += " forCommercial-board";
   }
 
-  // Add the initial color class
-  boardClassName += " myKad-board";
-
   return (
     <div className={boardClassName} style={{ padding: "20px", width: "100%" }}>
       <h2
@@ -45,9 +43,9 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
         {selectedOption} Notification Board
         <Switch
           checked={!collapsed}
-          checkedChildren="Show"
-          unCheckedChildren="Hide"
-          defaultChecked
+          checkedChildren={<EyeOutlined />}
+          unCheckedChildren={<EyeInvisibleOutlined />}
+          defaultChecked={!collapsed}
           onChange={toggleCollapse}
         />
       </h2>
@@ -76,6 +74,7 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
           </Panel>
         </Collapse>
       )}
+      <ConsumerIcNameBoard selectedOption={selectedOption} />
     </div>
   );
 };

@@ -527,60 +527,122 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
 
       {currentStep === 1 && (
         <Form>
-          <Form.Item label="Lot No">
-            <Input />
-          </Form.Item>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item label="Lot No">
+                <Input
+                  value={formData.lotNo}
+                  onChange={(e) => onChange("lotNo", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label="Block No">
+                <Input
+                  value={formData.blockNo}
+                  onChange={(e) => onChange("blockNo", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label="Premise No">
+                <Input
+                  value={formData.premiseNo}
+                  onChange={(e) => onChange("premiseNo", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item label="Block No">
-            <Input />
-          </Form.Item>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item label="Premise Name">
+                <Input
+                  value={formData.premiseName}
+                  onChange={(e) => onChange("premiseName", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Road">
+                <Input
+                  value={formData.road}
+                  onChange={(e) => onChange("road", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item label="Premise No">
-            <Input />
-          </Form.Item>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item label="Garden">
+                <Input
+                  value={formData.garden}
+                  onChange={(e) => onChange("garden", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label="Section">
+                <Input
+                  value={formData.section}
+                  onChange={(e) => onChange("section", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label="Village">
+                <Input
+                  value={formData.village}
+                  onChange={(e) => onChange("village", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item label="Premise Name">
-            <Input />
-          </Form.Item>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item label="Area">
+                <Input
+                  value={formData.area}
+                  onChange={(e) => onChange("area", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label="Post Code">
+                <Input
+                  value={formData.postCode}
+                  onChange={(e) => onChange("postCode", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label="Post Code Area">
+                <Input
+                  value={formData.postCodeArea}
+                  onChange={(e) => onChange("postCodeArea", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item label="Road">
-            <Input />
-          </Form.Item>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item label="State">
+                <Input
+                  value={formData.state}
+                  onChange={(e) => onChange("state", e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Form.Item label="Garden">
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Section">
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Village">
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Area">
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Post Code">
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Post Code Area">
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="State">
-            <Input />
-          </Form.Item>
-
-          {/* Render navigation buttons */}
           <div>
-            <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
+            <Button style={{ marginRight: 8 }} onClick={handlePrev}>
               Previous
             </Button>
-            <Button type="primary" onClick={handleNextStep}>
+            <Button type="primary" onClick={handleNext}>
               Next
             </Button>
           </div>

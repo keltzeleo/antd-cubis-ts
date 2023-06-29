@@ -49,7 +49,7 @@ interface CustomerInfoProps {
   onNationalityChange: (value: string | null) => void;
 }
 
-const CustomerForm: React.FC<CustomerInfoProps> = ({
+const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
   inputIcNumber,
@@ -185,11 +185,7 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
     <div style={{ padding: "16px" }}>
       <div style={{ marginBottom: "16px" }}>
         {steps.map((step, index) => (
-          <Tag
-            key={index}
-            color={currentStep === index ? light["cyan.6"] : "gray"}
-            onClick={() => setCurrentStep(index)}
-          >
+          <Tag key={index} color={currentStep === index ? "cyan.6" : "gray"}>
             {step.title}
           </Tag>
         ))}
@@ -614,4 +610,4 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
   );
 };
 
-export default CustomerForm;
+export default CustomerInfo;

@@ -40,6 +40,7 @@ interface CustomerInfoProps {
   alternativeNumber: string;
   citizenship: string;
   nationality: string | null;
+  onStepChange: (step: number) => void;
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
   onMobileNumberChange: (value: string) => void;
@@ -49,7 +50,7 @@ interface CustomerInfoProps {
   onNationalityChange: (value: string | null) => void;
 }
 
-const CustomerForm: React.FC<CustomerInfoProps> = ({
+const CustomerInfo: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
   inputIcNumber,
@@ -58,6 +59,7 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
   alternativeNumber,
   citizenship,
   nationality,
+  onStepChange,
   onCustomerTitleChange,
   onCustomerNameChange,
   onMobileNumberChange,
@@ -183,12 +185,20 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
 
   return (
     <div style={{ padding: "16px" }}>
-      <div style={{ marginBottom: "16px" }}>
+      <div>
         {steps.map((step, index) => (
           <Tag
             key={index}
-            color={currentStep === index ? light["cyan.6"] : "gray"}
-            onClick={() => setCurrentStep(index)}
+            color={index < currentStep ? "green" : "blue"}
+            style={{
+              marginBottom: "8px",
+              marginRight: "8px",
+              fontSize: "14px",
+              borderRadius: "16px",
+              padding: "4px 12px",
+              cursor: "pointer",
+            }}
+            onClick={() => onStepChange(index)}
           >
             {step.title}
           </Tag>
@@ -614,4 +624,4 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
   );
 };
 
-export default CustomerForm;
+export default CustomerInfo;

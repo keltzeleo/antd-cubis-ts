@@ -1,5 +1,5 @@
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { Collapse, Switch } from "antd";
-
 import React, { useState } from "react";
 import "./IdTypeBoard.css";
 
@@ -33,6 +33,16 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
   // Add the initial color class
   boardClassName += " myKad-board";
 
+  const styles = {
+    switchContainer: {
+      display: "flex",
+      alignItems: "center",
+    },
+    icon: {
+      marginRight: "4px",
+    },
+  };
+
   return (
     <div className={boardClassName} style={{ padding: "20px", width: "100%" }}>
       <h2
@@ -44,9 +54,10 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
       >
         {selectedOption} Notification Board
         <Switch
+          style={styles.switchContainer}
           checked={!collapsed}
-          checkedChildren="Show"
-          unCheckedChildren="Hide"
+          checkedChildren={<EyeOutlined style={styles.icon} />}
+          unCheckedChildren={<EyeInvisibleOutlined style={styles.icon} />}
           defaultChecked
           onChange={toggleCollapse}
         />

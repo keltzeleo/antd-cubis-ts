@@ -1,3 +1,4 @@
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { Collapse, Switch } from "antd";
 
 import React, { useState } from "react";
@@ -45,8 +46,10 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
         {selectedOption} Notification Board
         <Switch
           checked={!collapsed}
-          checkedChildren="Show"
-          unCheckedChildren="Hide"
+          checkedChildren={<EyeOutlined style={{ verticalAlign: "middle" }} />}
+          unCheckedChildren={
+            <EyeInvisibleOutlined style={{ verticalAlign: "middle" }} />
+          }
           defaultChecked
           onChange={toggleCollapse}
         />
