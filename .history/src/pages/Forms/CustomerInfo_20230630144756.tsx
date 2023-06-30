@@ -99,10 +99,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
       );
       if (response.status === 200) {
         const data = response.data;
-        if (Array.isArray(data) && data.length > 0) {
-          const state = data[0].state;
-          setStateData(state);
-        }
+        const state = data[0]?.state;
+        setStateData(state || "");
       }
     } catch (error) {
       console.log("Error fetching state data:", error);
@@ -635,10 +633,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                         width="md"
                         name="postcode"
                         label="Postcode"
-                        fieldProps={{
-                          onChange: async (event) =>
-                            await fetchStateData(event.target.value),
-                        }}
+                        onChange={(value) => fetchStateData(value)}
                       />
                     </Col>
                     <Col style={{ width: "200px" }}>

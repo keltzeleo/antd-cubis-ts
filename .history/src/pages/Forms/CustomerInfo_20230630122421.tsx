@@ -60,7 +60,7 @@ interface CustomerInfoProps {
   onNationalityChange: (value: string | null) => void;
 }
 
-const CustomerInfo: React.FC<CustomerInfoProps> = ({
+const CustomerForm: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
   inputIcNumber,
@@ -82,32 +82,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const [dobFromId, setDobFromId] = useState<string>("");
   const [age, setAge] = useState<number>(0);
   const [currentStep, setCurrentStep] = useState(0);
-  const [addressData, setAddressData] = useState<string[]>([]);
-  const [stateData, setStateData] = useState<string>("");
-
-  useEffect(() => {
-    if (addressData.length > 0) {
-      const postcode = addressData[0];
-      fetchStateData(postcode);
-    }
-  }, [addressData]);
-
-  const fetchStateData = async (postcode: string) => {
-    try {
-      const response = await axios.get(
-        `https://api.postcode.my/postcode/${postcode}`
-      );
-      if (response.status === 200) {
-        const data = response.data;
-        if (Array.isArray(data) && data.length > 0) {
-          const state = data[0].state;
-          setStateData(state);
-        }
-      }
-    } catch (error) {
-      console.log("Error fetching state data:", error);
-    }
-  };
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -570,7 +544,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 <ProFormText
                   width="md"
                   name="lotNo"
-                  label="Lot No."
+                  label="Lot No"
                   placeholder="Lot Number"
                 />
               </Col>
@@ -578,87 +552,26 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 <ProFormText
                   width="md"
                   name="blockNo"
-                  label="Block"
+                  label="Block No"
                   placeholder="Block Number"
                 />
               </Col>
               <Col span={12}>
-                <ProForm.Item>
-                  <Space.Compact>
-                    <Col style={{ width: "100px" }}>
-                      <ProFormText
-                        width="md"
-                        name="premiseNo"
-                        label="Premise No."
-                        placeholder="Number"
-                      />
-                    </Col>
-                    <Col style={{ width: "200px" }}>
-                      <ProFormText
-                        name="premiseName"
-                        label="Premise Name"
-                        placeholder="Premise Name"
-                      />
-                    </Col>
-                  </Space.Compact>
-                </ProForm.Item>
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormText width="md" name="garden" label="Garden" />
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="section" label="Section" />
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormText width="md" name="village" label="Village" />
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="area" label="Area" />
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProForm.Item>
-                  <Space.Compact>
-                    <Col style={{ width: "100px" }}>
-                      <ProFormText
-                        width="md"
-                        name="postcode"
-                        label="Postcode"
-                        fieldProps={{
-                          onChange: async (event) =>
-                            await fetchStateData(event.target.value),
-                        }}
-                      />
-                    </Col>
-                    <Col style={{ width: "200px" }}>
-                      <ProFormText
-                        name="postcodeArea"
-                        label="Postcode Area"
-                        placeholder="Postcode Area"
-                      />
-                    </Col>
-                  </Space.Compact>
-                </ProForm.Item>
-              </Col>
-              <Col span={12}>
-                <ProFormText
-                  width="md"
-                  name="state"
-                  label="State"
-                  disabled
-                  initialValue={stateData}
-                />
+                <Space.Compact>
+                  <Col span={24}>
+                    <ProFormText
+                      style={{ width: "10%" }}
+                      name="premiseNo"
+                      label="Premise No"
+                      placeholder="Premise Number"
+                    />
+                  </Col>
+                  <ProFormText
+                    name="premiseName"
+                    label="Premise Name"
+                    placeholder="Premise Name"
+                  />
+                </Space.Compact>
               </Col>
             </Row>
           </ProForm.Group>
@@ -692,4 +605,4 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   );
 };
 
-export default CustomerInfo;
+export default CustomerForm;

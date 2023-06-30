@@ -42,6 +42,10 @@ interface Country {
   flag: string;
 }
 
+interface AddressData {
+  address: string;
+}
+
 interface CustomerInfoProps {
   customerTitle: string | undefined;
   customerName: string;
@@ -60,7 +64,7 @@ interface CustomerInfoProps {
   onNationalityChange: (value: string | null) => void;
 }
 
-const CustomerInfo: React.FC<CustomerInfoProps> = ({
+const CustomerForm: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
   inputIcNumber,
@@ -82,30 +86,27 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const [dobFromId, setDobFromId] = useState<string>("");
   const [age, setAge] = useState<number>(0);
   const [currentStep, setCurrentStep] = useState(0);
-  const [addressData, setAddressData] = useState<string[]>([]);
-  const [stateData, setStateData] = useState<string>("");
+  const [postcodeArea, setPostcodeArea] = useState<string>("");
+  const [state, setState] = useState<string>("");
 
-  useEffect(() => {
-    if (addressData.length > 0) {
-      const postcode = addressData[0];
-      fetchStateData(postcode);
-    }
-  }, [addressData]);
-
-  const fetchStateData = async (postcode: string) => {
+  const handlePostcodeChange = async (postcode: string) => {
     try {
       const response = await axios.get(
         `https://api.postcode.my/postcode/${postcode}`
       );
       if (response.status === 200) {
         const data = response.data;
-        if (Array.isArray(data) && data.length > 0) {
-          const state = data[0].state;
-          setStateData(state);
+        if (data && data.data && data.data.length > 0) {
+          const addressData: AddressData = data.data[0];
+          setPostcodeArea(addressData.postcode_area);
+          setState(addressData.state);
+        } else {
+          setPostcodeArea("");
+          setState("");
         }
       }
     } catch (error) {
-      console.log("Error fetching state data:", error);
+      console.log("Error retrieving postcode data:", error);
     }
   };
 
@@ -635,10 +636,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                         width="md"
                         name="postcode"
                         label="Postcode"
-                        fieldProps={{
-                          onChange: async (event) =>
-                            await fetchStateData(event.target.value),
-                        }}
+                        placeholder="enter postcode"
                       />
                     </Col>
                     <Col style={{ width: "200px" }}>
@@ -652,13 +650,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 </ProForm.Item>
               </Col>
               <Col span={12}>
-                <ProFormText
-                  width="md"
-                  name="state"
-                  label="State"
-                  disabled
-                  initialValue={stateData}
-                />
+                <ProFormText width="md" name="state" label="State" />
               </Col>
             </Row>
           </ProForm.Group>
@@ -692,4 +684,4 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   );
 };
 
-export default CustomerInfo;
+export default CustomerForm;

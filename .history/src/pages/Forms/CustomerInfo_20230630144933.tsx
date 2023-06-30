@@ -636,8 +636,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                         name="postcode"
                         label="Postcode"
                         fieldProps={{
-                          onChange: async (event) =>
-                            await fetchStateData(event.target.value),
+                          onChange: (e) => fetchStateData(e.target.value),
                         }}
                       />
                     </Col>
