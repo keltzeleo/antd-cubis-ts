@@ -85,13 +85,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const [addressData, setAddressData] = useState<string[]>([]);
   const [stateData, setStateData] = useState<string>("");
 
-  useEffect(() => {
-    if (addressData.length > 0) {
-      const postcode = addressData[0];
-      fetchStateData(postcode);
-    }
-  }, [addressData]);
-
   const fetchStateData = async (postcode: string) => {
     try {
       const response = await axios.get(
@@ -99,10 +92,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
       );
       if (response.status === 200) {
         const data = response.data;
-        if (Array.isArray(data) && data.length > 0) {
-          const state = data[0].state;
-          setStateData(state);
-        }
+        const state = data[0].state;
+        setStateData(state);
       }
     } catch (error) {
       console.log("Error fetching state data:", error);
@@ -635,10 +626,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                         width="md"
                         name="postcode"
                         label="Postcode"
-                        fieldProps={{
-                          onChange: async (event) =>
-                            await fetchStateData(event.target.value),
-                        }}
+                        onChange={(value) => fetchStateData(value)}
                       />
                     </Col>
                     <Col style={{ width: "200px" }}>
@@ -657,7 +645,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   name="state"
                   label="State"
                   disabled
-                  initialValue={stateData}
+                  value={stateData}
                 />
               </Col>
             </Row>
