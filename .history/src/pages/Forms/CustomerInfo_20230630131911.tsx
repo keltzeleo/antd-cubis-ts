@@ -567,7 +567,7 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
                         placeholder="Number"
                       />
                     </Col>
-                    <Col style={{ width: "200px" }}>
+                    <Col style={{ width: "1200px" }}>
                       <ProFormText
                         name="premiseName"
                         label="Premise Name"
@@ -596,34 +596,6 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
               </Col>
               <Col span={12}>
                 <ProFormText width="md" name="area" label="Area" />
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProForm.Item>
-                  <Space.Compact>
-                    <Col style={{ width: "100px" }}>
-                      <ProFormText
-                        width="md"
-                        name="postcode"
-                        label="Postcode"
-                        placeholder="enter postcode"
-                      />
-                    </Col>
-                    <Col style={{ width: "200px" }}>
-                      <ProFormText
-                        name="postcodeArea"
-                        label="Postcode Area"
-                        placeholder="Postcode Area"
-                      />
-                    </Col>
-                  </Space.Compact>
-                </ProForm.Item>
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="state" label="State" />
               </Col>
             </Row>
           </ProForm.Group>

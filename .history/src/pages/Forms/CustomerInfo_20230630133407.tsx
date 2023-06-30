@@ -622,8 +622,21 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
                   </Space.Compact>
                 </ProForm.Item>
               </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="state" label="State" />
+              <Col span={6}>
+                <ProFormText
+                  width="md"
+                  name="lotNo"
+                  label="Lot No."
+                  placeholder="Lot Number"
+                />
+              </Col>
+              <Col span={6}>
+                <ProFormText
+                  width="md"
+                  name="blockNo"
+                  label="Block"
+                  placeholder="Block Number"
+                />
               </Col>
             </Row>
           </ProForm.Group>

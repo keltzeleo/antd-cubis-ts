@@ -1,16 +1,5 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  Radio,
-  Row,
-  Select,
-  Space,
-  Steps,
-  Tag,
-} from "antd";
+import { Button, Col, Form, Input, Radio, Row, Select, Steps, Tag } from "antd";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -544,7 +533,7 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
                 <ProFormText
                   width="md"
                   name="lotNo"
-                  label="Lot No."
+                  label="Lot No"
                   placeholder="Lot Number"
                 />
               </Col>
@@ -552,78 +541,29 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
                 <ProFormText
                   width="md"
                   name="blockNo"
-                  label="Block"
+                  label="Block No"
                   placeholder="Block Number"
                 />
               </Col>
-              <Col span={12}>
-                <ProForm.Item>
-                  <Space.Compact>
-                    <Col style={{ width: "100px" }}>
-                      <ProFormText
-                        width="md"
-                        name="premiseNo"
-                        label="Premise No."
-                        placeholder="Number"
-                      />
-                    </Col>
-                    <Col style={{ width: "200px" }}>
-                      <ProFormText
-                        name="premiseName"
-                        label="Premise Name"
-                        placeholder="Premise Name"
-                      />
-                    </Col>
-                  </Space.Compact>
-                </ProForm.Item>
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormText width="md" name="garden" label="Garden" />
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="section" label="Section" />
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormText width="md" name="village" label="Village" />
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="area" label="Area" />
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProForm.Item>
-                  <Space.Compact>
-                    <Col style={{ width: "100px" }}>
-                      <ProFormText
-                        width="md"
-                        name="postcode"
-                        label="Postcode"
-                        placeholder="enter postcode"
-                      />
-                    </Col>
-                    <Col style={{ width: "200px" }}>
-                      <ProFormText
-                        name="postcodeArea"
-                        label="Postcode Area"
-                        placeholder="Postcode Area"
-                      />
-                    </Col>
-                  </Space.Compact>
-                </ProForm.Item>
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="state" label="State" />
+              <Col span={6}>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <ProFormText
+                      width="md"
+                      name="premiseNo"
+                      label="Premise No"
+                      placeholder="Premise Number"
+                    />
+                  </Col>
+                  <Col span={12}>
+                    <ProFormText
+                      width="md"
+                      name="premiseName"
+                      label="Premise Name"
+                      placeholder="Premise Name"
+                    />
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </ProForm.Group>

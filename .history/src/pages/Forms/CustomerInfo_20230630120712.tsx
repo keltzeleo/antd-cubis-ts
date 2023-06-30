@@ -1,16 +1,5 @@
 import { ProForm, ProFormText } from "@ant-design/pro-form";
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  Radio,
-  Row,
-  Select,
-  Space,
-  Steps,
-  Tag,
-} from "antd";
+import { Button, Col, Form, Input, Radio, Row, Select, Steps, Tag } from "antd";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -538,96 +527,56 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
 
       {currentStep === 1 && (
         <ProForm>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={6}>
-                <ProFormText
-                  width="md"
-                  name="lotNo"
-                  label="Lot No."
-                  placeholder="Lot Number"
-                />
-              </Col>
-              <Col span={6}>
-                <ProFormText
-                  width="md"
-                  name="blockNo"
-                  label="Block"
-                  placeholder="Block Number"
-                />
-              </Col>
-              <Col span={12}>
-                <ProForm.Item>
-                  <Space.Compact>
-                    <Col style={{ width: "100px" }}>
-                      <ProFormText
-                        width="md"
-                        name="premiseNo"
-                        label="Premise No."
-                        placeholder="Number"
-                      />
-                    </Col>
-                    <Col style={{ width: "200px" }}>
-                      <ProFormText
-                        name="premiseName"
-                        label="Premise Name"
-                        placeholder="Premise Name"
-                      />
-                    </Col>
-                  </Space.Compact>
-                </ProForm.Item>
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormText width="md" name="garden" label="Garden" />
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="section" label="Section" />
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormText width="md" name="village" label="Village" />
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="area" label="Area" />
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProForm.Item>
-                  <Space.Compact>
-                    <Col style={{ width: "100px" }}>
-                      <ProFormText
-                        width="md"
-                        name="postcode"
-                        label="Postcode"
-                        placeholder="enter postcode"
-                      />
-                    </Col>
-                    <Col style={{ width: "200px" }}>
-                      <ProFormText
-                        name="postcodeArea"
-                        label="Postcode Area"
-                        placeholder="Postcode Area"
-                      />
-                    </Col>
-                  </Space.Compact>
-                </ProForm.Item>
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="state" label="State" />
-              </Col>
-            </Row>
-          </ProForm.Group>
-        </ProForm>
+         <ProForm.Group>
+         <Row gutter={16}>
+           <Col span={6}>
+             <ProFormText
+               width="md"
+               name="lotNo"
+               label="Lot No"
+               placeholder="Lot Number"
+             />
+           </Col>
+           <Col span={6}>
+             <ProFormText
+               width="md"
+               name="blockNo"
+               label="Block No"
+               placeholder="Block Number"
+             />
+           </Col>
+           <Col span={6}>
+             <ProFormText
+               width="md"
+               name="premiseNo"
+               label="Premise No"
+               placeholder="Premise Number"
+             />
+           </Col>
+           <Col span={6}>
+             <ProFormText
+               width="md"
+               name="premiseName"
+               label="Premise Name"
+               placeholder="Premise Name"
+             />
+           </Col>
+         </Row>
+       </ProForm.Group>
+       </ProForm>
+
+      
+
+          {/* Render navigation buttons */}
+          <div>
+            <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
+              Previous
+            </Button>
+            <Button type="primary" onClick={handleNextStep}>
+              Next
+            </Button>
+          </div>
+        </Form>
       )}
 
       {currentStep === 2 && (

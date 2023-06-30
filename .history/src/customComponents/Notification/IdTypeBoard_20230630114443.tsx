@@ -55,11 +55,11 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption }) => {
         <Collapse bordered={false} defaultActiveKey="1">
           <Panel header={null} key="1">
             <p>
-              This is the notification board for ID type{" "}
-              <b> {selectedOption} </b> with its relevant theme colour. The
-              background color changes based on the selected option in the
-              IdType component. It also will notify the user whether the form
-              below will be a new registration form or an account registration:
+              This is the <b>{selectedOption} notification</b> board with its
+              theme colour. The background color changes based on the selected
+              option in the IdType component. It also will notify the user
+              whether the form below will be a new registration form or an
+              account registration:
             </p>
             <p>
               <b>

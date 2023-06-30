@@ -539,93 +539,34 @@ const CustomerForm: React.FC<CustomerInfoProps> = ({
       {currentStep === 1 && (
         <ProForm>
           <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={6}>
+            <Space.Compact>
+              <ProFormText
+                width="md"
+                name="lotNo"
+                label="Lot No"
+                placeholder="Lot Number"
+              />
+              <ProFormText
+                width="md"
+                name="blockNo"
+                label="Block No"
+                placeholder="Block Number"
+              />
+              <Space.Compact>
                 <ProFormText
                   width="md"
-                  name="lotNo"
-                  label="Lot No."
-                  placeholder="Lot Number"
+                  name="premiseNo"
+                  label="Premise No"
+                  placeholder="Premise Number"
                 />
-              </Col>
-              <Col span={6}>
                 <ProFormText
                   width="md"
-                  name="blockNo"
-                  label="Block"
-                  placeholder="Block Number"
+                  name="premiseName"
+                  label="Premise Name"
+                  placeholder="Premise Name"
                 />
-              </Col>
-              <Col span={12}>
-                <ProForm.Item>
-                  <Space.Compact>
-                    <Col style={{ width: "100px" }}>
-                      <ProFormText
-                        width="md"
-                        name="premiseNo"
-                        label="Premise No."
-                        placeholder="Number"
-                      />
-                    </Col>
-                    <Col style={{ width: "200px" }}>
-                      <ProFormText
-                        name="premiseName"
-                        label="Premise Name"
-                        placeholder="Premise Name"
-                      />
-                    </Col>
-                  </Space.Compact>
-                </ProForm.Item>
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormText width="md" name="garden" label="Garden" />
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="section" label="Section" />
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormText width="md" name="village" label="Village" />
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="area" label="Area" />
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProForm.Item>
-                  <Space.Compact>
-                    <Col style={{ width: "100px" }}>
-                      <ProFormText
-                        width="md"
-                        name="postcode"
-                        label="Postcode"
-                        placeholder="enter postcode"
-                      />
-                    </Col>
-                    <Col style={{ width: "200px" }}>
-                      <ProFormText
-                        name="postcodeArea"
-                        label="Postcode Area"
-                        placeholder="Postcode Area"
-                      />
-                    </Col>
-                  </Space.Compact>
-                </ProForm.Item>
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="state" label="State" />
-              </Col>
-            </Row>
+              </Space.Compact>
+            </Space.Compact>
           </ProForm.Group>
         </ProForm>
       )}
