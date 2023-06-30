@@ -13,7 +13,7 @@ import {
 } from "antd";
 
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import light from "../../../src/tokens/light.json";
 
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
@@ -42,6 +42,12 @@ interface Country {
   flag: string;
 }
 
+interface AddressData {
+  address: string;
+  postcode_area: string;
+  state: string;
+}
+
 interface CustomerInfoProps {
   customerTitle: string | undefined;
   customerName: string;
@@ -60,7 +66,7 @@ interface CustomerInfoProps {
   onNationalityChange: (value: string | null) => void;
 }
 
-const CustomerInfo: React.FC<CustomerInfoProps> = ({
+const CustomerForm: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
   inputIcNumber,
@@ -82,6 +88,29 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const [dobFromId, setDobFromId] = useState<string>("");
   const [age, setAge] = useState<number>(0);
   const [currentStep, setCurrentStep] = useState(0);
+  const [postcodeArea, setPostcodeArea] = useState<string>("");
+  const [state, setState] = useState<string>("");
+
+  const handlePostcodeChange = async (postcode: string) => {
+    try {
+      const response = await axios.get(
+        `https://api.postcode.my/postcode/${postcode}`
+      );
+      if (response.status === 200) {
+        const data = response.data;
+        if (data && data.data && data.data.length > 0) {
+          const addressData: AddressData = data.data[0];
+          setPostcodeArea(addressData.postcode_area);
+          setState(addressData.state);
+        } else {
+          setPostcodeArea("");
+          setState("");
+        }
+      }
+    } catch (error) {
+      console.log("Error retrieving postcode data:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -610,6 +639,11 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                         name="postcode"
                         label="Postcode"
                         placeholder="enter postcode"
+                        readonly
+                        value={postcodeArea}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                          handlePostcodeChange(event.target.value)
+                        }
                       />
                     </Col>
                     <Col style={{ width: "200px" }}>
@@ -617,13 +651,21 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                         name="postcodeArea"
                         label="Postcode Area"
                         placeholder="Postcode Area"
+                        readonly
+                        value={postcodeArea}
                       />
                     </Col>
                   </Space.Compact>
                 </ProForm.Item>
               </Col>
               <Col span={12}>
-                <ProFormText width="md" name="state" label="State" />
+                <ProFormText
+                  width="md"
+                  name="state"
+                  label="State"
+                  readonly
+                  value={state}
+                />
               </Col>
             </Row>
           </ProForm.Group>
@@ -657,4 +699,4 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   );
 };
 
-export default CustomerInfo;
+export default CustomerForm;

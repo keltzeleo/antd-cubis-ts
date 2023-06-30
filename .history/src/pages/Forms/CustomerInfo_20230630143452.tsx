@@ -60,7 +60,7 @@ interface CustomerInfoProps {
   onNationalityChange: (value: string | null) => void;
 }
 
-const CustomerInfo: React.FC<CustomerInfoProps> = ({
+const CustomerForm: React.FC<CustomerInfoProps> = ({
   customerTitle,
   customerName,
   inputIcNumber,
@@ -657,4 +657,4 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   );
 };
 
-export default CustomerInfo;
+export default CustomerForm;
