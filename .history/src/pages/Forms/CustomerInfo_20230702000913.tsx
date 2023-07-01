@@ -688,56 +688,58 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
       )}
       {currentStep === 2 && (
         // Render form fields for "Related Family, Name, and Contact Number" step
-        <ProForm.Group>
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProFormText
-                width="md"
-                name="otherContactName"
-                label="Other Contact Name"
-                placeholder="Sub-holder name"
-              />
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                label="Other Contact Number"
-                name="otherContactNumber"
-                tooltip="Valid and contactable mobile number"
-                rules={[{ validator: validateDigitsOnly }]}
-              >
-                <Input
-                  style={{
-                    width: "",
-                    minWidth: "",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                  addonBefore="+60"
-                  placeholder="Contactable number"
-                  value={mobileNumber}
-                  onChange={(e) => onMobileNumberChange(e.target.value)}
+        <ProForm>
+          <ProForm.Group>
+            <Row gutter={16}>
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="otherContactName"
+                  label="Other Contact Name"
+                  placeholder="Sub-holder name"
                 />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <ProFormText
-                width="md"
-                name="relationship"
-                label="Relationship"
-                placeholder=""
-              />
-            </Col>
-          </Row>
-          <div>
-            <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
-              Previous
-            </Button>
-            <Button type="primary" onClick={handleNextStep}>
-              Next
-            </Button>
-          </div>
-        </ProForm.Group>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Other Contact Number"
+                  name="otherContactNumber"
+                  tooltip="Valid and contactable mobile number"
+                  rules={[{ validator: validateDigitsOnly }]}
+                >
+                  <Input
+                    style={{
+                      width: "",
+                      minWidth: "",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                    addonBefore="+60"
+                    placeholder="Contactable number"
+                    value={mobileNumber}
+                    onChange={(e) => onMobileNumberChange(e.target.value)}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="relationship"
+                  label="Relationship"
+                  placeholder=""
+                />
+              </Col>
+            </Row>
+            <div>
+              <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
+                Previous
+              </Button>
+              <Button type="primary" onClick={handleNextStep}>
+                Next
+              </Button>
+            </div>
+          </ProForm.Group>
+        </ProForm>
       )}
       {/* {currentStep === 3 && (
         // Render form fields for "Proceed to Account Registration" step
