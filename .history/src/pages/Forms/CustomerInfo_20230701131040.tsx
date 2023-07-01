@@ -578,6 +578,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
           </div>
         </div>
       )}
+      // Previous code...
       {currentStep === 1 && (
         <ProForm.Group>
           <Row gutter={16}>
@@ -674,9 +675,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             </Col>
           </Row>
           <div>
-            <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
-              Previous
-            </Button>
             <Button type="primary" onClick={handleNextStep}>
               Next
             </Button>

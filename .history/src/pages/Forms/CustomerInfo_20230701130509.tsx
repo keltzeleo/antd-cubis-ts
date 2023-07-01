@@ -251,6 +251,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
           </Tag>
         ))}
       </div>
+
       {currentStep === 0 && (
         <div style={{ padding: "0" }}>
           <ProForm.Group>
@@ -578,111 +579,90 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
           </div>
         </div>
       )}
+
       {currentStep === 1 && (
-        <ProForm.Group>
-          <Row gutter={16}>
-            <Col span={6}>
-              <ProFormText
-                width="md"
-                name="lotNo"
-                label="Lot No."
-                placeholder="Lot Number"
-              />
-            </Col>
-            <Col span={6}>
-              <ProFormText
-                width="md"
-                name="blockNo"
-                label="Block"
-                placeholder="Block Number"
-              />
-            </Col>
-            <Col span={12}>
-              <ProForm.Item>
-                <Space.Compact>
-                  <Col style={{ width: "100px" }}>
-                    <ProFormText
-                      width="md"
-                      name="premiseNo"
-                      label="Premise No."
-                      placeholder="Number"
-                    />
-                  </Col>
-                  <Col style={{ width: "200px" }}>
-                    <ProFormText
-                      name="premiseName"
-                      label="Premise Name"
-                      placeholder="Premise Name"
-                    />
-                  </Col>
-                </Space.Compact>
-              </ProForm.Item>
-            </Col>
-          </Row>
-          {/* Rest of the code... */}
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProFormText width="md" name="garden" label="Garden" />
-            </Col>
-            <Col span={12}>
-              <ProFormText width="md" name="section" label="Section" />
-            </Col>
-          </Row>
-          {/* Rest of the code... */}
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProFormText width="md" name="village" label="Village" />
-            </Col>
-            <Col span={12}>
-              <ProFormText width="md" name="area" label="Area" />
-            </Col>
-          </Row>
-          {/* Rest of the code... */}
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProForm.Item>
-                <Space.Compact>
-                  <Col style={{ width: "100px" }}>
-                    <ProFormText
-                      width="md"
-                      name="postcode"
-                      label="Postcode"
-                      fieldProps={{
-                        onChange: (event) =>
-                          handlePostcodeChange(event.target.value),
-                      }}
-                    />
-                  </Col>
-                  <Col style={{ width: "200px" }}>
-                    <ProFormText
-                      name="postcodeArea"
-                      label="Postcode Area"
-                      placeholder="Postcode Area"
-                      initialValue={addressData[0]}
-                    />
-                  </Col>
-                </Space.Compact>
-              </ProForm.Item>
-            </Col>
-            <Col span={12}>
-              <ProFormText
-                width="md"
-                name="state"
-                label="State"
-                initialValue={addressData[0]}
-              />
-            </Col>
-          </Row>
-          <div>
-            <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
-              Previous
-            </Button>
-            <Button type="primary" onClick={handleNextStep}>
-              Next
-            </Button>
-          </div>
-        </ProForm.Group>
+
+<ProForm.Group>
+  <Row gutter={16}>
+    <Col span={6}>
+      <ProFormText width="md" name="lotNo" label="Lot No." placeholder="Lot Number" />
+    </Col>
+    <Col span={6}>
+      <ProFormText width="md" name="blockNo" label="Block" placeholder="Block Number" />
+    </Col>
+    <Col span={12}>
+      <ProForm.Item>
+        <Space.Compact>
+          <Col style={{ width: "100px" }}>
+            <ProFormText width="md" name="premiseNo" label="Premise No." placeholder="Number" />
+          </Col>
+          <Col style={{ width: "200px" }}>
+            <ProFormText
+              name="premiseName"
+              label="Premise Name"
+              placeholder="Premise Name"
+            />
+          </Col>
+        </Space.Compact>
+      </ProForm.Item>
+    </Col>
+  </Row>
+  <Row gutter={16}>
+    <Col span={12}>
+      <ProFormText width="md" name="garden" label="Garden" />
+    </Col>
+    <Col span={12}>
+      <ProFormText width="md" name="section" label="Section" />
+    </Col>
+  </Row>
+  <Row gutter={16}>
+    <Col span={12}>
+      <ProFormText width="md" name="village" label="Village" />
+    </Col>
+    <Col span={12}>
+      <ProFormText width="md" name="area" label="Area" />
+    </Col>
+  </Row>
+  <Row gutter={16}>
+    <Col span={12}>
+      <ProForm.Item>
+        <Space.Compact>
+          <Col style={{ width: "100px" }}>
+            <ProFormText
+              width="md"
+              name="postcode"
+              label="Postcode"
+              fieldProps={{
+                onChange: (event) => handlePostcodeChange(event.target.value),
+              }}
+            />
+          </Col>
+          <Col style={{ width: "200px" }}>
+            <ProFormText
+              name="postcodeArea"
+              label="Postcode Area"
+              placeholder="Postcode Area"
+              initialValue={addressData[0]}
+            />
+          </Col>
+        </Space.Compact>
+      </ProForm.Item>
+    </Col>
+    <Col span={12}>
+      <ProFormText width="md" name="state" label="State" initialValue={addressData[0]} />
+    </Col>
+  </Row>
+</ProForm.Group>
+<div>
+  <Button type="primary" onClick={handleNextStep}>
+    Next
+  </Button>
+</div>
+
+
       )}
+
+
       {currentStep === 2 && (
         // Render form fields for "Related Family, Name, and Contact Number" step
         <ProForm>
@@ -730,6 +710,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
           </ProForm.Group>
         </ProForm>
       )}
+
       {/* {currentStep === 3 && (
         // Render form fields for "Proceed to Account Registration" step
         <div>

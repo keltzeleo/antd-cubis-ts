@@ -674,9 +674,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             </Col>
           </Row>
           <div>
-            <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
-              Previous
-            </Button>
             <Button type="primary" onClick={handleNextStep}>
               Next
             </Button>
