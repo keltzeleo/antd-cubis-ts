@@ -272,11 +272,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             key={index}
             color={currentStep === index ? light["cyan.6"] : "gray"}
             onClick={() => setCurrentStep(index)}
-            style={{
-              fontSize: "14px",
-              padding: "3px 8px",
-              borderRadius: "8px",
-            }}
           >
             {step.title}
           </Tag>
@@ -737,19 +732,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             Previous
           </Button>
         )}
-        <div style={{ flex: 1 }}></div>
         {currentStep === 0 ? (
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button
-              type="primary"
-              onClick={handleNextStep}
-              disabled={!isStepValid(currentStep)}
-            >
-              Next
-            </Button>
-          </div>
+          <div style={{ flex: 1 }}></div>
         ) : (
-          <div>
+          <>
             {currentStep < Step.length - 1 ? (
               <Button
                 type="primary"
@@ -767,7 +753,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 Submit
               </Button>
             )}
-          </div>
+          </>
         )}
       </div>
     </div>

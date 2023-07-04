@@ -274,7 +274,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             onClick={() => setCurrentStep(index)}
             style={{
               fontSize: "14px",
-              padding: "3px 8px",
+              padding: "2px 8px",
               borderRadius: "8px",
             }}
           >

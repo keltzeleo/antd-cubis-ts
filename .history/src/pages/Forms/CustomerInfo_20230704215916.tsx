@@ -273,8 +273,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             color={currentStep === index ? light["cyan.6"] : "gray"}
             onClick={() => setCurrentStep(index)}
             style={{
-              fontSize: "14px",
-              padding: "3px 8px",
+              fontSize: "13px",
+              padding: "4px 4px",
               borderRadius: "8px",
             }}
           >
