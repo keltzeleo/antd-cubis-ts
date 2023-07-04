@@ -32,7 +32,7 @@ interface FormFields {
 
 const { Option } = Select;
 
-const MyFormDummy: React.FC = () => {
+const MyForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
   const [selectedItem, setSelectedItem] = useState("newWaterSupply");
   const [idNumber, setIdNumber] = useState("");
@@ -95,7 +95,7 @@ const MyFormDummy: React.FC = () => {
                   fieldProps={{
                     style: {
                       width: "480px", //
-                      minWidth: "400px", // Ensure a minimum width of 300px
+                      minWidth: "400px", // Ensure a minimum width of 400px
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -647,4 +647,4 @@ const MyFormDummy: React.FC = () => {
   );
 };
 
-export default MyFormDummy;
+export default MyForm;

@@ -667,7 +667,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 />
               </Col>
               <Col span={12}>
-                <ProFormText
+                <ProFormItem
                   fieldProps={{
                     addonBefore: "+60",
                   }}
@@ -675,7 +675,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   name="othersContactNumber"
                   tooltip="Valid and contactable number"
                   rules={[{ validator: validateDigitsOnly }]}
-                ></ProFormText>
+                ></ProFormItem>
               </Col>
               <Col span={12}>
                 <ProFormText
