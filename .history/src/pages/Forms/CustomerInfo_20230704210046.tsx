@@ -583,6 +583,15 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 </Col>
               </Row>
             </ProForm.Group>
+            <div>
+              <Button
+                type="primary"
+                onClick={handleNextStep}
+                disabled={!customerName || !inputIcNumber || !citizenship}
+              >
+                Next
+              </Button>
+            </div>
           </div>
         )}
         {currentStep === 1 && (

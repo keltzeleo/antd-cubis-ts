@@ -36,13 +36,6 @@ interface CustomerInfoProps {
   alternativeNumber: string;
   citizenship: string;
   nationality: string | null;
-  lotNo: string;
-  blockNo: string;
-  premiseNo: string;
-  premiseName: string;
-  otherContactName: string;
-  othersContactNumber: string;
-  relationship: string;
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
   onMobileNumberChange: (value: string) => void;
@@ -61,13 +54,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   alternativeNumber,
   citizenship,
   nationality,
-  lotNo,
-  blockNo,
-  premiseNo,
-  premiseName,
-  otherContactName,
-  othersContactNumber,
-  relationship,
   onCustomerTitleChange,
   onCustomerNameChange,
   onMobileNumberChange,
@@ -84,6 +70,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const [addressData, setAddressData] = useState<string[]>([]);
   const [postcode, setPostcode] = useState<string>("");
   const [stateData, setStateData] = useState("");
+
+  // Add this line
 
   useEffect(() => {
     const fetchStateData = async () => {
@@ -210,38 +198,12 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     onCustomerNameChange(e.target.value);
   };
 
-  const isStepValid = (step: number): boolean => {
-    switch (step) {
-      case 0:
-        return !!customerName && !!inputIcNumber && !!citizenship;
-      case 1:
-        return (
-          !!lotNo &&
-          !!blockNo &&
-          !!premiseNo &&
-          !!premiseName &&
-          !!postcode &&
-          !!stateData
-        );
-      case 2:
-        return !!otherContactName && !!othersContactNumber && !!relationship;
-      case 3:
-        return true; // Add your validation logic for Step 4 if needed
-      default:
-        return false;
-    }
-  };
-
   const handleNextStep = () => {
-    if (currentStep < Step.length - 1 && isStepValid(currentStep)) {
-      setCurrentStep((prevStep) => prevStep + 1);
-    }
+    setCurrentStep((prevStep) => prevStep + 1);
   };
 
   const handlePrevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep((prevStep) => prevStep - 1);
-    }
+    setCurrentStep((prevStep) => prevStep - 1);
   };
 
   const handleSubmit = () => {
@@ -277,7 +239,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
           </Tag>
         ))}
       </div>
-      <ProForm submitter={false}>
+      <ProForm>
         {currentStep === 0 && (
           <div style={{ padding: "0" }}>
             <ProForm.Group>
@@ -583,6 +545,15 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 </Col>
               </Row>
             </ProForm.Group>
+            <div>
+              <Button
+                type="primary"
+                onClick={handleNextStep}
+                disabled={!customerName || !inputIcNumber || !citizenship}
+              >
+                Next
+              </Button>
+            </div>
           </div>
         )}
         {currentStep === 1 && (
@@ -677,6 +648,25 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 />
               </Col>
             </Row>
+            <div>
+              <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
+                Previous
+              </Button>
+              <Button
+                type="primary"
+                onClick={handleNextStep}
+                disabled={
+                  !lotNo ||
+                  !blockNo ||
+                  !premiseNo ||
+                  !premiseName ||
+                  !postcode ||
+                  !stateData
+                }
+              >
+                Next
+              </Button>
+            </div>
           </ProForm.Group>
         )}
         {currentStep === 2 && (
@@ -711,46 +701,29 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 />
               </Col>
             </Row>
+            <div>
+              <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
+                Previous
+              </Button>
+              <Button type="primary" onClick={handleNextStep}>
+                Next
+              </Button>
+            </div>
           </ProForm.Group>
         )}
 
         {/* {currentStep === 3 && (
-      // Render form fields for "Proceed to Account Registration" step
-      <div>
-        <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
-          Previous
-        </Button>
-        <Button type="primary" onClick={handleSubmit}>
-          Submit
-        </Button>
-      </div>
-    )} */}
-      </ProForm>
-      <div>
-        {currentStep > 0 && (
+        // Render form fields for "Proceed to Account Registration" step
+        <div>
           <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
             Previous
           </Button>
-        )}
-
-        {currentStep < Step.length - 1 ? (
-          <Button
-            type="primary"
-            onClick={handleNextStep}
-            disabled={!isStepValid(currentStep)}
-          >
-            Next
-          </Button>
-        ) : (
-          <Button
-            type="primary"
-            onClick={handleSubmit}
-            disabled={!isStepValid(currentStep)}
-          >
+          <Button type="primary" onClick={handleSubmit}>
             Submit
           </Button>
-        )}
-      </div>
+        </div>
+      )} */}
+      </ProForm>
     </div>
   );
 };

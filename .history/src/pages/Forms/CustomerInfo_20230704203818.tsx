@@ -36,13 +36,6 @@ interface CustomerInfoProps {
   alternativeNumber: string;
   citizenship: string;
   nationality: string | null;
-  lotNo: string;
-  blockNo: string;
-  premiseNo: string;
-  premiseName: string;
-  otherContactName: string;
-  othersContactNumber: string;
-  relationship: string;
   onCustomerTitleChange: (value: string | undefined) => void;
   onCustomerNameChange: (value: string) => void;
   onMobileNumberChange: (value: string) => void;
@@ -61,13 +54,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   alternativeNumber,
   citizenship,
   nationality,
-  lotNo,
-  blockNo,
-  premiseNo,
-  premiseName,
-  otherContactName,
-  othersContactNumber,
-  relationship,
   onCustomerTitleChange,
   onCustomerNameChange,
   onMobileNumberChange,
@@ -277,7 +263,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
           </Tag>
         ))}
       </div>
-      <ProForm submitter={false}>
+      <ProForm>
         {currentStep === 0 && (
           <div style={{ padding: "0" }}>
             <ProForm.Group>
@@ -583,6 +569,15 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 </Col>
               </Row>
             </ProForm.Group>
+            <div>
+              <Button
+                type="primary"
+                onClick={handleNextStep}
+                disabled={!customerName || !inputIcNumber || !citizenship}
+              >
+                Next
+              </Button>
+            </div>
           </div>
         )}
         {currentStep === 1 && (
@@ -677,6 +672,25 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 />
               </Col>
             </Row>
+            <div>
+              <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
+                Previous
+              </Button>
+              <Button
+                type="primary"
+                onClick={handleNextStep}
+                disabled={
+                  !lotNo ||
+                  !blockNo ||
+                  !premiseNo ||
+                  !premiseName ||
+                  !postcode ||
+                  !stateData
+                }
+              >
+                Next
+              </Button>
+            </div>
           </ProForm.Group>
         )}
         {currentStep === 2 && (
@@ -711,6 +725,14 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 />
               </Col>
             </Row>
+            <div>
+              <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
+                Previous
+              </Button>
+              <Button type="primary" onClick={handleNextStep}>
+                Next
+              </Button>
+            </div>
           </ProForm.Group>
         )}
 
