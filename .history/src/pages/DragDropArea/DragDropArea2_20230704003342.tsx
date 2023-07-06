@@ -55,9 +55,10 @@ const DragDropArea2: React.FC = () => {
     undefined
   );
   const [customerName, setCustomerName] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [homeNumber, setHomeNumber] = useState("");
-  const [alternativeNumber, setAlternativeNumber] = useState("");
+  const [mobileNumber, setMobileNumber] = useState<number>();
+  const [homeNumber, setHomeNumber] = useState<number>(0);
+  const [alternativeNumber, setAlternativeNumber] = useState<number>(0);
+  const [othersContactNumber, setOthersContactNumber] = useState<number>(0);
 
   const [citizenship, setCitizenship] = useState<string>("");
   const [nationality, setNationality] = useState<string | null>(null);
@@ -84,6 +85,22 @@ const DragDropArea2: React.FC = () => {
 
   const handleNationalityChange = (value: string | null) => {
     setNationality(value);
+  };
+
+  const setMobileNumberChange = (value: number) => {
+    setMobileNumber(value);
+  };
+
+  const setHomeNumberChange = (value: number) => {
+    setHomeNumber(value);
+  };
+
+  const setAlternativeNumberChange = (value: number) => {
+    setAlternativeNumber(value);
+  };
+
+  const setOthersContactNumberChange = (value: number) => {
+    setOthersContactNumber(value);
   };
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -409,20 +426,15 @@ const DragDropArea2: React.FC = () => {
               mobileNumber={mobileNumber}
               homeNumber={homeNumber}
               alternativeNumber={alternativeNumber}
+              othersContactNumber={othersContactNumber}
               citizenship={citizenship}
               nationality={nationality}
-              lotNo={""}
-              blockNo={""}
-              premiseNo={""}
-              premiseName={""}
-              otherContactName={""}
-              othersContactNumber={""}
-              relationship={""}
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
               onMobileNumberChange={setMobileNumber}
               onHomeNumberChange={setHomeNumber}
               onAlternativeNumberChange={setAlternativeNumber}
+              onOthersContactNumber={setOthersContactNumber}
               onCitizenshipChange={handleCitizenshipChange}
               onNationalityChange={handleNationalityChange}
             />

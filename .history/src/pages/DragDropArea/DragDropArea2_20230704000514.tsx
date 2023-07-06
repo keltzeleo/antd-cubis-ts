@@ -58,6 +58,7 @@ const DragDropArea2: React.FC = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [homeNumber, setHomeNumber] = useState("");
   const [alternativeNumber, setAlternativeNumber] = useState("");
+  const [othersContactNumber, setOthersContactNumber] = useState("");
 
   const [citizenship, setCitizenship] = useState<string>("");
   const [nationality, setNationality] = useState<string | null>(null);
@@ -411,13 +412,6 @@ const DragDropArea2: React.FC = () => {
               alternativeNumber={alternativeNumber}
               citizenship={citizenship}
               nationality={nationality}
-              lotNo={""}
-              blockNo={""}
-              premiseNo={""}
-              premiseName={""}
-              otherContactName={""}
-              othersContactNumber={""}
-              relationship={""}
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
               onMobileNumberChange={setMobileNumber}

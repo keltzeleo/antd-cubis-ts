@@ -411,13 +411,6 @@ const DragDropArea2: React.FC = () => {
               alternativeNumber={alternativeNumber}
               citizenship={citizenship}
               nationality={nationality}
-              lotNo={""}
-              blockNo={""}
-              premiseNo={""}
-              premiseName={""}
-              otherContactName={""}
-              othersContactNumber={""}
-              relationship={""}
               onCustomerTitleChange={handleCustomerTitleChange}
               onCustomerNameChange={handleCustomerNameChange}
               onMobileNumberChange={setMobileNumber}

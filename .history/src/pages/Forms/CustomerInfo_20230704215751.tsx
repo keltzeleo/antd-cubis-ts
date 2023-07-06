@@ -1,28 +1,20 @@
-<<<<<<< HEAD
-import ProForm, { ProFormText } from "@ant-design/pro-form";
-import { Button, Col, Form, Input, Radio, Row, Select, Space, Tag } from "antd";
-=======
 import { ProForm, ProFormItem, ProFormText } from "@ant-design/pro-form";
 import { Button, Col, Form, Input, Radio, Row, Select, Space, Tag } from "antd";
 
->>>>>>> 2a3cc1a92d1d5e6066e9b640d7c0eb7dd1ff3a1e
 import axios from "axios";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import light from "../../../src/tokens/light.json";
+
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 
 const { Option } = Select;
-<<<<<<< HEAD
-const steps = [
-=======
 
 const Step = [
->>>>>>> 2a3cc1a92d1d5e6066e9b640d7c0eb7dd1ff3a1e
   {
     title: "Customer Information",
   },
   {
-    title: "Customer Address",
+    title: "Consumer Address",
   },
   {
     title: "Sub-Contact",
@@ -92,16 +84,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const [addressData, setAddressData] = useState<string[]>([]);
   const [postcode, setPostcode] = useState<string>("");
   const [stateData, setStateData] = useState("");
-<<<<<<< HEAD
-  const [mobileNumberError, setMobileNumberError] = useState<string | null>(
-    null
-  );
-  const [homeNumberError, setHomeNumberError] = useState<string | null>(null);
-  const [alternativeNumberError, setAlternativeNumberError] = useState<
-    string | null
-  >(null);
-=======
->>>>>>> 2a3cc1a92d1d5e6066e9b640d7c0eb7dd1ff3a1e
 
   useEffect(() => {
     const fetchStateData = async () => {
@@ -129,9 +111,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const handlePostcodeChange = async (value: string) => {
     setPostcode(value);
     try {
-      const response = await axios.get(
-        `https://api.postcode.my/postcode/${value}`
-      );
+      const response = await axios.get(`https://api.postcode.my/postcode/`);
       if (response.status === 200) {
         const data = response.data;
         if (Array.isArray(data) && data.length > 0) {
@@ -226,7 +206,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     onCustomerTitleChange(value);
   };
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCustomerNameChange(e.target.value);
   };
 
@@ -292,11 +272,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             key={index}
             color={currentStep === index ? light["cyan.6"] : "gray"}
             onClick={() => setCurrentStep(index)}
-            style={{
-              fontSize: "14px",
-              padding: "3px 8px",
-              borderRadius: "8px",
-            }}
+            style={{ fontSize: "16px" }}
           >
             {step.title}
           </Tag>
@@ -354,311 +330,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     labelCol={{ span: 7 }}
                     wrapperCol={{ span: 24 }}
                   >
-<<<<<<< HEAD
-                    <Radio style={{ marginLeft: 16 }} value="Malaysian">
-                      Malaysian
-                    </Radio>
-                    <Radio style={{ marginLeft: 16 }} value="Non-Malaysian">
-                      Non-Malaysian
-                    </Radio>
-                  </Radio.Group>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item label="Nationality">
-                  <Select
-                    showSearch
-                    style={{ width: 300, marginBottom: 0 }}
-                    placeholder="Select a Nationality"
-                    value={selectedCountry}
-                    onChange={handleCountryChange}
-                    optionFilterProp="children"
-                    filterOption={(input, option) => {
-                      const countryLabel =
-                        option?.label?.toString()?.toLowerCase() ?? "";
-                      const countryValue =
-                        option?.value?.toString()?.toLowerCase() ?? "";
-                      const inputValue = input?.toString()?.toLowerCase() ?? "";
-
-                      return (
-                        countryLabel.includes(inputValue) ||
-                        countryValue.includes(inputValue)
-                      );
-                    }}
-                  >
-                    {countries.map((country) => (
-                      <Option key={country.value} value={country.value}>
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                          <img
-                            src={country.flag}
-                            alt={`${country.label} Flag`}
-                            style={{ width: "20px", marginRight: "12px" }}
-                          />
-                          {country.label}
-                        </div>
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-          </ProForm.Group>
-
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={8}>
-                <Form.Item
-                  label="Race"
-                  name="race"
-                  rules={[{ required: true, message: "Please select Race" }]}
-                >
-                  <Select
-                    style={{ width: "md" }}
-                    placeholder="Please select a Race"
-                  >
-                    <Select.Option value="C">
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <SquircleBorder
-                          size={20}
-                          curvature={0.43}
-                          backgroundColor={light["volcano.2"]}
-                          rotate={0}
-                          borderType="dashed"
-                          borderWidth={1}
-                          borderColor="transparent"
-                          fontWeight={700}
-                          character="C"
-                        />
-                        <span style={{ marginLeft: "8px" }}>Chinese</span>
-                      </div>
-                    </Select.Option>
-                    <Select.Option value="I">
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <SquircleBorder
-                          size={20}
-                          curvature={0.43}
-                          backgroundColor={light["magenta.2"]}
-                          rotate={0}
-                          borderType="dashed"
-                          borderWidth={1}
-                          borderColor="transparent"
-                          fontWeight={700}
-                          character="I"
-                        />
-                        <span style={{ marginLeft: "8px" }}>Indian</span>
-                      </div>
-                    </Select.Option>
-                    <Select.Option value="M">
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <SquircleBorder
-                          size={20}
-                          curvature={0.43}
-                          backgroundColor={light["grass.2"]}
-                          rotate={0}
-                          borderType="dashed"
-                          borderWidth={1}
-                          borderColor="transparent"
-                          fontWeight={700}
-                          character="M"
-                        />
-                        <span style={{ marginLeft: "8px" }}>Malay</span>
-                      </div>
-                    </Select.Option>
-                    <Select.Option value="O">
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <SquircleBorder
-                          size={20}
-                          curvature={0.43}
-                          backgroundColor={light["yellow.2"]}
-                          rotate={0}
-                          borderType="dashed"
-                          borderWidth={1}
-                          borderColor="transparent"
-                          fontWeight={700}
-                          character="O"
-                        />
-                        <span style={{ marginLeft: "8px" }}>Others</span>
-                      </div>
-                    </Select.Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <ProFormText
-                  width="md"
-                  name="dob"
-                  label="D.O.B"
-                  disabled
-                  placeholder={
-                    inputIcNumber
-                      ? formatDob(extractDobFromIcNumber(inputIcNumber))
-                      : ""
-                  }
-                />
-              </Col>
-              <Col span={8}>
-                <ProFormText
-                  width="md"
-                  name="age"
-                  label="Age"
-                  disabled
-                  placeholder={age.toString()}
-                />
-              </Col>
-            </Row>
-          </ProForm.Group>
-
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={8}>
-                <Form.Item
-                  label="Mobile Number"
-                  name="mobileNumber"
-                  tooltip="Valid and contactable mobile number"
-                  validateStatus={mobileNumberError ? "error" : ""}
-                  help={mobileNumberError}
-                  rules={[{ validator: validateDigitsOnly }]}
-                  hasFeedback
-                >
-                  <Input
-                    style={{
-                      width: "",
-                      minWidth: "",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                    addonBefore="+60"
-                    placeholder="Contactable number"
-                    value={mobileNumber}
-                    onChange={(e) => onMobileNumberChange(e.target.value)}
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item
-                  label="Home Number"
-                  name="homeNumber"
-                  tooltip="Valid home use contact number"
-                  validateStatus={homeNumberError ? "error" : ""}
-                  help={homeNumberError}
-                  rules={[{ validator: validateDigitsOnly }]}
-                >
-                  <Input
-                    style={{
-                      width: "",
-                      minWidth: "",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                    addonBefore="+60"
-                    placeholder="Home use number"
-                    value={homeNumber}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      onHomeNumberChange(value);
-                      setHomeNumberError(null); // Reset the error before validation
-                    }}
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item
-                  label="Other Contact Number"
-                  name="otherContact"
-                  tooltip="Valid alternative contact number"
-                  validateStatus={alternativeNumberError ? "error" : ""}
-                  help={alternativeNumberError}
-                  rules={[{ validator: validateDigitsOnly }]}
-                >
-                  <Input
-                    style={{
-                      width: "",
-                      minWidth: "",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                    addonBefore="+60"
-                    placeholder="Alternative contact number"
-                    value={alternativeNumber}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      onAlternativeNumberChange(value);
-                      setAlternativeNumberError(null); // Reset the error before validation
-                    }}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={8}>
-                <ProFormText
-                  width="md"
-                  name="email"
-                  label="Customer Email"
-                  //disabled
-                  placeholder="Contactable Email Address"
-                />
-              </Col>
-              <Col span={8}>
-                <ProFormText
-                  width="md"
-                  name="faxNumber"
-                  label="Fax Number"
-                  //disabled
-                  placeholder="Fax Number if Available"
-                />
-              </Col>
-              <Col span={8}>
-                <Form.Item label="Preferred Contact Channel">
-                  <Radio.Group>
-                    <Radio style={{ marginLeft: 16 }} value="email">
-                      E-Mail
-                    </Radio>
-                    <Radio style={{ marginLeft: 16 }} value="sms">
-                      SMS{" "}
-                    </Radio>
-                  </Radio.Group>
-                </Form.Item>
-              </Col>
-            </Row>
-          </ProForm.Group>
-          <div>
-            <Button type="primary" onClick={handleNextStep}>
-              Next
-            </Button>
-          </div>
-        </div>
-      )}
-      {currentStep === 1 && (
-        <ProForm.Group>
-          <Row gutter={16}>
-            <Col span={6}>
-              <ProFormText
-                width="md"
-                name="lotNo"
-                label="Lot No."
-                placeholder="Lot Number"
-              />
-            </Col>
-            <Col span={6}>
-              <ProFormText
-                width="md"
-                name="blockNo"
-                label="Block"
-                placeholder="Block Number"
-              />
-            </Col>
-            <Col span={12}>
-              <ProForm.Item>
-                <Space.Compact>
-                  <Col style={{ width: "100px" }}>
-=======
->>>>>>> 2a3cc1a92d1d5e6066e9b640d7c0eb7dd1ff3a1e
                     <ProFormText
                       width="md"
                       name="id"
