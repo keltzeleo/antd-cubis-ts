@@ -1,17 +1,32 @@
-import ProForm, { ProFormText } from "@ant-design/pro-form";
-import { Button, Col, Form, Input, Radio, Row, Select, Space, Tag } from "antd";
+import { ProForm, ProFormText } from "@ant-design/pro-form";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Radio,
+  Row,
+  Select,
+  Space,
+  Steps,
+  Tag,
+} from "antd";
+
 import axios from "axios";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import light from "../../../src/tokens/light.json";
+
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 
 const { Option } = Select;
+const { Step } = Steps;
+
 const steps = [
   {
     title: "Customer Information",
   },
   {
-    title: "Customer Address",
+    title: "Customer Account Address",
   },
   {
     title: "Sub-Contact",
@@ -67,13 +82,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const [addressData, setAddressData] = useState<string[]>([]);
   const [postcode, setPostcode] = useState<string>("");
   const [stateData, setStateData] = useState("");
-  const [mobileNumberError, setMobileNumberError] = useState<string | null>(
-    null
-  );
-  const [homeNumberError, setHomeNumberError] = useState<string | null>(null);
-  const [alternativeNumberError, setAlternativeNumberError] = useState<
-    string | null
-  >(null);
+
+  // Add this line
 
   useEffect(() => {
     const fetchStateData = async () => {
@@ -101,9 +111,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const handlePostcodeChange = async (value: string) => {
     setPostcode(value);
     try {
-      const response = await axios.get(
-        `https://api.postcode.my/postcode/${value}`
-      );
+      const response = await axios.get(`https://api.postcode.my/postcode/`);
       if (response.status === 200) {
         const data = response.data;
         if (Array.isArray(data) && data.length > 0) {
@@ -198,7 +206,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     onCustomerTitleChange(value);
   };
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCustomerNameChange(e.target.value);
   };
 
@@ -469,10 +477,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   label="Mobile Number"
                   name="mobileNumber"
                   tooltip="Valid and contactable mobile number"
-                  validateStatus={mobileNumberError ? "error" : ""}
-                  help={mobileNumberError}
                   rules={[{ validator: validateDigitsOnly }]}
-                  hasFeedback
                 >
                   <Input
                     style={{
@@ -492,10 +497,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               <Col span={8}>
                 <Form.Item
                   label="Home Number"
-                  name="homeNumber"
+                  name="homeUseNumber"
                   tooltip="Valid home use contact number"
-                  validateStatus={homeNumberError ? "error" : ""}
-                  help={homeNumberError}
                   rules={[{ validator: validateDigitsOnly }]}
                 >
                   <Input
@@ -509,11 +512,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     addonBefore="+60"
                     placeholder="Home use number"
                     value={homeNumber}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      onHomeNumberChange(value);
-                      setHomeNumberError(null); // Reset the error before validation
-                    }}
+                    onChange={(e) => onHomeNumberChange(e.target.value)}
                   />
                 </Form.Item>
               </Col>
@@ -522,8 +521,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   label="Other Contact Number"
                   name="otherContact"
                   tooltip="Valid alternative contact number"
-                  validateStatus={alternativeNumberError ? "error" : ""}
-                  help={alternativeNumberError}
                   rules={[{ validator: validateDigitsOnly }]}
                 >
                   <Input
@@ -537,11 +534,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     addonBefore="+60"
                     placeholder="Alternative contact number"
                     value={alternativeNumber}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      onAlternativeNumberChange(value);
-                      setAlternativeNumberError(null); // Reset the error before validation
-                    }}
+                    onChange={(e) => onAlternativeNumberChange(e.target.value)}
                   />
                 </Form.Item>
               </Col>

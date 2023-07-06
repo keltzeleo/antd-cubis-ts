@@ -1,9 +1,6 @@
-import ProForm, { ProFormText } from "@ant-design/pro-form";
-import { Button, Col, Form, Input, Radio, Row, Select, Space, Tag } from "antd";
+import { Button, Col, Form, Input, Radio, Row, Select, Tag } from "antd";
 import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
-import light from "../../../src/tokens/light.json";
-import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 
 const { Option } = Select;
 const steps = [
@@ -236,7 +233,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
         {steps.map((step, index) => (
           <Tag
             key={index}
-            color={currentStep === index ? light["cyan.6"] : "gray"}
+            color={currentStep === index ? "cyan" : "gray"}
             onClick={() => setCurrentStep(index)}
           >
             {step.title}
@@ -245,44 +242,41 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
       </div>
       {currentStep === 0 && (
         <div style={{ padding: "0" }}>
-          <ProForm.Group>
+          <Form>
             <Row gutter={16}>
               <Col span={12}>
-                <ProFormText
-                  width="md"
-                  name="branch"
-                  label="Branch Site"
-                  disabled
-                />
+                <Form.Item label="Branch Site">
+                  <Input disabled />
+                </Form.Item>
               </Col>
               <Col span={12}>
-                <ProFormText
-                  width="md"
-                  name="customerNo"
-                  label="Customer Number"
-                  disabled
-                />
+                <Form.Item label="Customer Number">
+                  <Input disabled />
+                </Form.Item>
               </Col>
             </Row>
-          </ProForm.Group>
-          <ProForm.Group>
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item label="Enter Name">
-                  <Input
-                    addonBefore={
-                      <Select defaultValue="" onChange={handleNamePrefixChange}>
-                        <Option value="">Title</Option>
-                        <Option value="Mr.">Mr.</Option>
-                        <Option value="Ms.">Ms.</Option>
-                        <Option value="Mdm.">Mdm.</Option>
-                        <Option value="Dr.">Dr.</Option>
-                      </Select>
-                    }
-                    value={customerName}
-                    onChange={handleNameChange}
-                    placeholder="Full Name"
-                  />
+                  <Input.Group compact>
+                    <Select
+                      defaultValue=""
+                      onChange={handleNamePrefixChange}
+                      style={{ width: "25%" }}
+                    >
+                      <Option value="">Title</Option>
+                      <Option value="Mr.">Mr.</Option>
+                      <Option value="Ms.">Ms.</Option>
+                      <Option value="Mdm.">Mdm.</Option>
+                      <Option value="Dr.">Dr.</Option>
+                    </Select>
+                    <Input
+                      value={customerName}
+                      onChange={handleNameChange}
+                      placeholder="Full Name"
+                      style={{ width: "75%" }}
+                    />
+                  </Input.Group>
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -291,17 +285,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   labelCol={{ span: 7 }}
                   wrapperCol={{ span: 24 }}
                 >
-                  <ProFormText
-                    width="md"
-                    name="id"
-                    disabled
-                    placeholder={inputIcNumber}
-                  />
+                  <Input disabled placeholder={inputIcNumber} />
                 </Form.Item>
               </Col>
             </Row>
-          </ProForm.Group>
-          <ProForm.Group>
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item label="Citizenship">
@@ -309,12 +296,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     value={citizenship}
                     onChange={(e) => onCitizenshipChange(e.target.value)}
                   >
-                    <Radio style={{ marginLeft: 16 }} value="Malaysian">
-                      Malaysian
-                    </Radio>
-                    <Radio style={{ marginLeft: 16 }} value="Non-Malaysian">
-                      Non-Malaysian
-                    </Radio>
+                    <Radio value="Malaysian">Malaysian</Radio>
+                    <Radio value="Non-Malaysian">Non-Malaysian</Radio>
                   </Radio.Group>
                 </Form.Item>
               </Col>
@@ -322,7 +305,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 <Form.Item label="Nationality">
                   <Select
                     showSearch
-                    style={{ width: 300, marginBottom: 0 }}
+                    style={{ width: 300 }}
                     placeholder="Select a Nationality"
                     value={selectedCountry}
                     onChange={handleCountryChange}
@@ -356,113 +339,44 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 </Form.Item>
               </Col>
             </Row>
-          </ProForm.Group>
-
-          <ProForm.Group>
             <Row gutter={16}>
               <Col span={8}>
-                <Form.Item
-                  label="Race"
-                  name="race"
-                  rules={[{ required: true, message: "Please select Race" }]}
-                >
-                  <Select
-                    style={{ width: "md" }}
-                    placeholder="Please select a Race"
-                  >
-                    <Select.Option value="C">
+                <Form.Item label="Race" name="race">
+                  <Select placeholder="Please select a Race">
+                    <Option value="C">
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <SquircleBorder
-                          size={20}
-                          curvature={0.43}
-                          backgroundColor={light["volcano.2"]}
-                          rotate={0}
-                          borderType="dashed"
-                          borderWidth={1}
-                          borderColor="transparent"
-                          fontWeight={700}
-                          character="C"
-                        />
-                        <span style={{ marginLeft: "8px" }}>Chinese</span>
+                        <span style={{ marginRight: "8px" }}>Chinese</span>
                       </div>
-                    </Select.Option>
-                    <Select.Option value="I">
+                    </Option>
+                    <Option value="I">
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <SquircleBorder
-                          size={20}
-                          curvature={0.43}
-                          backgroundColor={light["magenta.2"]}
-                          rotate={0}
-                          borderType="dashed"
-                          borderWidth={1}
-                          borderColor="transparent"
-                          fontWeight={700}
-                          character="I"
-                        />
-                        <span style={{ marginLeft: "8px" }}>Indian</span>
+                        <span style={{ marginRight: "8px" }}>Indian</span>
                       </div>
-                    </Select.Option>
-                    <Select.Option value="M">
+                    </Option>
+                    <Option value="M">
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <SquircleBorder
-                          size={20}
-                          curvature={0.43}
-                          backgroundColor={light["grass.2"]}
-                          rotate={0}
-                          borderType="dashed"
-                          borderWidth={1}
-                          borderColor="transparent"
-                          fontWeight={700}
-                          character="M"
-                        />
-                        <span style={{ marginLeft: "8px" }}>Malay</span>
+                        <span style={{ marginRight: "8px" }}>Malay</span>
                       </div>
-                    </Select.Option>
-                    <Select.Option value="O">
+                    </Option>
+                    <Option value="O">
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <SquircleBorder
-                          size={20}
-                          curvature={0.43}
-                          backgroundColor={light["yellow.2"]}
-                          rotate={0}
-                          borderType="dashed"
-                          borderWidth={1}
-                          borderColor="transparent"
-                          fontWeight={700}
-                          character="O"
-                        />
-                        <span style={{ marginLeft: "8px" }}>Others</span>
+                        <span style={{ marginRight: "8px" }}>Others</span>
                       </div>
-                    </Select.Option>
+                    </Option>
                   </Select>
                 </Form.Item>
               </Col>
               <Col span={8}>
-                <ProFormText
-                  width="md"
-                  name="dob"
-                  label="D.O.B"
-                  disabled
-                  placeholder={
-                    inputIcNumber
-                      ? formatDob(extractDobFromIcNumber(inputIcNumber))
-                      : ""
-                  }
-                />
+                <Form.Item label="D.O.B" name="dob">
+                  <Input disabled placeholder={formatDob(dobFromId)} />
+                </Form.Item>
               </Col>
               <Col span={8}>
-                <ProFormText
-                  width="md"
-                  name="age"
-                  label="Age"
-                  disabled
-                  placeholder={age.toString()}
-                />
+                <Form.Item label="Age" name="age">
+                  <Input disabled placeholder={age.toString()} />
+                </Form.Item>
               </Col>
             </Row>
-          </ProForm.Group>
-
-          <ProForm.Group>
             <Row gutter={16}>
               <Col span={8}>
                 <Form.Item
@@ -472,20 +386,16 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   validateStatus={mobileNumberError ? "error" : ""}
                   help={mobileNumberError}
                   rules={[{ validator: validateDigitsOnly }]}
-                  hasFeedback
                 >
                   <Input
-                    style={{
-                      width: "",
-                      minWidth: "",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
                     addonBefore="+60"
                     placeholder="Contactable number"
                     value={mobileNumber}
-                    onChange={(e) => onMobileNumberChange(e.target.value)}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      onMobileNumberChange(value);
+                      setMobileNumberError(null);
+                    }}
                   />
                 </Form.Item>
               </Col>
@@ -499,20 +409,13 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   rules={[{ validator: validateDigitsOnly }]}
                 >
                   <Input
-                    style={{
-                      width: "",
-                      minWidth: "",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
                     addonBefore="+60"
                     placeholder="Home use number"
                     value={homeNumber}
                     onChange={(e) => {
                       const { value } = e.target;
                       onHomeNumberChange(value);
-                      setHomeNumberError(null); // Reset the error before validation
+                      setHomeNumberError(null);
                     }}
                   />
                 </Form.Item>
@@ -527,160 +430,144 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   rules={[{ validator: validateDigitsOnly }]}
                 >
                   <Input
-                    style={{
-                      width: "",
-                      minWidth: "",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
                     addonBefore="+60"
                     placeholder="Alternative contact number"
                     value={alternativeNumber}
                     onChange={(e) => {
                       const { value } = e.target;
                       onAlternativeNumberChange(value);
-                      setAlternativeNumberError(null); // Reset the error before validation
+                      setAlternativeNumberError(null);
                     }}
                   />
                 </Form.Item>
               </Col>
             </Row>
-          </ProForm.Group>
-          <ProForm.Group>
             <Row gutter={16}>
               <Col span={8}>
-                <ProFormText
-                  width="md"
-                  name="email"
-                  label="Customer Email"
-                  //disabled
-                  placeholder="Contactable Email Address"
-                />
+                <Form.Item label="Customer Email" name="email">
+                  <Input placeholder="Contactable Email Address" />
+                </Form.Item>
               </Col>
               <Col span={8}>
-                <ProFormText
-                  width="md"
-                  name="faxNumber"
-                  label="Fax Number"
-                  //disabled
-                  placeholder="Fax Number if Available"
-                />
+                <Form.Item label="Fax Number" name="faxNumber">
+                  <Input placeholder="Fax Number if Available" />
+                </Form.Item>
               </Col>
               <Col span={8}>
-                <Form.Item label="Preferred Contact Channel">
+                <Form.Item
+                  label="Preferred Contact Channel"
+                  name="contactChannel"
+                >
                   <Radio.Group>
-                    <Radio style={{ marginLeft: 16 }} value="email">
-                      E-Mail
-                    </Radio>
-                    <Radio style={{ marginLeft: 16 }} value="sms">
-                      SMS{" "}
-                    </Radio>
+                    <Radio value="email">E-Mail</Radio>
+                    <Radio value="sms">SMS</Radio>
                   </Radio.Group>
                 </Form.Item>
               </Col>
             </Row>
-          </ProForm.Group>
-          <div>
-            <Button type="primary" onClick={handleNextStep}>
-              Next
-            </Button>
-          </div>
+            <div>
+              <Button type="primary" onClick={handleNextStep}>
+                Next
+              </Button>
+            </div>
+          </Form>
         </div>
       )}
       {currentStep === 1 && (
-        <ProForm.Group>
+        <Form>
           <Row gutter={16}>
             <Col span={6}>
-              <ProFormText
-                width="md"
-                name="lotNo"
-                label="Lot No."
-                placeholder="Lot Number"
-              />
+              <Form.Item label="Lot No." name="lotNo">
+                <Input placeholder="Lot Number" />
+              </Form.Item>
             </Col>
             <Col span={6}>
-              <ProFormText
-                width="md"
-                name="blockNo"
-                label="Block"
-                placeholder="Block Number"
-              />
+              <Form.Item label="Block" name="blockNo">
+                <Input placeholder="Block Number" />
+              </Form.Item>
             </Col>
             <Col span={12}>
-              <ProForm.Item>
-                <Space.Compact>
-                  <Col style={{ width: "100px" }}>
-                    <ProFormText
-                      width="md"
-                      name="premiseNo"
-                      label="Premise No."
-                      placeholder="Number"
-                    />
-                  </Col>
-                  <Col style={{ width: "200px" }}>
-                    <ProFormText
-                      name="premiseName"
-                      label="Premise Name"
+              <Form.Item>
+                <Input.Group compact>
+                  <Form.Item
+                    name="premiseNo"
+                    noStyle
+                    rules={[{ required: true, message: "Number is required" }]}
+                  >
+                    <Input style={{ width: "50%" }} placeholder="Number" />
+                  </Form.Item>
+                  <Form.Item
+                    name="premiseName"
+                    noStyle
+                    rules={[
+                      { required: true, message: "Premise name is required" },
+                    ]}
+                  >
+                    <Input
+                      style={{ width: "50%" }}
                       placeholder="Premise Name"
                     />
-                  </Col>
-                </Space.Compact>
-              </ProForm.Item>
+                  </Form.Item>
+                </Input.Group>
+              </Form.Item>
             </Col>
           </Row>
-          {/* Rest of the code... */}
           <Row gutter={16}>
             <Col span={12}>
-              <ProFormText width="md" name="garden" label="Garden" />
+              <Form.Item label="Garden" name="garden">
+                <Input />
+              </Form.Item>
             </Col>
             <Col span={12}>
-              <ProFormText width="md" name="section" label="Section" />
+              <Form.Item label="Section" name="section">
+                <Input />
+              </Form.Item>
             </Col>
           </Row>
-          {/* Rest of the code... */}
           <Row gutter={16}>
             <Col span={12}>
-              <ProFormText width="md" name="village" label="Village" />
+              <Form.Item label="Village" name="village">
+                <Input />
+              </Form.Item>
             </Col>
             <Col span={12}>
-              <ProFormText width="md" name="area" label="Area" />
+              <Form.Item label="Area" name="area">
+                <Input />
+              </Form.Item>
             </Col>
           </Row>
-          {/* Rest of the code... */}
           <Row gutter={16}>
             <Col span={12}>
-              <ProForm.Item>
-                <Space.Compact>
-                  <Col style={{ width: "100px" }}>
-                    <ProFormText
-                      width="md"
-                      name="postcode"
-                      label="Postcode"
-                      fieldProps={{
-                        onChange: (event) =>
-                          handlePostcodeChange(event.target.value),
-                      }}
-                    />
-                  </Col>
-                  <Col style={{ width: "200px" }}>
-                    <ProFormText
-                      name="postcodeArea"
-                      label="Postcode Area"
+              <Form.Item>
+                <Input.Group compact>
+                  <Form.Item
+                    name="postcode"
+                    noStyle
+                    rules={[
+                      { required: true, message: "Postcode is required" },
+                    ]}
+                  >
+                    <Input style={{ width: "50%" }} placeholder="Postcode" />
+                  </Form.Item>
+                  <Form.Item
+                    name="postcodeArea"
+                    noStyle
+                    rules={[
+                      { required: true, message: "Postcode area is required" },
+                    ]}
+                  >
+                    <Input
+                      style={{ width: "50%" }}
                       placeholder="Postcode Area"
-                      initialValue={addressData[0]}
                     />
-                  </Col>
-                </Space.Compact>
-              </ProForm.Item>
+                  </Form.Item>
+                </Input.Group>
+              </Form.Item>
             </Col>
             <Col span={12}>
-              <ProFormText
-                width="md"
-                name="state"
-                label="State"
-                initialValue={addressData[0]}
-              />
+              <Form.Item label="State" name="state">
+                <Input placeholder="State" />
+              </Form.Item>
             </Col>
           </Row>
           <div>
@@ -691,19 +578,15 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               Next
             </Button>
           </div>
-        </ProForm.Group>
+        </Form>
       )}
       {currentStep === 2 && (
-        // Render form fields for "Related Family, Name, and Contact Number" step
-        <ProForm.Group>
+        <Form>
           <Row gutter={16}>
             <Col span={12}>
-              <ProFormText
-                width="md"
-                name="otherContactName"
-                label="Other Contact Name"
-                placeholder="Sub-holder name"
-              />
+              <Form.Item label="Other Contact Name" name="otherContactName">
+                <Input placeholder="Sub-holder name" />
+              </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
@@ -712,28 +595,13 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 tooltip="Valid and contactable mobile number"
                 rules={[{ validator: validateDigitsOnly }]}
               >
-                <Input
-                  style={{
-                    width: "",
-                    minWidth: "",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                  addonBefore="+60"
-                  placeholder="Contactable number"
-                  value={mobileNumber}
-                  onChange={(e) => onMobileNumberChange(e.target.value)}
-                />
+                <Input addonBefore="+60" placeholder="Contactable number" />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <ProFormText
-                width="md"
-                name="relationship"
-                label="Relationship"
-                placeholder=""
-              />
+              <Form.Item label="Relationship" name="relationship">
+                <Input placeholder="" />
+              </Form.Item>
             </Col>
           </Row>
           <div>
@@ -744,19 +612,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               Next
             </Button>
           </div>
-        </ProForm.Group>
+        </Form>
       )}
-      {/* {currentStep === 3 && (
-        // Render form fields for "Proceed to Account Registration" step
-        <div>
-          <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
-            Previous
-          </Button>
-          <Button type="primary" onClick={handleSubmit}>
-            Submit
-          </Button>
-        </div>
-      )} */}
     </div>
   );
 };

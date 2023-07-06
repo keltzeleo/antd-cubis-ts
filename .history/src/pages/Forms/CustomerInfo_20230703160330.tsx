@@ -485,7 +485,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     addonBefore="+60"
                     placeholder="Contactable number"
                     value={mobileNumber}
-                    onChange={(e) => onMobileNumberChange(e.target.value)}
+                    onChange={(e) => handleMobileNumberChange(e.target.value)}
                   />
                 </Form.Item>
               </Col>

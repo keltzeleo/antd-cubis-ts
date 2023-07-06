@@ -1,11 +1,24 @@
-import ProForm, { ProFormText } from "@ant-design/pro-form";
-import { Button, Col, Form, Input, Radio, Row, Select, Space, Tag } from "antd";
+import { ProForm, ProFormText } from "@ant-design/pro-form";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Radio,
+  Row,
+  Select,
+  Space,
+  Steps,
+  Tag,
+} from "antd";
 import axios from "axios";
-import { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import light from "../../../src/tokens/light.json";
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 
 const { Option } = Select;
+const { Step } = Steps;
+
 const steps = [
   {
     title: "Customer Information",
@@ -67,13 +80,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const [addressData, setAddressData] = useState<string[]>([]);
   const [postcode, setPostcode] = useState<string>("");
   const [stateData, setStateData] = useState("");
-  const [mobileNumberError, setMobileNumberError] = useState<string | null>(
-    null
-  );
-  const [homeNumberError, setHomeNumberError] = useState<string | null>(null);
-  const [alternativeNumberError, setAlternativeNumberError] = useState<
-    string | null
-  >(null);
 
   useEffect(() => {
     const fetchStateData = async () => {
@@ -101,9 +107,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const handlePostcodeChange = async (value: string) => {
     setPostcode(value);
     try {
-      const response = await axios.get(
-        `https://api.postcode.my/postcode/${value}`
-      );
+      const response = await axios.get(`https://api.postcode.my/postcode/`);
       if (response.status === 200) {
         const data = response.data;
         if (Array.isArray(data) && data.length > 0) {
@@ -198,7 +202,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     onCustomerTitleChange(value);
   };
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onCustomerNameChange(e.target.value);
   };
 
@@ -464,299 +468,288 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
 
           <ProForm.Group>
             <Row gutter={16}>
-              <Col span={8}>
-                <Form.Item
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="mobile"
                   label="Mobile Number"
-                  name="mobileNumber"
-                  tooltip="Valid and contactable mobile number"
-                  validateStatus={mobileNumberError ? "error" : ""}
-                  help={mobileNumberError}
-                  rules={[{ validator: validateDigitsOnly }]}
-                  hasFeedback
-                >
-                  <Input
-                    style={{
-                      width: "",
-                      minWidth: "",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                    addonBefore="+60"
-                    placeholder="Contactable number"
-                    value={mobileNumber}
-                    onChange={(e) => onMobileNumberChange(e.target.value)}
-                  />
-                </Form.Item>
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter your mobile number",
+                    },
+                    {
+                      validator: validateDigitsOnly,
+                    },
+                  ]}
+                  placeholder="Mobile Number"
+                  value={mobileNumber}
+                  onChange={onMobileNumberChange}
+                />
               </Col>
-              <Col span={8}>
-                <Form.Item
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="home"
                   label="Home Number"
-                  name="homeNumber"
-                  tooltip="Valid home use contact number"
-                  validateStatus={homeNumberError ? "error" : ""}
-                  help={homeNumberError}
-                  rules={[{ validator: validateDigitsOnly }]}
+                  rules={[
+                    {
+                      validator: validateDigitsOnly,
+                    },
+                  ]}
+                  placeholder="Home Number"
+                  value={homeNumber}
+                  onChange={onHomeNumberChange}
+                />
+              </Col>
+            </Row>
+          </ProForm.Group>
+
+          <ProForm.Group>
+            <Row gutter={16}>
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="alternative"
+                  label="Alternative Number"
+                  rules={[
+                    {
+                      validator: validateDigitsOnly,
+                    },
+                  ]}
+                  placeholder="Alternative Number"
+                  value={alternativeNumber}
+                  onChange={onAlternativeNumberChange}
+                />
+              </Col>
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="email"
+                  label="Email"
+                  rules={[
+                    {
+                      type: "email",
+                      message: "Invalid email format",
+                    },
+                  ]}
+                  placeholder="Email"
+                />
+              </Col>
+            </Row>
+          </ProForm.Group>
+
+          <ProForm.Group>
+            <Row gutter={16}>
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="occupation"
+                  label="Occupation"
+                  placeholder="Occupation"
+                />
+              </Col>
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="employer"
+                  label="Employer"
+                  placeholder="Employer"
+                />
+              </Col>
+            </Row>
+          </ProForm.Group>
+
+          <Form.Item>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Space>
+                <Button
+                  type="primary"
+                  onClick={handleNextStep}
+                  style={{ marginRight: 8 }}
                 >
-                  <Input
-                    style={{
-                      width: "",
-                      minWidth: "",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                    addonBefore="+60"
-                    placeholder="Home use number"
-                    value={homeNumber}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      onHomeNumberChange(value);
-                      setHomeNumberError(null); // Reset the error before validation
-                    }}
-                  />
-                </Form.Item>
+                  Next
+                </Button>
+                <Button onClick={handleSubmit}>Submit</Button>
+              </Space>
+            </div>
+          </Form.Item>
+        </div>
+      )}
+
+      {currentStep === 1 && (
+        <div style={{ padding: "0" }}>
+          <ProForm.Group>
+            <Row gutter={16}>
+              <Col span={8}>
+                <ProFormText
+                  width="md"
+                  name="addressLine1"
+                  label="Address Line 1"
+                  placeholder="Address Line 1"
+                />
               </Col>
               <Col span={8}>
-                <Form.Item
-                  label="Other Contact Number"
-                  name="otherContact"
-                  tooltip="Valid alternative contact number"
-                  validateStatus={alternativeNumberError ? "error" : ""}
-                  help={alternativeNumberError}
-                  rules={[{ validator: validateDigitsOnly }]}
-                >
-                  <Input
-                    style={{
-                      width: "",
-                      minWidth: "",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                    addonBefore="+60"
-                    placeholder="Alternative contact number"
-                    value={alternativeNumber}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      onAlternativeNumberChange(value);
-                      setAlternativeNumberError(null); // Reset the error before validation
-                    }}
-                  />
-                </Form.Item>
+                <ProFormText
+                  width="md"
+                  name="addressLine2"
+                  label="Address Line 2"
+                  placeholder="Address Line 2"
+                />
+              </Col>
+              <Col span={8}>
+                <ProFormText
+                  width="md"
+                  name="addressLine3"
+                  label="Address Line 3"
+                  placeholder="Address Line 3"
+                />
               </Col>
             </Row>
           </ProForm.Group>
           <ProForm.Group>
             <Row gutter={16}>
               <Col span={8}>
+                <Form.Item label="Postcode">
+                  <Select
+                    style={{ width: "md" }}
+                    showSearch
+                    placeholder="Postcode"
+                    optionFilterProp="children"
+                    onChange={handlePostcodeChange}
+                    filterOption={(input, option) =>
+                      option?.children?.toString().indexOf(input) >= 0
+                    }
+                  >
+                    {addressData.map((address) => (
+                      <Select.Option key={address} value={address}>
+                        {address}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={8}>
                 <ProFormText
                   width="md"
-                  name="email"
-                  label="Customer Email"
-                  //disabled
-                  placeholder="Contactable Email Address"
+                  name="city"
+                  label="City"
+                  placeholder="City"
+                  disabled
                 />
               </Col>
               <Col span={8}>
                 <ProFormText
                   width="md"
-                  name="faxNumber"
-                  label="Fax Number"
-                  //disabled
-                  placeholder="Fax Number if Available"
+                  name="state"
+                  label="State"
+                  placeholder="State"
+                  disabled
+                  value={stateData}
                 />
               </Col>
-              <Col span={8}>
-                <Form.Item label="Preferred Contact Channel">
-                  <Radio.Group>
-                    <Radio style={{ marginLeft: 16 }} value="email">
-                      E-Mail
-                    </Radio>
-                    <Radio style={{ marginLeft: 16 }} value="sms">
-                      SMS{" "}
-                    </Radio>
-                  </Radio.Group>
+            </Row>
+          </ProForm.Group>
+          <ProForm.Group>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item label="Country">
+                  <Select
+                    showSearch
+                    style={{ width: 300, marginBottom: 0 }}
+                    placeholder="Select a Country"
+                    value={selectedCountry}
+                    onChange={handleCountryChange}
+                    optionFilterProp="children"
+                    filterOption={(input, option) => {
+                      const countryLabel =
+                        option?.label?.toString()?.toLowerCase() ?? "";
+                      const countryValue =
+                        option?.value?.toString()?.toLowerCase() ?? "";
+                      const inputValue = input?.toString()?.toLowerCase() ?? "";
+
+                      return (
+                        countryLabel.includes(inputValue) ||
+                        countryValue.includes(inputValue)
+                      );
+                    }}
+                  >
+                    {countries.map((country) => (
+                      <Option key={country.value} value={country.value}>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <img
+                            src={country.flag}
+                            alt={`${country.label} Flag`}
+                            style={{ width: "20px", marginRight: "12px" }}
+                          />
+                          {country.label}
+                        </div>
+                      </Option>
+                    ))}
+                  </Select>
                 </Form.Item>
               </Col>
             </Row>
           </ProForm.Group>
-          <div>
-            <Button type="primary" onClick={handleNextStep}>
-              Next
-            </Button>
-          </div>
+
+          <Form.Item>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Button onClick={handlePrevStep}>Previous</Button>
+              <Space>
+                <Button
+                  type="primary"
+                  onClick={handleNextStep}
+                  style={{ marginRight: 8 }}
+                >
+                  Next
+                </Button>
+                <Button onClick={handleSubmit}>Submit</Button>
+              </Space>
+            </div>
+          </Form.Item>
         </div>
       )}
-      {currentStep === 1 && (
-        <ProForm.Group>
-          <Row gutter={16}>
-            <Col span={6}>
-              <ProFormText
-                width="md"
-                name="lotNo"
-                label="Lot No."
-                placeholder="Lot Number"
-              />
-            </Col>
-            <Col span={6}>
-              <ProFormText
-                width="md"
-                name="blockNo"
-                label="Block"
-                placeholder="Block Number"
-              />
-            </Col>
-            <Col span={12}>
-              <ProForm.Item>
-                <Space.Compact>
-                  <Col style={{ width: "100px" }}>
-                    <ProFormText
-                      width="md"
-                      name="premiseNo"
-                      label="Premise No."
-                      placeholder="Number"
-                    />
-                  </Col>
-                  <Col style={{ width: "200px" }}>
-                    <ProFormText
-                      name="premiseName"
-                      label="Premise Name"
-                      placeholder="Premise Name"
-                    />
-                  </Col>
-                </Space.Compact>
-              </ProForm.Item>
-            </Col>
-          </Row>
-          {/* Rest of the code... */}
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProFormText width="md" name="garden" label="Garden" />
-            </Col>
-            <Col span={12}>
-              <ProFormText width="md" name="section" label="Section" />
-            </Col>
-          </Row>
-          {/* Rest of the code... */}
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProFormText width="md" name="village" label="Village" />
-            </Col>
-            <Col span={12}>
-              <ProFormText width="md" name="area" label="Area" />
-            </Col>
-          </Row>
-          {/* Rest of the code... */}
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProForm.Item>
-                <Space.Compact>
-                  <Col style={{ width: "100px" }}>
-                    <ProFormText
-                      width="md"
-                      name="postcode"
-                      label="Postcode"
-                      fieldProps={{
-                        onChange: (event) =>
-                          handlePostcodeChange(event.target.value),
-                      }}
-                    />
-                  </Col>
-                  <Col style={{ width: "200px" }}>
-                    <ProFormText
-                      name="postcodeArea"
-                      label="Postcode Area"
-                      placeholder="Postcode Area"
-                      initialValue={addressData[0]}
-                    />
-                  </Col>
-                </Space.Compact>
-              </ProForm.Item>
-            </Col>
-            <Col span={12}>
-              <ProFormText
-                width="md"
-                name="state"
-                label="State"
-                initialValue={addressData[0]}
-              />
-            </Col>
-          </Row>
-          <div>
-            <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
-              Previous
-            </Button>
-            <Button type="primary" onClick={handleNextStep}>
-              Next
-            </Button>
-          </div>
-        </ProForm.Group>
-      )}
+
       {currentStep === 2 && (
-        // Render form fields for "Related Family, Name, and Contact Number" step
-        <ProForm.Group>
-          <Row gutter={16}>
-            <Col span={12}>
-              <ProFormText
-                width="md"
-                name="otherContactName"
-                label="Other Contact Name"
-                placeholder="Sub-holder name"
-              />
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                label="Other Contact Number"
-                name="otherContactNumber"
-                tooltip="Valid and contactable mobile number"
-                rules={[{ validator: validateDigitsOnly }]}
-              >
-                <Input
-                  style={{
-                    width: "",
-                    minWidth: "",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                  addonBefore="+60"
-                  placeholder="Contactable number"
-                  value={mobileNumber}
-                  onChange={(e) => onMobileNumberChange(e.target.value)}
+        <div style={{ padding: "0" }}>
+          <ProForm.Group>
+            <Row gutter={16}>
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="subContactName"
+                  label="Sub-Contact Name"
+                  placeholder="Sub-Contact Name"
                 />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <ProFormText
-                width="md"
-                name="relationship"
-                label="Relationship"
-                placeholder=""
-              />
-            </Col>
-          </Row>
-          <div>
-            <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
-              Previous
-            </Button>
-            <Button type="primary" onClick={handleNextStep}>
-              Next
-            </Button>
-          </div>
-        </ProForm.Group>
-      )}
-      {/* {currentStep === 3 && (
-        // Render form fields for "Proceed to Account Registration" step
-        <div>
-          <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
-            Previous
-          </Button>
-          <Button type="primary" onClick={handleSubmit}>
-            Submit
-          </Button>
+              </Col>
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="subContactNumber"
+                  label="Sub-Contact Number"
+                  placeholder="Sub-Contact Number"
+                />
+              </Col>
+            </Row>
+          </ProForm.Group>
+
+          <Form.Item>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Button onClick={handlePrevStep}>Previous</Button>
+              <Space>
+                <Button
+                  type="primary"
+                  onClick={handleNextStep}
+                  style={{ marginRight: 8 }}
+                >
+                  Next
+                </Button>
+                <Button onClick={handleSubmit}>Submit</Button>
+              </Space>
+            </div>
+          </Form.Item>
         </div>
-      )} */}
+      )}
     </div>
   );
 };

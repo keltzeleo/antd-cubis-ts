@@ -1,4 +1,4 @@
-import ProForm, { ProFormText } from "@ant-design/pro-form";
+import { ProForm, ProFormText } from "@ant-design/pro-form";
 import { Button, Col, Form, Input, Radio, Row, Select, Space, Tag } from "antd";
 import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -472,7 +472,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   validateStatus={mobileNumberError ? "error" : ""}
                   help={mobileNumberError}
                   rules={[{ validator: validateDigitsOnly }]}
-                  hasFeedback
                 >
                   <Input
                     style={{
@@ -485,17 +484,19 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     addonBefore="+60"
                     placeholder="Contactable number"
                     value={mobileNumber}
-                    onChange={(e) => onMobileNumberChange(e.target.value)}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      onMobileNumberChange(value);
+                      setMobileNumberError(null); // Reset the error before validation
+                    }}
                   />
                 </Form.Item>
               </Col>
               <Col span={8}>
                 <Form.Item
                   label="Home Number"
-                  name="homeNumber"
+                  name="homeUseNumber"
                   tooltip="Valid home use contact number"
-                  validateStatus={homeNumberError ? "error" : ""}
-                  help={homeNumberError}
                   rules={[{ validator: validateDigitsOnly }]}
                 >
                   <Input
@@ -509,11 +510,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     addonBefore="+60"
                     placeholder="Home use number"
                     value={homeNumber}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      onHomeNumberChange(value);
-                      setHomeNumberError(null); // Reset the error before validation
-                    }}
+                    onChange={(e) => onHomeNumberChange(e.target.value)}
                   />
                 </Form.Item>
               </Col>
@@ -522,8 +519,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   label="Other Contact Number"
                   name="otherContact"
                   tooltip="Valid alternative contact number"
-                  validateStatus={alternativeNumberError ? "error" : ""}
-                  help={alternativeNumberError}
                   rules={[{ validator: validateDigitsOnly }]}
                 >
                   <Input
@@ -537,11 +532,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     addonBefore="+60"
                     placeholder="Alternative contact number"
                     value={alternativeNumber}
-                    onChange={(e) => {
-                      const { value } = e.target;
-                      onAlternativeNumberChange(value);
-                      setAlternativeNumberError(null); // Reset the error before validation
-                    }}
+                    onChange={(e) => onAlternativeNumberChange(e.target.value)}
                   />
                 </Form.Item>
               </Col>

@@ -472,7 +472,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   validateStatus={mobileNumberError ? "error" : ""}
                   help={mobileNumberError}
                   rules={[{ validator: validateDigitsOnly }]}
-                  hasFeedback
                 >
                   <Input
                     style={{
@@ -485,7 +484,11 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     addonBefore="+60"
                     placeholder="Contactable number"
                     value={mobileNumber}
-                    onChange={(e) => onMobileNumberChange(e.target.value)}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      onMobileNumberChange(value);
+                      setMobileNumberError(null); // Reset the error before validation
+                    }}
                   />
                 </Form.Item>
               </Col>
