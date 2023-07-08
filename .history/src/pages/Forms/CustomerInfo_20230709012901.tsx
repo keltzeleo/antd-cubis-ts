@@ -914,13 +914,13 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               bordered
               style={{
                 marginBlockEnd: 16,
-                maxWidth: "100%", // Set the desired width here
+                minWidth: "100%", // Set the desired width here
               }}
               extra={
                 <Switch
                   style={{}}
                   checked={readonlyPostalAddress}
-                  checkedChildren="Same as Account Address"
+                  checkedChildren="Follow Account Address"
                   unCheckedChildren="Postal Address Fill In"
                   onChange={(value) => {
                     setReadonlyPostalAddress(value);

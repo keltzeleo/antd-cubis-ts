@@ -796,7 +796,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               bordered
               style={{
                 marginBlockEnd: 16,
-                minWidth: "100%", // Set the desired width here
               }}
               extra={
                 <Switch
@@ -914,13 +913,13 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               bordered
               style={{
                 marginBlockEnd: 16,
-                maxWidth: "100%", // Set the desired width here
+                width: "100%",
               }}
               extra={
                 <Switch
                   style={{}}
                   checked={readonlyPostalAddress}
-                  checkedChildren="Same as Account Address"
+                  checkedChildren="Follow Account Address"
                   unCheckedChildren="Postal Address Fill In"
                   onChange={(value) => {
                     setReadonlyPostalAddress(value);

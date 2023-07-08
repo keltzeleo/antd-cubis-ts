@@ -285,10 +285,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   };
 
   const handleNextStep = () => {
-    if (currentStep === Step.length - 1) {
-      setCurrentStepAccountEntry(-1);
-    } else {
-      setCurrentStep(currentStep + 1);
+    if (currentStep < Step.length - 1 && isStepValid(currentStep)) {
+      setCurrentStep((prevStep) => prevStep + 1);
     }
   };
 
@@ -792,11 +790,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <ProCard
               title="Account Address"
               collapsible
-              collapsed={readonlyAccountAddress ? undefined : false}
+              defaultCollapsed={readonlyAccountAddress}
               bordered
               style={{
                 marginBlockEnd: 16,
-                minWidth: "100%", // Set the desired width here
               }}
               extra={
                 <Switch
@@ -804,9 +801,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   checked={readonlyAccountAddress}
                   checkedChildren="Same as Primary Address"
                   unCheckedChildren="Account Address Fill In"
-                  onChange={(value) => {
-                    setReadonlyAccountAddress(value);
-                  }}
+                  onChange={setReadonlyAccountAddress}
                 />
               }
             >
@@ -910,21 +905,19 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <ProCard
               title="Postal Address"
               collapsible
-              collapsed={readonlyPostalAddress ? undefined : false}
+              defaultCollapsed={readonlyPostalAddress}
               bordered
               style={{
                 marginBlockEnd: 16,
-                maxWidth: "100%", // Set the desired width here
+                width: "100%",
               }}
               extra={
                 <Switch
                   style={{}}
                   checked={readonlyPostalAddress}
-                  checkedChildren="Same as Account Address"
+                  checkedChildren="Follow Account Address"
                   unCheckedChildren="Postal Address Fill In"
-                  onChange={(value) => {
-                    setReadonlyPostalAddress(value);
-                  }}
+                  onChange={setReadonlyPostalAddress}
                 />
               }
             >
@@ -1463,68 +1456,55 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
       </ProForm>
 
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div>
-          {currentStep === 0 ? (
-            <></>
-          ) : (
-            <Button
-              style={{ marginRight: 8 }}
-              onClick={() => {
-                if (
-                  currentStep ===
-                  Step.findIndex((step) => step.title === "Account Entry")
-                ) {
-                  if (currentStepAccountEntry === 0) {
-                    setCurrentStep(2); // Replace SubContactStep with the index of the "Sub-Contact" step
-                  } else {
-                    setCurrentStepAccountEntry(currentStepAccountEntry - 1);
-                  }
-                } else {
-                  setCurrentStep(currentStep - 1);
-                }
-              }}
-              disabled={!isStepValid(currentStep)}
-            >
-              Previous
-            </Button>
-          )}
-        </div>
+        {currentStep > 0 && currentStep === Step.length - 1 && (
+          <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
+            Previous
+          </Button>
+        )}
 
-        <div>
-          {currentStep === Step.length - 1 ? (
-            <>
-              {currentStep ===
-              Step.findIndex((step) => step.title === "Account Entry") ? (
-                <>
-                  {currentStepAccountEntry === StepAccountEntry.length - 1 ? (
-                    <Button
-                      type="primary"
-                      onClick={handleSubmitAccountEntry}
-                      disabled={!isStepValid(currentStepAccountEntry)}
-                    >
-                      Submit
-                    </Button>
-                  ) : (
-                    <Button
-                      type="primary"
-                      onClick={handleNextStepAccountEntry}
-                      disabled={!isStepValid(currentStepAccountEntry)}
-                    >
-                      Next
-                    </Button>
-                  )}
-                </>
-              ) : (
+        <div style={{ flex: 1 }}></div>
+
+        {currentStep === Step.length - 1 ? (
+          <div>
+            {currentStepAccountEntry === 0 ? (
+              <Button
+                type="primary"
+                onClick={handleNextStepAccountEntry}
+                disabled={!isStepValid(currentStepAccountEntry)}
+              >
+                Next
+              </Button>
+            ) : (
+              <>
                 <Button
-                  type="primary"
-                  onClick={handleNextStep}
-                  disabled={!isStepValid(currentStep)}
+                  style={{ marginRight: 8 }}
+                  onClick={handlePrevStepAccountEntry}
+                  disabled={!isStepValid(currentStepAccountEntry)}
                 >
-                  Next
+                  Previous
                 </Button>
-              )}
-            </>
-          ) : (
+                {currentStepAccountEntry === StepAccountEntry.length - 1 ? (
+                  <Button
+                    type="primary"
+                    onClick={handleSubmitAccountEntry}
+                    disabled={!isStepValid(currentStepAccountEntry)}
+                  >
+                    Submit
+                  </Button>
+                ) : (
+                  <Button
+                    type="primary"
+                    onClick={handleNextStepAccountEntry}
+                    disabled={!isStepValid(currentStepAccountEntry)}
+                  >
+                    Next
+                  </Button>
+                )}
+              </>
+            )}
+          </div>
+        ) : (
+          <div>
             <Button
               type="primary"
               onClick={handleNextStep}
@@ -1532,8 +1512,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             >
               Next
             </Button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

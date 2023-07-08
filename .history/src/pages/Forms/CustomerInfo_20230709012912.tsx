@@ -920,7 +920,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 <Switch
                   style={{}}
                   checked={readonlyPostalAddress}
-                  checkedChildren="Same as Account Address"
+                  checkedChildren="Follow Account Address"
                   unCheckedChildren="Postal Address Fill In"
                   onChange={(value) => {
                     setReadonlyPostalAddress(value);

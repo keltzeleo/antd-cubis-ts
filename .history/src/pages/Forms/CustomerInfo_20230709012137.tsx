@@ -792,11 +792,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <ProCard
               title="Account Address"
               collapsible
-              collapsed={readonlyAccountAddress ? undefined : false}
+              defaultCollapsed={readonlyAccountAddress}
               bordered
               style={{
                 marginBlockEnd: 16,
-                minWidth: "100%", // Set the desired width here
               }}
               extra={
                 <Switch
@@ -804,9 +803,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   checked={readonlyAccountAddress}
                   checkedChildren="Same as Primary Address"
                   unCheckedChildren="Account Address Fill In"
-                  onChange={(value) => {
-                    setReadonlyAccountAddress(value);
-                  }}
+                  onChange={setReadonlyAccountAddress}
                 />
               }
             >
@@ -910,20 +907,23 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <ProCard
               title="Postal Address"
               collapsible
-              collapsed={readonlyPostalAddress ? undefined : false}
+              collapsed={readonlyPostalAddress && isProCardCollapsed}
               bordered
               style={{
                 marginBlockEnd: 16,
-                maxWidth: "100%", // Set the desired width here
+                width: "100%",
               }}
               extra={
                 <Switch
                   style={{}}
                   checked={readonlyPostalAddress}
-                  checkedChildren="Same as Account Address"
+                  checkedChildren="Follow Account Address"
                   unCheckedChildren="Postal Address Fill In"
                   onChange={(value) => {
                     setReadonlyPostalAddress(value);
+                    if (!value) {
+                      setIsProCardCollapsed(false);
+                    }
                   }}
                 />
               }

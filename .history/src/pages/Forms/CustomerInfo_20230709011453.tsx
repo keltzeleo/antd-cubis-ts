@@ -792,11 +792,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <ProCard
               title="Account Address"
               collapsible
-              collapsed={readonlyAccountAddress ? undefined : false}
+              defaultCollapsed={readonlyAccountAddress}
               bordered
               style={{
                 marginBlockEnd: 16,
-                minWidth: "100%", // Set the desired width here
               }}
               extra={
                 <Switch
@@ -804,9 +803,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   checked={readonlyAccountAddress}
                   checkedChildren="Same as Primary Address"
                   unCheckedChildren="Account Address Fill In"
-                  onChange={(value) => {
-                    setReadonlyAccountAddress(value);
-                  }}
+                  onChange={setReadonlyAccountAddress}
                 />
               }
             >
@@ -910,21 +907,19 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             <ProCard
               title="Postal Address"
               collapsible
-              collapsed={readonlyPostalAddress ? undefined : false}
+              defaultCollapsed={readonlyPostalAddress}
               bordered
               style={{
                 marginBlockEnd: 16,
-                maxWidth: "100%", // Set the desired width here
+                width: "100%",
               }}
               extra={
                 <Switch
                   style={{}}
                   checked={readonlyPostalAddress}
-                  checkedChildren="Same as Account Address"
+                  checkedChildren="Follow Account Address"
                   unCheckedChildren="Postal Address Fill In"
-                  onChange={(value) => {
-                    setReadonlyPostalAddress(value);
-                  }}
+                  onChange={setReadonlyPostalAddress}
                 />
               }
             >
@@ -1475,7 +1470,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   Step.findIndex((step) => step.title === "Account Entry")
                 ) {
                   if (currentStepAccountEntry === 0) {
-                    setCurrentStep(2); // Replace SubContactStep with the index of the "Sub-Contact" step
+                    setCurrentStep(SubContactStep);
                   } else {
                     setCurrentStepAccountEntry(currentStepAccountEntry - 1);
                   }
