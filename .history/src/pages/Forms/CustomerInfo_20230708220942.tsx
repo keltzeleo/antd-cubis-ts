@@ -1168,273 +1168,149 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                     </Form.Item>
                   </Col>
                 </Row>
-
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Form.Item
-                      label="Meter Type"
-                      name="meterType"
-                      style={{ background: "#ffffff" }}
-                      rules={[
-                        { required: true, message: "Meter Type is mandatory" },
-                      ]}
-                    >
-                      <Select placeholder="Please select a Meter Type">
-                        <Select.Option value="1">
-                          <div
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            <SquircleBorder
-                              size={20}
-                              curvature={0.43}
-                              backgroundColor={light["volcano.2"]}
-                              rotate={0}
-                              borderType="dashed"
-                              borderWidth={1}
-                              borderColor="transparent"
-                              fontWeight={700}
-                              character="1"
-                            />
-                            <span style={{ marginLeft: "8px" }}>
-                              Individual Meter
-                            </span>
-                          </div>
-                        </Select.Option>
-                        <Select.Option value="I">
-                          <div
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            <SquircleBorder
-                              size={20}
-                              curvature={0.43}
-                              backgroundColor={light["magenta.2"]}
-                              rotate={0}
-                              borderType="dashed"
-                              borderWidth={1}
-                              borderColor="transparent"
-                              fontWeight={700}
-                              character="2"
-                            />
-                            <span style={{ marginLeft: "8px" }}>
-                              Bulk Meter
-                            </span>
-                          </div>
-                        </Select.Option>
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item
-                      label="Bill Delivery Type"
-                      name="billDeliveryType"
-                      style={{ background: "#ffffff" }}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Bill Delivery Type is mandatory",
-                        },
-                      ]}
-                    >
-                      <Select placeholder="Please select a Race">
-                        <Select.Option value="C">
-                          <div
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            <SquircleBorder
-                              size={20}
-                              curvature={0.43}
-                              backgroundColor={light["volcano.2"]}
-                              rotate={0}
-                              borderType="dashed"
-                              borderWidth={1}
-                              borderColor="transparent"
-                              fontWeight={700}
-                              character="S"
-                            />
-                            <span style={{ marginLeft: "8px" }}>Spot Bill</span>
-                          </div>
-                        </Select.Option>
-                        <Select.Option value="I">
-                          <div
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            <SquircleBorder
-                              size={20}
-                              curvature={0.43}
-                              backgroundColor={light["magenta.2"]}
-                              rotate={0}
-                              borderType="dashed"
-                              borderWidth={1}
-                              borderColor="transparent"
-                              fontWeight={700}
-                              character="P"
-                            />
-                            <span style={{ marginLeft: "8px" }}>
-                              Postal Bill
-                            </span>
-                          </div>
-                        </Select.Option>
-                        <Select.Option value="M">
-                          <div
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            <SquircleBorder
-                              size={20}
-                              curvature={0.43}
-                              backgroundColor={light["grass.2"]}
-                              rotate={0}
-                              borderType="dashed"
-                              borderWidth={1}
-                              borderColor="transparent"
-                              fontWeight={700}
-                              character="G"
-                            />
-                            <span style={{ marginLeft: "8px" }}>
-                              Green Bill
-                            </span>
-                          </div>
-                        </Select.Option>
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <ProCard
-                  title="GST Relief"
-                  collapsible
-                  collapsed={!gstIsApplicable}
-                  bordered
-                  style={{
-                    marginBlockEnd: 16,
-                    width: "100%",
-                  }}
-                  extra={
-                    <Switch
-                      checked={gstIsApplicable}
-                      checkedChildren="Applicable"
-                      unCheckedChildren="Not Applicable"
-                      onChange={handleGSTReliefSwitch}
-                    />
-                  }
+              </ProForm>
+           
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  label="Meter Type"
+                  name="meterType"
+                  style={{ background: "#ffffff" }}
+                  rules={[
+                    { required: true, message: "Meter Type is mandatory" },
+                  ]}
                 >
-                  {gstIsApplicable && (
-                    <div>
-                      {/* Place your checklist content here */}
-                      <Checkbox>Checkbox 1</Checkbox>
-                      <Checkbox>Checkbox 2</Checkbox>
-                      <Checkbox>Checkbox 3</Checkbox>
-                    </div>
-                  )}
-                </ProCard>
-              </ProForm>
-            )}
-            {currentStepAccountEntry === 1 && (
-              <ProForm submitter={false}>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Form.Item
-                      label="Bank"
-                      name="bank"
-                      style={{ background: "#ffffff" }}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Bank must be selected",
-                        },
-                      ]}
-                    >
-                      <Select placeholder="Please select a  Bank">
-                        <Select.Option value="BNM">
-                          <div
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            <SquircleBorder
-                              size={20}
-                              curvature={0.43}
-                              backgroundColor={light["volcano.2"]}
-                              rotate={0}
-                              borderType="dashed"
-                              borderWidth={1}
-                              borderColor="transparent"
-                              fontWeight={700}
-                              character="01"
-                            />
-                            <span style={{ marginLeft: "8px" }}>
-                              Bank Negara Malaysia
-                            </span>
-                          </div>
-                        </Select.Option>
-                        <Select.Option value="RBS">
-                          <div
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            <SquircleBorder
-                              size={20}
-                              curvature={0.43}
-                              backgroundColor={light["magenta.2"]}
-                              rotate={0}
-                              borderType="dashed"
-                              borderWidth={1}
-                              borderColor="transparent"
-                              fontWeight={700}
-                              character="02"
-                            />
-                            <span style={{ marginLeft: "8px" }}>
-                              The Royal Bank of Scotland
-                            </span>
-                          </div>
-                        </Select.Option>
-                        <Select.Option value="BOA">
-                          <div
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            <SquircleBorder
-                              size={20}
-                              curvature={0.43}
-                              backgroundColor={light["grass.2"]}
-                              rotate={0}
-                              borderType="dashed"
-                              borderWidth={1}
-                              borderColor="transparent"
-                              fontWeight={700}
-                              character="07"
-                            />
-                            <span style={{ marginLeft: "8px" }}>
-                              Bank of America Malaysia
-                            </span>
-                            {/* lots more of banks */}
-                          </div>
-                        </Select.Option>
-                      </Select>
-                    </Form.Item>
-                  </Col>
-
-                  <Col span={12}>
-                    <Form.Item
-                      label="Bank Account No"
-                      name="bankAccountNo"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Bank Account No is required",
-                        },
-                        {
-                          max: 20,
-                          message:
-                            "Bank Account No cannot exceed 20 characters",
-                        },
-                        {
-                          validator: validateDigitsOnly,
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Enter Bank Account No" />
-                    </Form.Item>
-
-                    {/* Add more form items for other fields if needed */}
-                  </Col>
-                </Row>
-              </ProForm>
-            )}
+                  <Select placeholder="Please select a Meter Type">
+                    <Select.Option value="1">
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <SquircleBorder
+                          size={20}
+                          curvature={0.43}
+                          backgroundColor={light["volcano.2"]}
+                          rotate={0}
+                          borderType="dashed"
+                          borderWidth={1}
+                          borderColor="transparent"
+                          fontWeight={700}
+                          character="1"
+                        />
+                        <span style={{ marginLeft: "8px" }}>
+                          Individual Meter
+                        </span>
+                      </div>
+                    </Select.Option>
+                    <Select.Option value="I">
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <SquircleBorder
+                          size={20}
+                          curvature={0.43}
+                          backgroundColor={light["magenta.2"]}
+                          rotate={0}
+                          borderType="dashed"
+                          borderWidth={1}
+                          borderColor="transparent"
+                          fontWeight={700}
+                          character="2"
+                        />
+                        <span style={{ marginLeft: "8px" }}>Bulk Meter</span>
+                      </div>
+                    </Select.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="Bill Delivery Type"
+                  name="billDeliveryType"
+                  style={{ background: "#ffffff" }}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Bill Delivery Type is mandatory",
+                    },
+                  ]}
+                >
+                  <Select placeholder="Please select a Race">
+                    <Select.Option value="C">
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <SquircleBorder
+                          size={20}
+                          curvature={0.43}
+                          backgroundColor={light["volcano.2"]}
+                          rotate={0}
+                          borderType="dashed"
+                          borderWidth={1}
+                          borderColor="transparent"
+                          fontWeight={700}
+                          character="S"
+                        />
+                        <span style={{ marginLeft: "8px" }}>Spot Bill</span>
+                      </div>
+                    </Select.Option>
+                    <Select.Option value="I">
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <SquircleBorder
+                          size={20}
+                          curvature={0.43}
+                          backgroundColor={light["magenta.2"]}
+                          rotate={0}
+                          borderType="dashed"
+                          borderWidth={1}
+                          borderColor="transparent"
+                          fontWeight={700}
+                          character="P"
+                        />
+                        <span style={{ marginLeft: "8px" }}>Postal Bill</span>
+                      </div>
+                    </Select.Option>
+                    <Select.Option value="M">
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <SquircleBorder
+                          size={20}
+                          curvature={0.43}
+                          backgroundColor={light["grass.2"]}
+                          rotate={0}
+                          borderType="dashed"
+                          borderWidth={1}
+                          borderColor="transparent"
+                          fontWeight={700}
+                          character="G"
+                        />
+                        <span style={{ marginLeft: "8px" }}>Green Bill</span>
+                      </div>
+                    </Select.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            <ProCard
+              title="GST Relief"
+              collapsible
+              collapsed={!gstIsApplicable}
+              bordered
+              style={{
+                marginBlockEnd: 16,
+                width: "100%",
+              }}
+              extra={
+                <Switch
+                  checked={gstIsApplicable}
+                  checkedChildren="Applicable"
+                  unCheckedChildren="Not Applicable"
+                  onChange={handleGSTReliefSwitch}
+                />
+              }
+            >
+              {gstIsApplicable && (
+                <div>
+                  {/* Place your checklist content here */}
+                  <Checkbox>Checkbox 1</Checkbox>
+                  <Checkbox>Checkbox 2</Checkbox>
+                  <Checkbox>Checkbox 3</Checkbox>
+                </div>
+              )}
+            </ProCard>
+             )}
             {addAccountFormVisible && (
               <ProCard title="Add Account Form"></ProCard>
             )}

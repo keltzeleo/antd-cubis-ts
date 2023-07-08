@@ -1407,7 +1407,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                       </Select>
                     </Form.Item>
                   </Col>
-
+                </Row>
+                <Row gutter={16}>
                   <Col span={12}>
                     <Form.Item
                       label="Bank Account No"
@@ -1421,9 +1422,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                           max: 20,
                           message:
                             "Bank Account No cannot exceed 20 characters",
-                        },
-                        {
-                          validator: validateDigitsOnly,
                         },
                       ]}
                     >

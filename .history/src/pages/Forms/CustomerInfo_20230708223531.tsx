@@ -1422,9 +1422,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                           message:
                             "Bank Account No cannot exceed 20 characters",
                         },
-                        {
-                          validator: validateDigitsOnly,
-                        },
                       ]}
                     >
                       <Input placeholder="Enter Bank Account No" />

@@ -395,7 +395,7 @@ const DragDropArea2: React.FC<DragDropArea2Props> = ({ theme }) => {
   return (
     <div
       className="drag-drop-container"
-      style={{ backgroundColor: colorBgBase, overflow: "hidden" }}
+      style={{ backgroundColor: colorBgBase }}
     >
       <div className="top-section">
         <IdType

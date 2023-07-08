@@ -403,7 +403,7 @@ const DragDropArea2: React.FC<DragDropArea2Props> = ({ theme }) => {
           onInputChange={handleInputIcChange}
         />
       </div>
-      <div className="top-section" style={{ width: "100vh" }}>
+      <div className="top-section" style={{ width: "100%" }}>
         <CustomerIcNameBoard
           customerTitle={customerTitle}
           customerName={customerName}

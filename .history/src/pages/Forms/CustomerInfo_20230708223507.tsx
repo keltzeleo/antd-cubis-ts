@@ -1407,7 +1407,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                       </Select>
                     </Form.Item>
                   </Col>
-
+                </Row>
+                <Row gutter={16}>
                   <Col span={12}>
                     <Form.Item
                       label="Bank Account No"
@@ -1422,15 +1423,18 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                           message:
                             "Bank Account No cannot exceed 20 characters",
                         },
-                        {
-                          validator: validateDigitsOnly,
-                        },
                       ]}
                     >
                       <Input placeholder="Enter Bank Account No" />
                     </Form.Item>
 
                     {/* Add more form items for other fields if needed */}
+
+                    <Form.Item>
+                      <Button type="primary" htmlType="submit">
+                        Submit
+                      </Button>
+                    </Form.Item>
                   </Col>
                 </Row>
               </ProForm>

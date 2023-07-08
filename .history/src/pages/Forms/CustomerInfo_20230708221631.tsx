@@ -1332,18 +1332,18 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 <Row gutter={16}>
                   <Col span={12}>
                     <Form.Item
-                      label="Bank"
-                      name="bank"
+                      label="Bill Delivery Type"
+                      name="billDeliveryType"
                       style={{ background: "#ffffff" }}
                       rules={[
                         {
                           required: true,
-                          message: "Bank must be selected",
+                          message: "Bill Delivery Type is mandatory",
                         },
                       ]}
                     >
-                      <Select placeholder="Please select a  Bank">
-                        <Select.Option value="BNM">
+                      <Select placeholder="Please select a Race">
+                        <Select.Option value="C">
                           <div
                             style={{ display: "flex", alignItems: "center" }}
                           >
@@ -1356,14 +1356,12 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                               borderWidth={1}
                               borderColor="transparent"
                               fontWeight={700}
-                              character="01"
+                              character="S"
                             />
-                            <span style={{ marginLeft: "8px" }}>
-                              Bank Negara Malaysia
-                            </span>
+                            <span style={{ marginLeft: "8px" }}>Spot Bill</span>
                           </div>
                         </Select.Option>
-                        <Select.Option value="RBS">
+                        <Select.Option value="I">
                           <div
                             style={{ display: "flex", alignItems: "center" }}
                           >
@@ -1376,14 +1374,14 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                               borderWidth={1}
                               borderColor="transparent"
                               fontWeight={700}
-                              character="02"
+                              character="P"
                             />
                             <span style={{ marginLeft: "8px" }}>
-                              The Royal Bank of Scotland
+                              Postal Bill
                             </span>
                           </div>
                         </Select.Option>
-                        <Select.Option value="BOA">
+                        <Select.Option value="M">
                           <div
                             style={{ display: "flex", alignItems: "center" }}
                           >
@@ -1396,41 +1394,15 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                               borderWidth={1}
                               borderColor="transparent"
                               fontWeight={700}
-                              character="07"
+                              character="G"
                             />
                             <span style={{ marginLeft: "8px" }}>
-                              Bank of America Malaysia
+                              Green Bill
                             </span>
-                            {/* lots more of banks */}
                           </div>
                         </Select.Option>
                       </Select>
                     </Form.Item>
-                  </Col>
-
-                  <Col span={12}>
-                    <Form.Item
-                      label="Bank Account No"
-                      name="bankAccountNo"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Bank Account No is required",
-                        },
-                        {
-                          max: 20,
-                          message:
-                            "Bank Account No cannot exceed 20 characters",
-                        },
-                        {
-                          validator: validateDigitsOnly,
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Enter Bank Account No" />
-                    </Form.Item>
-
-                    {/* Add more form items for other fields if needed */}
                   </Col>
                 </Row>
               </ProForm>

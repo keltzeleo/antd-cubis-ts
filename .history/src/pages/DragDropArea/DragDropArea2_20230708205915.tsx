@@ -395,7 +395,7 @@ const DragDropArea2: React.FC<DragDropArea2Props> = ({ theme }) => {
   return (
     <div
       className="drag-drop-container"
-      style={{ backgroundColor: colorBgBase, overflow: "hidden" }}
+      style={{ backgroundColor: colorBgBase }}
     >
       <div className="top-section">
         <IdType
@@ -403,7 +403,7 @@ const DragDropArea2: React.FC<DragDropArea2Props> = ({ theme }) => {
           onInputChange={handleInputIcChange}
         />
       </div>
-      <div className="top-section" style={{ width: "100vh" }}>
+      <div className="top-section" style:{{width:"100vh"}}>
         <CustomerIcNameBoard
           customerTitle={customerTitle}
           customerName={customerName}
