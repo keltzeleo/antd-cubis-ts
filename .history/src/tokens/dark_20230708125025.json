@@ -228,7 +228,7 @@
   "colorBgElevated": "#2d3d40",
   "colorBgLayout": "#141b1c",
   "colorBgSpotlight": "#4b6669",
-  "colorBgMask": "rgba(0, 40, 35, 0.45)",
+  "colorBgMask": "rgba(1, 169, 145, 0.15)",
   "colorBgBase": "#121c1b",
   "colorBgTextActive": "rgba(239, 239, 239, 0.18)",
   "colorBgTextHover": "rgba(239, 239, 239, 0.12)",

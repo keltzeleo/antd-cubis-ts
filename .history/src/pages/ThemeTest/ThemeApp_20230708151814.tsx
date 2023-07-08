@@ -12,25 +12,25 @@ interface Theme {
 
 const ThemeApp: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [token, setToken] = useState<Theme>(light);
+  const [theme, setTheme] = useState<Theme>(light);
 
   useEffect(() => {
-    document.body.style.backgroundColor = token.colorBgBase;
-  }, [token]);
+    document.body.style.backgroundColor = theme.colorBgBase;
+  }, [theme]);
 
   const handleThemeChange = () => {
     setIsDarkMode(!isDarkMode);
-    setToken(isDarkMode ? { ...light } : { ...dark });
+    setTheme(isDarkMode ? { ...light } : { ...dark });
   };
 
   return (
-    <ConfigProvider theme={{ token }}>
+    <ConfigProvider>
       <div style={{ display: "flex", alignItems: "center", marginBottom: 20 }}>
         <span style={{ marginRight: 10 }}>Light</span>
         <Switch checked={isDarkMode} onChange={handleThemeChange} />
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
-      <AppointmentUpdates theme={isDarkMode ? dark : light} />
+      <AppointmentUpdates style={theme} />
       {/* <ThemeTest /> */}
     </ConfigProvider>
   );

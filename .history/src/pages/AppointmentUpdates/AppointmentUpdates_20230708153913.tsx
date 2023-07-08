@@ -31,7 +31,6 @@ interface Theme {
 interface AppointmentUpdatesProps {
   theme: Theme;
 }
-
 interface Appointment {
   key: string;
   datePlanned: string;

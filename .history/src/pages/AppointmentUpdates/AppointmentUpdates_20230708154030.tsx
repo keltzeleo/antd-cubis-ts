@@ -32,6 +32,10 @@ interface AppointmentUpdatesProps {
   theme: Theme;
 }
 
+interface DragDropArea2Props {
+  theme: Theme;
+  // other prop definitions...
+}
 interface Appointment {
   key: string;
   datePlanned: string;

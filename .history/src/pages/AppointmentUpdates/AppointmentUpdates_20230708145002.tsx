@@ -25,13 +25,6 @@ import light from "../../../src/tokens/light.json";
 
 import "../MyForm.css";
 
-interface Theme {
-  [key: string]: string;
-}
-interface AppointmentUpdatesProps {
-  theme: Theme;
-}
-
 interface Appointment {
   key: string;
   datePlanned: string;
@@ -88,7 +81,7 @@ const { Search } = Input;
 
 const onSearch = (value: string) => console.log(value);
 
-const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
+const AppointmentUpdates: React.FC = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerData, setDrawerData] = useState<Plumber | null>(null);
   const [addAppointmentDrawerVisible, setAddAppointmentDrawerVisible] =
@@ -350,26 +343,21 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
         title: "Customer Name",
         dataIndex: "customerName",
         render: (text: string) => (
-          <span style={{ color: theme.colorText }}>{text}</span>
-        ),
+          <span style={{ color: dark["colorTextBase"] }}>{text}</span>
+        ), // Apply font color styling here
+
         sorter: (a: Appointment, b: Appointment) =>
           a.customerName.localeCompare(b.customerName),
       },
       {
         title: "IC Number",
         dataIndex: "icNumber",
-        render: (text: string) => (
-          <span style={{ color: theme.colorText }}>{text}</span>
-        ),
         sorter: (a: Appointment, b: Appointment) =>
           a.icNumber.localeCompare(b.icNumber),
       },
       {
         title: "Date Planned",
         dataIndex: "datePlanned",
-        render: (text: string) => (
-          <span style={{ color: theme.colorText }}>{text}</span>
-        ),
         sorter: (a: Appointment, b: Appointment) =>
           a.datePlanned.localeCompare(b.datePlanned),
       },
@@ -377,18 +365,12 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
       {
         title: "Appointment Location",
         dataIndex: "appointmentLocation",
-        render: (text: string) => (
-          <span style={{ color: theme.colorText }}>{text}</span>
-        ),
         sorter: (a: Appointment, b: Appointment) =>
           a.appointmentLocation.localeCompare(b.appointmentLocation),
       },
       {
         title: "Type of Service",
         dataIndex: "typeOfService",
-        render: (text: string) => (
-          <span style={{ color: theme.colorText }}>{text}</span>
-        ),
         sorter: (a: Appointment, b: Appointment) =>
           a.typeOfService.localeCompare(b.typeOfService),
       },
@@ -406,7 +388,7 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
           let color = "";
           switch (status) {
             case "assigned":
-              color = theme.cyan;
+              color = light["cyan"];
               break;
             case "cancelled":
               color = light["red"];
@@ -460,9 +442,6 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
       {
         title: "Rearrangement Count",
         dataIndex: "rearrangementCount",
-        render: (text: string) => (
-          <span style={{ color: theme.colorText }}>{text}</span>
-        ),
         sorter: (a: Appointment, b: Appointment) =>
           a.rearrangementCount.localeCompare(b.rearrangementCount),
       },
@@ -930,7 +909,7 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
                   justifyContent: "center",
                   fontWeight: "bold",
                   borderRadius: 16,
-                  background: theme.colorPrimaryBase,
+                  background: "colorPrimaryBase",
                   overflow: "hidden",
                   color: "#fff",
                 }}
@@ -1017,7 +996,7 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
                   justifyContent: "center",
                   fontWeight: "bold",
                   borderRadius: 16,
-                  background: theme.colorPrimaryBase,
+                  background: light["colorPrimaryBase"],
                   overflow: "hidden",
                   color: "#fff",
                 }}
@@ -1046,7 +1025,7 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
 
           {/* Add appointment form and content */}
           <p>Add Appointment Form</p>
-          <DragDropArea2 theme={theme} />
+          <DragDropArea2 />
         </Drawer>
       </div>
     </ConfigProvider>

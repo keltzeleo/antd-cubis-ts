@@ -4,7 +4,7 @@ import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
 // import ThemeTest from "../ThemeTest/ThemeTest";
 
 import dark from "../../tokens/dark.json";
-import light from "../../tokens/light.json";
+import kelLight from "../../tokens/kelLight.json";
 
 interface Theme {
   [key: string]: string;
@@ -12,7 +12,7 @@ interface Theme {
 
 const ThemeApp: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [token, setToken] = useState<Theme>(light);
+  const [token, setToken] = useState<Theme>(kelLight);
 
   useEffect(() => {
     document.body.style.backgroundColor = token.colorBgBase;
@@ -20,7 +20,7 @@ const ThemeApp: React.FC = () => {
 
   const handleThemeChange = () => {
     setIsDarkMode(!isDarkMode);
-    setToken(isDarkMode ? { ...light } : { ...dark });
+    setToken(isDarkMode ? { ...kelLight } : { ...dark });
   };
 
   return (
@@ -30,7 +30,7 @@ const ThemeApp: React.FC = () => {
         <Switch checked={isDarkMode} onChange={handleThemeChange} />
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
-      <AppointmentUpdates theme={isDarkMode ? dark : light} />
+      <AppointmentUpdates />
       {/* <ThemeTest /> */}
     </ConfigProvider>
   );

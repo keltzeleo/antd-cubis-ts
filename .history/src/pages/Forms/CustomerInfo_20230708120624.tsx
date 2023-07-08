@@ -1006,7 +1006,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                   color={
                     currentStepAccountEntry === index ? light["cyan.6"] : "gray"
                   }
-                  onClick={() => setCurrentStepAccountEntry(index)}
+                  onClick={() => setCurrentStep(index)}
                   style={{
                     fontSize: "14px",
                     padding: "3px 8px",
@@ -1017,7 +1017,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 </Tag>
               ))}
             </div>
-            {currentStepAccountEntry === 0 && (
+            {currentStep === 0 && (
               <ProForm submitter={false}>
                 <Row gutter={16}>
                   <Col span={12}>

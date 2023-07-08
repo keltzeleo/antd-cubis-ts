@@ -24,13 +24,13 @@ const ThemeApp: React.FC = () => {
   };
 
   return (
-    <ConfigProvider theme={{ token }}>
+    <ConfigProvider theme={{ ...token }}>
       <div style={{ display: "flex", alignItems: "center", marginBottom: 20 }}>
         <span style={{ marginRight: 10 }}>Light</span>
         <Switch checked={isDarkMode} onChange={handleThemeChange} />
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
-      <AppointmentUpdates theme={isDarkMode ? dark : light} />
+      <AppointmentUpdates theme={isDarkMode ? "dark" : "light"} />
       {/* <ThemeTest /> */}
     </ConfigProvider>
   );

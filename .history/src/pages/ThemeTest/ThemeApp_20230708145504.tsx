@@ -30,7 +30,7 @@ const ThemeApp: React.FC = () => {
         <Switch checked={isDarkMode} onChange={handleThemeChange} />
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
-      <AppointmentUpdates theme={isDarkMode ? dark : light} />
+      <AppointmentUpdates theme={isDarkMode ? "dark" : "light"} />
       {/* <ThemeTest /> */}
     </ConfigProvider>
   );

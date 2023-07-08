@@ -53,8 +53,6 @@ const getChecksum = (file: RcFile): Promise<number> =>
   });
 
 const DragDropArea2: React.FC<DragDropArea2Props> = ({ theme }) => {
-  const { colorBgBase } = theme;
-
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -393,10 +391,7 @@ const DragDropArea2: React.FC<DragDropArea2Props> = ({ theme }) => {
   };
 
   return (
-    <div
-      className="drag-drop-container"
-      style={{ backgroundColor: colorBgBase }}
-    >
+    <div className="drag-drop-container">
       <div className="top-section">
         <IdType
           onChange={handleOptionChange}

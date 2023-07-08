@@ -31,7 +31,6 @@ interface Theme {
 interface AppointmentUpdatesProps {
   theme: Theme;
 }
-
 interface Appointment {
   key: string;
   datePlanned: string;
@@ -406,7 +405,7 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
           let color = "";
           switch (status) {
             case "assigned":
-              color = theme.cyan;
+              color = theme.cyan"
               break;
             case "cancelled":
               color = light["red"];
@@ -930,7 +929,7 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
                   justifyContent: "center",
                   fontWeight: "bold",
                   borderRadius: 16,
-                  background: theme.colorPrimaryBase,
+                  background: "colorPrimaryBase",
                   overflow: "hidden",
                   color: "#fff",
                 }}
@@ -1017,7 +1016,7 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
                   justifyContent: "center",
                   fontWeight: "bold",
                   borderRadius: 16,
-                  background: theme.colorPrimaryBase,
+                  background: light["colorPrimaryBase"],
                   overflow: "hidden",
                   color: "#fff",
                 }}
@@ -1046,7 +1045,7 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
 
           {/* Add appointment form and content */}
           <p>Add Appointment Form</p>
-          <DragDropArea2 theme={theme} />
+          <DragDropArea2 />
         </Drawer>
       </div>
     </ConfigProvider>

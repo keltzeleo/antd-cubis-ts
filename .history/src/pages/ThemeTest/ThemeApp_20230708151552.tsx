@@ -1,7 +1,6 @@
 import { ConfigProvider, Switch } from "antd";
 import React, { useEffect, useState } from "react";
 import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
-// import ThemeTest from "../ThemeTest/ThemeTest";
 
 import dark from "../../tokens/dark.json";
 import light from "../../tokens/light.json";
@@ -24,14 +23,13 @@ const ThemeApp: React.FC = () => {
   };
 
   return (
-    <ConfigProvider theme={{ token }}>
+    <ConfigProvider theme={isDarkMode ? dark : light}>
       <div style={{ display: "flex", alignItems: "center", marginBottom: 20 }}>
         <span style={{ marginRight: 10 }}>Light</span>
         <Switch checked={isDarkMode} onChange={handleThemeChange} />
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
-      <AppointmentUpdates theme={isDarkMode ? dark : light} />
-      {/* <ThemeTest /> */}
+      <AppointmentUpdates />
     </ConfigProvider>
   );
 };

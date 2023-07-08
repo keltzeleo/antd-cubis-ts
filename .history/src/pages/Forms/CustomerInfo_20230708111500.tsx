@@ -38,15 +38,6 @@ const Step = [
   },
 ];
 
-const StepAccountEntry = [
-  {
-    title: "Account Category and Usage",
-  },
-  {
-    title: "Refund Information",
-  },
-];
-
 interface Country {
   label: string;
   value: string;
@@ -107,8 +98,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const [dobFromId, setDobFromId] = useState<string>("");
   const [age, setAge] = useState<number>(0);
   const [currentStep, setCurrentStep] = useState(0);
-  const [currentStepAccountEntry, setCurrentStepAccountEntry] = useState(0);
-
   const [addressData, setAddressData] = useState<string[]>([]);
   const [postcode, setPostcode] = useState<string>("");
   const [stateData, setStateData] = useState("");
@@ -999,171 +988,139 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 {/* ... Add more form groups here ... */}
               </ProForm>
             </ProCard>
-            <div style={{ marginBottom: "16px" }}>
-              {StepAccountEntry.map((step, index) => (
-                <Tag
-                  key={index}
-                  color={
-                    currentStepAccountEntry === index ? light["cyan.6"] : "gray"
-                  }
-                  onClick={() => setCurrentStepAccountEntry(index)}
-                  style={{
-                    fontSize: "14px",
-                    padding: "3px 8px",
-                    borderRadius: "8px",
-                  }}
-                >
-                  {step.title}
-                </Tag>
-              ))}
-            </div>
-            {currentStepAccountEntry === 0 && (
-              <ProForm submitter={false}>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Form.Item
-                      label="Tariff"
-                      name="tariff"
-                      rules={[
-                        { required: true, message: "Tariff is required" },
-                      ]}
-                    >
-                      <Select>
-                        {/* Retrieve and map the drop-down list data */}
-                        {/* Option 1: code + short description */}
-                        <Option value="tariff1">
-                          Tariff 1 - Description 1
-                        </Option>
-                        <Option value="tariff2">
-                          Tariff 2 - Description 2
-                        </Option>
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}></Col>
-                </Row>
+            <ProForm submitter={false}>
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Tariff"
+                    name="tariff"
+                    rules={[{ required: true, message: "Tariff is required" }]}
+                  >
+                    <Select>
+                      {/* Retrieve and map the drop-down list data */}
+                      {/* Option 1: code + short description */}
+                      <Option value="tariff1">Tariff 1 - Description 1</Option>
+                      <Option value="tariff2">Tariff 2 - Description 2</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={12}></Col>
+              </Row>
 
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Form.Item
-                      label="Consumer Group"
-                      name="consumerGroup"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Consumer Group is required",
-                        },
-                      ]}
-                    >
-                      <Select>
-                        {/* Retrieve and map the drop-down list data */}
-                        {/* Option 1: code + abbreviation description */}
-                        <Option value="group1">Group 1 - Abbreviation 1</Option>
-                        <Option value="group2">Group 2 - Abbreviation 2</Option>
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item
-                      label="Consumer Type"
-                      name="consumerType"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Consumer Type is required",
-                        },
-                      ]}
-                    >
-                      <Select>
-                        {/* Retrieve and map the drop-down list data */}
-                        {/* Option 1: code + abbreviation description */}
-                        <Option value="type1">Type 1 - Abbreviation 1</Option>
-                        <Option value="type2">Type 2 - Abbreviation 2</Option>
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                </Row>
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Consumer Group"
+                    name="consumerGroup"
+                    rules={[
+                      { required: true, message: "Consumer Group is required" },
+                    ]}
+                  >
+                    <Select>
+                      {/* Retrieve and map the drop-down list data */}
+                      {/* Option 1: code + abbreviation description */}
+                      <Option value="group1">Group 1 - Abbreviation 1</Option>
+                      <Option value="group2">Group 2 - Abbreviation 2</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Consumer Type"
+                    name="consumerType"
+                    rules={[
+                      { required: true, message: "Consumer Type is required" },
+                    ]}
+                  >
+                    <Select>
+                      {/* Retrieve and map the drop-down list data */}
+                      {/* Option 1: code + abbreviation description */}
+                      <Option value="type1">Type 1 - Abbreviation 1</Option>
+                      <Option value="type2">Type 2 - Abbreviation 2</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
 
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Form.Item
-                      label="Supply Type"
-                      name="supplyType"
-                      rules={[
-                        { required: true, message: "Supply Type is required" },
-                      ]}
+              <Row gutter={16}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Supply Type"
+                    name="supplyType"
+                    rules={[
+                      { required: true, message: "Supply Type is required" },
+                    ]}
+                  >
+                    <Radio.Group
+                      onChange={handleSupplyTypeChange}
+                      defaultValue="P"
                     >
-                      <Radio.Group
-                        onChange={handleSupplyTypeChange}
-                        defaultValue="P"
-                      >
-                        <Radio value="P">Permanent </Radio>
-                        <Radio value="T">Temporary </Radio>
-                      </Radio.Group>
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item
-                      label="Temporary Supply End Date"
-                      name="supplyEndDate"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Temporary Supply End Date is required",
-                        },
-                      ]}
+                      <Radio value="P">Permanent </Radio>
+                      <Radio value="T">Temporary </Radio>
+                    </Radio.Group>
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    label="Temporary Supply End Date"
+                    name="supplyEndDate"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Temporary Supply End Date is required",
+                      },
+                    ]}
+                  >
+                    <DatePicker disabled={selectedSupplyType === "P"} />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                {/* ... */}
+                <Col span={12}>
+                  <Form.Item
+                    label="Corporate Account"
+                    name="corporateAccount"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Corporate Account is required",
+                      },
+                    ]}
+                  >
+                    <Radio.Group
+                      onChange={handleCorporateAccountChange}
+                      defaultValue="no"
                     >
-                      <DatePicker disabled={selectedSupplyType === "P"} />
-                    </Form.Item>
-                  </Col>
-                </Row>
-                <Row gutter={16}>
-                  {/* ... */}
-                  <Col span={12}>
-                    <Form.Item
-                      label="Corporate Account"
-                      name="corporateAccount"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Corporate Account is required",
-                        },
-                      ]}
-                    >
-                      <Radio.Group
-                        onChange={handleCorporateAccountChange}
-                        defaultValue="no"
-                      >
-                        <Radio value="no">Not Applicable</Radio>
-                        <Radio value="yes">Yes</Radio>
-                      </Radio.Group>
-                    </Form.Item>
-                  </Col>
-                  {/* ... */}
+                      <Radio value="yes">Yes</Radio>
+                      <Radio value="no">Not Applicable</Radio>
+                    </Radio.Group>
+                  </Form.Item>
+                </Col>
+                {/* ... */}
 
-                  {/* ... */}
-                  <Col span={12}>
-                    <Form.Item
-                      label="Corporate Group"
-                      name="corporateGroup"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Corporate Group is required",
-                        },
-                      ]}
-                    >
-                      <Select disabled={selectedCorporateAccount === "no"}>
-                        {/* Retrieve and map the dropdown list data */}
-                        {/* Option 1: code + abbreviation description */}
-                        <Option value="group1">Group 1 - Abbreviation 1</Option>
-                        <Option value="group2">Group 2 - Abbreviation 2</Option>
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </ProForm>
-            )}
+                {/* ... */}
+                <Col span={12}>
+                  <Form.Item
+                    label="Corporate Group"
+                    name="corporateGroup"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Corporate Group is required",
+                      },
+                    ]}
+                  >
+                    <Select disabled={selectedCorporateAccount === "no"}>
+                      {/* Retrieve and map the dropdown list data */}
+                      {/* Option 1: code + abbreviation description */}
+                      <Option value="group1">Group 1 - Abbreviation 1</Option>
+                      <Option value="group2">Group 2 - Abbreviation 2</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </ProForm>
 
             {addAccountFormVisible && (
               <ProCard title="Add Account Form"></ProCard>

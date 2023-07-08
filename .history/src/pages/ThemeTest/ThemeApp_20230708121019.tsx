@@ -4,7 +4,7 @@ import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
 // import ThemeTest from "../ThemeTest/ThemeTest";
 
 import dark from "../../tokens/dark.json";
-import light from "../../tokens/light.json";
+import light from "../../tokens/kelLight.json";
 
 interface Theme {
   [key: string]: string;
@@ -30,7 +30,7 @@ const ThemeApp: React.FC = () => {
         <Switch checked={isDarkMode} onChange={handleThemeChange} />
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
-      <AppointmentUpdates theme={isDarkMode ? dark : light} />
+      <AppointmentUpdates />
       {/* <ThemeTest /> */}
     </ConfigProvider>
   );
