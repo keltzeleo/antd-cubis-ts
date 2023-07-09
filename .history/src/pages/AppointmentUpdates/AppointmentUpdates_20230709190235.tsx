@@ -1010,26 +1010,27 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
         </Drawer>
         <Drawer
           style={{ backgroundColor: theme.colorBgBase }}
-          title={
-            <div>
-              Add Appointment for
-              <div
-                style={{
-                  height: 30,
-                  width: "100vh",
-                  padding: " 1px 4px 1px 4px",
-                  alignContent: "center",
-                  justifyContent: "center",
-                  fontWeight: "bold",
-                  borderRadius: 16,
-                  background: theme.colorPrimaryBase,
-                  overflow: "hidden",
-                  color: "#fff",
-                }}
+          // title={
+          //   <div>
+          //     Add Appointment for
+          //     <div
+          //       style={{
+          //         height: 30,
+          //         width: "100vh",
+          //         padding: " 1px 4px 1px 4px",
+          //         alignContent: "center",
+          //         justifyContent: "center",
+          //         fontWeight: "bold",
+          //         borderRadius: 16,
+          //         background: theme.colorPrimaryBase,
+          //         overflow: "hidden",
+          //         color: "#fff",
+          //       }}
               >
                 <div
                   style={{
                     fontSize: 40,
+
                     alignContent: "center",
                     justifyContent: "center",
                     margin: "-20px 0px 0px 10px",
@@ -1046,10 +1047,10 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
           onClose={() => setAddAppointmentDrawerVisible(false)}
           visible={addAppointmentDrawerVisible}
         >
-          {/* <div>Add Appointment for {drawerData?.name}</div> */}
+          <div>Add Appointment for {drawerData?.name}</div>
 
           {/* Add appointment form and content */}
-          {/* <p>Add Appointment Form</p> */}
+          <p>Add Appointment Form</p>
           <DragDropArea2 theme={theme} />
         </Drawer>
       </div>

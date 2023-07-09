@@ -20,6 +20,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import light from "../../../src/tokens/light.json";
 
+import { FooterToolbar } from "@ant-design/pro-layout";
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 
 const { Option } = Select;
@@ -1463,97 +1464,108 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
         )}
       </ProForm>
       <>
-        <div></div>
-        <div
-          style={{
-            position: "relative",
-            right: 0,
-            bottom: 0,
-            padding: "16px",
-            width: "600px",
-            backgroundColor: "#f5f5f5",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div>
-              {currentStep === 0 ? (
-                <></>
-              ) : (
-                <Button
-                  style={{ marginRight: 8 }}
-                  onClick={() => {
-                    if (
-                      currentStep ===
-                      Step.findIndex((step) => step.title === "Account Entry")
-                    ) {
-                      if (currentStepAccountEntry === 0) {
-                        setCurrentStep(2); // Replace SubContactStep with the index of the "Sub-Contact" step
+        <FooterToolbar>
+          <div
+            style={{
+              display: "flex",
+              bottom: 0,
+              width: "100%",
+              backgroundColor: "#174893",
+            }}
+          ></div>
+          <div
+            style={{
+              position: "absolute",
+              right: 0,
+              bottom: 0,
+              padding: "16px",
+              width: "650px",
+              backgroundColor: "#f5f5f5",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div>
+                {currentStep === 0 ? (
+                  <></>
+                ) : (
+                  <Button
+                    style={{ marginRight: 8 }}
+                    onClick={() => {
+                      if (
+                        currentStep ===
+                        Step.findIndex((step) => step.title === "Account Entry")
+                      ) {
+                        if (currentStepAccountEntry === 0) {
+                          setCurrentStep(2); // Replace SubContactStep with the index of the "Sub-Contact" step
+                        } else {
+                          setCurrentStepAccountEntry(
+                            currentStepAccountEntry - 1
+                          );
+                        }
                       } else {
-                        setCurrentStepAccountEntry(currentStepAccountEntry - 1);
+                        setCurrentStep(currentStep - 1);
                       }
-                    } else {
-                      setCurrentStep(currentStep - 1);
-                    }
-                  }}
-                  disabled={!isStepValid(currentStep)}
-                >
-                  Previous
-                </Button>
-              )}
-            </div>
+                    }}
+                    disabled={!isStepValid(currentStep)}
+                  >
+                    Previous
+                  </Button>
+                )}
+              </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-            >
-              {currentStep === Step.length - 1 ? (
-                <>
-                  {currentStep ===
-                  Step.findIndex((step) => step.title === "Account Entry") ? (
-                    <>
-                      {currentStepAccountEntry ===
-                      StepAccountEntry.length - 1 ? (
-                        <Button
-                          type="primary"
-                          onClick={handleSubmitAccountEntry}
-                          disabled={!isStepValid(currentStepAccountEntry)}
-                        >
-                          Submit
-                        </Button>
-                      ) : (
-                        <Button
-                          type="primary"
-                          onClick={handleNextStepAccountEntry}
-                          disabled={!isStepValid(currentStepAccountEntry)}
-                        >
-                          Next
-                        </Button>
-                      )}
-                    </>
-                  ) : (
-                    <Button
-                      type="primary"
-                      onClick={handleNextStep}
-                      disabled={!isStepValid(currentStep)}
-                    >
-                      Next
-                    </Button>
-                  )}
-                </>
-              ) : (
-                <Button
-                  type="primary"
-                  onClick={handleNextStep}
-                  disabled={!isStepValid(currentStep)}
-                >
-                  Next
-                </Button>
-              )}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+              >
+                {currentStep === Step.length - 1 ? (
+                  <>
+                    {currentStep ===
+                    Step.findIndex((step) => step.title === "Account Entry") ? (
+                      <>
+                        {currentStepAccountEntry ===
+                        StepAccountEntry.length - 1 ? (
+                          <Button
+                            type="primary"
+                            onClick={handleSubmitAccountEntry}
+                            disabled={!isStepValid(currentStepAccountEntry)}
+                          >
+                            Submit
+                          </Button>
+                        ) : (
+                          <Button
+                            type="primary"
+                            onClick={handleNextStepAccountEntry}
+                            disabled={!isStepValid(currentStepAccountEntry)}
+                          >
+                            Next
+                          </Button>
+                        )}
+                      </>
+                    ) : (
+                      <Button
+                        type="primary"
+                        onClick={handleNextStep}
+                        disabled={!isStepValid(currentStep)}
+                      >
+                        Next
+                      </Button>
+                    )}
+                  </>
+                ) : (
+                  <Button
+                    type="primary"
+                    onClick={handleNextStep}
+                    disabled={!isStepValid(currentStep)}
+                  >
+                    Next
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        </FooterToolbar>
       </>
     </div>
   );

@@ -1463,14 +1463,22 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
         )}
       </ProForm>
       <>
-        <div></div>
+        <div
+          footer={true}
+          style={{
+            display: "flex",
+            bottom: 0,
+            width: "100%",
+            backgroundColor: "#174893",
+          }}
+        ></div>
         <div
           style={{
-            position: "relative",
+            position: "absolute",
             right: 0,
             bottom: 0,
             padding: "16px",
-            width: "600px",
+            width: "650px",
             backgroundColor: "#f5f5f5",
           }}
         >

@@ -1463,7 +1463,14 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
         )}
       </ProForm>
       <>
-        <div></div>
+        <div
+          style={{
+            display: "flex",
+            bottom: 0,
+            width: "100%",
+            backgroundColor: "#174893",
+          }}
+        ></div>
         <div
           style={{
             position: "relative",

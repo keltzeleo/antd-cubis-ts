@@ -1030,6 +1030,7 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
                 <div
                   style={{
                     fontSize: 40,
+
                     alignContent: "center",
                     justifyContent: "center",
                     margin: "-20px 0px 0px 10px",

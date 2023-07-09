@@ -1009,7 +1009,7 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
           </div>
         </Drawer>
         <Drawer
-          style={{ backgroundColor: theme.colorBgBase }}
+          style={{ backgroundColor: theme.colorBgBase, overflowX: "hidden" }}
           title={
             <div>
               Add Appointment for
@@ -1030,6 +1030,7 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
                 <div
                   style={{
                     fontSize: 40,
+
                     alignContent: "center",
                     justifyContent: "center",
                     margin: "-20px 0px 0px 10px",
@@ -1046,10 +1047,10 @@ const AppointmentUpdates: React.FC<AppointmentUpdatesProps> = ({ theme }) => {
           onClose={() => setAddAppointmentDrawerVisible(false)}
           visible={addAppointmentDrawerVisible}
         >
-          {/* <div>Add Appointment for {drawerData?.name}</div> */}
+          <div>Add Appointment for {drawerData?.name}</div>
 
           {/* Add appointment form and content */}
-          {/* <p>Add Appointment Form</p> */}
+          <p>Add Appointment Form</p>
           <DragDropArea2 theme={theme} />
         </Drawer>
       </div>
