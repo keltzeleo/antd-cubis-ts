@@ -1,20 +1,21 @@
 import { ProForm, ProFormItem, ProFormText } from "@ant-design/pro-form";
 import { Button, Col, Form, Input, Radio, Row, Select, Space, Tag } from "antd";
 
+>>>>>>> 2a3cc1a92d1d5e6066e9b640d7c0eb7dd1ff3a1e
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import light from "../../../src/tokens/light.json";
-
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 
 const { Option } = Select;
+const { Step } = Steps;
 
-const Step = [
+const steps = [
   {
     title: "Customer Information",
   },
   {
-    title: "Consumer Address",
+    title: "Customer Address",
   },
   {
     title: "Sub-Contact",
@@ -84,6 +85,16 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const [addressData, setAddressData] = useState<string[]>([]);
   const [postcode, setPostcode] = useState<string>("");
   const [stateData, setStateData] = useState("");
+<<<<<<< HEAD
+  const [mobileNumberError, setMobileNumberError] = useState<string | null>(
+    null
+  );
+  const [homeNumberError, setHomeNumberError] = useState<string | null>(null);
+  const [alternativeNumberError, setAlternativeNumberError] = useState<
+    string | null
+  >(null);
+=======
+>>>>>>> 2a3cc1a92d1d5e6066e9b640d7c0eb7dd1ff3a1e
 
   useEffect(() => {
     const fetchStateData = async () => {
@@ -111,7 +122,9 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
   const handlePostcodeChange = async (value: string) => {
     setPostcode(value);
     try {
-      const response = await axios.get(`https://api.postcode.my/postcode/`);
+      const response = await axios.get(
+        `https://api.postcode.my/postcode/${value}`
+      );
       if (response.status === 200) {
         const data = response.data;
         if (Array.isArray(data) && data.length > 0) {
@@ -206,7 +219,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
     onCustomerTitleChange(value);
   };
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     onCustomerNameChange(e.target.value);
   };
 
@@ -282,101 +295,96 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
           </Tag>
         ))}
       </div>
-      <ProForm submitter={false}>
-        {currentStep === 0 && (
-          <div style={{ padding: "0" }}>
-            <ProForm.Group>
-              <Row gutter={16}>
-                <Col span={12}>
+      {currentStep === 0 && (
+        <div style={{ padding: "0" }}>
+          <ProForm.Group>
+            <Row gutter={16}>
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="branch"
+                  label="Branch Site"
+                  disabled
+                />
+              </Col>
+              <Col span={12}>
+                <ProFormText
+                  width="md"
+                  name="customerNo"
+                  label="Customer Number"
+                  disabled
+                />
+              </Col>
+            </Row>
+          </ProForm.Group>
+          <ProForm.Group>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item label="Enter Name">
+                  <Input
+                    addonBefore={
+                      <Select defaultValue="" onChange={handleNamePrefixChange}>
+                        <Option value="">Title</Option>
+                        <Option value="Mr.">Mr.</Option>
+                        <Option value="Ms.">Ms.</Option>
+                        <Option value="Mdm.">Mdm.</Option>
+                        <Option value="Dr.">Dr.</Option>
+                      </Select>
+                    }
+                    value={customerName}
+                    onChange={handleNameChange}
+                    placeholder="Full Name"
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label="ID Number"
+                  labelCol={{ span: 7 }}
+                  wrapperCol={{ span: 24 }}
+                >
                   <ProFormText
                     width="md"
-                    name="branch"
-                    label="Branch Site"
+                    name="id"
                     disabled
+                    placeholder={inputIcNumber}
                   />
-                </Col>
-                <Col span={12}>
-                  <ProFormText
-                    width="md"
-                    name="customerNo"
-                    label="Customer Number"
-                    disabled
-                  />
-                </Col>
-              </Row>
-            </ProForm.Group>
-            <ProForm.Group>
-              <Row gutter={16}>
-                <Col span={12}>
-                  <ProFormItem label="Enter Name">
-                    <Input
-                      addonBefore={
-                        <Select
-                          defaultValue=""
-                          onChange={handleNamePrefixChange}
-                        >
-                          <Option value="">Title</Option>
-                          <Option value="Mr.">Mr.</Option>
-                          <Option value="Ms.">Ms.</Option>
-                          <Option value="Mdm.">Mdm.</Option>
-                          <Option value="Dr.">Dr.</Option>
-                        </Select>
-                      }
-                      value={customerName}
-                      onChange={handleNameChange}
-                      placeholder="Full Name"
-                    />
-                  </ProFormItem>
-                </Col>
-                <Col span={12}>
-                  <ProFormItem
-                    label="ID Number"
-                    labelCol={{ span: 7 }}
-                    wrapperCol={{ span: 24 }}
+                </Form.Item>
+              </Col>
+            </Row>
+          </ProForm.Group>
+          <ProForm.Group>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item label="Citizenship">
+                  <Radio.Group
+                    value={citizenship}
+                    onChange={(e) => onCitizenshipChange(e.target.value)}
                   >
-                    <ProFormText
-                      width="md"
-                      name="id"
-                      disabled
-                      placeholder={inputIcNumber}
-                    />
-                  </ProFormItem>
-                </Col>
-              </Row>
-            </ProForm.Group>
-            <ProForm.Group>
-              <Row gutter={16}>
-                <Col span={12}>
-                  <ProFormText label="Citizenship">
-                    <Radio.Group
-                      value={citizenship}
-                      onChange={(e) => onCitizenshipChange(e.target.value)}
-                    >
-                      <Radio style={{ marginLeft: 16 }} value="Malaysian">
-                        Malaysian
-                      </Radio>
-                      <Radio style={{ marginLeft: 16 }} value="Non-Malaysian">
-                        Non-Malaysian
-                      </Radio>
-                    </Radio.Group>
-                  </ProFormText>
-                </Col>
-                <Col span={12}>
-                  <ProFormText label="Nationality">
-                    <Select
-                      showSearch
-                      style={{ width: 300, marginBottom: 0 }}
-                      placeholder="Select a Nationality"
-                      value={selectedCountry}
-                      onChange={handleCountryChange}
-                      optionFilterProp="children"
-                      filterOption={(input, option) => {
-                        const countryLabel =
-                          option?.label?.toString()?.toLowerCase() ?? "";
-                        const countryValue =
-                          option?.value?.toString()?.toLowerCase() ?? "";
-                        const inputValue =
-                          input?.toString()?.toLowerCase() ?? "";
+                    <Radio style={{ marginLeft: 16 }} value="Malaysian">
+                      Malaysian
+                    </Radio>
+                    <Radio style={{ marginLeft: 16 }} value="Non-Malaysian">
+                      Non-Malaysian
+                    </Radio>
+                  </Radio.Group>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Nationality">
+                  <Select
+                    showSearch
+                    style={{ width: 300, marginBottom: 0 }}
+                    placeholder="Select a Nationality"
+                    value={selectedCountry}
+                    onChange={handleCountryChange}
+                    optionFilterProp="children"
+                    filterOption={(input, option) => {
+                      const countryLabel =
+                        option?.label?.toString()?.toLowerCase() ?? "";
+                      const countryValue =
+                        option?.value?.toString()?.toLowerCase() ?? "";
+                      const inputValue = input?.toString()?.toLowerCase() ?? "";
 
                         return (
                           countryLabel.includes(inputValue) ||
@@ -508,48 +516,71 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               </Row>
             </ProForm.Group>
 
-            <ProForm.Group>
-              <Row gutter={16}>
-                <Col span={8}>
-                  <ProFormText
-                    fieldProps={{
-                      addonBefore: "+60",
+          <ProForm.Group>
+            <Row gutter={16}>
+              <Col span={8}>
+                <Form.Item
+                  label="Mobile Number"
+                  name="mobileNumber"
+                  tooltip="Valid and contactable mobile number"
+                  rules={[{ validator: validateDigitsOnly }]}
+                >
+                  <Input
+                    style={{
+                      width: "",
+                      minWidth: "",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
                     }}
-                    width="md"
-                    name="mobileNumber"
-                    label="Mobile Number"
-                    tooltip="Valid and contactable mobile number"
-                    rules={[
-                      {
-                        pattern: /^\d+$/, // Use a regular expression pattern to enforce numeric input
-                        validator: validateDigitsOnly,
-                        message: "Please enter digits only.",
-                      },
-                    ]}
+                    addonBefore="+60"
+                    placeholder="Contactable number"
+                    value={mobileNumber}
+                    onChange={(e) => onMobileNumberChange(e.target.value)}
                   />
-                </Col>
-                <Col span={8}>
-                  <ProFormText
-                    fieldProps={{
-                      addonBefore: "+60",
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  label="Home Number"
+                  name="homeUseNumber"
+                  tooltip="Valid home use contact number"
+                  rules={[{ validator: validateDigitsOnly }]}
+                >
+                  <Input
+                    style={{
+                      width: "",
+                      minWidth: "",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
                     }}
-                    width="md"
-                    name="homeUseNumber"
-                    label="Home Number"
-                    tooltip="Valid home use contact number"
-                    rules={[{ validator: validateDigitsOnly }]}
+                    addonBefore="+60"
+                    placeholder="Home use number"
+                    value={homeNumber}
+                    onChange={(e) => onHomeNumberChange(e.target.value)}
                   />
-                </Col>
-                <Col span={8}>
-                  <ProFormText
-                    fieldProps={{
-                      addonBefore: "+60",
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item
+                  label="Other Contact Number"
+                  name="otherContact"
+                  tooltip="Valid alternative contact number"
+                  rules={[{ validator: validateDigitsOnly }]}
+                >
+                  <Input
+                    style={{
+                      width: "",
+                      minWidth: "",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
                     }}
-                    width="md"
-                    name="otherContact"
-                    label="Other Contact Number"
-                    tooltip="Valid alternative contact number"
-                    rules={[{ validator: validateDigitsOnly }]}
+                    addonBefore="+60"
+                    placeholder="Alternative contact number"
+                    value={alternativeNumber}
+                    onChange={(e) => onAlternativeNumberChange(e.target.value)}
                   />
                 </Col>
               </Row>
@@ -589,117 +620,139 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
               </Row>
             </ProForm.Group>
           </div>
-        )}
-        {currentStep === 1 && (
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={6}>
-                <ProFormText
-                  width="md"
-                  name="lotNo"
-                  label="Lot No."
-                  placeholder="Lot Number"
-                />
-              </Col>
-              <Col span={6}>
-                <ProFormText
-                  width="md"
-                  name="blockNo"
-                  label="Block"
-                  placeholder="Block Number"
-                />
-              </Col>
-              <Col span={12}>
-                <ProFormItem>
-                  <Space.Compact>
-                    <Col style={{ width: "100px" }}>
-                      <ProFormText
-                        width="md"
-                        name="premiseNo"
-                        label="Premise No."
-                        placeholder="Number"
-                      />
-                    </Col>
-                    <Col style={{ width: "200px" }}>
-                      <ProFormText
-                        name="premiseName"
-                        label="Premise Name"
-                        placeholder="Premise Name"
-                      />
-                    </Col>
-                  </Space.Compact>
-                </ProFormItem>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormText width="md" name="garden" label="Garden" />
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="section" label="Section" />
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormText width="md" name="village" label="Village" />
-              </Col>
-              <Col span={12}>
-                <ProFormText width="md" name="area" label="Area" />
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormItem>
-                  <Space.Compact>
-                    <Col style={{ width: "100px" }}>
-                      <ProFormText
-                        width="md"
-                        name="postcode"
-                        label="Postcode"
-                        fieldProps={{
-                          onChange: (event) =>
-                            handlePostcodeChange(event.target.value),
-                        }}
-                      />
-                    </Col>
-                    <Col style={{ width: "200px" }}>
-                      <ProFormText
-                        name="postcodeArea"
-                        label="Postcode Area"
-                        placeholder="Postcode Area"
-                        initialValue={addressData[0]}
-                      />
-                    </Col>
-                  </Space.Compact>
-                </ProFormItem>
-              </Col>
-              <Col span={12}>
-                <ProFormText
-                  width="md"
-                  name="state"
-                  label="State"
-                  initialValue={addressData[0]}
-                />
-              </Col>
-            </Row>
-          </ProForm.Group>
-        )}
-        {currentStep === 2 && (
-          // Render form fields for "Related Family, Name, and Contact Number" step
-          <ProForm.Group>
-            <Row gutter={16}>
-              <Col span={12}>
-                <ProFormText
-                  width="md"
-                  name="otherContactName"
-                  label="Other Contact Name"
-                  placeholder="Sub-holder name"
-                />
-              </Col>
-              <Col span={12}>
-                <ProFormText
-                  fieldProps={{
-                    addonBefore: "+60",
+        </div>
+      )}
+      {currentStep === 1 && (
+        <ProForm.Group>
+          <Row gutter={16}>
+            <Col span={6}>
+              <ProFormText
+                width="md"
+                name="lotNo"
+                label="Lot No."
+                placeholder="Lot Number"
+              />
+            </Col>
+            <Col span={6}>
+              <ProFormText
+                width="md"
+                name="blockNo"
+                label="Block"
+                placeholder="Block Number"
+              />
+            </Col>
+            <Col span={12}>
+              <ProForm.Item>
+                <Space.Compact>
+                  <Col style={{ width: "100px" }}>
+                    <ProFormText
+                      width="md"
+                      name="premiseNo"
+                      label="Premise No."
+                      placeholder="Number"
+                    />
+                  </Col>
+                  <Col style={{ width: "200px" }}>
+                    <ProFormText
+                      name="premiseName"
+                      label="Premise Name"
+                      placeholder="Premise Name"
+                    />
+                  </Col>
+                </Space.Compact>
+              </ProForm.Item>
+            </Col>
+          </Row>
+          {/* Rest of the code... */}
+          <Row gutter={16}>
+            <Col span={12}>
+              <ProFormText width="md" name="garden" label="Garden" />
+            </Col>
+            <Col span={12}>
+              <ProFormText width="md" name="section" label="Section" />
+            </Col>
+          </Row>
+          {/* Rest of the code... */}
+          <Row gutter={16}>
+            <Col span={12}>
+              <ProFormText width="md" name="village" label="Village" />
+            </Col>
+            <Col span={12}>
+              <ProFormText width="md" name="area" label="Area" />
+            </Col>
+          </Row>
+          {/* Rest of the code... */}
+          <Row gutter={16}>
+            <Col span={12}>
+              <ProForm.Item>
+                <Space.Compact>
+                  <Col style={{ width: "100px" }}>
+                    <ProFormText
+                      width="md"
+                      name="postcode"
+                      label="Postcode"
+                      fieldProps={{
+                        onChange: (event) =>
+                          handlePostcodeChange(event.target.value),
+                      }}
+                    />
+                  </Col>
+                  <Col style={{ width: "200px" }}>
+                    <ProFormText
+                      name="postcodeArea"
+                      label="Postcode Area"
+                      placeholder="Postcode Area"
+                      initialValue={addressData[0]}
+                    />
+                  </Col>
+                </Space.Compact>
+              </ProForm.Item>
+            </Col>
+            <Col span={12}>
+              <ProFormText
+                width="md"
+                name="state"
+                label="State"
+                initialValue={addressData[0]}
+              />
+            </Col>
+          </Row>
+          <div>
+            <Button style={{ marginRight: 8 }} onClick={handlePrevStep}>
+              Previous
+            </Button>
+            <Button type="primary" onClick={handleNextStep}>
+              Next
+            </Button>
+          </div>
+        </ProForm.Group>
+      )}
+      {currentStep === 2 && (
+        // Render form fields for "Related Family, Name, and Contact Number" step
+        <ProForm.Group>
+          <Row gutter={16}>
+            <Col span={12}>
+              <ProFormText
+                width="md"
+                name="otherContactName"
+                label="Other Contact Name"
+                placeholder="Sub-holder name"
+              />
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Other Contact Number"
+                name="otherContactNumber"
+                tooltip="Valid and contactable mobile number"
+                rules={[{ validator: validateDigitsOnly }]}
+              >
+                <Input
+                  style={{
+                    width: "",
+                    minWidth: "",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
                   }}
                   label="Other's Contact Number"
                   name="othersContactNumber"
