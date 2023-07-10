@@ -1484,8 +1484,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             bottom: 0,
             padding: "12 16px",
             width: "650px",
-            borderRadius: 8,
-            backgroundColor: `${theme["cyan.3"]}50`, // Apply transparency to the background color
+            backgroundColor: `${theme["cyan.2"]}50`, // Apply transparency to the background color
             backdropFilter: "blur(10px)", // Apply the blur filter
           }}
         >

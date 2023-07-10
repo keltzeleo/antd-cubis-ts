@@ -796,7 +796,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             {/* Step 4 - Account Entry */}
             <ProCard
               title="Account Address"
-              titleStyle={{ color: theme["colorText"] }}
               collapsible
               collapsed={readonlyAccountAddress ? undefined : false}
               bordered
@@ -804,7 +803,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
                 marginBlockEnd: 16,
                 minWidth: "100%", // Set the desired width here
                 background: theme["colorBgContainer"],
-                color: theme["colorText"],
               }}
               extra={
                 <Switch
@@ -1481,11 +1479,10 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
           style={{
             position: "absolute",
             right: 15,
-            bottom: 0,
+            bottom: 15,
             padding: "12 16px",
             width: "650px",
-            borderRadius: 8,
-            backgroundColor: `${theme["cyan.3"]}50`, // Apply transparency to the background color
+            backgroundColor: `${theme["cyan.2"]}50`, // Apply transparency to the background color
             backdropFilter: "blur(10px)", // Apply the blur filter
           }}
         >
