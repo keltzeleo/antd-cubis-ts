@@ -46,7 +46,7 @@ const IdTypeBoard: React.FC<IdTypeBoardProps> = ({ selectedOption, theme }) => {
         background: boardClassName,
         color: theme["colorText"],
       }}
-      headerStyle={{
+      headStyle={{
         color: theme["colorText"],
       }}
       collapsible

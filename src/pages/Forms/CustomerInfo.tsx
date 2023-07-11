@@ -796,7 +796,6 @@ const CustomerInfo: React.FC<CustomerInfoProps> = ({
             {/* Step 4 - Account Entry */}
             <ProCard
               title="Account Address"
-              titleStyle={{ color: theme["colorText"] }}
               collapsible
               collapsed={readonlyAccountAddress ? undefined : false}
               bordered
