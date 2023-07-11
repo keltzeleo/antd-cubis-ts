@@ -53,30 +53,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           modifiedBy: "Jane Smith",
           modifiedDate: "2022-02-01",
         },
-        {
-          key: "02",
-          status: "Active",
-          block: "11-20m³",
-          rate: "RM 0.08/m³",
-          effectiveDate: "04/07/2020",
-          monthlyMinimumCharges: 50,
-          createdBy: "John Doe",
-          createDate: "2022-01-01",
-          modifiedBy: "Jane Smith",
-          modifiedDate: "2022-02-01",
-        },
-        {
-          key: "03",
-          status: "Active",
-          block: "11-20m³",
-          rate: "RM 0.08/m³",
-          effectiveDate: "04/07/2020",
-          monthlyMinimumCharges: 50,
-          createdBy: "John Doe",
-          createDate: "2022-01-01",
-          modifiedBy: "Jane Smith",
-          modifiedDate: "2022-02-01",
-        },
       ],
     },
   ];
@@ -112,8 +88,8 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     },
     {
       title: "Effective Since",
-      dataIndex: "effectiveDate",
-      key: "effectiveDate",
+      dataIndex: "effectiveSince",
+      key: "effectiveSince",
       render: (text: string) => (
         <span style={{ color: theme.colorText }}>{text}</span>
       ),

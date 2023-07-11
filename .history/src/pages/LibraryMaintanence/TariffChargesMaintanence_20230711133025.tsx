@@ -112,8 +112,8 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     },
     {
       title: "Effective Since",
-      dataIndex: "effectiveDate",
-      key: "effectiveDate",
+      dataIndex: "effectiveSince",
+      key: "effectiveSince",
       render: (text: string) => (
         <span style={{ color: theme.colorText }}>{text}</span>
       ),

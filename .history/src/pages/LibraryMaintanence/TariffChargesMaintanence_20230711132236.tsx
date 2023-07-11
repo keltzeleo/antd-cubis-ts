@@ -12,11 +12,10 @@ interface TariffChargesMaintenanceProps {
 }
 
 interface TariffChargesDataType {
-  key: string;
   tariffCode: string;
   tariffAbbreviation: string;
   monthlyMinimumCharges: number;
-  effectiveDate: string;
+  effectiveSince: string;
   createdBy: string;
   createDate: string;
   modifiedBy: string;
@@ -31,46 +30,19 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
   const dataSource: TariffChargesDataType[] = [
     {
-      key: "01",
       tariffCode: "T1",
       tariffAbbreviation: "TA1",
       monthlyMinimumCharges: 100,
-      effectiveDate: "2022-01-01",
+      effectiveSince: "2022-01-01",
       createdBy: "John Doe",
       createDate: "2022-01-01",
       modifiedBy: "Jane Smith",
       modifiedDate: "2022-02-01",
       nestedData: [
         {
-          key: "01",
           status: "Active",
-          block: "0-10m³",
-          rate: "RM 0.03/m³",
-          effectiveDate: "04/07/2020",
-          monthlyMinimumCharges: 50,
-          createdBy: "John Doe",
-          createDate: "2022-01-01",
-          modifiedBy: "Jane Smith",
-          modifiedDate: "2022-02-01",
-        },
-        {
-          key: "02",
-          status: "Active",
-          block: "11-20m³",
-          rate: "RM 0.08/m³",
-          effectiveDate: "04/07/2020",
-          monthlyMinimumCharges: 50,
-          createdBy: "John Doe",
-          createDate: "2022-01-01",
-          modifiedBy: "Jane Smith",
-          modifiedDate: "2022-02-01",
-        },
-        {
-          key: "03",
-          status: "Active",
-          block: "11-20m³",
-          rate: "RM 0.08/m³",
-          effectiveDate: "04/07/2020",
+          block: "Block1",
+          rate: 50,
           monthlyMinimumCharges: 50,
           createdBy: "John Doe",
           createDate: "2022-01-01",
@@ -112,8 +84,8 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     },
     {
       title: "Effective Since",
-      dataIndex: "effectiveDate",
-      key: "effectiveDate",
+      dataIndex: "effectiveSince",
+      key: "effectiveSince",
       render: (text: string) => (
         <span style={{ color: theme.colorText }}>{text}</span>
       ),
@@ -125,7 +97,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             dataIndex: "createdBy",
             key: "createdBy",
             render: (text: string) => (
-              <span style={{ color: theme.colorText }}>{text}</span>
+              <span style={{ color: "red" }}>{text}</span>
             ),
           },
           {
@@ -133,7 +105,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             dataIndex: "createDate",
             key: "createDate",
             render: (text: string) => (
-              <span style={{ color: theme.colorText }}>{text}</span>
+              <span style={{ color: "red" }}>{text}</span>
             ),
           },
           {
@@ -141,7 +113,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             dataIndex: "modifiedBy",
             key: "modifiedBy",
             render: (text: string) => (
-              <span style={{ color: theme.colorText }}>{text}</span>
+              <span style={{ color: "red" }}>{text}</span>
             ),
           },
           {
@@ -149,7 +121,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             dataIndex: "modifiedDate",
             key: "modifiedDate",
             render: (text: string) => (
-              <span style={{ color: theme.colorText }}>{text}</span>
+              <span style={{ color: "red" }}>{text}</span>
             ),
           },
         ]
@@ -217,7 +189,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             dataIndex: "createdBy",
             key: "createdBy",
             render: (text: string) => (
-              <span style={{ color: theme.colorText }}>{text}</span>
+              <span style={{ color: "red" }}>{text}</span>
             ),
           },
           {
@@ -225,7 +197,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             dataIndex: "createDate",
             key: "createDate",
             render: (text: string) => (
-              <span style={{ color: theme.colorText }}>{text}</span>
+              <span style={{ color: "red" }}>{text}</span>
             ),
           },
           {
@@ -233,7 +205,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             dataIndex: "modifiedBy",
             key: "modifiedBy",
             render: (text: string) => (
-              <span style={{ color: theme.colorText }}>{text}</span>
+              <span style={{ color: "red" }}>{text}</span>
             ),
           },
           {
@@ -241,7 +213,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             dataIndex: "modifiedDate",
             key: "modifiedDate",
             render: (text: string) => (
-              <span style={{ color: theme.colorText }}>{text}</span>
+              <span style={{ color: "red" }}>{text}</span>
             ),
           },
         ]
