@@ -1,6 +1,6 @@
 import ProTable, { ProColumns } from "@ant-design/pro-table";
 import { Button, Checkbox } from "antd";
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 
 interface Theme {
   [key: string]: string;
@@ -43,64 +43,51 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
   const dataSource: TariffChargesDataType[] = [
     {
-      key: "1",
-      tariffCode: "TAR-001",
-      tariffAbbreviation: "TA",
+      key: "01",
+      tariffCode: "T1",
+      tariffAbbreviation: "TA1",
       monthlyMinimumCharges: 100,
-      effectiveDate: "2023-07-01",
+      effectiveDate: "2022-01-01",
       createdBy: "John Doe",
-      createDate: "2023-07-01",
-      modifiedBy: "John Doe",
-      modifiedDate: "2023-07-01",
+      createDate: "2022-01-01",
+      modifiedBy: "Jane Smith",
+      modifiedDate: "2022-02-01",
       nestedData: [
         {
-          key: "1",
+          key: "01",
           status: "Active",
-          block: "Block A",
-          rate: "10%",
-          effectiveDate: "2023-07-01",
+          block: "0-10m³",
+          rate: "RM 0.03/m³",
+          effectiveDate: "04/07/2020",
           monthlyMinimumCharges: 50,
           createdBy: "John Doe",
-          createDate: "2023-07-01",
-          modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
-        },
-        {
-          key: "2",
-          status: "Inactive",
-          block: "Block B",
-          rate: "5%",
-          effectiveDate: "2023-07-01",
-          monthlyMinimumCharges: 30,
-          createdBy: "John Doe",
-          createDate: "2023-07-01",
-          modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
-        },
-      ],
-    },
-    {
-      key: "2",
-      tariffCode: "TAR-002",
-      tariffAbbreviation: "TB",
-      monthlyMinimumCharges: 150,
-      effectiveDate: "2023-07-01",
-      createdBy: "Jane Smith",
-      createDate: "2023-07-01",
-      modifiedBy: "Jane Smith",
-      modifiedDate: "2023-07-01",
-      nestedData: [
-        {
-          key: "3",
-          status: "Active",
-          block: "Block C",
-          rate: "15%",
-          effectiveDate: "2023-07-01",
-          monthlyMinimumCharges: 70,
-          createdBy: "Jane Smith",
-          createDate: "2023-07-01",
+          createDate: "2022-01-01",
           modifiedBy: "Jane Smith",
-          modifiedDate: "2023-07-01",
+          modifiedDate: "2022-02-01",
+        },
+        {
+          key: "02",
+          status: "Active",
+          block: "11-20m³",
+          rate: "RM 0.08/m³",
+          effectiveDate: "04/07/2020",
+          monthlyMinimumCharges: 50,
+          createdBy: "John Doe",
+          createDate: "2022-01-01",
+          modifiedBy: "Jane Smith",
+          modifiedDate: "2022-02-01",
+        },
+        {
+          key: "03",
+          status: "Active",
+          block: "11-20m³",
+          rate: "RM 0.08/m³",
+          effectiveDate: "04/07/2020",
+          monthlyMinimumCharges: 50,
+          createdBy: "John Doe",
+          createDate: "2022-01-01",
+          modifiedBy: "Jane Smith",
+          modifiedDate: "2022-02-01",
         },
       ],
     },
@@ -115,7 +102,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Tariff Code",
       dataIndex: "tariffCode",
       key: "tariffCode",
-      render: (text: ReactNode) => (
+      render: (text: string) => (
         <span style={{ color: theme.colorText }}>{text}</span>
       ),
     },
@@ -123,7 +110,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Tariff Abbreviation",
       dataIndex: "tariffAbbreviation",
       key: "tariffAbbreviation",
-      render: (text: ReactNode) => (
+      render: (text: string) => (
         <span style={{ color: theme.colorText }}>{text}</span>
       ),
     },
@@ -131,7 +118,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Monthly Minimum Charges",
       dataIndex: "monthlyMinimumCharges",
       key: "monthlyMinimumCharges",
-      render: (text: ReactNode) => (
+      render: (text: string) => (
         <span style={{ color: theme.colorText }}>{text}</span>
       ),
     },
@@ -139,7 +126,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Effective Since",
       dataIndex: "effectiveDate",
       key: "effectiveDate",
-      render: (text: ReactNode) => (
+      render: (text: string) => (
         <span style={{ color: theme.colorText }}>{text}</span>
       ),
     },
@@ -149,7 +136,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Created By",
             dataIndex: "createdBy",
             key: "createdBy",
-            render: (text: ReactNode) => (
+            render: (text: string) => (
               <span style={{ color: theme.colorText }}>{text}</span>
             ),
           },
@@ -157,7 +144,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Create Date",
             dataIndex: "createDate",
             key: "createDate",
-            render: (text: ReactNode) => (
+            render: (text: string) => (
               <span style={{ color: theme.colorText }}>{text}</span>
             ),
           },
@@ -165,7 +152,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Modified By",
             dataIndex: "modifiedBy",
             key: "modifiedBy",
-            render: (text: ReactNode) => (
+            render: (text: string) => (
               <span style={{ color: theme.colorText }}>{text}</span>
             ),
           },
@@ -173,7 +160,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Modified Date",
             dataIndex: "modifiedDate",
             key: "modifiedDate",
-            render: (text: ReactNode) => (
+            render: (text: string) => (
               <span style={{ color: theme.colorText }}>{text}</span>
             ),
           },
@@ -184,13 +171,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "actions",
       fixed: "right",
       width: 100,
-      render: (
-        dom: ReactNode,
-        entity: TariffChargesDataType,
-        index: number,
-        action: any,
-        schema: any
-      ) => <Button type="primary">Add</Button>,
+      render: () => <Button type="primary">Add</Button>,
     },
   ];
 
@@ -199,7 +180,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: (text: ReactNode) => (
+      render: (text: string) => (
         <span style={{ color: theme.colorText }}>{text}</span>
       ),
     },
@@ -207,7 +188,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Block",
       dataIndex: "block",
       key: "block",
-      render: (text: ReactNode) => (
+      render: (text: string) => (
         <span style={{ color: theme.colorText }}>{text}</span>
       ),
     },
@@ -215,7 +196,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Rate",
       dataIndex: "rate",
       key: "rate",
-      render: (text: ReactNode) => (
+      render: (text: string) => (
         <span style={{ color: theme.colorText }}>{text}</span>
       ),
     },
@@ -223,7 +204,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Effective Date",
       dataIndex: "effectiveDate",
       key: "effectiveDate",
-      render: (text: ReactNode) => (
+      render: (text: string) => (
         <span style={{ color: theme.colorText }}>{text}</span>
       ),
     },
@@ -233,7 +214,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Created By",
             dataIndex: "createdBy",
             key: "createdBy",
-            render: (text: ReactNode) => (
+            render: (text: string) => (
               <span style={{ color: theme.colorText }}>{text}</span>
             ),
           },
@@ -241,7 +222,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Create Date",
             dataIndex: "createDate",
             key: "createDate",
-            render: (text: ReactNode) => (
+            render: (text: string) => (
               <span style={{ color: theme.colorText }}>{text}</span>
             ),
           },
@@ -249,7 +230,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Modified By",
             dataIndex: "modifiedBy",
             key: "modifiedBy",
-            render: (text: ReactNode) => (
+            render: (text: string) => (
               <span style={{ color: theme.colorText }}>{text}</span>
             ),
           },
@@ -257,7 +238,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Modified Date",
             dataIndex: "modifiedDate",
             key: "modifiedDate",
-            render: (text: ReactNode) => (
+            render: (text: string) => (
               <span style={{ color: theme.colorText }}>{text}</span>
             ),
           },
@@ -268,13 +249,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "actions",
       fixed: "right",
       width: 100,
-      render: (
-        dom: ReactNode,
-        entity: NestedDataType,
-        index: number,
-        action: any,
-        schema: any
-      ) => <Button type="primary">Add</Button>,
+      render: () => <Button type="primary">Add</Button>,
     },
   ];
 
@@ -283,31 +258,28 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       columns={columns}
       dataSource={dataSource}
       rowKey="tariffCode"
-      search={false}
-      headerTitle="Tariff Charges Maintenance"
-      toolbar={{
-        actions: [
-          <Checkbox
-            key="toggleColumns"
-            checked={showAdditionalColumns}
-            onChange={(e) => handleToggleColumns(e.target.checked)}
-          >
-            Show Additional Columns
-          </Checkbox>,
-        ],
-      }}
+      scroll={{ x: "auto" }}
       expandable={{
-        expandedRowRender: (record) => (
-          <ProTable<NestedDataType>
-            columns={nestedColumns}
-            dataSource={record.nestedData}
-            rowKey="key"
-            search={false}
-            pagination={false}
-          />
-        ),
-        rowExpandable: (record) => !!record.nestedData,
+        expandedRowRender: (record) =>
+          record.nestedData ? (
+            <ProTable<NestedDataType>
+              dataSource={record.nestedData}
+              columns={nestedColumns}
+              rowKey="key"
+              pagination={false}
+            />
+          ) : null,
+        rowExpandable: (record) =>
+          !!(record.nestedData && record.nestedData.length > 0),
       }}
+      toolBarRender={() => [
+        <Checkbox
+          checked={showAdditionalColumns}
+          onChange={(e) => handleToggleColumns(e.target.checked)}
+        >
+          Show Log
+        </Checkbox>,
+      ]}
     />
   );
 };

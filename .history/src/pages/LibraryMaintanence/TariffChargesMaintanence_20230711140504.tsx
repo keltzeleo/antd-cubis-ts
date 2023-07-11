@@ -42,68 +42,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
 
   const dataSource: TariffChargesDataType[] = [
-    {
-      key: "1",
-      tariffCode: "TAR-001",
-      tariffAbbreviation: "TA",
-      monthlyMinimumCharges: 100,
-      effectiveDate: "2023-07-01",
-      createdBy: "John Doe",
-      createDate: "2023-07-01",
-      modifiedBy: "John Doe",
-      modifiedDate: "2023-07-01",
-      nestedData: [
-        {
-          key: "1",
-          status: "Active",
-          block: "Block A",
-          rate: "10%",
-          effectiveDate: "2023-07-01",
-          monthlyMinimumCharges: 50,
-          createdBy: "John Doe",
-          createDate: "2023-07-01",
-          modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
-        },
-        {
-          key: "2",
-          status: "Inactive",
-          block: "Block B",
-          rate: "5%",
-          effectiveDate: "2023-07-01",
-          monthlyMinimumCharges: 30,
-          createdBy: "John Doe",
-          createDate: "2023-07-01",
-          modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
-        },
-      ],
-    },
-    {
-      key: "2",
-      tariffCode: "TAR-002",
-      tariffAbbreviation: "TB",
-      monthlyMinimumCharges: 150,
-      effectiveDate: "2023-07-01",
-      createdBy: "Jane Smith",
-      createDate: "2023-07-01",
-      modifiedBy: "Jane Smith",
-      modifiedDate: "2023-07-01",
-      nestedData: [
-        {
-          key: "3",
-          status: "Active",
-          block: "Block C",
-          rate: "15%",
-          effectiveDate: "2023-07-01",
-          monthlyMinimumCharges: 70,
-          createdBy: "Jane Smith",
-          createDate: "2023-07-01",
-          modifiedBy: "Jane Smith",
-          modifiedDate: "2023-07-01",
-        },
-      ],
-    },
+    // ...
   ];
 
   const handleToggleColumns = (checked: boolean) => {
