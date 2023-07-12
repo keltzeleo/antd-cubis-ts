@@ -1,6 +1,6 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ProFormDigit } from "@ant-design/pro-form";
-import ProTable, { ProColumns } from "@ant-design/pro-table";
+import { EditableProTable, ProColumns } from "@ant-design/pro-table";
 import { Button, Checkbox, DatePicker, Form, Space, message } from "antd";
 import React, { ReactNode, useState } from "react";
 
@@ -27,8 +27,6 @@ interface TariffChargesDataType {
   tariffAbbreviation: string;
   monthlyMinimumCharges: number;
   effectiveDate: string;
-  isEditing?: boolean;
-
   createdBy: string;
   createDate: string;
   modifiedBy: string;
@@ -123,22 +121,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     setShowAdditionalColumns(checked);
   };
 
-  const handleAdd = (record: TariffChargesDataType) => {
-    console.log("Add record", record);
-    // Handle add logic here
-  };
-
-  const handleEdit = (record: NestedDataType) => {
-    form.setFieldsValue({ ...record });
-    setDataSource((prevDataSource) =>
-      prevDataSource.map((item) =>
-        item.key === record.key
-          ? { ...item, isEditing: true }
-          : { ...item, isEditing: false }
-      )
-    );
-  };
-
   const handleSave = (record: NestedDataType) => {
     form.validateFields().then((values) => {
       // Do your API calls here with values
@@ -170,50 +152,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "tariffCode",
       render: renderText,
     },
-    {
-      title: "Effective Date",
-      dataIndex: "effectiveDate",
-      key: "effectiveDate",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item name={["nestedData", record.key, "effectiveDate"]}>
-              <DatePicker />
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
-      valueType: "text", // Set the valueType to "text" to disable editing
-    },
-    ...(showAdditionalColumns
-      ? [
-          {
-            title: "Created By",
-            dataIndex: "createdBy",
-            key: "createdBy",
-            render: renderText,
-          },
-          {
-            title: "Create Date",
-            dataIndex: "createDate",
-            key: "createDate",
-            render: renderText,
-          },
-          {
-            title: "Modified By",
-            dataIndex: "modifiedBy",
-            key: "modifiedBy",
-            render: renderText,
-          },
-          {
-            title: "Modified Date",
-            dataIndex: "modifiedDate",
-            key: "modifiedDate",
-            render: renderText,
-          },
-        ]
-      : []),
+    // rest of the columns
     {
       title: "Actions",
       key: "actions",
@@ -243,6 +182,8 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           {record.block ? `${record.block[0]} - ${record.block[1]}m³` : ""}
         </span>
       ),
+      valueType: "number",
+      editable: true, // Allow editing block values
     },
     {
       title: "Rate",
@@ -270,6 +211,8 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           </span>
         );
       },
+      valueType: "number",
+      editable: true, // Allow editing rate values
     },
     {
       title: "Effective Date",
@@ -285,6 +228,8 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         }
         return renderText(text);
       },
+      valueType: "date",
+      editable: true, // Allow editing effectiveDate values
     },
     ...(showAdditionalColumns
       ? [
@@ -340,36 +285,90 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
   return (
     <Form form={form} component={false}>
-      <ProTable<TariffChargesDataType>
-        columns={columns}
-        dataSource={dataSource}
+      <EditableProTable<TariffChargesDataType, NestedDataType>
         rowKey="tariffCode"
-        search={false}
         headerTitle="Tariff Charges Maintenance"
-        toolbar={{
-          actions: [
-            <Checkbox
-              key="toggleColumns"
-              checked={showAdditionalColumns}
-              onChange={(e) => handleToggleColumns(e.target.checked)}
-            >
-              Show Additional Columns
-            </Checkbox>,
-          ],
+        columns={columns}
+        request={(params, sorter, filter) => {
+          // Handle table data fetching here
+          console.log(params, sorter, filter);
+          return Promise.resolve({
+            data: dataSource,
+            success: true,
+          });
+        }}
+        editable={{
+          type: "single", // Change type to "single"
+          onSave: handleSave,
+          onDelete: handleDelete,
+          editableKeys: dataSource.map((item) => item.key),
+          onChange: (editableKeys) => {
+            setDataSource((prevDataSource) =>
+              prevDataSource.map((item) => ({
+                ...item,
+                isEditing: editableKeys.includes(item.key),
+              }))
+            );
+          },
         }}
         expandable={{
-          expandedRowRender: (record) => (
-            <ProTable<NestedDataType>
-              columns={nestedColumns}
-              dataSource={record.nestedData}
-              rowKey="key"
-              search={false}
-              pagination={false}
-            />
-          ),
+          expandedRowRender: (record) => {
+            return (
+              <EditableProTable<NestedDataType>
+                rowKey="key"
+                columns={nestedColumns}
+                request={(params, sorter, filter) => {
+                  // Handle nested table data fetching here
+                  console.log(params, sorter, filter);
+                  return Promise.resolve({
+                    data: record.nestedData || [],
+                    success: true,
+                  });
+                }}
+                editable={{
+                  type: "single", // Change type to "single"
+                  form,
+                  editableKeys:
+                    record.nestedData?.map((item) => item.key) || [],
+                  onSave: handleSave,
+                  onDelete: handleDelete,
+                  onChange: (editableKeys) => {
+                    setDataSource((prevDataSource) =>
+                      prevDataSource.map((item) =>
+                        item.key === record.key
+                          ? {
+                              ...item,
+                              nestedData:
+                                item.nestedData?.map((nestedItem) => ({
+                                  ...nestedItem,
+                                  isEditing: editableKeys.includes(
+                                    nestedItem.key
+                                  ),
+                                })) || [],
+                            }
+                          : item
+                      )
+                    );
+                  },
+                }}
+              />
+            );
+          },
           rowExpandable: (record) => !!record.nestedData,
         }}
-        bordered={false}
+        options={{
+          search: false,
+          bordered: false,
+        }}
+        toolBarRender={() => [
+          <Checkbox
+            key="toggleColumns"
+            checked={showAdditionalColumns}
+            onChange={(e) => handleToggleColumns(e.target.checked)}
+          >
+            Show Additional Columns
+          </Checkbox>,
+        ]}
       />
     </Form>
   );

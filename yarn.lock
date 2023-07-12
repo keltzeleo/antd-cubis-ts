@@ -7887,6 +7887,7 @@ __metadata:
     craco-antd: ^2.0.0
     craco-less: ^2.0.0
     crc: ^4.3.2
+    dayjs: ^1.11.9
     figma-tokens-transformer: ^1.1.3
     formik: ^2.2.9
     moment: ^2.29.4

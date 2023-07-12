@@ -27,8 +27,6 @@ interface TariffChargesDataType {
   tariffAbbreviation: string;
   monthlyMinimumCharges: number;
   effectiveDate: string;
-  isEditing?: boolean;
-
   createdBy: string;
   createDate: string;
   modifiedBy: string;
@@ -170,50 +168,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "tariffCode",
       render: renderText,
     },
-    {
-      title: "Effective Date",
-      dataIndex: "effectiveDate",
-      key: "effectiveDate",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item name={["nestedData", record.key, "effectiveDate"]}>
-              <DatePicker />
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
-      valueType: "text", // Set the valueType to "text" to disable editing
-    },
-    ...(showAdditionalColumns
-      ? [
-          {
-            title: "Created By",
-            dataIndex: "createdBy",
-            key: "createdBy",
-            render: renderText,
-          },
-          {
-            title: "Create Date",
-            dataIndex: "createDate",
-            key: "createDate",
-            render: renderText,
-          },
-          {
-            title: "Modified By",
-            dataIndex: "modifiedBy",
-            key: "modifiedBy",
-            render: renderText,
-          },
-          {
-            title: "Modified Date",
-            dataIndex: "modifiedDate",
-            key: "modifiedDate",
-            render: renderText,
-          },
-        ]
-      : []),
+    // rest of the columns
     {
       title: "Actions",
       key: "actions",
@@ -245,33 +200,34 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       ),
     },
     {
-      title: "Rate",
-      dataIndex: "rate",
-      key: "rate",
-      render: (text, record) => {
-        if (record.isEditing) {
+      {
+        title: "Rate",
+        dataIndex: "rate",
+        key: "rate",
+        render: (text, record) => {
+          if (record.isEditing) {
+            return (
+              <Form.Item
+                name="rate"
+                rules={[
+                  {
+                    pattern: /^\d+(\.\d{1,2})?$/,
+                    message: "Please input a valid rate."
+                  }
+                ]}
+              >
+                <ProFormDigit fieldProps={{ precision: 2 }} />
+              </Form.Item>
+            );
+          }
           return (
-            <Form.Item
-              name="rate"
-              rules={[
-                {
-                  pattern: /^\d+(\.\d{1,2})?$/,
-                  message: "Please input a valid rate.",
-                },
-              ]}
-            >
-              <ProFormDigit fieldProps={{ precision: 2 }} />
-            </Form.Item>
+            <span style={{ color: theme["colorText"] }}>
+              {typeof text === "number" ? `RM ${text.toFixed(2)}/m³` : ""}
+            </span>
           );
         }
-        return (
-          <span style={{ color: theme["colorText"] }}>
-            {typeof text === "number" ? `RM ${text.toFixed(2)}/m³` : ""}
-          </span>
-        );
       },
-    },
-    {
+          {
       title: "Effective Date",
       dataIndex: "effectiveDate",
       key: "effectiveDate",

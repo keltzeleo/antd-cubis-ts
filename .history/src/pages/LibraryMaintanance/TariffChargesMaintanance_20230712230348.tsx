@@ -1,6 +1,6 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ProFormDigit } from "@ant-design/pro-form";
-import ProTable, { ProColumns } from "@ant-design/pro-table";
+import { EditableProTable, ProColumns } from "@ant-design/pro-table";
 import { Button, Checkbox, DatePicker, Form, Space, message } from "antd";
 import React, { ReactNode, useState } from "react";
 
@@ -27,8 +27,6 @@ interface TariffChargesDataType {
   tariffAbbreviation: string;
   monthlyMinimumCharges: number;
   effectiveDate: string;
-  isEditing?: boolean;
-
   createdBy: string;
   createDate: string;
   modifiedBy: string;
@@ -106,7 +104,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         {
           key: "01",
           status: "Applied",
-
           block: [0, 10],
           rate: 0.03,
           effectiveDate: "04/07/2020",
@@ -170,50 +167,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "tariffCode",
       render: renderText,
     },
-    {
-      title: "Effective Date",
-      dataIndex: "effectiveDate",
-      key: "effectiveDate",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item name={["nestedData", record.key, "effectiveDate"]}>
-              <DatePicker />
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
-      valueType: "text", // Set the valueType to "text" to disable editing
-    },
-    ...(showAdditionalColumns
-      ? [
-          {
-            title: "Created By",
-            dataIndex: "createdBy",
-            key: "createdBy",
-            render: renderText,
-          },
-          {
-            title: "Create Date",
-            dataIndex: "createDate",
-            key: "createDate",
-            render: renderText,
-          },
-          {
-            title: "Modified By",
-            dataIndex: "modifiedBy",
-            key: "modifiedBy",
-            render: renderText,
-          },
-          {
-            title: "Modified Date",
-            dataIndex: "modifiedDate",
-            key: "modifiedDate",
-            render: renderText,
-          },
-        ]
-      : []),
+    // rest of the columns
     {
       title: "Actions",
       key: "actions",
@@ -243,6 +197,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           {record.block ? `${record.block[0]} - ${record.block[1]}m³` : ""}
         </span>
       ),
+      valueType: "text", // Set the valueType to "text" to disable editing
     },
     {
       title: "Rate",
@@ -270,6 +225,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           </span>
         );
       },
+      valueType: "text", // Set the valueType to "text" to disable editing
     },
     {
       title: "Effective Date",
@@ -285,36 +241,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         }
         return renderText(text);
       },
+      valueType: "text", // Set the valueType to "text" to disable editing
     },
-    ...(showAdditionalColumns
-      ? [
-          {
-            title: "Created By",
-            dataIndex: "createdBy",
-            key: "createdBy",
-            render: renderText,
-          },
-          {
-            title: "Create Date",
-            dataIndex: "createDate",
-            key: "createDate",
-            render: renderText,
-          },
-          {
-            title: "Modified By",
-            dataIndex: "modifiedBy",
-            key: "modifiedBy",
-            render: renderText,
-          },
-          {
-            title: "Modified Date",
-            dataIndex: "modifiedDate",
-            key: "modifiedDate",
-            render: renderText,
-          },
-        ]
-      : []),
-
+    // rest of the columns
     {
       title: "Actions",
       key: "actions",
@@ -340,7 +269,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
   return (
     <Form form={form} component={false}>
-      <ProTable<TariffChargesDataType>
+      <EditableProTable<TariffChargesDataType, TariffChargesDataType["key"]>
         columns={columns}
         dataSource={dataSource}
         rowKey="tariffCode"
@@ -359,12 +288,45 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         }}
         expandable={{
           expandedRowRender: (record) => (
-            <ProTable<NestedDataType>
+            <EditableProTable<NestedDataType, NestedDataType["key"]>
               columns={nestedColumns}
               dataSource={record.nestedData}
               rowKey="key"
               search={false}
               pagination={false}
+              recordCreatorProps={{
+                newRecordType: "dataSource",
+                position: "bottom",
+                record: () => ({
+                  key: Date.now().toString(),
+                }),
+              }}
+              editable={{
+                type: "multiple",
+                editableKeys: (record?.nestedData || []).map(
+                  (item) => item.key
+                ),
+                onSave: handleSave,
+                onDelete: handleDelete,
+                onChange: (editableKeys) => {
+                  setDataSource((prevDataSource) =>
+                    prevDataSource.map((item) =>
+                      item.key === record.key
+                        ? {
+                            ...item,
+                            nestedData:
+                              item.nestedData?.map((nestedItem) => ({
+                                ...nestedItem,
+                                isEditing: editableKeys.includes(
+                                  nestedItem.key
+                                ),
+                              })) || [],
+                          }
+                        : item
+                    )
+                  );
+                },
+              }}
             />
           ),
           rowExpandable: (record) => !!record.nestedData,

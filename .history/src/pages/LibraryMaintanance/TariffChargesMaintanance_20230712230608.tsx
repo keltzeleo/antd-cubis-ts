@@ -27,8 +27,6 @@ interface TariffChargesDataType {
   tariffAbbreviation: string;
   monthlyMinimumCharges: number;
   effectiveDate: string;
-  isEditing?: boolean;
-
   createdBy: string;
   createDate: string;
   modifiedBy: string;
@@ -170,50 +168,21 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "tariffCode",
       render: renderText,
     },
-    {
+
       title: "Effective Date",
       dataIndex: "effectiveDate",
       key: "effectiveDate",
       render: (text, record) => {
         if (record.isEditing) {
           return (
-            <Form.Item name={["nestedData", record.key, "effectiveDate"]}>
+            <Form.Item name="effectiveDate">
               <DatePicker />
             </Form.Item>
           );
         }
         return renderText(text);
       },
-      valueType: "text", // Set the valueType to "text" to disable editing
     },
-    ...(showAdditionalColumns
-      ? [
-          {
-            title: "Created By",
-            dataIndex: "createdBy",
-            key: "createdBy",
-            render: renderText,
-          },
-          {
-            title: "Create Date",
-            dataIndex: "createDate",
-            key: "createDate",
-            render: renderText,
-          },
-          {
-            title: "Modified By",
-            dataIndex: "modifiedBy",
-            key: "modifiedBy",
-            render: renderText,
-          },
-          {
-            title: "Modified Date",
-            dataIndex: "modifiedDate",
-            key: "modifiedDate",
-            render: renderText,
-          },
-        ]
-      : []),
     {
       title: "Actions",
       key: "actions",

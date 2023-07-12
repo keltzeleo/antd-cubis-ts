@@ -27,8 +27,6 @@ interface TariffChargesDataType {
   tariffAbbreviation: string;
   monthlyMinimumCharges: number;
   effectiveDate: string;
-  isEditing?: boolean;
-
   createdBy: string;
   createDate: string;
   modifiedBy: string;
@@ -45,7 +43,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 }) => {
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
   const [form] = Form.useForm();
-  const [dataSource, setDataSource] = useState<TariffChargesDataType[]>([
+  const [dataSource, setDataSource] = useState<TariffChargesDataType[]>([]);
+
+  const dataSource: TariffChargesDataType[] = [
     {
       key: "01",
       tariffCode: "TAR-001",
@@ -117,7 +117,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         },
       ],
     },
-  ]);
+  ];
 
   const handleToggleColumns = (checked: boolean) => {
     setShowAdditionalColumns(checked);
@@ -170,50 +170,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "tariffCode",
       render: renderText,
     },
-    {
-      title: "Effective Date",
-      dataIndex: "effectiveDate",
-      key: "effectiveDate",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item name={["nestedData", record.key, "effectiveDate"]}>
-              <DatePicker />
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
-      valueType: "text", // Set the valueType to "text" to disable editing
-    },
-    ...(showAdditionalColumns
-      ? [
-          {
-            title: "Created By",
-            dataIndex: "createdBy",
-            key: "createdBy",
-            render: renderText,
-          },
-          {
-            title: "Create Date",
-            dataIndex: "createDate",
-            key: "createDate",
-            render: renderText,
-          },
-          {
-            title: "Modified By",
-            dataIndex: "modifiedBy",
-            key: "modifiedBy",
-            render: renderText,
-          },
-          {
-            title: "Modified Date",
-            dataIndex: "modifiedDate",
-            key: "modifiedDate",
-            render: renderText,
-          },
-        ]
-      : []),
+    // rest of the columns
     {
       title: "Actions",
       key: "actions",
@@ -266,7 +223,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         }
         return (
           <span style={{ color: theme["colorText"] }}>
-            {typeof text === "number" ? `RM ${text.toFixed(2)}/m³` : ""}
+            RM {text.toFixed(2)}/m³
           </span>
         );
       },

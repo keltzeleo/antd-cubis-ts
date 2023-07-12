@@ -27,8 +27,6 @@ interface TariffChargesDataType {
   tariffAbbreviation: string;
   monthlyMinimumCharges: number;
   effectiveDate: string;
-  isEditing?: boolean;
-
   createdBy: string;
   createDate: string;
   modifiedBy: string;
@@ -171,20 +169,40 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       render: renderText,
     },
     {
+      title: "Tariff Abbreviation",
+      dataIndex: "tariffAbbreviation",
+      key: "tariffAbbreviation",
+      render: renderText,
+    },
+    {
+      title: "Monthly Minimum Charges",
+      dataIndex: "monthlyMinimumCharges",
+      key: "monthlyMinimumCharges",
+      render: (text: number, record: TariffChargesDataType) =>
+        editData[record.key] ? (
+          <InputNumber
+            defaultValue={text}
+            onChange={(value) => handleEditMonthlyMinimumCharges(value, record)}
+          />
+        ) : (
+          renderText(text)
+        ),
+    },
+    {
       title: "Effective Date",
       dataIndex: "effectiveDate",
       key: "effectiveDate",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item name={["nestedData", record.key, "effectiveDate"]}>
-              <DatePicker />
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
-      valueType: "text", // Set the valueType to "text" to disable editing
+      render: (text: string | number | Date, record: TariffChargesDataType) =>
+        editData[record.key] ? (
+          <DatePicker
+            defaultValue={moment(text)}
+            onChange={(value) =>
+              handleEditEffectiveDate(value, record as NestedDataType)
+            }
+          />
+        ) : (
+          renderText(text)
+        ),
     },
     ...(showAdditionalColumns
       ? [
