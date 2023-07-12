@@ -2,7 +2,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ProFormDatePicker, ProFormDigitRange } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
 import { Button, Checkbox, ConfigProvider, Space } from "antd";
-import moment, { Moment } from "moment";
+import moment from "moment";
 import React, { ReactNode, useState } from "react";
 
 interface Theme {
@@ -42,9 +42,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   theme,
 }) => {
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
-  const [editData, setEditData] = useState<
-    Partial<Record<string, Partial<TariffChargesDataType>>>
-  >({});
+  const [editData, setEditData] = useState<Partial<TariffChargesDataType>>({});
 
   const handleToggleColumns = (checked: boolean) => {
     setShowAdditionalColumns(checked);
@@ -110,7 +108,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   };
 
   const handleEditEffectiveDate = (
-    value: Moment | null,
+    value: string | number | Date | undefined,
     record: NestedDataType
   ) => {
     setEditData((prevState) => ({
@@ -122,7 +120,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             if (item.key === record.key) {
               return {
                 ...item,
-                effectiveDate: value?.format(),
+                effectiveDate: value,
               };
             }
             return item;
@@ -244,7 +242,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         ),
     },
     {
-      title: "Effective Date",
+      title: "Effective Since",
       dataIndex: "effectiveDate",
       key: "effectiveDate",
       render: (text: string | number | Date, record: TariffChargesDataType) =>
@@ -253,7 +251,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             fieldProps={{
               defaultValue: moment(text),
               onChange: (value) =>
-                handleEditEffectiveDate(value, record as NestedDataType),
+                handleEditEffectiveDate(value?.format(), record),
             }}
           />
         ) : (

@@ -1,8 +1,7 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { ProFormDatePicker, ProFormDigitRange } from "@ant-design/pro-form";
+import { ProFormCheckbox } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
-import { Button, Checkbox, ConfigProvider, Space } from "antd";
-import moment, { Moment } from "moment";
+import { Button, ConfigProvider, Space } from "antd";
 import React, { ReactNode, useState } from "react";
 
 interface Theme {
@@ -42,99 +41,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   theme,
 }) => {
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
-  const [editData, setEditData] = useState<
-    Partial<Record<string, Partial<TariffChargesDataType>>>
-  >({});
-
-  const handleToggleColumns = (checked: boolean) => {
-    setShowAdditionalColumns(checked);
-  };
-
-  const handleEditMonthlyMinimumCharges = (
-    value: number | undefined,
-    record: TariffChargesDataType
-  ) => {
-    setEditData((prevState) => ({
-      ...prevState,
-      [record.key]: {
-        ...prevState[record.key],
-        monthlyMinimumCharges: value,
-      },
-    }));
-  };
-
-  const handleEditRate = (
-    value: number | undefined,
-    record: NestedDataType
-  ) => {
-    setEditData((prevState) => ({
-      ...prevState,
-      [record.key]: {
-        ...prevState[record.key],
-        nestedData: prevState[record.key]?.nestedData?.map(
-          (item: NestedDataType) => {
-            if (item.key === record.key) {
-              return {
-                ...item,
-                rate: value,
-              };
-            }
-            return item;
-          }
-        ),
-      },
-    }));
-  };
-
-  const handleEditBlock = (
-    value: [number, number] | undefined,
-    record: NestedDataType
-  ) => {
-    setEditData((prevState) => ({
-      ...prevState,
-      [record.key]: {
-        ...prevState[record.key],
-        nestedData: prevState[record.key]?.nestedData?.map(
-          (item: NestedDataType) => {
-            if (item.key === record.key) {
-              return {
-                ...item,
-                block: value,
-              };
-            }
-            return item;
-          }
-        ),
-      },
-    }));
-  };
-
-  const handleEditEffectiveDate = (
-    value: Moment | null,
-    record: NestedDataType
-  ) => {
-    setEditData((prevState) => ({
-      ...prevState,
-      [record.key]: {
-        ...prevState[record.key],
-        nestedData: prevState[record.key]?.nestedData?.map(
-          (item: NestedDataType) => {
-            if (item.key === record.key) {
-              return {
-                ...item,
-                effectiveDate: value?.format(),
-              };
-            }
-            return item;
-          }
-        ),
-      },
-    }));
-  };
-
-  const renderText = (text: ReactNode) => (
-    <span style={{ color: theme["colorText"] }}>{text}</span>
-  );
 
   const dataSource: TariffChargesDataType[] = [
     {
@@ -209,6 +115,10 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     },
   ];
 
+  const handleToggleColumns = (checked: boolean) => {
+    setShowAdditionalColumns(checked);
+  };
+
   const tableContainerStyle = {
     color: theme["colorText"],
   };
@@ -218,47 +128,25 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Tariff Code",
       dataIndex: "tariffCode",
       key: "tariffCode",
-      render: renderText,
+      render: (text: ReactNode) => <span>{text}</span>,
     },
     {
       title: "Tariff Abbreviation",
       dataIndex: "tariffAbbreviation",
       key: "tariffAbbreviation",
-      render: renderText,
+      render: (text: ReactNode) => <span>{text}</span>,
     },
     {
       title: "Monthly Minimum Charges",
       dataIndex: "monthlyMinimumCharges",
       key: "monthlyMinimumCharges",
-      render: (text: number, record: TariffChargesDataType) =>
-        editData[record.key] ? (
-          <ProFormDigitRange
-            fieldProps={{
-              defaultValue: text,
-              onChange: (value) =>
-                handleEditMonthlyMinimumCharges(value, record),
-            }}
-          />
-        ) : (
-          renderText(text)
-        ),
+      render: (text: ReactNode) => <span>{text}</span>,
     },
     {
-      title: "Effective Date",
+      title: "Effective Since",
       dataIndex: "effectiveDate",
       key: "effectiveDate",
-      render: (text: string | number | Date, record: TariffChargesDataType) =>
-        editData[record.key] ? (
-          <ProFormDatePicker
-            fieldProps={{
-              defaultValue: moment(text),
-              onChange: (value) =>
-                handleEditEffectiveDate(value, record as NestedDataType),
-            }}
-          />
-        ) : (
-          renderText(text)
-        ),
+      render: (text: ReactNode) => <span>{text}</span>,
     },
     ...(showAdditionalColumns
       ? [
@@ -266,25 +154,25 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Created By",
             dataIndex: "createdBy",
             key: "createdBy",
-            render: renderText,
+            render: (text: ReactNode) => <span>{text}</span>,
           },
           {
             title: "Create Date",
             dataIndex: "createDate",
             key: "createDate",
-            render: renderText,
+            render: (text: ReactNode) => <span>{text}</span>,
           },
           {
             title: "Modified By",
             dataIndex: "modifiedBy",
             key: "modifiedBy",
-            render: renderText,
+            render: (text: ReactNode) => <span>{text}</span>,
           },
           {
             title: "Modified Date",
             dataIndex: "modifiedDate",
             key: "modifiedDate",
-            render: renderText,
+            render: (text: ReactNode) => <span>{text}</span>,
           },
         ]
       : []),
@@ -293,7 +181,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "actions",
       fixed: "right",
       width: 100,
-      render: (_: ReactNode, entity: TariffChargesDataType) => (
+      render: (_: ReactNode, entity: TariffChargesDataType, index: number) => (
         <Space>
           <Button type="primary" icon={<EditOutlined />} />
           <Button type="primary" danger icon={<DeleteOutlined />} />
@@ -307,31 +195,27 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: renderText,
+      render: (text: ReactNode) => <span>{text}</span>,
     },
     {
       title: "Block",
       dataIndex: "block",
       key: "block",
-      render: (text: [number, number]) => (
-        <span style={{ color: theme["colorText"] }}>
-          {Array.isArray(text) ? `${text[0]}-${text[1]}m³` : text}
-        </span>
+      render: (text: ReactNode) => (
+        <span>{Array.isArray(text) ? `${text[0]}-${text[1]}m³` : text}</span>
       ),
     },
     {
       title: "Rate",
       dataIndex: "rate",
       key: "rate",
-      render: (text: number) => (
-        <span style={{ color: theme["colorText"] }}>RM {text}/m³</span>
-      ),
+      render: (text: ReactNode) => <span>RM {text}/m³</span>,
     },
     {
       title: "Effective Date",
       dataIndex: "effectiveDate",
       key: "effectiveDate",
-      render: (text: string | number | Date) => renderText(text),
+      render: (text: ReactNode) => <span>{text}</span>,
     },
     ...(showAdditionalColumns
       ? [
@@ -339,32 +223,50 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Created By",
             dataIndex: "createdBy",
             key: "createdBy",
-            render: renderText,
+            render: (text: ReactNode) => <span>{text}</span>,
           },
           {
             title: "Create Date",
             dataIndex: "createDate",
             key: "createDate",
-            render: renderText,
+            render: (text: ReactNode) => <span>{text}</span>,
           },
           {
             title: "Modified By",
             dataIndex: "modifiedBy",
             key: "modifiedBy",
-            render: renderText,
+            render: (text: ReactNode) => <span>{text}</span>,
           },
           {
             title: "Modified Date",
             dataIndex: "modifiedDate",
             key: "modifiedDate",
-            render: renderText,
+            render: (text: ReactNode) => <span>{text}</span>,
           },
         ]
       : []),
+    {
+      title: "Actions",
+      key: "actions",
+      fixed: "right",
+      width: 100,
+      render: (
+        _: ReactNode,
+        entity: NestedDataType,
+        index: number,
+        action: any,
+        schema: any
+      ) => (
+        <Space>
+          <Button type="primary" icon={<EditOutlined />} />
+          <Button type="primary" danger icon={<DeleteOutlined />} />
+        </Space>
+      ),
+    },
   ];
 
   return (
-    <ConfigProvider theme={theme}>
+    <ConfigProvider theme={{}}>
       <div style={tableContainerStyle}>
         <ProTable<TariffChargesDataType>
           columns={columns}
@@ -372,17 +274,15 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           rowKey="tariffCode"
           search={false}
           headerTitle="Tariff Charges Maintenance"
-          toolbar={{
-            actions: [
-              <Checkbox
-                key="toggleColumns"
-                checked={showAdditionalColumns}
-                onChange={(e) => handleToggleColumns(e.target.checked)}
-              >
-                Show Additional Columns
-              </Checkbox>,
-            ],
-          }}
+          toolBarRender={() => [
+            <ProFormCheckbox
+              key="toggleColumns"
+              checked={showAdditionalColumns}
+              onChange={(e) => handleToggleColumns(e.target.checked)}
+            >
+              Show Additional Columns
+            </ProFormCheckbox>,
+          ]}
           expandable={{
             expandedRowRender: (record) => (
               <ProTable<NestedDataType>
@@ -396,24 +296,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             rowExpandable: (record) => !!record.nestedData,
           }}
           bordered={false}
-          editable={{
-            type: "multiple",
-            onSave: async (key, record) => {
-              console.log("Save:", key, record);
-              // Perform saving logic here
-            },
-            onChange: (key, record) => {
-              console.log("Change:", key, record);
-              // Update edited data in the state
-              setEditData((prevState) => ({
-                ...prevState,
-                [key]: {
-                  ...prevState[key],
-                  ...record,
-                },
-              }));
-            },
-          }}
         />
       </div>
     </ConfigProvider>

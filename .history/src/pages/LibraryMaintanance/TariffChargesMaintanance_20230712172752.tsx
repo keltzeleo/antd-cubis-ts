@@ -1,8 +1,6 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { ProFormDatePicker, ProFormDigitRange } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
 import { Button, Checkbox, ConfigProvider, Space } from "antd";
-import moment, { Moment } from "moment";
 import React, { ReactNode, useState } from "react";
 
 interface Theme {
@@ -42,96 +40,8 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   theme,
 }) => {
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
-  const [editData, setEditData] = useState<
-    Partial<Record<string, Partial<TariffChargesDataType>>>
-  >({});
 
-  const handleToggleColumns = (checked: boolean) => {
-    setShowAdditionalColumns(checked);
-  };
-
-  const handleEditMonthlyMinimumCharges = (
-    value: number | undefined,
-    record: TariffChargesDataType
-  ) => {
-    setEditData((prevState) => ({
-      ...prevState,
-      [record.key]: {
-        ...prevState[record.key],
-        monthlyMinimumCharges: value,
-      },
-    }));
-  };
-
-  const handleEditRate = (
-    value: number | undefined,
-    record: NestedDataType
-  ) => {
-    setEditData((prevState) => ({
-      ...prevState,
-      [record.key]: {
-        ...prevState[record.key],
-        nestedData: prevState[record.key]?.nestedData?.map(
-          (item: NestedDataType) => {
-            if (item.key === record.key) {
-              return {
-                ...item,
-                rate: value,
-              };
-            }
-            return item;
-          }
-        ),
-      },
-    }));
-  };
-
-  const handleEditBlock = (
-    value: [number, number] | undefined,
-    record: NestedDataType
-  ) => {
-    setEditData((prevState) => ({
-      ...prevState,
-      [record.key]: {
-        ...prevState[record.key],
-        nestedData: prevState[record.key]?.nestedData?.map(
-          (item: NestedDataType) => {
-            if (item.key === record.key) {
-              return {
-                ...item,
-                block: value,
-              };
-            }
-            return item;
-          }
-        ),
-      },
-    }));
-  };
-
-  const handleEditEffectiveDate = (
-    value: Moment | null,
-    record: NestedDataType
-  ) => {
-    setEditData((prevState) => ({
-      ...prevState,
-      [record.key]: {
-        ...prevState[record.key],
-        nestedData: prevState[record.key]?.nestedData?.map(
-          (item: NestedDataType) => {
-            if (item.key === record.key) {
-              return {
-                ...item,
-                effectiveDate: value?.format(),
-              };
-            }
-            return item;
-          }
-        ),
-      },
-    }));
-  };
-
+  // Define a function to render the text with the desired style
   const renderText = (text: ReactNode) => (
     <span style={{ color: theme["colorText"] }}>{text}</span>
   );
@@ -207,7 +117,29 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         },
       ],
     },
+    {
+      title: "Actions",
+      key: "actions",
+      fixed: "right",
+      width: 100,
+      render: (
+        _: ReactNode,
+        entity: NestedDataType,
+        index: number,
+        action: any,
+        schema: any
+      ) => (
+        <Space>
+          <Button type="primary" icon={<EditOutlined />} />
+          <Button type="primary" danger icon={<DeleteOutlined />} />
+        </Space>
+      ),
+    },
   ];
+
+  const handleToggleColumns = (checked: boolean) => {
+    setShowAdditionalColumns(checked);
+  };
 
   const tableContainerStyle = {
     color: theme["colorText"],
@@ -230,35 +162,13 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Monthly Minimum Charges",
       dataIndex: "monthlyMinimumCharges",
       key: "monthlyMinimumCharges",
-      render: (text: number, record: TariffChargesDataType) =>
-        editData[record.key] ? (
-          <ProFormDigitRange
-            fieldProps={{
-              defaultValue: text,
-              onChange: (value) =>
-                handleEditMonthlyMinimumCharges(value, record),
-            }}
-          />
-        ) : (
-          renderText(text)
-        ),
+      render: renderText,
     },
     {
-      title: "Effective Date",
+      title: "Effective Since",
       dataIndex: "effectiveDate",
       key: "effectiveDate",
-      render: (text: string | number | Date, record: TariffChargesDataType) =>
-        editData[record.key] ? (
-          <ProFormDatePicker
-            fieldProps={{
-              defaultValue: moment(text),
-              onChange: (value) =>
-                handleEditEffectiveDate(value, record as NestedDataType),
-            }}
-          />
-        ) : (
-          renderText(text)
-        ),
+      render: renderText,
     },
     ...(showAdditionalColumns
       ? [
@@ -293,7 +203,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "actions",
       fixed: "right",
       width: 100,
-      render: (_: ReactNode, entity: TariffChargesDataType) => (
+      render: (_: ReactNode, entity: TariffChargesDataType, index: number) => (
         <Space>
           <Button type="primary" icon={<EditOutlined />} />
           <Button type="primary" danger icon={<DeleteOutlined />} />
@@ -313,7 +223,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Block",
       dataIndex: "block",
       key: "block",
-      render: (text: [number, number]) => (
+      render: (text: ReactNode) => (
         <span style={{ color: theme["colorText"] }}>
           {Array.isArray(text) ? `${text[0]}-${text[1]}m³` : text}
         </span>
@@ -323,7 +233,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Rate",
       dataIndex: "rate",
       key: "rate",
-      render: (text: number) => (
+      render: (text: ReactNode) => (
         <span style={{ color: theme["colorText"] }}>RM {text}/m³</span>
       ),
     },
@@ -331,7 +241,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Effective Date",
       dataIndex: "effectiveDate",
       key: "effectiveDate",
-      render: (text: string | number | Date) => renderText(text),
+      render: renderText,
     },
     ...(showAdditionalColumns
       ? [
@@ -361,6 +271,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           },
         ]
       : []),
+    // ...
   ];
 
   return (
@@ -396,24 +307,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             rowExpandable: (record) => !!record.nestedData,
           }}
           bordered={false}
-          editable={{
-            type: "multiple",
-            onSave: async (key, record) => {
-              console.log("Save:", key, record);
-              // Perform saving logic here
-            },
-            onChange: (key, record) => {
-              console.log("Change:", key, record);
-              // Update edited data in the state
-              setEditData((prevState) => ({
-                ...prevState,
-                [key]: {
-                  ...prevState[key],
-                  ...record,
-                },
-              }));
-            },
-          }}
         />
       </div>
     </ConfigProvider>

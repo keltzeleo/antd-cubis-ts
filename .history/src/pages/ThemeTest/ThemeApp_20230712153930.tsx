@@ -2,7 +2,7 @@ import { ConfigProvider, Switch } from "antd";
 import React, { useEffect, useState } from "react";
 // import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
 import TariffChargesMaintenance from "../LibraryMaintanance/TariffChargesMaintanance";
-import TariffChargesMaintenanceCard from "../LibraryMaintanance/TariffChargesMaintananceCard";
+// import TariffChargesMaintenanceCard from "../LibraryMaintanance/TariffChargesMaintananceCard";
 // import ThemeTest from "../ThemeTest/ThemeTest";
 
 import dark from "../../tokens/dark.json";
@@ -34,7 +34,7 @@ const ThemeApp: React.FC = () => {
       </div>
       {/* <AppointmentUpdates theme={isDarkMode ? dark : light} /> */}
       <TariffChargesMaintenance theme={isDarkMode ? dark : light} />
-      <TariffChargesMaintenanceCard theme={isDarkMode ? dark : light} />
+      {/* <TariffChargesMaintenanceCard theme={isDarkMode ? dark : light} /> */}
       {/* <ThemeTest /> */}
     </ConfigProvider>
   );

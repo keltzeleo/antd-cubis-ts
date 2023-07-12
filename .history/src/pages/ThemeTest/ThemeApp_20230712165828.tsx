@@ -1,9 +1,8 @@
 import { ConfigProvider, Switch } from "antd";
 import React, { useEffect, useState } from "react";
-// import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
+import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
 import TariffChargesMaintenance from "../LibraryMaintanance/TariffChargesMaintanance";
 import TariffChargesMaintenanceCard from "../LibraryMaintanance/TariffChargesMaintananceCard";
-// import ThemeTest from "../ThemeTest/ThemeTest";
 
 import dark from "../../tokens/dark.json";
 import light from "../../tokens/light.json";
@@ -21,21 +20,21 @@ const ThemeApp: React.FC = () => {
   }, [token]);
 
   const handleThemeChange = () => {
-    setIsDarkMode(!isDarkMode);
-    setToken(isDarkMode ? { ...light } : { ...dark });
+    const newIsDarkMode = !isDarkMode;
+    setIsDarkMode(newIsDarkMode);
+    setToken(newIsDarkMode ? { ...dark } : { ...light });
   };
 
   return (
-    <ConfigProvider theme={{ token }}>
+    <ConfigProvider>
       <div style={{ display: "flex", alignItems: "center", marginBottom: 20 }}>
         <span style={{ marginRight: 10 }}>Light</span>
         <Switch checked={isDarkMode} onChange={handleThemeChange} />
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
-      {/* <AppointmentUpdates theme={isDarkMode ? dark : light} /> */}
-      <TariffChargesMaintenance theme={isDarkMode ? dark : light} />
-      <TariffChargesMaintenanceCard theme={isDarkMode ? dark : light} />
-      {/* <ThemeTest /> */}
+      <AppointmentUpdates theme={token} />
+      <TariffChargesMaintenance theme={token} />
+      <TariffChargesMaintenanceCard theme={token} />
     </ConfigProvider>
   );
 };
