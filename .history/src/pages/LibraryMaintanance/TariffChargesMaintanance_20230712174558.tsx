@@ -211,76 +211,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   );
 
   const dataSource: TariffChargesDataType[] = [
-    {
-      key: "01",
-      tariffCode: "TAR-001",
-      tariffAbbreviation: "TA",
-      monthlyMinimumCharges: 100,
-      effectiveDate: "2023-07-01",
-      createdBy: "John Doe",
-      createDate: "2023-07-01",
-      modifiedBy: "John Doe",
-      modifiedDate: "2023-07-01",
-      nestedData: [
-        {
-          key: "01",
-          status: "Applied",
-          block: [0, 10],
-          rate: 0.03,
-          effectiveDate: "04/07/2020",
-          createdBy: "John Doe",
-          createDate: "2023-07-01",
-          modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
-        },
-        {
-          key: "02",
-          status: "Applied",
-          block: [11, 20],
-          rate: 0.08,
-          effectiveDate: "04/07/2023",
-          createdBy: "John Doe",
-          createDate: "2023-07-01",
-          modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
-        },
-        {
-          key: "03",
-          status: "Pending",
-          block: [21, 100],
-          rate: 0.13,
-          effectiveDate: "04/07/2024",
-          createdBy: "John Doe",
-          createDate: "2023-07-01",
-          modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
-        },
-      ],
-    },
-    {
-      key: "02",
-      tariffCode: "TAR-002",
-      tariffAbbreviation: "TB",
-      monthlyMinimumCharges: 150,
-      effectiveDate: "2023-07-01",
-      createdBy: "Jane Smith",
-      createDate: "2023-07-01",
-      modifiedBy: "Jane Smith",
-      modifiedDate: "2023-07-01",
-      nestedData: [
-        {
-          key: "01",
-          status: "Applied",
-          block: [0, 10],
-          rate: 0.03,
-          effectiveDate: "04/07/2020",
-          createdBy: "Jane Smith",
-          createDate: "2023-07-01",
-          modifiedBy: "Jane Smith",
-          modifiedDate: "2023-07-01",
-        },
-      ],
-    },
+    // ...
   ];
 
   const tableContainerStyle = {
@@ -334,34 +265,21 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           renderText(text)
         ),
     },
-    ...(showAdditionalColumns
-      ? [
-          {
-            title: "Created By",
-            dataIndex: "createdBy",
-            key: "createdBy",
-            render: renderText,
-          },
-          {
-            title: "Create Date",
-            dataIndex: "createDate",
-            key: "createDate",
-            render: renderText,
-          },
-          {
-            title: "Modified By",
-            dataIndex: "modifiedBy",
-            key: "modifiedBy",
-            render: renderText,
-          },
-          {
-            title: "Modified Date",
-            dataIndex: "modifiedDate",
-            key: "modifiedDate",
-            render: renderText,
-          },
-        ]
-      : []),
+    {
+      title: "Nested Data",
+      dataIndex: "nestedData",
+      key: "nestedData",
+      render: (text: NestedDataType[], record: TariffChargesDataType) =>
+        editData[record.key] ? (
+          <EditableTable
+            dataSource={text}
+            handleEditRate={handleEditRate}
+            handleEditBlock={handleEditBlock}
+          />
+        ) : (
+          renderText(text)
+        ),
+    },
     {
       title: "Actions",
       key: "actions",
@@ -377,64 +295,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   ];
 
   const nestedColumns: ProColumns<NestedDataType>[] = [
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: renderText,
-    },
-    {
-      title: "Block",
-      dataIndex: "block",
-      key: "block",
-      render: (text: [number, number]) => (
-        <span style={{ color: theme["colorText"] }}>
-          {Array.isArray(text) ? `${text[0]}-${text[1]}m³` : text}
-        </span>
-      ),
-    },
-    {
-      title: "Rate",
-      dataIndex: "rate",
-      key: "rate",
-      render: (text: number) => (
-        <span style={{ color: theme["colorText"] }}>RM {text}/m³</span>
-      ),
-    },
-    {
-      title: "Effective Date",
-      dataIndex: "effectiveDate",
-      key: "effectiveDate",
-      render: (text: string | number | Date) => renderText(text),
-    },
-    ...(showAdditionalColumns
-      ? [
-          {
-            title: "Created By",
-            dataIndex: "createdBy",
-            key: "createdBy",
-            render: renderText,
-          },
-          {
-            title: "Create Date",
-            dataIndex: "createDate",
-            key: "createDate",
-            render: renderText,
-          },
-          {
-            title: "Modified By",
-            dataIndex: "modifiedBy",
-            key: "modifiedBy",
-            render: renderText,
-          },
-          {
-            title: "Modified Date",
-            dataIndex: "modifiedDate",
-            key: "modifiedDate",
-            render: renderText,
-          },
-        ]
-      : []),
+    // ...
   ];
 
   return (
