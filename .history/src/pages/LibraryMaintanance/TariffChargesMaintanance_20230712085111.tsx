@@ -1,14 +1,6 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
-import {
-  Button,
-  Checkbox,
-  DatePicker,
-  Form,
-  InputNumber,
-  Space,
-  message,
-} from "antd";
+import { Button, Checkbox, Space } from "antd";
 import React, { ReactNode, useState } from "react";
 
 interface Theme {
@@ -18,10 +10,9 @@ interface Theme {
 interface NestedDataType {
   key: string;
   status: string;
-  block: [moment.Moment, moment.Moment] | null;
+  block: string;
   rate: string;
-  effectiveDate: moment.Moment | null;
-  isEditing?: boolean;
+  effectiveDate: string;
   createdBy: string;
   createDate: string;
   modifiedBy: string;
@@ -49,8 +40,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   theme,
 }) => {
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
-
-  const [form] = Form.useForm();
 
   const dataSource: TariffChargesDataType[] = [
     {
@@ -140,30 +129,8 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   };
 
   const handleEdit = (record: NestedDataType) => {
-    form.setFieldsValue({ ...record }); // set initial form values
-    // create a new copy of the dataSource where only the editing row's isEditing property is true
-    setDataSource((dataSource) =>
-      dataSource.map((item) =>
-        item.key === record.key
-          ? { ...item, isEditing: true }
-          : { ...item, isEditing: false }
-      )
-    );
-  };
-
-  const handleSave = (record: NestedDataType) => {
-    form.validateFields().then((values) => {
-      // Do your API calls here with values
-      // reset isEditing state
-      setDataSource((dataSource) =>
-        dataSource.map((item) =>
-          item.key === record.key
-            ? { ...item, ...values, isEditing: false }
-            : item
-        )
-      );
-      message.success("Record updated successfully.");
-    });
+    console.log("Edit record", record);
+    // Handle edit logic here
   };
 
   const handleDelete = (record: NestedDataType) => {
@@ -207,54 +174,25 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Block",
       dataIndex: "block",
       key: "block",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item name="block">
-              <DatePicker.RangePicker />
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
+      render: (text: ReactNode) => (
+        <span style={{ color: theme.colorText }}>{text}</span>
+      ),
     },
     {
       title: "Rate",
       dataIndex: "rate",
       key: "rate",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item
-              name="rate"
-              rules={[
-                {
-                  pattern: /^\d+(\.\d{1,2})?$/,
-                  message: "Please input valid rate.",
-                },
-              ]}
-            >
-              <InputNumber min={0} step={0.01} precision={2} />
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
+      render: (text: ReactNode) => (
+        <span style={{ color: theme.colorText }}>{text}</span>
+      ),
     },
     {
       title: "Effective Date",
       dataIndex: "effectiveDate",
       key: "effectiveDate",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item name="effectiveDate">
-              <DatePicker />
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
+      render: (text: ReactNode) => (
+        <span style={{ color: theme.colorText }}>{text}</span>
+      ),
     },
     ...(showAdditionalColumns
       ? [
@@ -262,25 +200,33 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Created By",
             dataIndex: "createdBy",
             key: "createdBy",
-            render: renderText,
+            render: (text: ReactNode) => (
+              <span style={{ color: theme.colorText }}>{text}</span>
+            ),
           },
           {
             title: "Create Date",
             dataIndex: "createDate",
             key: "createDate",
-            render: renderText,
+            render: (text: ReactNode) => (
+              <span style={{ color: theme.colorText }}>{text}</span>
+            ),
           },
           {
             title: "Modified By",
             dataIndex: "modifiedBy",
             key: "modifiedBy",
-            render: renderText,
+            render: (text: ReactNode) => (
+              <span style={{ color: theme.colorText }}>{text}</span>
+            ),
           },
           {
             title: "Modified Date",
             dataIndex: "modifiedDate",
             key: "modifiedDate",
-            render: renderText,
+            render: (text: ReactNode) => (
+              <span style={{ color: theme.colorText }}>{text}</span>
+            ),
           },
         ]
       : []),
@@ -309,39 +255,37 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   ];
 
   return (
-    <Form form={form} component={false}>
-      <ProTable<TariffChargesDataType>
-        columns={columns}
-        dataSource={dataSource}
-        rowKey="tariffCode"
-        search={false}
-        headerTitle="Tariff Charges Maintenance"
-        toolbar={{
-          actions: [
-            <Checkbox
-              key="toggleColumns"
-              checked={showAdditionalColumns}
-              onChange={(e) => handleToggleColumns(e.target.checked)}
-            >
-              Show Additional Columns
-            </Checkbox>,
-          ],
-        }}
-        expandable={{
-          expandedRowRender: (record) => (
-            <ProTable<NestedDataType>
-              columns={nestedColumns}
-              dataSource={record.nestedData}
-              rowKey="key"
-              search={false}
-              pagination={false}
-            />
-          ),
-          rowExpandable: (record) => !!record.nestedData,
-        }}
-        bordered={false}
-      />
-    </Form>
+    <ProTable<TariffChargesDataType>
+      columns={columns}
+      dataSource={dataSource}
+      rowKey="tariffCode"
+      search={false}
+      headerTitle="Tariff Charges Maintenance"
+      toolbar={{
+        actions: [
+          <Checkbox
+            key="toggleColumns"
+            checked={showAdditionalColumns}
+            onChange={(e) => handleToggleColumns(e.target.checked)}
+          >
+            Show Additional Columns
+          </Checkbox>,
+        ],
+      }}
+      expandable={{
+        expandedRowRender: (record) => (
+          <ProTable<NestedDataType>
+            columns={nestedColumns}
+            dataSource={record.nestedData}
+            rowKey="key"
+            search={false}
+            pagination={false}
+          />
+        ),
+        rowExpandable: (record) => !!record.nestedData,
+      }}
+      bordered={false}
+    />
   );
 };
 
