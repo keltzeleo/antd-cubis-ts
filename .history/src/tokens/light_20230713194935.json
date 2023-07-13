@@ -231,7 +231,7 @@
   "colorFillSecondary": "rgba(20, 29, 29, 0.15)",
   "colorFillTertiary": "rgba(20, 29, 29, 0.04)",
   "colorFillQuaternary": "rgba(20, 29, 29, 0.02)",
-  "colorBgContainer": "#ffffff",
+  "colorBgContainer": "#00000",
   "colorBgLayout": "#f5f5f5",
   "colorBgElevated": "#f3f6f9",
   "colorBgSpotlight": "rgba(20, 29, 29, 0.85)",

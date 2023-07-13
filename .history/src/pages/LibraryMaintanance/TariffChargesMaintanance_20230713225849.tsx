@@ -161,52 +161,27 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
   const handleSave = async (key: React.Key) => {
     try {
-      await form.validateFields();
+      const row = await form.validateFields();
 
+      // Update the record and set isEditing to false
       setDataSource((prevDataSource) =>
-        prevDataSource.map((record) => {
-          if (record.key === key) {
-            const updatedRecord = {
-              ...record,
-              isEditing: false,
-              nestedData: record.nestedData?.map((nestedItem) => ({
-                ...nestedItem,
-                isEditing: false,
-              })),
-            };
-
-            return updatedRecord;
-          }
-
-          return record;
-        })
+        prevDataSource.map((record) =>
+          record.key === key ? { ...record, ...row, isEditing: false } : record
+        )
       );
     } catch (err) {
       console.log("Save error:", err);
     } finally {
-      setIsEditing(false);
+      setIsEditing(false); // Set isEditing to false after saving
     }
   };
 
   const handleCancel = (key: React.Key) => {
     setDataSource((prevDataSource) =>
-      prevDataSource.map((record) => {
-        if (record.key === key) {
-          const originalRecord = dataSource.find((item) => item.key === key);
-          return {
-            ...originalRecord!,
-            isEditing: false,
-            nestedData: originalRecord!.nestedData?.map((nestedItem) => ({
-              ...nestedItem,
-              isEditing: false,
-            })),
-          };
-        }
-
-        return record;
-      })
+      prevDataSource.map((record) =>
+        record.key === key ? { ...record, isEditing: false } : record
+      )
     );
-
     setIsEditing(false);
   };
 

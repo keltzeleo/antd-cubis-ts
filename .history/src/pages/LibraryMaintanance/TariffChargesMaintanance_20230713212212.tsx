@@ -1,12 +1,8 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import {
-  ProFormDatePicker,
-  ProFormDigit,
-  ProFormDigitRange,
-} from "@ant-design/pro-form";
+import { ProFormDigit, ProFormDigitRange } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
-import { Button, Checkbox, Form, FormInstance, Space } from "antd";
-import React, { ReactNode, useRef, useState } from "react";
+import { Button, Checkbox, DatePicker, Form, Select, Space } from "antd";
+import React, { ReactNode, useState } from "react";
 
 interface Theme {
   [key: string]: string;
@@ -15,9 +11,9 @@ interface Theme {
 interface NestedDataType {
   key: React.Key;
   status: string;
-  block?: [number, number] | null;
-  rate?: number;
-  effectiveDate?: string;
+  block: [number, number] | null;
+  rate: number;
+  effectiveDate: string;
   isEditing?: boolean;
   createdBy: string;
   createDate: string;
@@ -29,8 +25,8 @@ interface TariffChargesDataType {
   key: React.Key;
   tariffCode: string;
   tariffAbbreviation: string;
-  monthlyMinimumCharges?: number;
-  effectiveDate?: string;
+  monthlyMinimumCharges: number;
+  effectiveDate: string;
   isEditing?: boolean;
   createdBy: string;
   createDate: string;
@@ -47,7 +43,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   theme,
 }) => {
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
-  const formRef = useRef<FormInstance<any> | undefined>();
   const [form] = Form.useForm();
   const [dataSource, setDataSource] = useState<TariffChargesDataType[]>([
     {
@@ -122,8 +117,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     },
   ]);
 
-  const [isEditing, setIsEditing] = useState(false); // Add the isEditing state variable here
-
   const handleToggleColumns = (checked: boolean) => {
     setShowAdditionalColumns(checked);
   };
@@ -132,82 +125,53 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     nestedRecord: NestedDataType | undefined,
     mainRecord: TariffChargesDataType
   ) => {
-    formRef.current?.setFieldsValue({ ...nestedRecord });
-    setDataSource((prevDataSource) =>
-      prevDataSource.map((item) => ({
-        ...item,
-        isEditing: item.key === mainRecord.key,
-        nestedData: item.nestedData?.map((nestedItem) => ({
-          ...nestedItem,
-          isEditing: item.key === mainRecord.key,
-        })),
-      }))
-    );
-    setIsEditing(true);
+    if (nestedRecord) {
+      form.setFieldsValue({ ...nestedRecord });
+      setDataSource((prevDataSource) =>
+        prevDataSource.map((item) =>
+          item.key === mainRecord.key
+            ? {
+                ...item,
+                nestedData: item.nestedData?.map((nestedItem) =>
+                  nestedItem.key === nestedRecord.key
+                    ? { ...nestedItem, isEditing: true }
+                    : { ...nestedItem, isEditing: false }
+                ),
+              }
+            : item
+        )
+      );
+    } else {
+      form.setFieldsValue({ ...mainRecord });
+      setDataSource((prevDataSource) =>
+        prevDataSource.map((item) =>
+          item.key === mainRecord.key
+            ? { ...item, isEditing: true }
+            : { ...item, isEditing: false }
+        )
+      );
+    }
   };
 
   const handleDelete = (
     nestedRecord: NestedDataType | undefined,
-    mainRecord: TariffChargesDataType | undefined
+    mainRecord: TariffChargesDataType
   ) => {
-    if (nestedRecord && mainRecord) {
+    if (nestedRecord) {
       console.log("Delete nested record", nestedRecord);
       // Handle nested record delete logic here
-    } else if (mainRecord) {
+    } else {
       console.log("Delete main record", mainRecord);
       // Handle main record delete logic here
     }
   };
 
-  const handleSave = async (key: React.Key) => {
-    try {
-      await form.validateFields();
-
-      setDataSource((prevDataSource) =>
-        prevDataSource.map((record) => {
-          if (record.key === key) {
-            const updatedRecord = {
-              ...record,
-              isEditing: false,
-              nestedData: record.nestedData?.map((nestedItem) => ({
-                ...nestedItem,
-                isEditing: false,
-              })),
-            };
-
-            return updatedRecord;
-          }
-
-          return record;
-        })
-      );
-    } catch (err) {
-      console.log("Save error:", err);
-    } finally {
-      setIsEditing(false);
-    }
-  };
-
-  const handleCancel = (key: React.Key) => {
-    setDataSource((prevDataSource) =>
-      prevDataSource.map((record) => {
-        if (record.key === key) {
-          const originalRecord = dataSource.find((item) => item.key === key);
-          return {
-            ...originalRecord!,
-            isEditing: false,
-            nestedData: originalRecord!.nestedData?.map((nestedItem) => ({
-              ...nestedItem,
-              isEditing: false,
-            })),
-          };
-        }
-
-        return record;
-      })
+  const findMainRecord = (
+    record: NestedDataType
+  ): TariffChargesDataType | undefined => {
+    return dataSource.find((item) =>
+      item.nestedData?.find((nestedItem) => nestedItem.key === record.key)
     );
-
-    setIsEditing(false);
   };
 
   const renderText = (text: ReactNode) => (
@@ -228,9 +192,21 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "tariffAbbreviation",
       readonly: true,
 
-      render: renderText,
+      render: (text, record) => {
+        if (record.isEditing) {
+          return (
+            <Form.Item name={["tariffAbbreviation"]}>
+              <Select>
+                <Select.Option value="TA">TA</Select.Option>
+                <Select.Option value="TB">TB</Select.Option>
+                <Select.Option value="TC">TC</Select.Option>
+              </Select>
+            </Form.Item>
+          );
+        }
+        return renderText(text);
+      },
     },
-
     {
       title: "Effective Date",
       dataIndex: "effectiveDate",
@@ -238,11 +214,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       render: (text, record) => {
         if (record.isEditing) {
           return (
-            <Form form={formRef.current} component={false}>
-              <Form.Item name={["effectiveDate"]}>
-                <ProFormDatePicker />
-              </Form.Item>
-            </Form>
+            <Form.Item name={["effectiveDate"]}>
+              <DatePicker />
+            </Form.Item>
           );
         }
         return renderText(text);
@@ -266,7 +240,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         return renderText(text);
       },
     },
-
     ...(showAdditionalColumns
       ? [
           {
@@ -300,49 +273,30 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "actions",
       fixed: "right",
       width: 120,
-      render: (_, record) => {
-        const hasNestedRecords =
-          record.nestedData && record.nestedData.length > 0;
-
-        if (record.isEditing) {
-          return (
-            <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
-              <Button type="primary" onClick={() => handleSave(record.key)}>
-                Save
-              </Button>
-              <Button onClick={() => handleCancel(record.key)}>Cancel</Button>
-            </Space>
-          );
-        }
-
-        return (
-          <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
-            {hasNestedRecords && (
-              <Button
-                type="primary"
-                icon={<EditOutlined />}
-                onClick={() =>
-                  handleEdit(undefined, record as TariffChargesDataType)
-                }
-              >
-                Edit
-              </Button>
-            )}
-            {hasNestedRecords && (
-              <Button
-                type="primary"
-                danger
-                icon={<DeleteOutlined />}
-                onClick={() =>
-                  handleDelete(undefined, record as TariffChargesDataType)
-                }
-              >
-                Delete
-              </Button>
-            )}
-          </Space>
-        );
-      },
+      render: (_, record) => (
+        <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
+          {record.nestedData?.map((nestedRecord) => (
+            <Button
+              type="primary"
+              icon={<EditOutlined />}
+              onClick={() => handleEdit(nestedRecord, findMainRecord(record))}
+            >
+              Edit
+            </Button>
+          ))}
+          {record.nestedData?.map((nestedRecord) => (
+            <Button
+              key={nestedRecord.key}
+              type="primary"
+              danger
+              icon={<DeleteOutlined />}
+              onClick={() => handleDelete(nestedRecord, record)}
+            >
+              Delete
+            </Button>
+          ))}
+        </Space>
+      ),
     },
   ];
 
@@ -360,7 +314,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       render: (text: ReactNode, record: NestedDataType) => {
         if (record.isEditing) {
           return (
-            <Form.Item name={["block"]} initialValue={record.block}>
+            <Form.Item name={["block"]}>
               <ProFormDigitRange fieldProps={{ precision: 0 }} />
             </Form.Item>
           );
@@ -381,7 +335,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           return (
             <Form.Item
               name={["rate"]}
-              initialValue={record.rate}
               rules={[
                 {
                   pattern: /^\d+(\.\d{1,2})?$/,
@@ -408,7 +361,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         if (record.isEditing) {
           return (
             <Form.Item name={["effectiveDate"]}>
-              <ProFormDatePicker />
+              <DatePicker />
             </Form.Item>
           );
         }
@@ -443,49 +396,44 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           },
         ]
       : []),
-    // {
-    //   title: "Actions",
-    //   key: "actions",
-    //   fixed: "right",
-    //   width: 110,
-    //   render: (_, record) => {
-    //     if (record.isEditing) {
-    //       return (
-    //         <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
-    //           <Button type="primary" onClick={() => handleSave(record.key)}>
-    //             Save
-    //           </Button>
-    //           <Button onClick={() => handleCancel(record.key)}>Cancel</Button>
-    //         </Space>
-    //       );
-    //     }
-
-    //     return (
-    //       <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
-    //         <Button
-    //           type="primary"
-    //           icon={<EditOutlined />}
-    //           onClick={() => handleEdit(record, record)}
-    //         >
-    //           Edit
-    //         </Button>
-    //         <Button
-    //           type="primary"
-    //           danger
-    //           icon={<DeleteOutlined />}
-    //           onClick={() => handleDelete(undefined, record)}
-    //         >
-    //           Delete
-    //         </Button>
-    //       </Space>
-    //     );
-    //   },
-    // },
+    {
+      title: "Actions",
+      key: "actions",
+      fixed: "right",
+      width: 110,
+      render: (_, record) => (
+        <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={() =>
+              handleEdit(
+                record,
+                dataSource.find((item) => item.nestedData?.includes(record)) ||
+                  {}
+              )
+            }
+          />
+          <Button
+            type="primary"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={() =>
+              handleDelete(
+                record,
+                dataSource.find((item) => item.nestedData?.includes(record)) ||
+                  {}
+              )
+            }
+          />
+        </Space>
+      ),
+    },
   ];
 
   return (
     <>
-      <Form form={formRef.current} component={false}>
+      <Form form={form} component={false}>
         <ProTable<TariffChargesDataType>
           columns={columns}
           dataSource={dataSource}

@@ -190,23 +190,10 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
   const handleCancel = (key: React.Key) => {
     setDataSource((prevDataSource) =>
-      prevDataSource.map((record) => {
-        if (record.key === key) {
-          const originalRecord = dataSource.find((item) => item.key === key);
-          return {
-            ...originalRecord!,
-            isEditing: false,
-            nestedData: originalRecord!.nestedData?.map((nestedItem) => ({
-              ...nestedItem,
-              isEditing: false,
-            })),
-          };
-        }
-
-        return record;
-      })
+      prevDataSource.map((record) =>
+        record.key === key ? { ...record, isEditing: false } : record
+      )
     );
-
     setIsEditing(false);
   };
 

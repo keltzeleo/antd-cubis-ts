@@ -143,71 +143,36 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         })),
       }))
     );
-    setIsEditing(true);
-  };
-
-  const handleDelete = (
-    nestedRecord: NestedDataType | undefined,
-    mainRecord: TariffChargesDataType | undefined
-  ) => {
-    if (nestedRecord && mainRecord) {
-      console.log("Delete nested record", nestedRecord);
-      // Handle nested record delete logic here
-    } else if (mainRecord) {
-      console.log("Delete main record", mainRecord);
-      // Handle main record delete logic here
-    }
   };
 
   const handleSave = async (key: React.Key) => {
     try {
-      await form.validateFields();
+      const row = await form.validateFields();
 
+      // Update the record and set isEditing to false
       setDataSource((prevDataSource) =>
-        prevDataSource.map((record) => {
-          if (record.key === key) {
-            const updatedRecord = {
-              ...record,
-              isEditing: false,
-              nestedData: record.nestedData?.map((nestedItem) => ({
-                ...nestedItem,
-                isEditing: false,
-              })),
-            };
-
-            return updatedRecord;
-          }
-
-          return record;
-        })
+        prevDataSource.map((record) =>
+          record.key === key ? { ...record, ...row, isEditing: false } : record
+        )
       );
     } catch (err) {
       console.log("Save error:", err);
     } finally {
-      setIsEditing(false);
+      setIsEditing(false); // Set isEditing to false after saving
     }
   };
 
-  const handleCancel = (key: React.Key) => {
-    setDataSource((prevDataSource) =>
-      prevDataSource.map((record) => {
-        if (record.key === key) {
-          const originalRecord = dataSource.find((item) => item.key === key);
-          return {
-            ...originalRecord!,
-            isEditing: false,
-            nestedData: originalRecord!.nestedData?.map((nestedItem) => ({
-              ...nestedItem,
-              isEditing: false,
-            })),
-          };
-        }
-
-        return record;
-      })
-    );
-
-    setIsEditing(false);
+  const handleDelete = (
+    nestedRecord: NestedDataType | undefined,
+    mainRecord: TariffChargesDataType
+  ) => {
+    if (nestedRecord) {
+      console.log("Delete nested record", nestedRecord);
+      // Handle nested record delete logic here
+    } else {
+      console.log("Delete main record", mainRecord);
+      // Handle main record delete logic here
+    }
   };
 
   const renderText = (text: ReactNode) => (
@@ -304,26 +269,13 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         const hasNestedRecords =
           record.nestedData && record.nestedData.length > 0;
 
-        if (record.isEditing) {
-          return (
-            <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
-              <Button type="primary" onClick={() => handleSave(record.key)}>
-                Save
-              </Button>
-              <Button onClick={() => handleCancel(record.key)}>Cancel</Button>
-            </Space>
-          );
-        }
-
         return (
           <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
             {hasNestedRecords && (
               <Button
                 type="primary"
                 icon={<EditOutlined />}
-                onClick={() =>
-                  handleEdit(undefined, record as TariffChargesDataType)
-                }
+                onClick={() => handleEdit(undefined, record)}
               >
                 Edit
               </Button>
@@ -333,9 +285,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                 type="primary"
                 danger
                 icon={<DeleteOutlined />}
-                onClick={() =>
-                  handleDelete(undefined, record as TariffChargesDataType)
-                }
+                onClick={() => handleDelete(undefined, record)}
               >
                 Delete
               </Button>
@@ -443,44 +393,49 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           },
         ]
       : []),
-    // {
-    //   title: "Actions",
-    //   key: "actions",
-    //   fixed: "right",
-    //   width: 110,
-    //   render: (_, record) => {
-    //     if (record.isEditing) {
-    //       return (
-    //         <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
-    //           <Button type="primary" onClick={() => handleSave(record.key)}>
-    //             Save
-    //           </Button>
-    //           <Button onClick={() => handleCancel(record.key)}>Cancel</Button>
-    //         </Space>
-    //       );
-    //     }
-
-    //     return (
-    //       <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
-    //         <Button
-    //           type="primary"
-    //           icon={<EditOutlined />}
-    //           onClick={() => handleEdit(record, record)}
-    //         >
-    //           Edit
-    //         </Button>
-    //         <Button
-    //           type="primary"
-    //           danger
-    //           icon={<DeleteOutlined />}
-    //           onClick={() => handleDelete(undefined, record)}
-    //         >
-    //           Delete
-    //         </Button>
-    //       </Space>
-    //     );
-    //   },
-    // },
+    {
+      title: "Actions",
+      key: "actions",
+      fixed: "right",
+      width: 110,
+      render: (_, record) => (
+        <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
+          <Button
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={() =>
+              handleEdit(
+                record,
+                dataSource.find((item) =>
+                  item.nestedData?.find(
+                    (nestedItem) => nestedItem.key === record.key
+                  )
+                ) || ({} as TariffChargesDataType)
+              )
+            }
+          >
+            Edit
+          </Button>
+          <Button
+            type="primary"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={() =>
+              handleDelete(
+                record,
+                dataSource.find((item) =>
+                  item.nestedData?.find(
+                    (nestedItem) => nestedItem.key === record.key
+                  )
+                ) || ({} as TariffChargesDataType)
+              )
+            }
+          >
+            Delete
+          </Button>
+        </Space>
+      ),
+    },
   ];
 
   return (

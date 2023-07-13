@@ -194,9 +194,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         if (record.key === key) {
           const originalRecord = dataSource.find((item) => item.key === key);
           return {
-            ...originalRecord!,
+            ...originalRecord,
             isEditing: false,
-            nestedData: originalRecord!.nestedData?.map((nestedItem) => ({
+            nestedData: originalRecord?.nestedData?.map((nestedItem) => ({
               ...nestedItem,
               isEditing: false,
             })),

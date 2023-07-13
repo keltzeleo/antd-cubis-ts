@@ -161,19 +161,23 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
   const handleSave = async (key: React.Key) => {
     try {
-      await form.validateFields();
+      const row = await form.validateFields();
 
       setDataSource((prevDataSource) =>
         prevDataSource.map((record) => {
           if (record.key === key) {
-            const updatedRecord = {
-              ...record,
-              isEditing: false,
-              nestedData: record.nestedData?.map((nestedItem) => ({
-                ...nestedItem,
-                isEditing: false,
-              })),
-            };
+            const updatedRecord = { ...record, ...row, isEditing: false };
+
+            if (record.nestedData) {
+              const updatedNestedData = record.nestedData.map((nestedItem) => {
+                if (nestedItem.isEditing) {
+                  return { ...nestedItem, ...row };
+                }
+                return nestedItem;
+              });
+
+              return { ...updatedRecord, nestedData: updatedNestedData };
+            }
 
             return updatedRecord;
           }
@@ -190,23 +194,10 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
   const handleCancel = (key: React.Key) => {
     setDataSource((prevDataSource) =>
-      prevDataSource.map((record) => {
-        if (record.key === key) {
-          const originalRecord = dataSource.find((item) => item.key === key);
-          return {
-            ...originalRecord!,
-            isEditing: false,
-            nestedData: originalRecord!.nestedData?.map((nestedItem) => ({
-              ...nestedItem,
-              isEditing: false,
-            })),
-          };
-        }
-
-        return record;
-      })
+      prevDataSource.map((record) =>
+        record.key === key ? { ...record, isEditing: false } : record
+      )
     );
-
     setIsEditing(false);
   };
 
