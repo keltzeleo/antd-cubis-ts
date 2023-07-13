@@ -1,3 +1,4 @@
+// import { theme } from "antd";
 import React from "react";
 import ReactDOM from "react-dom";
 // import light from "./tokens/light.json"
@@ -41,7 +42,7 @@ ReactDOM.render(
     {/* <AppointmentUpdates /> */}
     {/*  <ThemeTest />*/}
     {/* <DragDropArea2 /> */}
-    <ThemeApp />
+    <ThemeApp theme={light} />
     {/* <IWillFollowYou errorMessage="I Will Follow You Message Sample!" /> */}
     {/* </div> */}
     {/* <CustomerInfo /> */}

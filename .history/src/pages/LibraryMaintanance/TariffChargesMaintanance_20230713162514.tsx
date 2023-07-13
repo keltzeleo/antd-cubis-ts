@@ -1,15 +1,7 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ProFormDigit } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
-import {
-  Button,
-  Checkbox,
-  DatePicker,
-  Form,
-  Select,
-  Space,
-  message,
-} from "antd";
+import { Button, Checkbox, DatePicker, Form, Space, message } from "antd";
 import React, { ReactNode, useState } from "react";
 
 interface Theme {

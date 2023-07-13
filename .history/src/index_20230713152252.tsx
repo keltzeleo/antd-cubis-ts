@@ -1,3 +1,4 @@
+import { theme } from "antd";
 import React from "react";
 import ReactDOM from "react-dom";
 // import light from "./tokens/light.json"
@@ -15,7 +16,7 @@ import ThemeApp from "./pages/ThemeTest/ThemeApp";
 // import CustomerInfo from "./pages/Forms/CustomerInfo";
 // import MyForm from "./pages/MyForm";
 
-// const { useToken } = theme;
+const { useToken } = theme;
 
 ReactDOM.render(
   <React.StrictMode>

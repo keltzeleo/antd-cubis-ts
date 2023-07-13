@@ -1,3 +1,4 @@
+// import { theme } from "antd";
 import React from "react";
 import ReactDOM from "react-dom";
 // import light from "./tokens/light.json"
@@ -5,6 +6,7 @@ import ReactDOM from "react-dom";
 
 //import "./index.css";
 import ThemeApp from "./pages/ThemeTest/ThemeApp";
+import light from "./tokens/light.json";
 // import App from "./App";
 //import ThemeTest from "./pages/ThemeTest/ThemeTest";
 //import "./customDarkTheme.css";
@@ -41,7 +43,7 @@ ReactDOM.render(
     {/* <AppointmentUpdates /> */}
     {/*  <ThemeTest />*/}
     {/* <DragDropArea2 /> */}
-    <ThemeApp />
+    <ThemeApp theme={light} />
     {/* <IWillFollowYou errorMessage="I Will Follow You Message Sample!" /> */}
     {/* </div> */}
     {/* <CustomerInfo /> */}

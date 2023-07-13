@@ -1,16 +1,10 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ProFormDigit } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
-import {
-  Button,
-  Checkbox,
-  DatePicker,
-  Form,
-  Select,
-  Space,
-  message,
-} from "antd";
+import { Button, Checkbox, DatePicker, Form, Space, message } from "antd";
 import React, { ReactNode, useState } from "react";
+
+import { ConfigProvider } from "antd";
 
 interface Theme {
   [key: string]: string;
@@ -36,6 +30,7 @@ interface TariffChargesDataType {
   monthlyMinimumCharges: number;
   effectiveDate: string;
   isEditing?: boolean;
+
   createdBy: string;
   createDate: string;
   modifiedBy: string;
@@ -176,46 +171,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       dataIndex: "tariffCode",
       key: "tariffCode",
       render: renderText,
-    },
-    {
-      title: "Tariff Abbreviation",
-      dataIndex: "tariffAbbreviation",
-      key: "tariffAbbreviation",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item
-              name={["tariffAbbreviation"]}
-              rules={[{ required: true }]}
-            >
-              <Select>
-                <Select.Option value="TA">TA</Select.Option>
-                <Select.Option value="TB">TB</Select.Option>
-                <Select.Option value="TC">TC</Select.Option>
-              </Select>
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
-    },
-    {
-      title: "Minimum Monthly Charges",
-      dataIndex: "monthlyMinimumCharges",
-      key: "monthlyMinimumCharges",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item
-              name={["monthlyMinimumCharges"]}
-              rules={[{ required: true }]}
-            >
-              <ProFormDigit fieldProps={{ precision: 2 }} />
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
     },
     {
       title: "Effective Date",
@@ -401,39 +356,41 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   ];
 
   return (
-    <Form form={form} component={false}>
-      <ProTable<TariffChargesDataType>
-        columns={columns}
-        dataSource={dataSource}
-        rowKey="tariffCode"
-        search={false}
-        headerTitle="Tariff Charges Maintenance"
-        toolbar={{
-          actions: [
-            <Checkbox
-              key="toggleColumns"
-              checked={showAdditionalColumns}
-              onChange={(e) => handleToggleColumns(e.target.checked)}
-            >
-              Show Additional Columns
-            </Checkbox>,
-          ],
-        }}
-        expandable={{
-          expandedRowRender: (record) => (
-            <ProTable<NestedDataType>
-              columns={nestedColumns}
-              dataSource={record.nestedData}
-              rowKey="key"
-              search={false}
-              pagination={false}
-            />
-          ),
-          rowExpandable: (record) => !!record.nestedData,
-        }}
-        bordered={false}
-      />
-    </Form>
+    <ConfigProvider theme={{ ...theme }}>
+      <Form form={form} component={false}>
+        <ProTable<TariffChargesDataType>
+          columns={columns}
+          dataSource={dataSource}
+          rowKey="tariffCode"
+          search={false}
+          headerTitle="Tariff Charges Maintenance"
+          toolbar={{
+            actions: [
+              <Checkbox
+                key="toggleColumns"
+                checked={showAdditionalColumns}
+                onChange={(e) => handleToggleColumns(e.target.checked)}
+              >
+                Show Additional Columns
+              </Checkbox>,
+            ],
+          }}
+          expandable={{
+            expandedRowRender: (record) => (
+              <ProTable<NestedDataType>
+                columns={nestedColumns}
+                dataSource={record.nestedData}
+                rowKey="key"
+                search={false}
+                pagination={false}
+              />
+            ),
+            rowExpandable: (record) => !!record.nestedData,
+          }}
+          bordered={false}
+        />
+      </Form>
+    </ConfigProvider>
   );
 };
 

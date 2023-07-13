@@ -1,15 +1,7 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ProFormDigit } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
-import {
-  Button,
-  Checkbox,
-  DatePicker,
-  Form,
-  Select,
-  Space,
-  message,
-} from "antd";
+import { Button, Checkbox, DatePicker, Form, Space, message } from "antd";
 import React, { ReactNode, useState } from "react";
 
 interface Theme {
@@ -36,6 +28,7 @@ interface TariffChargesDataType {
   monthlyMinimumCharges: number;
   effectiveDate: string;
   isEditing?: boolean;
+
   createdBy: string;
   createDate: string;
   modifiedBy: string;
@@ -178,46 +171,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       render: renderText,
     },
     {
-      title: "Tariff Abbreviation",
-      dataIndex: "tariffAbbreviation",
-      key: "tariffAbbreviation",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item
-              name={["tariffAbbreviation"]}
-              rules={[{ required: true }]}
-            >
-              <Select>
-                <Select.Option value="TA">TA</Select.Option>
-                <Select.Option value="TB">TB</Select.Option>
-                <Select.Option value="TC">TC</Select.Option>
-              </Select>
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
-    },
-    {
-      title: "Minimum Monthly Charges",
-      dataIndex: "monthlyMinimumCharges",
-      key: "monthlyMinimumCharges",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item
-              name={["monthlyMinimumCharges"]}
-              rules={[{ required: true }]}
-            >
-              <ProFormDigit fieldProps={{ precision: 2 }} />
-            </Form.Item>
-          );
-        }
-        return renderText(text);
-      },
-    },
-    {
       title: "Effective Date",
       dataIndex: "effectiveDate",
       key: "effectiveDate",
@@ -239,31 +192,24 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Created By",
             dataIndex: "createdBy",
             key: "createdBy",
-            readonly: true,
             render: renderText,
           },
           {
             title: "Create Date",
             dataIndex: "createDate",
             key: "createDate",
-            readonly: true,
-
             render: renderText,
           },
           {
             title: "Modified By",
             dataIndex: "modifiedBy",
             key: "modifiedBy",
-            readonly: true,
-
             render: renderText,
           },
           {
             title: "Modified Date",
             dataIndex: "modifiedDate",
             key: "modifiedDate",
-            readonly: true,
-
             render: renderText,
           },
         ]
@@ -346,32 +292,24 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             title: "Created By",
             dataIndex: "createdBy",
             key: "createdBy",
-            readonly: true,
-
             render: renderText,
           },
           {
             title: "Create Date",
             dataIndex: "createDate",
             key: "createDate",
-            readonly: true,
-
             render: renderText,
           },
           {
             title: "Modified By",
             dataIndex: "modifiedBy",
             key: "modifiedBy",
-            readonly: true,
-
             render: renderText,
           },
           {
             title: "Modified Date",
             dataIndex: "modifiedDate",
             key: "modifiedDate",
-            readonly: true,
-
             render: renderText,
           },
         ]
