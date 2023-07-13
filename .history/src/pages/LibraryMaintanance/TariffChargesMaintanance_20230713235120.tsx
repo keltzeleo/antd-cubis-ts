@@ -146,11 +146,16 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     );
     setIsEditing(true);
 
-    // Expand the main record in the table
-    setExpandedRowKeys((prevExpandedRowKeys) => [
-      ...prevExpandedRowKeys,
-      mainRecord.key,
-    ]);
+    // Expand or collapse the main record in the table based on its previous state
+    setExpandedRowKeys((prevExpandedRowKeys) => {
+      if (prevExpandedRowKeys.includes(mainRecord.key)) {
+        // Collapse the main record if it's already expanded
+        return prevExpandedRowKeys.filter((key) => key !== mainRecord.key);
+      } else {
+        // Expand the main record if it's collapsed
+        return [...prevExpandedRowKeys, mainRecord.key];
+      }
+    });
   };
 
   const handleDelete = (

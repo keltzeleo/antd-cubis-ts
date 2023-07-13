@@ -1,4 +1,4 @@
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import {
   ProFormDatePicker,
   ProFormDigit,
@@ -123,7 +123,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   ]);
 
   const [isEditing, setIsEditing] = useState(false); // Add the isEditing state variable here
-  const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
 
   const handleToggleColumns = (checked: boolean) => {
     setShowAdditionalColumns(checked);
@@ -146,12 +145,34 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     );
     setIsEditing(true);
 
-    // Expand the main record in the table
-    setExpandedRowKeys((prevExpandedRowKeys) => [
-      ...prevExpandedRowKeys,
-      mainRecord.key,
-    ]);
+    // Expand the nested table for the corresponding main record
+    const expandedRowKeys = expandedRowKeysRef.current;
+    if (!expandedRowKeys.includes(mainRecord.key)) {
+      expandedRowKeysRef.current = [...expandedRowKeys, mainRecord.key];
+    }
   };
+
+  // ...
+
+  <ProTable<TariffChargesDataType>
+    // ...
+    expandable={{
+      expandedRowKeys: expandedRowKeysRef.current,
+      onExpandedRowsChange: (expandedRows) => {
+        expandedRowKeysRef.current = expandedRows as React.Key[];
+      },
+      expandedRowRender: (record) => (
+        <ProTable<NestedDataType>
+          // ...
+          expandedRowKeys={expandedRowKeysRef.current}
+          onExpandedRowsChange={(expandedRows) => {
+            expandedRowKeysRef.current = expandedRows as React.Key[];
+          }}
+        />
+      ),
+      rowExpandable: () => true,
+    }}
+  />;
 
   const handleDelete = (
     nestedRecord: NestedDataType | undefined,
@@ -215,15 +236,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     );
 
     setIsEditing(false);
-
-    // Expand or collapse the main record in the table based on its previous state
-    setExpandedRowKeys((prevExpandedRowKeys) => {
-      if (prevExpandedRowKeys.includes(key)) {
-        return prevExpandedRowKeys;
-      } else {
-        return [...prevExpandedRowKeys, key];
-      }
-    });
   };
 
   const renderText = (text: ReactNode) => (
@@ -336,6 +348,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             {hasNestedRecords && (
               <Button
                 type="primary"
+                icon={<EditOutlined />}
                 onClick={() =>
                   handleEdit(undefined, record as TariffChargesDataType)
                 }
@@ -458,6 +471,44 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           },
         ]
       : []),
+    // {
+    //   title: "Actions",
+    //   key: "actions",
+    //   fixed: "right",
+    //   width: 110,
+    //   render: (_, record) => {
+    //     if (record.isEditing) {
+    //       return (
+    //         <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
+    //           <Button type="primary" onClick={() => handleSave(record.key)}>
+    //             Save
+    //           </Button>
+    //           <Button onClick={() => handleCancel(record.key)}>Cancel</Button>
+    //         </Space>
+    //       );
+    //     }
+
+    //     return (
+    //       <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
+    //         <Button
+    //           type="primary"
+    //           icon={<EditOutlined />}
+    //           onClick={() => handleEdit(record, record)}
+    //         >
+    //           Edit
+    //         </Button>
+    //         <Button
+    //           type="primary"
+    //           danger
+    //           icon={<DeleteOutlined />}
+    //           onClick={() => handleDelete(undefined, record)}
+    //         >
+    //           Delete
+    //         </Button>
+    //       </Space>
+    //     );
+    //   },
+    // },
   ];
 
   return (
@@ -489,9 +540,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             ],
           }}
           expandable={{
-            expandedRowKeys: expandedRowKeys,
+            expandedRowKeys: expandedRowKeysRef.current,
             onExpandedRowsChange: (expandedRows) => {
-              setExpandedRowKeys(expandedRows as React.Key[]);
+              expandedRowKeysRef.current = expandedRows as React.Key[];
             },
             expandedRowRender: (record) => (
               <ProTable<NestedDataType>
@@ -500,9 +551,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                 rowKey="key"
                 search={false}
                 pagination={false}
-                expandedRowKeys={expandedRowKeys}
+                expandedRowKeys={expandedRowKeysRef.current}
                 onExpandedRowsChange={(expandedRows) => {
-                  setExpandedRowKeys(expandedRows as React.Key[]);
+                  expandedRowKeysRef.current = expandedRows as React.Key[];
                 }}
               />
             ),

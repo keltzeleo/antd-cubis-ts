@@ -1,4 +1,4 @@
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import {
   ProFormDatePicker,
   ProFormDigit,
@@ -138,21 +138,17 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       prevDataSource.map((item) => ({
         ...item,
         isEditing: item.key === mainRecord.key,
-        nestedData: item.nestedData?.map((nestedItem) => ({
-          ...nestedItem,
-          isEditing: item.key === mainRecord.key,
-        })),
       }))
     );
     setIsEditing(true);
-
-    // Expand the main record in the table
+  
+    // Expand the nested table for the corresponding main record
     setExpandedRowKeys((prevExpandedRowKeys) => [
       ...prevExpandedRowKeys,
       mainRecord.key,
     ]);
   };
-
+  
   const handleDelete = (
     nestedRecord: NestedDataType | undefined,
     mainRecord: TariffChargesDataType | undefined
@@ -215,15 +211,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     );
 
     setIsEditing(false);
-
-    // Expand or collapse the main record in the table based on its previous state
-    setExpandedRowKeys((prevExpandedRowKeys) => {
-      if (prevExpandedRowKeys.includes(key)) {
-        return prevExpandedRowKeys;
-      } else {
-        return [...prevExpandedRowKeys, key];
-      }
-    });
   };
 
   const renderText = (text: ReactNode) => (
@@ -336,6 +323,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             {hasNestedRecords && (
               <Button
                 type="primary"
+                icon={<EditOutlined />}
                 onClick={() =>
                   handleEdit(undefined, record as TariffChargesDataType)
                 }
@@ -489,25 +477,22 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             ],
           }}
           expandable={{
-            expandedRowKeys: expandedRowKeys,
-            onExpandedRowsChange: (expandedRows) => {
-              setExpandedRowKeys(expandedRows as React.Key[]);
-            },
-            expandedRowRender: (record) => (
-              <ProTable<NestedDataType>
-                columns={nestedColumns}
-                dataSource={record.nestedData}
-                rowKey="key"
-                search={false}
-                pagination={false}
-                expandedRowKeys={expandedRowKeys}
-                onExpandedRowsChange={(expandedRows) => {
-                  setExpandedRowKeys(expandedRows as React.Key[]);
-                }}
-              />
-            ),
-            rowExpandable: () => true,
-          }}
+            expandedRowRender: (record) => {
+              if (expandedRowKeys.includes(record.key)) {
+                return (
+                  <ProTable<NestedDataType>
+                    columns={nestedColumns}
+                    dataSource={record.nestedData}
+                    rowKey="key"
+                    search={false}
+                    pagination={false}
+                    expandedRowKeys={expandedRowKeys}
+                    onExpandedRowsChange={setExpandedRowKeys}
+                  />
+                );
+              }
+              return null;
+        },
           bordered={false}
         />
       </Form>

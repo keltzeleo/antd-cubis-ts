@@ -1,4 +1,8 @@
-import { DeleteOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ExpandOutlined,
+} from "@ant-design/icons";
 import {
   ProFormDatePicker,
   ProFormDigit,
@@ -146,13 +150,15 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     );
     setIsEditing(true);
 
-    // Expand the main record in the table
-    setExpandedRowKeys((prevExpandedRowKeys) => [
-      ...prevExpandedRowKeys,
-      mainRecord.key,
-    ]);
+    // Expand the nested table for the corresponding main record
+    setExpandedRowKeys((prevExpandedRowKeys) => {
+      if (prevExpandedRowKeys.includes(mainRecord.key)) {
+        return prevExpandedRowKeys;
+      } else {
+        return [...prevExpandedRowKeys, mainRecord.key];
+      }
+    });
   };
-
   const handleDelete = (
     nestedRecord: NestedDataType | undefined,
     mainRecord: TariffChargesDataType | undefined
@@ -215,15 +221,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     );
 
     setIsEditing(false);
-
-    // Expand or collapse the main record in the table based on its previous state
-    setExpandedRowKeys((prevExpandedRowKeys) => {
-      if (prevExpandedRowKeys.includes(key)) {
-        return prevExpandedRowKeys;
-      } else {
-        return [...prevExpandedRowKeys, key];
-      }
-    });
   };
 
   const renderText = (text: ReactNode) => (
@@ -336,11 +333,18 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             {hasNestedRecords && (
               <Button
                 type="primary"
+                icon={
+                  expandedRowKeys.includes(record.key) ? (
+                    <EditOutlined />
+                  ) : (
+                    <ExpandOutlined />
+                  )
+                }
                 onClick={() =>
                   handleEdit(undefined, record as TariffChargesDataType)
                 }
               >
-                Edit
+                {expandedRowKeys.includes(record.key) ? "Edit" : "Expand"}
               </Button>
             )}
             {hasNestedRecords && (

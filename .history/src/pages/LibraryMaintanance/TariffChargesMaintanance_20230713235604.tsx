@@ -146,10 +146,11 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     );
     setIsEditing(true);
 
-    // Expand the main record in the table
+    // Expand the main record in the table and its nested table
     setExpandedRowKeys((prevExpandedRowKeys) => [
       ...prevExpandedRowKeys,
       mainRecord.key,
+      ...(mainRecord.nestedData?.map((nestedItem) => nestedItem.key) || []),
     ]);
   };
 
