@@ -49,7 +49,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
   const [dataSource, setDataSource] = useState<TariffChargesDataType[]>([
     {
-      key: "1",
+      key: "43743809",
       tariffCode: "TAR-001",
       tariffAbbreviation: "TA",
       monthlyMinimumCharges: 100,
@@ -60,33 +60,33 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       modifiedDate: "2023-07-01",
       nestedData: [
         {
-          key: "1-1",
+          key: "43756809",
           status: "Applied",
           block: [0, 10],
           rate: 0.03,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2020",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
         {
-          key: "1-2",
+          key: "43748889",
           status: "Applied",
           block: [11, 20],
           rate: 0.08,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2023",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
         {
-          key: "1-3",
+          key: "43749022",
           status: "Pending",
           block: [21, 100],
           rate: 0.13,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2024",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
@@ -95,7 +95,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       ],
     },
     {
-      key: "2",
+      key: "99743809",
       tariffCode: "TAR-002",
       tariffAbbreviation: "TB",
       monthlyMinimumCharges: 150,
@@ -106,11 +106,11 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       modifiedDate: "2023-07-01",
       nestedData: [
         {
-          key: "2-1",
+          key: "99799909",
           status: "Applied",
           block: [0, 10],
           rate: 0.05,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2020",
           createdBy: "Jane Smith",
           createDate: "2023-07-01",
           modifiedBy: "Jane Smith",
@@ -149,6 +149,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       }))
     );
     setEditingRecordKey(recordKey);
+
     setExpandedRowKeys((prevExpandedRowKeys) => [
       ...prevExpandedRowKeys,
       mainRecord.key,
@@ -161,10 +162,8 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   ) => {
     if (nestedRecord && mainRecord) {
       console.log("Delete nested record", nestedRecord);
-      // Handle nested record delete logic here
     } else if (mainRecord) {
       console.log("Delete main record", mainRecord);
-      // Handle main record delete logic here
     }
   };
 
@@ -220,6 +219,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     );
 
     setEditingRecordKey(null);
+
     setExpandedRowKeys((prevExpandedRowKeys) => {
       if (prevExpandedRowKeys.includes(key)) {
         return prevExpandedRowKeys;
@@ -457,7 +457,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         <ProTable<TariffChargesDataType>
           columns={columns}
           dataSource={dataSource}
-          rowKey="key"
+          rowKey="tariffCode"
           search={false}
           headerTitle={
             <span

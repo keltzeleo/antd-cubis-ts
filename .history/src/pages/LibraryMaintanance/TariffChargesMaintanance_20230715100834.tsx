@@ -5,8 +5,8 @@ import {
   ProFormDigitRange,
 } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
-import { Button, Checkbox, Form, FormInstance, Space } from "antd";
-import React, { ReactNode, useRef, useState } from "react";
+import { Button, Checkbox, Form, Space } from "antd";
+import React, { ReactNode, useState } from "react";
 
 interface Theme {
   [key: string]: string;
@@ -49,7 +49,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
   const [dataSource, setDataSource] = useState<TariffChargesDataType[]>([
     {
-      key: "1",
+      key: "43743809",
       tariffCode: "TAR-001",
       tariffAbbreviation: "TA",
       monthlyMinimumCharges: 100,
@@ -60,33 +60,33 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       modifiedDate: "2023-07-01",
       nestedData: [
         {
-          key: "1-1",
+          key: "43756809",
           status: "Applied",
           block: [0, 10],
           rate: 0.03,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2020",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
         {
-          key: "1-2",
+          key: "43748889",
           status: "Applied",
           block: [11, 20],
           rate: 0.08,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2023",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
         {
-          key: "1-3",
+          key: "43749022",
           status: "Pending",
           block: [21, 100],
           rate: 0.13,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2024",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
@@ -95,7 +95,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       ],
     },
     {
-      key: "2",
+      key: "99743809",
       tariffCode: "TAR-002",
       tariffAbbreviation: "TB",
       monthlyMinimumCharges: 150,
@@ -106,11 +106,11 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       modifiedDate: "2023-07-01",
       nestedData: [
         {
-          key: "2-1",
+          key: "99799909",
           status: "Applied",
           block: [0, 10],
           rate: 0.05,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2020",
           createdBy: "Jane Smith",
           createDate: "2023-07-01",
           modifiedBy: "Jane Smith",
@@ -124,7 +124,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     null
   );
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
-  const formRef = useRef<FormInstance<any>>(null);
 
   const handleToggleColumns = (checked: boolean) => {
     setShowAdditionalColumns(checked);
@@ -134,20 +133,21 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     recordKey: React.Key | null,
     mainRecord: TariffChargesDataType
   ) => {
-    formRef.current?.setFieldsValue({ ...mainRecord });
-    setDataSource((prevDataSource) =>
-      prevDataSource.map((item) => ({
-        ...item,
-        isEditing: item.key === mainRecord.key,
-        nestedData:
-          item.key === mainRecord.key
-            ? item.nestedData?.map((nestedItem) => ({
-                ...nestedItem,
-                isEditing: true,
-              }))
-            : item.nestedData,
-      }))
-    );
+    const updatedDataSource = dataSource.map((record) => {
+      if (record.key === mainRecord.key) {
+        return {
+          ...record,
+          isEditing: true,
+          nestedData: record.nestedData?.map((nestedItem) => ({
+            ...nestedItem,
+            isEditing: true,
+          })),
+        };
+      }
+      return record;
+    });
+
+    setDataSource(updatedDataSource);
     setEditingRecordKey(recordKey);
     setExpandedRowKeys((prevExpandedRowKeys) => [
       ...prevExpandedRowKeys,
@@ -159,7 +159,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     nestedRecord: NestedDataType | undefined,
     mainRecord: TariffChargesDataType | undefined
   ) => {
-    if (nestedRecord && mainRecord) {
+    if (nestedRecord) {
       console.log("Delete nested record", nestedRecord);
       // Handle nested record delete logic here
     } else if (mainRecord) {
@@ -170,26 +170,18 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
   const handleSave = async (key: React.Key) => {
     try {
-      await formRef.current?.validateFields();
-
       const updatedDataSource = dataSource.map((record) => {
         if (record.key === key) {
-          const formValues = formRef.current?.getFieldsValue();
-          const updatedRecord = {
+          const formValues = formRef.getFieldValue();
+          return {
             ...record,
             ...formValues[key],
-            nestedData: record.nestedData?.map((nestedItem) => {
-              const nestedKey = nestedItem.key;
-              return {
-                ...nestedItem,
-                ...formValues[`${key}-${nestedKey}`],
-              };
-            }),
+            nestedData: record.nestedData?.map((nestedItem) => ({
+              ...nestedItem,
+              ...formValues[`${key}-${nestedItem.key}`],
+            })),
           };
-
-          return updatedRecord;
         }
-
         return record;
       });
 
@@ -202,23 +194,21 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   };
 
   const handleCancel = (key: React.Key) => {
-    setDataSource((prevDataSource) =>
-      prevDataSource.map((record) => {
-        if (record.key === key) {
-          const originalRecord = dataSource.find((item) => item.key === key);
-          return {
-            ...originalRecord!,
+    const updatedDataSource = dataSource.map((record) => {
+      if (record.key === key) {
+        return {
+          ...record,
+          isEditing: false,
+          nestedData: record.nestedData?.map((nestedItem) => ({
+            ...nestedItem,
             isEditing: false,
-            nestedData: originalRecord!.nestedData?.map((nestedItem) => ({
-              ...nestedItem,
-              isEditing: false,
-            })),
-          };
-        }
-        return record;
-      })
-    );
+          })),
+        };
+      }
+      return record;
+    });
 
+    setDataSource(updatedDataSource);
     setEditingRecordKey(null);
     setExpandedRowKeys((prevExpandedRowKeys) => {
       if (prevExpandedRowKeys.includes(key)) {
@@ -453,55 +443,53 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
   return (
     <>
-      <Form form={formRef.current} component={false}>
-        <ProTable<TariffChargesDataType>
-          columns={columns}
-          dataSource={dataSource}
-          rowKey="key"
-          search={false}
-          headerTitle={
-            <span
-              style={{
-                fontFamily: theme.fontFamily,
-              }}
+      <ProTable<TariffChargesDataType>
+        columns={columns}
+        dataSource={dataSource}
+        rowKey="tariffCode"
+        search={false}
+        headerTitle={
+          <span
+            style={{
+              fontFamily: theme.fontFamily,
+            }}
+          >
+            Tariff Charges Maintenance
+          </span>
+        }
+        toolbar={{
+          actions: [
+            <Checkbox
+              key="toggleColumns"
+              checked={showAdditionalColumns}
+              onChange={(e) => handleToggleColumns(e.target.checked)}
             >
-              Tariff Charges Maintenance
-            </span>
-          }
-          toolbar={{
-            actions: [
-              <Checkbox
-                key="toggleColumns"
-                checked={showAdditionalColumns}
-                onChange={(e) => handleToggleColumns(e.target.checked)}
-              >
-                Show Additional Columns
-              </Checkbox>,
-            ],
-          }}
-          expandable={{
-            expandedRowKeys: expandedRowKeys,
-            onExpandedRowsChange: (expandedRows) => {
-              setExpandedRowKeys(expandedRows as React.Key[]);
-            },
-            expandedRowRender: (record) => (
-              <ProTable<NestedDataType>
-                columns={nestedColumns}
-                dataSource={record.nestedData}
-                rowKey="key"
-                search={false}
-                pagination={false}
-                expandedRowKeys={expandedRowKeys}
-                onExpandedRowsChange={(expandedRows) => {
-                  setExpandedRowKeys(expandedRows as React.Key[]);
-                }}
-              />
-            ),
-            rowExpandable: () => true,
-          }}
-          bordered={true}
-        />
-      </Form>
+              Show Additional Columns
+            </Checkbox>,
+          ],
+        }}
+        expandable={{
+          expandedRowKeys: expandedRowKeys,
+          onExpandedRowsChange: (expandedRows) => {
+            setExpandedRowKeys(expandedRows as React.Key[]);
+          },
+          expandedRowRender: (record) => (
+            <ProTable<NestedDataType>
+              columns={nestedColumns}
+              dataSource={record.nestedData}
+              rowKey="key"
+              search={false}
+              pagination={false}
+              expandedRowKeys={expandedRowKeys}
+              onExpandedRowsChange={(expandedRows) => {
+                setExpandedRowKeys(expandedRows as React.Key[]);
+              }}
+            />
+          ),
+          rowExpandable: () => true,
+        }}
+        bordered={true}
+      />
     </>
   );
 };

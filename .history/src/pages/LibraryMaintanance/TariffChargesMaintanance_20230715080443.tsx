@@ -49,7 +49,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
   const [dataSource, setDataSource] = useState<TariffChargesDataType[]>([
     {
-      key: "1",
+      key: "43743809",
       tariffCode: "TAR-001",
       tariffAbbreviation: "TA",
       monthlyMinimumCharges: 100,
@@ -60,33 +60,33 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       modifiedDate: "2023-07-01",
       nestedData: [
         {
-          key: "1-1",
+          key: "43756809",
           status: "Applied",
           block: [0, 10],
           rate: 0.03,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2020",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
         {
-          key: "1-2",
+          key: "43748889",
           status: "Applied",
           block: [11, 20],
           rate: 0.08,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2023",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
         {
-          key: "1-3",
+          key: "43749022",
           status: "Pending",
           block: [21, 100],
           rate: 0.13,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2024",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
@@ -95,7 +95,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       ],
     },
     {
-      key: "2",
+      key: "99743809",
       tariffCode: "TAR-002",
       tariffAbbreviation: "TB",
       monthlyMinimumCharges: 150,
@@ -106,11 +106,11 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       modifiedDate: "2023-07-01",
       nestedData: [
         {
-          key: "2-1",
+          key: "99799909",
           status: "Applied",
           block: [0, 10],
-          rate: 0.05,
-          effectiveDate: "2023-07-01",
+          rate: 0.03,
+          effectiveDate: "04/07/2020",
           createdBy: "Jane Smith",
           createDate: "2023-07-01",
           modifiedBy: "Jane Smith",
@@ -124,7 +124,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     null
   );
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
-  const formRef = useRef<FormInstance<any>>(null);
+  const formRef = useRef<FormInstance<any> | undefined>();
 
   const handleToggleColumns = (checked: boolean) => {
     setShowAdditionalColumns(checked);
@@ -139,16 +139,15 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       prevDataSource.map((item) => ({
         ...item,
         isEditing: item.key === mainRecord.key,
-        nestedData:
-          item.key === mainRecord.key
-            ? item.nestedData?.map((nestedItem) => ({
-                ...nestedItem,
-                isEditing: true,
-              }))
-            : item.nestedData,
+        nestedData: item.nestedData?.map((nestedItem) => ({
+          ...nestedItem,
+          isEditing: item.key === mainRecord.key,
+        })),
       }))
     );
     setEditingRecordKey(recordKey);
+
+    // Expand the main record in the table
     setExpandedRowKeys((prevExpandedRowKeys) => [
       ...prevExpandedRowKeys,
       mainRecord.key,
@@ -172,28 +171,24 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     try {
       await formRef.current?.validateFields();
 
-      const updatedDataSource = dataSource.map((record) => {
-        if (record.key === key) {
-          const formValues = formRef.current?.getFieldsValue();
-          const updatedRecord = {
-            ...record,
-            ...formValues[key],
-            nestedData: record.nestedData?.map((nestedItem) => {
-              const nestedKey = nestedItem.key;
-              return {
+      setDataSource((prevDataSource) =>
+        prevDataSource.map((record) => {
+          if (record.key === key) {
+            const updatedRecord = {
+              ...record,
+              isEditing: false,
+              nestedData: record.nestedData?.map((nestedItem) => ({
                 ...nestedItem,
-                ...formValues[`${key}-${nestedKey}`],
-              };
-            }),
-          };
+                isEditing: false,
+              })),
+            };
 
-          return updatedRecord;
-        }
+            return updatedRecord;
+          }
 
-        return record;
-      });
-
-      setDataSource(updatedDataSource);
+          return record;
+        })
+      );
     } catch (err) {
       console.log("Save error:", err);
     } finally {
@@ -215,11 +210,14 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             })),
           };
         }
+
         return record;
       })
     );
 
     setEditingRecordKey(null);
+
+    // Expand or collapse the main record in the table based on its previous state
     setExpandedRowKeys((prevExpandedRowKeys) => {
       if (prevExpandedRowKeys.includes(key)) {
         return prevExpandedRowKeys;
@@ -253,11 +251,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       render: (text, record) => {
         if (record.isEditing) {
           return (
-            <Form.Item
-              name={["effectiveDate"]}
-              initialValue={text}
-              rules={[{ required: true }]}
-            >
+            <Form.Item name={["effectiveDate"]} initialValue={text}>
               <ProFormDatePicker />
             </Form.Item>
           );
@@ -373,19 +367,16 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Block",
       dataIndex: "block",
       key: "block",
-      render: (_, record) => {
+      render: (text: ReactNode, record: NestedDataType) => {
         if (record.isEditing) {
           return (
-            <Form.Item
-              name={[`${record.key}`, "block"]}
-              initialValue={record.block}
-            >
+            <Form.Item name={["block"]} initialValue={record.block}>
               <ProFormDigitRange fieldProps={{ precision: 0 }} />
             </Form.Item>
           );
         }
         return (
-          <span style={{ color: theme.colorText }}>
+          <span style={{ color: theme["colorText"] }}>
             {record.block ? `${record.block[0]} - ${record.block[1]}m³` : ""}
           </span>
         );
@@ -395,11 +386,11 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Rate",
       dataIndex: "rate",
       key: "rate",
-      render: (_, record) => {
+      render: (text, record) => {
         if (record.isEditing) {
           return (
             <Form.Item
-              name={[`${record.key}`, "rate"]}
+              name={["rate"]}
               initialValue={record.rate}
               rules={[
                 {
@@ -413,12 +404,25 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           );
         }
         return (
-          <span style={{ color: theme.colorText }}>
-            {typeof record.rate === "number"
-              ? `RM ${record.rate.toFixed(2)}/m³`
-              : ""}
+          <span style={{ color: theme["colorText"] }}>
+            {typeof text === "number" ? `RM ${text.toFixed(2)}/m³` : ""}
           </span>
         );
+      },
+    },
+    {
+      title: "Effective Date",
+      dataIndex: "effectiveDate",
+      key: "effectiveDate",
+      render: (text, record) => {
+        if (record.isEditing) {
+          return (
+            <Form.Item name={["effectiveDate"]} initialValue={text}>
+              <ProFormDatePicker />
+            </Form.Item>
+          );
+        }
+        return renderText(text);
       },
     },
     ...(showAdditionalColumns
@@ -457,7 +461,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         <ProTable<TariffChargesDataType>
           columns={columns}
           dataSource={dataSource}
-          rowKey="key"
+          rowKey="tariffCode"
           search={false}
           headerTitle={
             <span

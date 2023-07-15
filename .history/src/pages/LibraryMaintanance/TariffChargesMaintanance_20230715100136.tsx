@@ -49,7 +49,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
   const [dataSource, setDataSource] = useState<TariffChargesDataType[]>([
     {
-      key: "1",
+      key: "43743809",
       tariffCode: "TAR-001",
       tariffAbbreviation: "TA",
       monthlyMinimumCharges: 100,
@@ -60,33 +60,33 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       modifiedDate: "2023-07-01",
       nestedData: [
         {
-          key: "1-1",
+          key: "43756809",
           status: "Applied",
           block: [0, 10],
           rate: 0.03,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2020",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
         {
-          key: "1-2",
+          key: "43748889",
           status: "Applied",
           block: [11, 20],
           rate: 0.08,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2023",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
         {
-          key: "1-3",
+          key: "43749022",
           status: "Pending",
           block: [21, 100],
           rate: 0.13,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2024",
           createdBy: "John Doe",
           createDate: "2023-07-01",
           modifiedBy: "John Doe",
@@ -95,7 +95,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       ],
     },
     {
-      key: "2",
+      key: "99743809",
       tariffCode: "TAR-002",
       tariffAbbreviation: "TB",
       monthlyMinimumCharges: 150,
@@ -106,11 +106,11 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       modifiedDate: "2023-07-01",
       nestedData: [
         {
-          key: "2-1",
+          key: "99799909",
           status: "Applied",
           block: [0, 10],
           rate: 0.05,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "04/07/2020",
           createdBy: "Jane Smith",
           createDate: "2023-07-01",
           modifiedBy: "Jane Smith",
@@ -143,12 +143,14 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           item.key === mainRecord.key
             ? item.nestedData?.map((nestedItem) => ({
                 ...nestedItem,
-                isEditing: true,
+                isEditing: true, // Set isEditing to true for the nestedData of the current main record
               }))
-            : item.nestedData,
+            : item.nestedData, // Keep the nestedData unchanged for other records
       }))
     );
     setEditingRecordKey(recordKey);
+
+    // Expand the main record in the table
     setExpandedRowKeys((prevExpandedRowKeys) => [
       ...prevExpandedRowKeys,
       mainRecord.key,
@@ -174,20 +176,37 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
       const updatedDataSource = dataSource.map((record) => {
         if (record.key === key) {
-          const formValues = formRef.current?.getFieldsValue();
           const updatedRecord = {
             ...record,
-            ...formValues[key],
-            nestedData: record.nestedData?.map((nestedItem) => {
-              const nestedKey = nestedItem.key;
-              return {
-                ...nestedItem,
-                ...formValues[`${key}-${nestedKey}`],
-              };
-            }),
+            isEditing: false,
+            nestedData: record.nestedData?.map((nestedItem) => ({
+              ...nestedItem,
+              isEditing: false,
+            })),
           };
 
-          return updatedRecord;
+          // Get the updated values from the form
+          const formValues = formRef.current?.getFieldValue(key);
+
+          // Update the record's values with the form values
+          const updatedNestedData = updatedRecord.nestedData?.map(
+            (nestedItem) => {
+              const nestedKey = nestedItem.key;
+              const nestedFormValues = formRef.current?.getFieldValue(
+                `${key}-${nestedKey}`
+              );
+              return {
+                ...nestedItem,
+                ...nestedFormValues,
+              };
+            }
+          );
+
+          return {
+            ...updatedRecord,
+            ...formValues,
+            nestedData: updatedNestedData,
+          };
         }
 
         return record;
@@ -220,6 +239,8 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     );
 
     setEditingRecordKey(null);
+
+    // Expand or collapse the main record in the table based on its previous state
     setExpandedRowKeys((prevExpandedRowKeys) => {
       if (prevExpandedRowKeys.includes(key)) {
         return prevExpandedRowKeys;
@@ -457,7 +478,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         <ProTable<TariffChargesDataType>
           columns={columns}
           dataSource={dataSource}
-          rowKey="key"
+          rowKey="tariffCode"
           search={false}
           headerTitle={
             <span
