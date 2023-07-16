@@ -1,4 +1,3 @@
-import { DeleteOutlined } from "@ant-design/icons";
 import {
   ProFormDatePicker,
   ProFormDigit,
@@ -6,23 +5,22 @@ import {
 } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
 import { Button, Checkbox, Form, FormInstance, Space } from "antd";
-import React, { ReactNode, useRef, useState } from "react";
-
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 interface Theme {
   [key: string]: string;
 }
 
 interface NestedDataType {
   key: React.Key;
-  status: string;
+  status?: string;
   block?: [number, number] | null;
-  rate?: number;
+  rate?: number | undefined;
   effectiveDate?: string;
+  createdBy?: string;
+  createDate?: string;
+  modifiedBy?: string;
+  modifiedDate?: string;
   isEditing?: boolean;
-  createdBy: string;
-  createDate: string;
-  modifiedBy: string;
-  modifiedDate: string;
 }
 
 interface TariffChargesDataType {
@@ -32,10 +30,10 @@ interface TariffChargesDataType {
   monthlyMinimumCharges?: number;
   effectiveDate?: string;
   isEditing?: boolean;
-  createdBy: string;
-  createDate: string;
-  modifiedBy: string;
-  modifiedDate: string;
+  createdBy?: string;
+  createDate?: string;
+  modifiedBy?: string;
+  modifiedDate?: string;
   nestedData?: NestedDataType[];
 }
 
@@ -47,6 +45,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   theme,
 }) => {
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
+  const [dataSource, setDataSource] = useState<TariffChargesDataType[]>([]);
   const [dataSource, setDataSource] = useState<TariffChargesDataType[]>([
     {
       key: "1",
@@ -119,22 +118,26 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       ],
     },
   ]);
-
-  const [editingRecordKey, setEditingRecordKey] = useState<React.Key | null>(
-    null
-  );
-
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
   const formRef = useRef<FormInstance<any>>(Form.useForm()[0]);
-  const nestedFormRef = useRef<FormInstance<any>>(Form.useForm()[0]);
-  const [newRowValues, setNewRowValues] = useState<Partial<NestedDataType>>({});
 
-  const handleChangeNewRow = (fieldName: string, value: any) => {
-    setNewRowValues((prevValues) => ({
-      ...prevValues,
-      [fieldName]: value,
-    }));
-  };
+  // Add a useEffect hook to initialize the data source with a blank record when there's no data
+  useEffect(() => {
+    if (dataSource.length === 0) {
+      setDataSource([
+        {
+          key: "0",
+          tariffCode: "",
+          tariffAbbreviation: "",
+          monthlyMinimumCharges: undefined,
+          effectiveDate: "",
+          isEditing: true,
+          nestedData: [],
+        },
+      ]);
+      setExpandedRowKeys(["0"]);
+    }
+  }, [dataSource]);
 
   const handleToggleColumns = (checked: boolean) => {
     setShowAdditionalColumns(checked);
@@ -174,18 +177,13 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           const updatedRecord = {
             ...record,
             ...formValues?.[record.key],
-            nestedData: record.nestedData?.map((nestedItem) => {
-              const nestedFormValues = nestedFormRef.current?.getFieldsValue();
-              const updatedNestedItem = {
-                ...nestedItem,
-                ...nestedFormValues?.[`${record.key}-${nestedItem.key}`],
-                isEditing: false,
-              };
-              return updatedNestedItem;
-            }),
+            nestedData: record.nestedData?.map((nestedItem) => ({
+              ...nestedItem,
+              ...formValues?.[`${record.key}-${nestedItem.key}`],
+            })),
             effectiveDate: {
               value: formValues?.[record.key]?.effectiveDate,
-              offset: new Date().getTimezoneOffset(),
+              offset: new Date().getTimezoneOffset(), // Store the time zone offset
             },
             isEditing: false,
           };
@@ -198,7 +196,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
       setDataSource(updatedDataSource);
       setEditingRecordKey(null);
-      setExpandedRowKeys([key]);
+      setExpandedRowKeys([key]); // Update expandedRowKeys with the key of the main record being saved
 
       // Refresh data here, if applicable
       // displaySuccessMessage("Data saved successfully."); // Display success message, if needed
@@ -235,6 +233,26 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     });
   };
 
+  const handleSaveNested = (recordKey: React.Key) => {
+    const updatedDataSource = dataSource.map((record) => {
+      if (record.key === recordKey) {
+        const updatedNestedData = record.nestedData?.map((nestedItem) => ({
+          ...nestedItem,
+          isEditing: false,
+        }));
+
+        return {
+          ...record,
+          nestedData: updatedNestedData,
+        };
+      }
+
+      return record;
+    });
+
+    setDataSource(updatedDataSource);
+  };
+
   const handleDelete = (
     nestedRecord: NestedDataType | undefined,
     mainRecord: TariffChargesDataType | undefined
@@ -255,7 +273,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       block: null,
       rate: undefined,
       effectiveDate: "",
-      isEditing: true,
       createdBy: "",
       createDate: "",
       modifiedBy: "",
@@ -265,13 +282,12 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     setDataSource((prevDataSource) =>
       prevDataSource.map((item) => {
         if (item.key === recordKey) {
-          const updatedItem = {
+          return {
             ...item,
             nestedData: item.nestedData
               ? [...item.nestedData, newData]
               : [newData],
           };
-          return updatedItem;
         }
         return item;
       })
@@ -284,6 +300,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   };
 
   const generateUniqueKey = (): React.Key => {
+    // Generate a unique key for the new row (you can implement your own logic here)
     const timestamp = new Date().getTime();
     return `new-row-${timestamp}`;
   };
@@ -300,18 +317,12 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         const adjustedDate = date.toISOString().split("T")[0];
         return adjustedDate;
       }
-      return JSON.stringify(text);
+      return JSON.stringify(text); // Or any other appropriate way to render the object
     }
     return <span style={{ color: theme.colorText }}>{text}</span>;
   };
 
   const columns: ProColumns<TariffChargesDataType>[] = [
-    {
-      title: "No.",
-      dataIndex: "no",
-      key: "no",
-      valueType: "indexBorder",
-    },
     {
       title: "Tariff Code",
       dataIndex: "tariffCode",
@@ -332,7 +343,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         if (record.isEditing) {
           return (
             <Form.Item
-              name={[record.key, "effectiveDate"]}
+              name={[record.key, "effectiveDate"]} // Update name prop
               initialValue={text}
               rules={[{ required: true }]}
             >
@@ -351,7 +362,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         if (record.isEditing) {
           return (
             <Form.Item
-              name={[record.key, "monthlyMinimumCharges"]}
+              name={[record.key, "monthlyMinimumCharges"]} // Update name prop
               initialValue={text}
               rules={[{ required: true }]}
             >
@@ -426,25 +437,17 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             {hasNestedRecords && (
               <Button
                 type="primary"
-                onClick={() =>
-                  handleEdit(record.key, record as TariffChargesDataType)
-                }
+                onClick={() => handleAddAdditionalRow(record.key)}
               >
-                Edit
+                Add Additional Row
               </Button>
             )}
-            {hasNestedRecords && (
-              <Button
-                type="primary"
-                danger
-                icon={<DeleteOutlined />}
-                onClick={() =>
-                  handleDelete(undefined, record as TariffChargesDataType)
-                }
-              >
-                Delete
-              </Button>
-            )}
+            <Button type="primary" onClick={() => handleEdit(record.key)}>
+              Edit
+            </Button>
+            <Button danger onClick={() => handleDelete(undefined, record)}>
+              Delete
+            </Button>
           </Space>
         );
       },
@@ -453,16 +456,23 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
   const nestedColumns: ProColumns<NestedDataType>[] = [
     {
-      title: "No.",
-      dataIndex: "no",
-      key: "no",
-      valueType: "indexBorder",
-    },
-    {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      render: renderText,
+      render: (_, record) => {
+        if (record.isEditing) {
+          return (
+            <Form.Item
+              name={[`${record.key}`, "status"]}
+              initialValue={record.status}
+              rules={[{ required: true }]}
+            >
+              <ProFormDigit disabled={!record.isEditing} />
+            </Form.Item>
+          );
+        }
+        return renderText(record.status);
+      },
     },
     {
       title: "Block",
@@ -474,19 +484,13 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             <Form.Item
               name={[`${record.key}`, "block"]}
               initialValue={record.block}
+              rules={[{ required: true }]}
             >
-              <ProFormDigitRange
-                fieldProps={{ precision: 0 }}
-                disabled={!record.isEditing}
-              />
+              <ProFormDigitRange disabled={!record.isEditing} />
             </Form.Item>
           );
         }
-        return (
-          <span style={{ color: theme.colorText }}>
-            {record.block ? `${record.block[0]} - ${record.block[1]}m³` : ""}
-          </span>
-        );
+        return renderText(record.block);
       },
     },
     {
@@ -499,12 +503,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             <Form.Item
               name={[`${record.key}`, "rate"]}
               initialValue={record.rate}
-              rules={[
-                {
-                  pattern: /^\d+(\.\d{1,2})?$/,
-                  message: "Please input a valid rate.",
-                },
-              ]}
+              rules={[{ required: true }]}
             >
               <ProFormDigit
                 fieldProps={{ precision: 2 }}
@@ -513,153 +512,132 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             </Form.Item>
           );
         }
+        return renderText(record.rate);
+      },
+    },
+    {
+      title: "Effective Date",
+      dataIndex: "effectiveDate",
+      key: "effectiveDate",
+      render: (_, record) => {
+        if (record.isEditing) {
+          return (
+            <Form.Item
+              name={[`${record.key}`, "effectiveDate"]}
+              initialValue={record.effectiveDate}
+              rules={[{ required: true }]}
+            >
+              <ProFormDatePicker disabled={!record.isEditing} />
+            </Form.Item>
+          );
+        }
+        return renderText(record.effectiveDate);
+      },
+    },
+    {
+      title: "Created By",
+      dataIndex: "createdBy",
+      key: "createdBy",
+      render: renderText,
+    },
+    {
+      title: "Create Date",
+      dataIndex: "createDate",
+      key: "createDate",
+      render: renderText,
+    },
+    {
+      title: "Modified By",
+      dataIndex: "modifiedBy",
+      key: "modifiedBy",
+      render: renderText,
+    },
+    {
+      title: "Modified Date",
+      dataIndex: "modifiedDate",
+      key: "modifiedDate",
+      render: renderText,
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      fixed: "right",
+      width: 120,
+      render: (_, record) => {
+        if (record.isEditing) {
+          return (
+            <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
+              <Button
+                type="primary"
+                onClick={() => handleSaveNested(record.key)}
+              >
+                Save
+              </Button>
+              <Button onClick={() => handleCancel(record.key)}>Cancel</Button>
+              <Button danger onClick={() => handleDelete(record, undefined)}>
+                Delete
+              </Button>
+            </Space>
+          );
+        }
+
         return (
-          <span style={{ color: theme.colorText }}>
-            {typeof record.rate === "number"
-              ? `RM ${record.rate.toFixed(2)}/m³`
-              : ""}
-          </span>
+          <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
+            <Button
+              type="primary"
+              onClick={() => handleEdit(record.key, record)}
+            >
+              Edit
+            </Button>
+            <Button danger onClick={() => handleDelete(record, undefined)}>
+              Delete
+            </Button>
+          </Space>
         );
       },
     },
-    ...(showAdditionalColumns
-      ? [
-          {
-            title: "Created By",
-            dataIndex: "createdBy",
-            key: "createdBy",
-            render: renderText,
-          },
-          {
-            title: "Create Date",
-            dataIndex: "createDate",
-            key: "createDate",
-            render: renderText,
-          },
-          {
-            title: "Modified By",
-            dataIndex: "modifiedBy",
-            key: "modifiedBy",
-            render: renderText,
-          },
-          {
-            title: "Modified Date",
-            dataIndex: "modifiedDate",
-            key: "modifiedDate",
-            render: renderText,
-          },
-        ]
-      : []),
   ];
 
   return (
     <>
-      <Form form={formRef.current}>
-        <ProTable<TariffChargesDataType>
-          columns={columns}
-          dataSource={dataSource}
-          rowKey="key"
-          search={false}
-          headerTitle={
-            <span
-              style={{
-                fontFamily: theme.fontFamily,
-              }}
-            >
-              Tariff Charges Maintenance
-            </span>
-          }
-          toolbar={{
-            actions: [
-              <Checkbox
-                key="toggleColumns"
-                checked={showAdditionalColumns}
-                onChange={(e) => handleToggleColumns(e.target.checked)}
-              >
-                Show Additional Columns
-              </Checkbox>,
-            ],
-          }}
-          expandable={{
-            expandedRowKeys,
-            onExpandedRowsChange: (expandedRows) => {
-              setExpandedRowKeys(expandedRows as React.Key[]);
-            },
-            expandedRowRender: (record) => {
-              const nestedRecord = dataSource.find(
-                (item) => item.key === record.key
+      <Checkbox
+        checked={showAdditionalColumns}
+        onChange={(e) => handleToggleColumns(e.target.checked)}
+      >
+        Show Additional Columns
+      </Checkbox>
+      <ProTable<TariffChargesDataType>
+        dataSource={dataSource}
+        columns={columns}
+        rowKey="key"
+        pagination={false}
+        expandable={{
+          expandedRowKeys,
+          onExpand: (expanded, record) => {
+            if (expanded) {
+              setExpandedRowKeys((prevExpandedRowKeys) => [
+                ...prevExpandedRowKeys,
+                record.key,
+              ]);
+            } else {
+              setExpandedRowKeys((prevExpandedRowKeys) =>
+                prevExpandedRowKeys.filter((key) => key !== record.key)
               );
-              const nestedData = nestedRecord?.nestedData || [];
-
-              return (
-                <Form form={nestedFormRef.current}>
-                  <ProTable<NestedDataType>
-                    columns={nestedColumns}
-                    dataSource={nestedData}
-                    rowKey="key"
-                    search={false}
-                    pagination={false}
-                    expandedRowKeys={expandedRowKeys}
-                    onExpandedRowsChange={(expandedRows) => {
-                      setExpandedRowKeys(expandedRows as React.Key[]);
-                    }}
-                    editable={{
-                      type: "multiple",
-                      onSave: async (rowKey, row) => {
-                        const updatedNestedData = dataSource.map((item) => {
-                          if (item.key === record.key) {
-                            return {
-                              ...item,
-                              nestedData: item.nestedData?.map((nestedItem) =>
-                                nestedItem.key === rowKey
-                                  ? { ...nestedItem, ...row }
-                                  : nestedItem
-                              ),
-                            };
-                          }
-                          return item;
-                        });
-                        setDataSource(updatedNestedData);
-                      },
-                      onChange: (
-                        editableKeys: React.Key[],
-                        editableRows: NestedDataType | NestedDataType[]
-                      ) => {
-                        const updatedMainDataSource = dataSource.map(
-                          (record) => {
-                            if (record.key === String(record.key)) {
-                              // Update the comparison condition here
-                              return {
-                                ...record,
-                                nestedData: Array.isArray(editableRows)
-                                  ? editableRows.map((nestedItem) => {
-                                      const matchingItem =
-                                        nestedFormRef.current?.getFieldValue(
-                                          `${record.key}-${nestedItem.key}`
-                                        );
-                                      return {
-                                        ...nestedItem,
-                                        ...(matchingItem || {}),
-                                      };
-                                    })
-                                  : [],
-                              };
-                            }
-                            return record;
-                          }
-                        );
-                        setDataSource(updatedMainDataSource);
-                      },
-                    }}
-                  />
-                </Form>
-              );
-            },
-            rowExpandable: () => true,
-          }}
-          bordered={false}
-        />
-      </Form>
+            }
+          },
+          expandedRowRender: (record) => {
+            return (
+              <ProTable<NestedDataType>
+                dataSource={record.nestedData || []}
+                columns={nestedColumns}
+                rowKey="key"
+                pagination={false}
+                search={false}
+              />
+            );
+          },
+        }}
+      />
     </>
   );
 };

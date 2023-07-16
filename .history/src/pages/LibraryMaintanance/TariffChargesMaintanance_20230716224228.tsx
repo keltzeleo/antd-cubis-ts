@@ -127,14 +127,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
   const formRef = useRef<FormInstance<any>>(Form.useForm()[0]);
   const nestedFormRef = useRef<FormInstance<any>>(Form.useForm()[0]);
-  const [newRowValues, setNewRowValues] = useState<Partial<NestedDataType>>({});
-
-  const handleChangeNewRow = (fieldName: string, value: any) => {
-    setNewRowValues((prevValues) => ({
-      ...prevValues,
-      [fieldName]: value,
-    }));
-  };
 
   const handleToggleColumns = (checked: boolean) => {
     setShowAdditionalColumns(checked);
@@ -167,6 +159,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   const handleSave = async (key: React.Key) => {
     try {
       await formRef.current?.validateFields();
+      await nestedFormRef.current?.validateFields();
 
       const updatedDataSource = dataSource.map((record) => {
         if (record.key === key) {
@@ -174,15 +167,11 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           const updatedRecord = {
             ...record,
             ...formValues?.[record.key],
-            nestedData: record.nestedData?.map((nestedItem) => {
-              const nestedFormValues = nestedFormRef.current?.getFieldsValue();
-              const updatedNestedItem = {
-                ...nestedItem,
-                ...nestedFormValues?.[`${record.key}-${nestedItem.key}`],
-                isEditing: false,
-              };
-              return updatedNestedItem;
-            }),
+            nestedData: record.nestedData?.map((nestedItem) => ({
+              ...nestedItem,
+              ...formValues?.[`${record.key}-${nestedItem.key}`],
+              isEditing: false,
+            })),
             effectiveDate: {
               value: formValues?.[record.key]?.effectiveDate,
               offset: new Date().getTimezoneOffset(),
@@ -265,13 +254,12 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     setDataSource((prevDataSource) =>
       prevDataSource.map((item) => {
         if (item.key === recordKey) {
-          const updatedItem = {
+          return {
             ...item,
             nestedData: item.nestedData
               ? [...item.nestedData, newData]
               : [newData],
           };
-          return updatedItem;
         }
         return item;
       })
@@ -620,35 +608,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                           return item;
                         });
                         setDataSource(updatedNestedData);
-                      },
-                      onChange: (
-                        editableKeys: React.Key[],
-                        editableRows: NestedDataType | NestedDataType[]
-                      ) => {
-                        const updatedMainDataSource = dataSource.map(
-                          (record) => {
-                            if (record.key === String(record.key)) {
-                              // Update the comparison condition here
-                              return {
-                                ...record,
-                                nestedData: Array.isArray(editableRows)
-                                  ? editableRows.map((nestedItem) => {
-                                      const matchingItem =
-                                        nestedFormRef.current?.getFieldValue(
-                                          `${record.key}-${nestedItem.key}`
-                                        );
-                                      return {
-                                        ...nestedItem,
-                                        ...(matchingItem || {}),
-                                      };
-                                    })
-                                  : [],
-                              };
-                            }
-                            return record;
-                          }
-                        );
-                        setDataSource(updatedMainDataSource);
                       },
                     }}
                   />

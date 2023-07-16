@@ -5,9 +5,9 @@ import {
   ProFormDigitRange,
 } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
-import { Button, Checkbox, Form, FormInstance, Space } from "antd";
+import { Button, Checkbox, Form } from "antd";
+import { FormInstance } from "antd/lib/form";
 import React, { ReactNode, useRef, useState } from "react";
-
 interface Theme {
   [key: string]: string;
 }
@@ -127,14 +127,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
   const formRef = useRef<FormInstance<any>>(Form.useForm()[0]);
   const nestedFormRef = useRef<FormInstance<any>>(Form.useForm()[0]);
-  const [newRowValues, setNewRowValues] = useState<Partial<NestedDataType>>({});
-
-  const handleChangeNewRow = (fieldName: string, value: any) => {
-    setNewRowValues((prevValues) => ({
-      ...prevValues,
-      [fieldName]: value,
-    }));
-  };
 
   const handleToggleColumns = (checked: boolean) => {
     setShowAdditionalColumns(checked);
@@ -265,13 +257,12 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     setDataSource((prevDataSource) =>
       prevDataSource.map((item) => {
         if (item.key === recordKey) {
-          const updatedItem = {
+          return {
             ...item,
             nestedData: item.nestedData
               ? [...item.nestedData, newData]
               : [newData],
           };
-          return updatedItem;
         }
         return item;
       })

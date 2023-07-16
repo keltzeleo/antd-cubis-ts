@@ -1,9 +1,5 @@
 import { DeleteOutlined } from "@ant-design/icons";
-import {
-  ProFormDatePicker,
-  ProFormDigit,
-  ProFormDigitRange,
-} from "@ant-design/pro-form";
+import { ProFormDigit, ProFormDigitRange } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
 import { Button, Checkbox, Form, FormInstance, Space } from "antd";
 import React, { ReactNode, useRef, useState } from "react";
@@ -136,6 +132,30 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     }));
   };
 
+  const handleAddNewRow = () => {
+    const newData: TariffChargesDataType = {
+      key: generateUniqueKey(),
+      tariffCode: "",
+      tariffAbbreviation: "",
+      monthlyMinimumCharges: undefined,
+      effectiveDate: "", // Set to null instead of an empty string
+      isEditing: true,
+      createdBy: "",
+      createDate: "",
+      modifiedBy: "",
+      modifiedDate: "",
+      nestedData: [],
+    };
+
+    setDataSource((prevDataSource) => [...prevDataSource, newData]);
+
+    // Set the newly added row as the expanded row
+    setExpandedRowKeys((prevExpandedRowKeys) => [
+      ...prevExpandedRowKeys,
+      newData.key,
+    ]);
+  };
+
   const handleToggleColumns = (checked: boolean) => {
     setShowAdditionalColumns(checked);
   };
@@ -202,6 +222,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
       // Refresh data here, if applicable
       // displaySuccessMessage("Data saved successfully."); // Display success message, if needed
+
+      // Clear the new row values
+      setNewRowValues({});
     } catch (error) {
       console.log("Save error:", error);
       // displayErrorMessage("Failed to save data. Please try again."); // Display error message, if needed
@@ -260,6 +283,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       createDate: "",
       modifiedBy: "",
       modifiedDate: "",
+      ...newRowValues, // Include the new row values
     };
 
     setDataSource((prevDataSource) =>
@@ -281,6 +305,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       ...prevExpandedRowKeys,
       recordKey,
     ]);
+
+    // Clear the new row values
+    setNewRowValues({});
   };
 
   const generateUniqueKey = (): React.Key => {
@@ -333,7 +360,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           return (
             <Form.Item
               name={[record.key, "effectiveDate"]}
-              initialValue={text}
+              initialValue={text ? moment(text) : null}
               rules={[{ required: true }]}
             >
               <ProFormDatePicker disabled={!record.isEditing} />
@@ -578,6 +605,13 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
               >
                 Show Additional Columns
               </Checkbox>,
+              <Button
+                key="addNew"
+                type="primary"
+                onClick={() => handleAddNewRow()}
+              >
+                Add New
+              </Button>, // Add New button
             ],
           }}
           expandable={{

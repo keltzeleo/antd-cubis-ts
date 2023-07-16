@@ -548,6 +548,53 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             key: "modifiedDate",
             render: renderText,
           },
+          {
+            title: "Actions",
+            key: "actions",
+            width: 120,
+            render: (_, nestedRecord, index) => (
+              <Space>
+                {nestedRecord.isEditing ? (
+                  <>
+                    <Button
+                      type="primary"
+                      onClick={() =>
+                        handleSaveNested(record.key, nestedRecord.key)
+                      }
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        handleCancelNested(record.key, nestedRecord.key)
+                      }
+                    >
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      type="primary"
+                      onClick={() =>
+                        handleEditNested(record.key, nestedRecord.key)
+                      }
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      danger
+                      onClick={() =>
+                        handleDeleteNested(record.key, nestedRecord.key)
+                      }
+                    >
+                      Delete
+                    </Button>
+                  </>
+                )}
+              </Space>
+            ),
+          },
         ]
       : []),
   ];

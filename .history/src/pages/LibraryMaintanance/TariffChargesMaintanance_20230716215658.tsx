@@ -6,7 +6,7 @@ import {
 } from "@ant-design/pro-form";
 import ProTable, { ProColumns } from "@ant-design/pro-table";
 import { Button, Checkbox, Form, FormInstance, Space } from "antd";
-import React, { ReactNode, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 interface Theme {
   [key: string]: string;
@@ -41,10 +41,12 @@ interface TariffChargesDataType {
 
 interface TariffChargesMaintenanceProps {
   theme: Theme;
+  refresh: boolean;
 }
 
 const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   theme,
+  refresh,
 }) => {
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
   const [dataSource, setDataSource] = useState<TariffChargesDataType[]>([
@@ -125,16 +127,15 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   );
 
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
-  const formRef = useRef<FormInstance<any>>(Form.useForm()[0]);
-  const nestedFormRef = useRef<FormInstance<any>>(Form.useForm()[0]);
-  const [newRowValues, setNewRowValues] = useState<Partial<NestedDataType>>({});
+  const formRef = useRef<FormInstance<any>>(Form.useForm()[0]); // Initialize formRef with a FormInstance
 
-  const handleChangeNewRow = (fieldName: string, value: any) => {
-    setNewRowValues((prevValues) => ({
-      ...prevValues,
-      [fieldName]: value,
-    }));
-  };
+  const [refreshData, setRefreshData] = useState(false);
+
+  useEffect(() => {
+    if (refreshData) {
+      setRefreshData(false);
+    }
+  }, [refreshData]);
 
   const handleToggleColumns = (checked: boolean) => {
     setShowAdditionalColumns(checked);
@@ -174,15 +175,11 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           const updatedRecord = {
             ...record,
             ...formValues?.[record.key],
-            nestedData: record.nestedData?.map((nestedItem) => {
-              const nestedFormValues = nestedFormRef.current?.getFieldsValue();
-              const updatedNestedItem = {
-                ...nestedItem,
-                ...nestedFormValues?.[`${record.key}-${nestedItem.key}`],
-                isEditing: false,
-              };
-              return updatedNestedItem;
-            }),
+            nestedData: record.nestedData?.map((nestedItem) => ({
+              ...nestedItem,
+              ...formValues?.[`${record.key}-${nestedItem.key}`],
+              isEditing: false, // Set isEditing to false for nested items
+            })),
             effectiveDate: {
               value: formValues?.[record.key]?.effectiveDate,
               offset: new Date().getTimezoneOffset(),
@@ -199,6 +196,34 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       setDataSource(updatedDataSource);
       setEditingRecordKey(null);
       setExpandedRowKeys([key]);
+
+      // Update nested table data here
+      const updatedNestedData = formRef.current?.getFieldsValue() as {
+        [key: string]: NestedDataType;
+      };
+      const updatedNestedDataSource = updatedDataSource.find(
+        (record) => record.key === key
+      )?.nestedData;
+      if (updatedNestedDataSource && updatedNestedData) {
+        const updatedNestedDataArray = updatedNestedDataSource.map(
+          (nestedRecord: NestedDataType) => {
+            const updatedNestedRecord = {
+              ...nestedRecord,
+              ...updatedNestedData[`${key}-${nestedRecord.key}`],
+            };
+            return updatedNestedRecord;
+          }
+        );
+
+        const updatedDataSourceWithNestedData = updatedDataSource.map(
+          (record) =>
+            record.key === key
+              ? { ...record, nestedData: updatedNestedDataArray }
+              : record
+        );
+
+        setDataSource(updatedDataSourceWithNestedData);
+      }
 
       // Refresh data here, if applicable
       // displaySuccessMessage("Data saved successfully."); // Display success message, if needed
@@ -265,13 +290,12 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     setDataSource((prevDataSource) =>
       prevDataSource.map((item) => {
         if (item.key === recordKey) {
-          const updatedItem = {
+          return {
             ...item,
             nestedData: item.nestedData
               ? [...item.nestedData, newData]
               : [newData],
           };
-          return updatedItem;
         }
         return item;
       })
@@ -586,82 +610,23 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
               setExpandedRowKeys(expandedRows as React.Key[]);
             },
             expandedRowRender: (record) => {
-              const nestedRecord = dataSource.find(
-                (item) => item.key === record.key
-              );
+              const nestedRecord = dataSource.find((item) => item.key === record.key);
               const nestedData = nestedRecord?.nestedData || [];
-
+            
               return (
-                <Form form={nestedFormRef.current}>
-                  <ProTable<NestedDataType>
-                    columns={nestedColumns}
-                    dataSource={nestedData}
-                    rowKey="key"
-                    search={false}
-                    pagination={false}
-                    expandedRowKeys={expandedRowKeys}
-                    onExpandedRowsChange={(expandedRows) => {
-                      setExpandedRowKeys(expandedRows as React.Key[]);
-                    }}
-                    editable={{
-                      type: "multiple",
-                      onSave: async (rowKey, row) => {
-                        const updatedNestedData = dataSource.map((item) => {
-                          if (item.key === record.key) {
-                            return {
-                              ...item,
-                              nestedData: item.nestedData?.map((nestedItem) =>
-                                nestedItem.key === rowKey
-                                  ? { ...nestedItem, ...row }
-                                  : nestedItem
-                              ),
-                            };
-                          }
-                          return item;
-                        });
-                        setDataSource(updatedNestedData);
-                      },
-                      onChange: (
-                        editableKeys: React.Key[],
-                        editableRows: NestedDataType | NestedDataType[]
-                      ) => {
-                        const updatedMainDataSource = dataSource.map(
-                          (record) => {
-                            if (record.key === String(record.key)) {
-                              // Update the comparison condition here
-                              return {
-                                ...record,
-                                nestedData: Array.isArray(editableRows)
-                                  ? editableRows.map((nestedItem) => {
-                                      const matchingItem =
-                                        nestedFormRef.current?.getFieldValue(
-                                          `${record.key}-${nestedItem.key}`
-                                        );
-                                      return {
-                                        ...nestedItem,
-                                        ...(matchingItem || {}),
-                                      };
-                                    })
-                                  : [],
-                              };
-                            }
-                            return record;
-                          }
-                        );
-                        setDataSource(updatedMainDataSource);
-                      },
-                    }}
-                  />
-                </Form>
+                <ProTable<NestedDataType>
+                  columns={nestedColumns}
+                  dataSource={nestedData}
+                  rowKey="key"
+                  search={false}
+                  pagination={false}
+                  expandedRowKeys={expandedRowKeys}
+                  onExpandedRowsChange={(expandedRows) => {
+                    setExpandedRowKeys(expandedRows as React.Key[]);
+                  }}
+                />
               );
             },
-            rowExpandable: () => true,
           }}
-          bordered={false}
-        />
-      </Form>
-    </>
-  );
-};
-
+            
 export default TariffChargesMaintenance;

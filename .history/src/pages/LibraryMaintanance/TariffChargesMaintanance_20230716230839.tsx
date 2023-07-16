@@ -202,6 +202,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
       // Refresh data here, if applicable
       // displaySuccessMessage("Data saved successfully."); // Display success message, if needed
+
+      // Clear the new row values
+      setNewRowValues({});
     } catch (error) {
       console.log("Save error:", error);
       // displayErrorMessage("Failed to save data. Please try again."); // Display error message, if needed
@@ -260,6 +263,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       createDate: "",
       modifiedBy: "",
       modifiedDate: "",
+      ...newRowValues, // Include the new row values
     };
 
     setDataSource((prevDataSource) =>
@@ -281,6 +285,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       ...prevExpandedRowKeys,
       recordKey,
     ]);
+
+    // Clear the new row values
+    setNewRowValues({});
   };
 
   const generateUniqueKey = (): React.Key => {

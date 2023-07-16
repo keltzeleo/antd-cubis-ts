@@ -468,23 +468,25 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Block",
       dataIndex: "block",
       key: "block",
-      render: (_, record) => {
-        if (record.isEditing) {
+      render: (text, nestedRecord) => {
+        if (nestedRecord.isEditing) {
           return (
             <Form.Item
-              name={[`${record.key}`, "block"]}
-              initialValue={record.block}
+              name={[`${nestedRecord.key}`, "block"]}
+              initialValue={nestedRecord.block}
             >
               <ProFormDigitRange
                 fieldProps={{ precision: 0 }}
-                disabled={!record.isEditing}
+                disabled={!nestedRecord.isEditing}
               />
             </Form.Item>
           );
         }
         return (
           <span style={{ color: theme.colorText }}>
-            {record.block ? `${record.block[0]} - ${record.block[1]}m³` : ""}
+            {nestedRecord.block
+              ? `${nestedRecord.block[0]} - ${nestedRecord.block[1]}m³`
+              : ""}
           </span>
         );
       },
@@ -493,12 +495,12 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Rate",
       dataIndex: "rate",
       key: "rate",
-      render: (_, record) => {
-        if (record.isEditing) {
+      render: (text, nestedRecord) => {
+        if (nestedRecord.isEditing) {
           return (
             <Form.Item
-              name={[`${record.key}`, "rate"]}
-              initialValue={record.rate}
+              name={[`${nestedRecord.key}`, "rate"]}
+              initialValue={nestedRecord.rate}
               rules={[
                 {
                   pattern: /^\d+(\.\d{1,2})?$/,
@@ -508,15 +510,15 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             >
               <ProFormDigit
                 fieldProps={{ precision: 2 }}
-                disabled={!record.isEditing}
+                disabled={!nestedRecord.isEditing}
               />
             </Form.Item>
           );
         }
         return (
           <span style={{ color: theme.colorText }}>
-            {typeof record.rate === "number"
-              ? `RM ${record.rate.toFixed(2)}/m³`
+            {typeof nestedRecord.rate === "number"
+              ? `RM ${nestedRecord.rate.toFixed(2)}/m³`
               : ""}
           </span>
         );
@@ -548,10 +550,53 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             key: "modifiedDate",
             render: renderText,
           },
-        ]
-      : []),
-  ];
-
+          {
+            title: "Actions",
+            key: "actions",
+            width: 120,
+            render: (_: any, nestedRecord: NestedDataType) => {
+              const hasNestedRecords =
+                nestedRecord.nestedData && nestedRecord.nestedData.length > 0;
+          
+              if (nestedRecord.isEditing) {
+                return (
+                  <Space>
+                    <Button
+                      type="primary"
+                      onClick={() => handleSave(nestedRecord.key)}
+                    >
+                      Save
+                    </Button>
+                    <Button onClick={() => handleCancel(nestedRecord.key)}>Cancel</Button>
+                  </Space>
+                );
+              }
+          
+              return (
+                <Space>
+                  {hasNestedRecords && (
+                    <Button
+                      type="primary"
+                      onClick={() => handleEdit(nestedRecord.key, nestedRecord)}
+                    >
+                      Edit
+                    </Button>
+                  )}
+                  {hasNestedRecords && (
+                    <Button
+                      type="primary"
+                      danger
+                      icon={<DeleteOutlined />}
+                      onClick={() => handleDelete(nestedRecord, undefined)}
+                    >
+                      Delete
+                    </Button>
+                  )}
+                </Space>
+              );
+            },
+          },
+          
   return (
     <>
       <Form form={formRef.current}>
