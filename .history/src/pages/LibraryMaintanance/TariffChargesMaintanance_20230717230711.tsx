@@ -662,7 +662,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                     }
                     return Promise.reject(
                       new Error(
-                        "reminder: thestart of the block must be less than the end!"
+                        "reminder: the start of the block must be less than the end."
                       )
                     );
                   },
@@ -679,7 +679,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           // Render read-only text for non-editing mode
           return (
             <span style={{ color: theme.colorText }}>
-              {record.block ? `${record.block[0]} - ${record.block[1]}m³` : ""}
+              {record.block ? `{record.block[0]} - ${record.block[1]} m³ : ""}
             </span>
           );
         }

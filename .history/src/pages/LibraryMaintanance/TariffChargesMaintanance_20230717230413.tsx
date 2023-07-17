@@ -467,82 +467,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         return <span style={{ color: theme.colorText }}>RM {text}</span>;
       },
     },
-    {
-      title: "Block Consumption 1",
-      dataIndex: "nestedData",
-      key: "blockConsumption1",
-      render: (_, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item
-              name={[record.key, "blockConsumption1"]}
-              initialValue={record.nestedData?.[0]?.block}
-              rules={[
-                { required: true },
-                () => ({
-                  validator(_, value) {
-                    if (!value || value[0] < value[1]) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      new Error(
-                        "The start of the block must be less than the end!"
-                      )
-                    );
-                  },
-                }),
-              ]}
-            >
-              <ProFormDigitRange
-                fieldProps={{ precision: 0 }}
-                disabled={!record.isEditing}
-              />
-            </Form.Item>
-          );
-        } else {
-          return (
-            <span style={{ color: theme.colorText }}>
-              {record.nestedData?.[0]?.block
-                ? `${record.nestedData[0].block[0]} - ${record.nestedData[0].block[1]}m³`
-                : ""}
-            </span>
-          );
-        }
-      },
-    },
-    {
-      title: "Rate 1",
-      dataIndex: "nestedData",
-      key: "rate1",
-      render: (_, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item
-              name={[record.key, "rate1"]}
-              initialValue={record.nestedData?.[0]?.rate}
-              rules={[
-                {
-                  pattern: /^\d+(\.\d{1,2})?$/,
-                  message: "Please input a valid rate.",
-                  required: true,
-                },
-              ]}
-            >
-              <ProFormDigit
-                fieldProps={{ precision: 2 }}
-                disabled={!record.isEditing}
-              />
-            </Form.Item>
-          );
-        } else {
-          return (
-            <span style={{ color: theme.colorText }}>
-              RM {record.nestedData?.[0]?.rate?.toFixed(2) || ""}
-            </span>
-          );
-        }
-      },
-    },
+
     ...(showAdditionalColumns
       ? [
           {
@@ -646,13 +571,13 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       title: "Block",
       dataIndex: "block",
       key: "block",
-      render: (_, record) => {
+      render: (text, record) => {
         if (record.isEditing) {
           // Render editable form fields for editing mode
           return (
             <Form.Item
               name={[record.key, "block"]}
-              initialValue={record.block}
+              initialValue={text}
               rules={[
                 { required: true },
                 () => ({
@@ -662,7 +587,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                     }
                     return Promise.reject(
                       new Error(
-                        "reminder: thestart of the block must be less than the end!"
+                        "reminder: the start of the block must be less than the end."
                       )
                     );
                   },
@@ -679,7 +604,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           // Render read-only text for non-editing mode
           return (
             <span style={{ color: theme.colorText }}>
-              {record.block ? `${record.block[0]} - ${record.block[1]}m³` : ""}
+              {text ? renderText(text) : ""}m³
             </span>
           );
         }

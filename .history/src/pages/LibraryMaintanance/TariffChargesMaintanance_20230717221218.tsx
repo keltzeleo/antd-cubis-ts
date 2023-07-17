@@ -20,7 +20,8 @@ interface Theme {
 }
 
 interface NestedDataType {
-  key: string;
+  key: React.Key;
+  nestedKey?: React.Key; // Add the nestedKey property
   status: string;
   block?: [number, number] | null;
   rate?: number;
@@ -33,7 +34,7 @@ interface NestedDataType {
 }
 
 interface TariffChargesDataType {
-  key: string;
+  key: React.Key;
   tariffCode: string;
   tariffAbbreviation: string;
   monthlyMinimumCharges?: number;
@@ -60,6 +61,8 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       tariffCode: "TAR-001",
       tariffAbbreviation: "TA",
       monthlyMinimumCharges: 100,
+      block1: [0, 10],
+      rate1: 0.03,
       effectiveDate: "2023-07-01",
       createdBy: "John Doe",
       createDate: "2023-07-01",
@@ -70,7 +73,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           key: "1-1",
           status: "Applied",
           block: [0, 10],
-          rate: 2,
+          rate: 0.03,
           effectiveDate: "2023-07-01",
           createdBy: "John Doe",
           createDate: "2023-07-01",
@@ -240,10 +243,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                 ...nestedItem,
                 ...(matchingItem || {}),
                 isEditing: false,
-                rate:
-                  matchingItem?.rate !== undefined
-                    ? Number(matchingItem.rate)
-                    : nestedItem.rate, // Convert rate value to a number
+                rate: matchingItem?.rate || nestedItem.rate, // Update the rate value
               };
             }),
             effectiveDate: {
@@ -380,9 +380,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     ]);
   };
 
-  const generateUniqueKey = (): string => {
+  const generateUniqueKey = (): React.Key => {
     const timestamp = new Date().getTime();
-    return `new-row-${timestamp.toString()}`;
+    return `new-row-${timestamp}`;
   };
 
   const renderText = (text: ReactNode) => {
@@ -651,7 +651,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           // Render editable form fields for editing mode
           return (
             <Form.Item
-              name={[record.key, "block"]}
+              name={[`${record.key}`, "block"]}
               initialValue={record.block}
               rules={[
                 { required: true },
@@ -662,7 +662,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                     }
                     return Promise.reject(
                       new Error(
-                        "reminder: thestart of the block must be less than the end!"
+                        "The start of the block must be less than the end!"
                       )
                     );
                   },

@@ -651,7 +651,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           // Render editable form fields for editing mode
           return (
             <Form.Item
-              name={[record.key, "block"]}
+              name={[`${record.key}`, "block"]}
               initialValue={record.block}
               rules={[
                 { required: true },
@@ -662,7 +662,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                     }
                     return Promise.reject(
                       new Error(
-                        "reminder: thestart of the block must be less than the end!"
+                        "The start of the block must be less than the end!"
                       )
                     );
                   },

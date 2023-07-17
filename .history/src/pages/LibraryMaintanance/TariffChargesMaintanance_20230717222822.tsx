@@ -60,6 +60,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       tariffCode: "TAR-001",
       tariffAbbreviation: "TA",
       monthlyMinimumCharges: 100,
+
       effectiveDate: "2023-07-01",
       createdBy: "John Doe",
       createDate: "2023-07-01",
@@ -380,9 +381,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     ]);
   };
 
-  const generateUniqueKey = (): string => {
+  const generateUniqueKey = (): React.Key => {
     const timestamp = new Date().getTime();
-    return `new-row-${timestamp.toString()}`;
+    return `new-row-${timestamp}`;
   };
 
   const renderText = (text: ReactNode) => {
@@ -651,7 +652,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           // Render editable form fields for editing mode
           return (
             <Form.Item
-              name={[record.key, "block"]}
+              name={[`${record.key}`, "block"]}
               initialValue={record.block}
               rules={[
                 { required: true },
@@ -662,7 +663,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                     }
                     return Promise.reject(
                       new Error(
-                        "reminder: thestart of the block must be less than the end!"
+                        "The start of the block must be less than the end!"
                       )
                     );
                   },
