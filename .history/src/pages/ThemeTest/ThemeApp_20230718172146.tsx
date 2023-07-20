@@ -6,7 +6,7 @@ import TariffChargesMaintenance from "../LibraryMaintanance/TariffChargesMaintan
 // import ThemeTest from "../ThemeTest/ThemeTest";
 import dark from "../../tokens/dark.json";
 import light from "../../tokens/light.json";
-import EditableTable from "../LibraryMaintanance/EditableTable";
+import Demo from "../LibraryMaintanance/Demo";
 
 interface Theme {
   [key: string]: string;
@@ -33,9 +33,9 @@ const ThemeApp: React.FC = () => {
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
       {/* <AppointmentUpdates theme={isDarkMode ? dark : light} /> */}
-      <EditableTable />
       <TariffChargesMaintenance theme={isDarkMode ? dark : light} />
       {/* <TariffChargesMaintenanceCard theme={isDarkMode ? dark : light} /> */}
+      <Demo />
       {/* <ThemeTest /> */}
     </ConfigProvider>
   );

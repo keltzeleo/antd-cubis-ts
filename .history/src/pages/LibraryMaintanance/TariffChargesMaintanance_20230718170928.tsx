@@ -27,7 +27,7 @@ interface NestedDataType {
   effectiveDate?: string;
   isEditing?: boolean;
   createdBy: string;
-  createdDate: string;
+  createDate: string;
   modifiedBy: string;
   modifiedDate: string;
 }
@@ -40,7 +40,7 @@ interface TariffChargesDataType {
   effectiveDate?: string;
   isEditing?: boolean;
   createdBy: string;
-  createdDate: string;
+  createDate: string;
   modifiedBy: string;
   modifiedDate: string;
   nestedData?: NestedDataType[];
@@ -62,7 +62,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       monthlyMinimumCharges: 100,
       effectiveDate: "2023-07-01",
       createdBy: "John Doe",
-      createdDate: "2023-07-01",
+      createDate: "2023-07-01",
       modifiedBy: "John Doe",
       modifiedDate: "2023-07-01",
       nestedData: [
@@ -73,7 +73,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           rate: 2,
           effectiveDate: "2023-07-01",
           createdBy: "John Doe",
-          createdDate: "2023-07-01",
+          createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
@@ -84,7 +84,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           rate: 0.08,
           effectiveDate: "2023-07-01",
           createdBy: "John Doe",
-          createdDate: "2023-07-01",
+          createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
@@ -95,7 +95,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           rate: 0.13,
           effectiveDate: "2023-07-01",
           createdBy: "John Doe",
-          createdDate: "2023-07-01",
+          createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
@@ -108,7 +108,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       monthlyMinimumCharges: 150,
       effectiveDate: "2023-07-01",
       createdBy: "Jane Smith",
-      createdDate: "2023-07-01",
+      createDate: "2023-07-01",
       modifiedBy: "Jane Smith",
       modifiedDate: "2023-07-01",
       nestedData: [
@@ -119,7 +119,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           rate: 0.05,
           effectiveDate: "2023-07-01",
           createdBy: "Jane Smith",
-          createdDate: "2023-07-01",
+          createDate: "2023-07-01",
           modifiedBy: "Jane Smith",
           modifiedDate: "2023-07-01",
         },
@@ -130,7 +130,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           rate: 0.18,
           effectiveDate: "2023-07-01",
           createdBy: "John Doe",
-          createdDate: "2023-07-01",
+          createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
@@ -141,7 +141,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           rate: 0.23,
           effectiveDate: "2023-07-01",
           createdBy: "John Doe",
-          createdDate: "2023-07-01",
+          createDate: "2023-07-01",
           modifiedBy: "John Doe",
           modifiedDate: "2023-07-01",
         },
@@ -354,7 +354,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       effectiveDate: "",
       isEditing: true,
       createdBy: "",
-      createdDate: "",
+      createDate: "",
       modifiedBy: "",
       modifiedDate: "",
     };
@@ -552,9 +552,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             render: renderText,
           },
           {
-            title: "Created Date",
-            dataIndex: "createdDate",
-            key: "createdDate",
+            title: "Create Date",
+            dataIndex: "createDate",
+            key: "createDate",
             render: renderText,
           },
           {
@@ -643,7 +643,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       render: renderText,
     },
     {
-      title: "Block Consumption",
+      title: "Block",
       dataIndex: "block",
       key: "block",
       render: (_, record) => {
@@ -730,9 +730,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             render: renderText,
           },
           {
-            title: "Created Date",
-            dataIndex: "createdDate",
-            key: "createdDate",
+            title: "Create Date",
+            dataIndex: "createDate",
+            key: "createDate",
             render: renderText,
           },
           {
@@ -758,58 +758,43 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           columns={columns}
           dataSource={dataSource}
           rowKey="key"
-          search={false}
-          headerTitle={
-            <span
-              style={{
-                fontFamily: theme.fontFamily,
-              }}
-            >
-              Tariff Charges Maintenance
-            </span>
-          }
-          toolbar={{
-            actions: [
-              <Checkbox
-                key="toggleColumns"
-                checked={showAdditionalColumns}
-                onChange={(e) => handleToggleColumns(e.target.checked)}
-              >
-                Show Additional Columns
-              </Checkbox>,
-            ],
-          }}
           expandable={{
             expandedRowKeys,
-            onExpandedRowsChange: (expandedRows) => {
-              setExpandedRowKeys(expandedRows as React.Key[]);
-            },
-            expandedRowRender: (record) => {
-              const nestedRecord = dataSource.find(
-                (item) => item.key === record.key
-              );
-              const nestedData = nestedRecord?.nestedData || [];
-
-              return (
-                <Form form={nestedFormRef.current}>
-                  <ProTable<NestedDataType>
-                    columns={nestedColumns}
-                    dataSource={nestedData}
-                    rowKey="key"
-                    search={false}
-                    pagination={false}
-                    editable={{
-                      type: "multiple",
-                    }}
-                  />
-                </Form>
-              );
-            },
-            rowExpandable: () => true,
+            onExpandedRowsChange: setExpandedRowKeys,
+            expandedRowRender: (record) => (
+              <ProTable<NestedDataType>
+                columns={nestedColumns}
+                dataSource={record.nestedData}
+                rowKey="key"
+                search={false}
+                pagination={false}
+                options={false}
+                tableStyle={{ width: "100%" }}
+                formRef={nestedFormRef.current}
+                editable={{
+                  type: "multiple",
+                  editableKeys: nestedExpandedRowKeys,
+                  onSave: (key, row) => handleSave(key),
+                  onChange: (keys, rows) =>
+                    handleNestedTableChange(record.key, rows),
+                  onCancel: (key, row) => handleCancel(key),
+                  onDelete: (row) =>
+                    handleDelete(row, record as TariffChargesDataType),
+                }}
+              />
+            ),
+            expandRowByClick: true,
           }}
-          bordered={false}
         />
       </Form>
+      <div>
+        <Checkbox
+          checked={showAdditionalColumns}
+          onChange={(e) => handleToggleColumns(e.target.checked)}
+        >
+          Show Additional Columns
+        </Checkbox>
+      </div>
     </>
   );
 };

@@ -643,7 +643,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       render: renderText,
     },
     {
-      title: "Block Consumption",
+      title: "Block",
       dataIndex: "block",
       key: "block",
       render: (_, record) => {
