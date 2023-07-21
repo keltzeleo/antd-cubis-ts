@@ -17,7 +17,7 @@ const waitTime = (time: number = 100) => {
 
 type DataSourceType = {
   id: React.Key;
-  title?: string;
+  tariffCode?: string;
   readonly?: string;
   decs?: string;
   state?: string;
@@ -31,7 +31,7 @@ type DataSourceType = {
 const defaultData: DataSourceType[] = [
   {
     id: 624748504,
-    title: "活动名称一",
+    tariffCode: "活动名称一",
     readonly: "活动名称一",
     decs: "这个活动真好玩",
     state: "open",
@@ -42,7 +42,7 @@ const defaultData: DataSourceType[] = [
   },
   {
     id: 624691229,
-    title: "活动名称二",
+    tariffCode: "活动名称二",
     readonly: "活动名称二",
     decs: "这个活动真好玩",
     state: "closed",
@@ -62,7 +62,7 @@ const EditableTable: React.FC = () => {
 
   const columns: ProColumns<DataSourceType>[] = [
     {
-      title: "活动名称",
+      tariffCode: "活动名称",
       dataIndex: "title",
       tooltip: "只读，使用form.getFieldValue获取不到值",
       formItemProps: (form, { rowIndex }) => {
@@ -78,14 +78,14 @@ const EditableTable: React.FC = () => {
       width: "15%",
     },
     {
-      title: "活动名称二",
+      tariffCode: "活动名称二",
       dataIndex: "readonly",
       tooltip: "只读，使用form.getFieldValue可以获取到值",
       readonly: true,
       width: "15%",
     },
     {
-      title: "状态",
+      tariffCode: "状态",
       key: "state",
       dataIndex: "state",
       valueType: "select",
@@ -102,7 +102,7 @@ const EditableTable: React.FC = () => {
       },
     },
     {
-      title: "描述",
+      tariffCode: "描述",
       dataIndex: "decs",
       fieldProps: (form, { rowKey, rowIndex }) => {
         if (form.getFieldValue([rowKey || "", "title"]) === "不好玩") {
@@ -119,12 +119,12 @@ const EditableTable: React.FC = () => {
       },
     },
     {
-      title: "活动时间",
+      tariffCode: "活动时间",
       dataIndex: "created_at",
       valueType: "date",
     },
     {
-      title: "Block", // Added column header for "Block"
+      tariffCode: "Block", // Added column header for "Block"
       dataIndex: "blocks",
       readonly: true, // Read-only
       width: "10%",
@@ -133,7 +133,7 @@ const EditableTable: React.FC = () => {
       ),
     },
     {
-      title: "Rate", // Added column header for "Rate"
+      tariffCode: "Rate", // Added column header for "Rate"
       dataIndex: "rates",
       readonly: true, // Read-only
       width: "10%",
@@ -142,7 +142,7 @@ const EditableTable: React.FC = () => {
       ),
     },
     {
-      title: "操作",
+      tariffCode: "操作",
       valueType: "option",
       width: 200,
       render: (text, record, _, action) => [
