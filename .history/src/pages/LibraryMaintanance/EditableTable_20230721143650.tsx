@@ -122,7 +122,7 @@ const EditableTable: React.FC = () => {
       title: 'Block Consumption 1',
       dataIndex: 'blockConsumption1',
       valueType: 'digitRange', // use 'digitRange' to enter two numbers
-      width: '150',
+      width: '15%',
       render: (text, record) => (
         <span>
           {record.blockConsumption1 &&
@@ -134,13 +134,13 @@ const EditableTable: React.FC = () => {
       title: 'Rates 1',
       dataIndex: 'ratespercubicm1', // Updated to "ratespercubicm1"
       valueType: 'digit', // use 'digit' to enter one number
-      width: '100',
+      width: '10%',
     },
     {
       title: 'Block Consumption 2',
       dataIndex: 'blockConsumption2',
       valueType: 'digitRange', // use 'digitRange' to enter two numbers
-      width: '150',
+      width: '15%',
       render: (text, record) => (
         <span>
           {record.blockConsumption1 &&
@@ -152,7 +152,24 @@ const EditableTable: React.FC = () => {
       title: 'Rates 2',
       dataIndex: 'ratespercubicm2', // Updated to "ratespercubicm1"
       valueType: 'digit', // use 'digit' to enter one number
-      width: '100',
+      width: '10%',
+    },
+    {
+      title: '描述',
+      dataIndex: 'decs',
+      fieldProps: (form, { rowKey, rowIndex }) => {
+        if (form.getFieldValue([rowKey || '', 'title']) === '不好玩') {
+          return {
+            disabled: true,
+          };
+        }
+        if (rowIndex > 9) {
+          return {
+            disabled: true,
+          };
+        }
+        return {};
+      },
     },
     {
       title: '活动时间',

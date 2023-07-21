@@ -20,6 +20,8 @@ type DataSourceType = {
   title?: string;
   tariffCode?: string;
   tariffAbbreviation?: string;
+  readonly?: string;
+  decs?: string;
   state?: string;
   created_at?: string;
   update_at?: string;
@@ -36,8 +38,10 @@ const defaultData: DataSourceType[] = [
   {
     id: 624748504,
     title: '活动名称一',
+    readonly: '活动名称一',
     tariffCode: 'TAR-001',
     tariffAbbreviation: 'TA',
+    decs: '这个活动真好玩',
     state: 'open',
     created_at: '1590486176000',
     update_at: '1590486176000',
@@ -51,8 +55,10 @@ const defaultData: DataSourceType[] = [
   {
     id: 624691229,
     title: '活动名称二',
+    readonly: '活动名称二',
     tariffCode: 'TAR-002',
     tariffAbbreviation: 'TB',
+    decs: '这个活动真好玩',
     state: 'closed',
     created_at: '1590481162000',
     update_at: '1590481162000',
@@ -90,6 +96,13 @@ const EditableTable: React.FC = () => {
       width: '15%',
     },
     {
+      title: '活动名称二',
+      dataIndex: 'readonly',
+      tooltip: '只读，使用form.getFieldValue可以获取到值',
+      readonly: true,
+      width: '15%',
+    },
+    {
       title: '状态',
       key: 'state',
       dataIndex: 'state',
@@ -122,7 +135,7 @@ const EditableTable: React.FC = () => {
       title: 'Block Consumption 1',
       dataIndex: 'blockConsumption1',
       valueType: 'digitRange', // use 'digitRange' to enter two numbers
-      width: '150',
+      width: '15%',
       render: (text, record) => (
         <span>
           {record.blockConsumption1 &&
@@ -134,13 +147,13 @@ const EditableTable: React.FC = () => {
       title: 'Rates 1',
       dataIndex: 'ratespercubicm1', // Updated to "ratespercubicm1"
       valueType: 'digit', // use 'digit' to enter one number
-      width: '100',
+      width: '10%',
     },
     {
       title: 'Block Consumption 2',
       dataIndex: 'blockConsumption2',
       valueType: 'digitRange', // use 'digitRange' to enter two numbers
-      width: '150',
+      width: '15%',
       render: (text, record) => (
         <span>
           {record.blockConsumption1 &&
@@ -152,7 +165,24 @@ const EditableTable: React.FC = () => {
       title: 'Rates 2',
       dataIndex: 'ratespercubicm2', // Updated to "ratespercubicm1"
       valueType: 'digit', // use 'digit' to enter one number
-      width: '100',
+      width: '10%',
+    },
+    {
+      title: '描述',
+      dataIndex: 'decs',
+      fieldProps: (form, { rowKey, rowIndex }) => {
+        if (form.getFieldValue([rowKey || '', 'title']) === '不好玩') {
+          return {
+            disabled: true,
+          };
+        }
+        if (rowIndex > 9) {
+          return {
+            disabled: true,
+          };
+        }
+        return {};
+      },
     },
     {
       title: '活动时间',
@@ -180,8 +210,7 @@ const EditableTable: React.FC = () => {
     {
       title: '操作',
       valueType: 'option',
-      width: 150, // Adjust the width to 150
-      fixed: 'right', // Make this a fixed column
+      width: 200,
       render: (text, record, _, action) => [
         <a
           key="editable"
@@ -210,7 +239,7 @@ const EditableTable: React.FC = () => {
         headerTitle="可编辑表格"
         maxLength={5}
         scroll={{
-          x: 'max-content', // This will enable horizontal scrolling if the table content overflows the container width
+          x: 960,
         }}
         recordCreatorProps={
           position !== 'hidden'

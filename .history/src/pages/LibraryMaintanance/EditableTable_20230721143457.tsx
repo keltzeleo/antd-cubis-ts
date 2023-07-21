@@ -17,9 +17,9 @@ const waitTime = (time: number = 100) => {
 
 type DataSourceType = {
   id: React.Key;
-  title?: string;
   tariffCode?: string;
   tariffAbbreviation?: string;
+  decs?: string;
   state?: string;
   created_at?: string;
   update_at?: string;
@@ -35,9 +35,9 @@ type DataSourceType = {
 const defaultData: DataSourceType[] = [
   {
     id: 624748504,
-    title: '活动名称一',
     tariffCode: 'TAR-001',
     tariffAbbreviation: 'TA',
+    decs: '这个活动真好玩',
     state: 'open',
     created_at: '1590486176000',
     update_at: '1590486176000',
@@ -50,9 +50,9 @@ const defaultData: DataSourceType[] = [
   },
   {
     id: 624691229,
-    title: '活动名称二',
     tariffCode: 'TAR-002',
     tariffAbbreviation: 'TB',
+    decs: '这个活动真好玩',
     state: 'closed',
     created_at: '1590481162000',
     update_at: '1590481162000',
@@ -73,22 +73,6 @@ const EditableTable: React.FC = () => {
   );
 
   const columns: ProColumns<DataSourceType>[] = [
-    {
-      title: '活动名称',
-      dataIndex: 'title',
-      tooltip: '只读，使用form.getFieldValue获取不到值',
-      formItemProps: (form, { rowIndex }) => {
-        return {
-          rules:
-            rowIndex > 1 ? [{ required: true, message: '此项为必填项' }] : [],
-        };
-      },
-      // 第一行不允许编辑
-      editable: (text, record, index) => {
-        return index !== 0;
-      },
-      width: '15%',
-    },
     {
       title: '状态',
       key: 'state',
@@ -122,7 +106,7 @@ const EditableTable: React.FC = () => {
       title: 'Block Consumption 1',
       dataIndex: 'blockConsumption1',
       valueType: 'digitRange', // use 'digitRange' to enter two numbers
-      width: '150',
+      width: '15%',
       render: (text, record) => (
         <span>
           {record.blockConsumption1 &&
@@ -134,13 +118,13 @@ const EditableTable: React.FC = () => {
       title: 'Rates 1',
       dataIndex: 'ratespercubicm1', // Updated to "ratespercubicm1"
       valueType: 'digit', // use 'digit' to enter one number
-      width: '100',
+      width: '10%',
     },
     {
       title: 'Block Consumption 2',
       dataIndex: 'blockConsumption2',
       valueType: 'digitRange', // use 'digitRange' to enter two numbers
-      width: '150',
+      width: '15%',
       render: (text, record) => (
         <span>
           {record.blockConsumption1 &&
@@ -152,7 +136,24 @@ const EditableTable: React.FC = () => {
       title: 'Rates 2',
       dataIndex: 'ratespercubicm2', // Updated to "ratespercubicm1"
       valueType: 'digit', // use 'digit' to enter one number
-      width: '100',
+      width: '10%',
+    },
+    {
+      title: '描述',
+      dataIndex: 'decs',
+      fieldProps: (form, { rowKey, rowIndex }) => {
+        if (form.getFieldValue([rowKey || '', 'title']) === '不好玩') {
+          return {
+            disabled: true,
+          };
+        }
+        if (rowIndex > 9) {
+          return {
+            disabled: true,
+          };
+        }
+        return {};
+      },
     },
     {
       title: '活动时间',
