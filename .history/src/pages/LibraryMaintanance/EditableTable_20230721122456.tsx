@@ -139,7 +139,7 @@ const EditableTable: React.FC = () => {
     },
     {
       title: 'Rates 1',
-      dataIndex: 'ratespercubicm1', // Updated to "ratespercubicm1"
+      dataIndex: 'ratespercubicm1',
       readonly: true, // Read-only
       width: '10%',
     },

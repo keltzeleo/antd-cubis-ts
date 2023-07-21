@@ -126,24 +126,6 @@ const EditableTable: React.FC = () => {
       readonly: true,
     },
     {
-      title: 'Block Consumption 1',
-      dataIndex: 'blockConsumption1',
-      readonly: true, // Read-only
-      width: '15%',
-      render: (text, record) => (
-        <span>
-          {record.blockConsumption1 &&
-            `${record.blockConsumption1[0]} - ${record.blockConsumption1[1]}`}
-        </span>
-      ),
-    },
-    {
-      title: 'Rates 1',
-      dataIndex: 'ratespercubicm1', // Updated to "ratespercubicm1"
-      readonly: true, // Read-only
-      width: '10%',
-    },
-    {
       title: '描述',
       dataIndex: 'decs',
       fieldProps: (form, { rowKey, rowIndex }) => {

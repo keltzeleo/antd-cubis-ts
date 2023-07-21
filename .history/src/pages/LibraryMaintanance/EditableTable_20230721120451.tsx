@@ -26,7 +26,7 @@ type DataSourceType = {
   created_at?: string;
   update_at?: string;
   blockConsumption1?: [number, number] | null;
-  ratespercubicm1?: number;
+  rates1?: number;
   blocks?: string[]; // Array to store "Block" values
   rates?: string[]; // Array to store "Rate" values
   children?: DataSourceType[];
@@ -44,7 +44,7 @@ const defaultData: DataSourceType[] = [
     created_at: '1590486176000',
     update_at: '1590486176000',
     blockConsumption1: [0, 19],
-    ratespercubicm1: 0.03,
+    rate1: 0.03,
     blocks: ['Block 1', 'Block 2', 'Block 3', 'Block 4', 'Block 5', 'Block 6'], // Added mock data for "Block" column
     rates: ['Rate 1', 'Rate 2', 'Rate 3', 'Rate 4', 'Rate 5', 'Rate 6'], // Added mock data for "Rate" column
   },
@@ -58,8 +58,6 @@ const defaultData: DataSourceType[] = [
     state: 'closed',
     created_at: '1590481162000',
     update_at: '1590481162000',
-    blockConsumption1: [0, 15],
-    ratespercubicm1: 0.05,
     blocks: ['Block 1', 'Block 2', 'Block 3', 'Block 4', 'Block 5', 'Block 6'], // Added mock data for "Block" column
     rates: ['Rate 1', 'Rate 2', 'Rate 3', 'Rate 4', 'Rate 5', 'Rate 6'], // Added mock data for "Rate" column
   },
@@ -124,24 +122,6 @@ const EditableTable: React.FC = () => {
       dataIndex: 'tariffAbbreviation',
       valueType: 'text',
       readonly: true,
-    },
-    {
-      title: 'Block Consumption 1',
-      dataIndex: 'blockConsumption1',
-      readonly: true, // Read-only
-      width: '15%',
-      render: (text, record) => (
-        <span>
-          {record.blockConsumption1 &&
-            `${record.blockConsumption1[0]} - ${record.blockConsumption1[1]}`}
-        </span>
-      ),
-    },
-    {
-      title: 'Rates 1',
-      dataIndex: 'ratespercubicm1', // Updated to "ratespercubicm1"
-      readonly: true, // Read-only
-      width: '10%',
     },
     {
       title: '描述',
