@@ -1,10 +1,11 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import {
+  ProColumns,
   ProFormDatePicker,
   ProFormDigit,
   ProFormDigitRange,
-} from "@ant-design/pro-form";
-import ProTable, { ProColumns } from "@ant-design/pro-table";
+  ProTable,
+} from "@ant-design/pro-components";
 import {
   Button,
   Checkbox,
@@ -13,6 +14,7 @@ import {
   Space,
   notification,
 } from "antd";
+import moment from "moment";
 import React, { ReactNode, useRef, useState } from "react";
 
 interface Theme {
@@ -27,7 +29,7 @@ interface NestedDataType {
   effectiveDate?: string;
   isEditing?: boolean;
   createdBy: string;
-  createdDate: string;
+  createDate: string;
   modifiedBy: string;
   modifiedDate: string;
 }
@@ -37,10 +39,12 @@ interface TariffChargesDataType {
   tariffCode: string;
   tariffAbbreviation: string;
   monthlyMinimumCharges?: number;
+  rate1?: number;
+  rate5?: number;
   effectiveDate?: string;
   isEditing?: boolean;
   createdBy: string;
-  createdDate: string;
+  createDate: string;
   modifiedBy: string;
   modifiedDate: string;
   nestedData?: NestedDataType[];
@@ -60,44 +64,45 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       tariffCode: "TAR-001",
       tariffAbbreviation: "TA",
       monthlyMinimumCharges: 100,
-      effectiveDate: "2023-07-01",
+      effectiveDate: "07-07-2023",
       createdBy: "John Doe",
-      createdDate: "2023-07-01",
+      createDate: "07-07-2023",
       modifiedBy: "John Doe",
-      modifiedDate: "2023-07-01",
+      modifiedDate: "07-07-2023",
+      rate1: 1.23,
       nestedData: [
         {
           key: "1-1",
           status: "Applied",
           block: [0, 10],
           rate: 2,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "07-07-2023",
           createdBy: "John Doe",
-          createdDate: "2023-07-01",
+          createDate: "07-07-2023",
           modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
+          modifiedDate: "07-07-2023",
         },
         {
           key: "1-2",
           status: "Applied",
           block: [11, 20],
           rate: 0.08,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "07-07-2023",
           createdBy: "John Doe",
-          createdDate: "2023-07-01",
+          createDate: "07-07-2023",
           modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
+          modifiedDate: "07-07-2023",
         },
         {
           key: "1-3",
           status: "Pending",
           block: [21, 100],
           rate: 0.13,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "07-07-2023",
           createdBy: "John Doe",
-          createdDate: "2023-07-01",
+          createDate: "07-07-2023",
           modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
+          modifiedDate: "07-07-2023",
         },
       ],
     },
@@ -106,44 +111,45 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       tariffCode: "TAR-002",
       tariffAbbreviation: "TB",
       monthlyMinimumCharges: 150,
-      effectiveDate: "2023-07-01",
+      effectiveDate: "07-07-2023",
       createdBy: "Jane Smith",
-      createdDate: "2023-07-01",
+      createDate: "07-07-2023",
       modifiedBy: "Jane Smith",
-      modifiedDate: "2023-07-01",
+      modifiedDate: "07-07-2023",
+      rate1: 1.13,
       nestedData: [
         {
           key: "2-1",
           status: "Applied",
           block: [0, 20],
           rate: 0.05,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "07-07-2023",
           createdBy: "Jane Smith",
-          createdDate: "2023-07-01",
+          createDate: "07-07-2023",
           modifiedBy: "Jane Smith",
-          modifiedDate: "2023-07-01",
+          modifiedDate: "07-07-2023",
         },
         {
           key: "2-2",
           status: "Applied",
           block: [21, 30],
           rate: 0.18,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "07-07-2023",
           createdBy: "John Doe",
-          createdDate: "2023-07-01",
+          createDate: "07-07-2023",
           modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
+          modifiedDate: "07-07-2023",
         },
         {
           key: "2-3",
           status: "Pending",
           block: [31, 100],
           rate: 0.23,
-          effectiveDate: "2023-07-01",
+          effectiveDate: "07-07-2023",
           createdBy: "John Doe",
-          createdDate: "2023-07-01",
+          createDate: "07-07-2023",
           modifiedBy: "John Doe",
-          modifiedDate: "2023-07-01",
+          modifiedDate: "07-07-2023",
         },
       ],
     },
@@ -198,7 +204,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     mainRecord: TariffChargesDataType
   ) => {
     setNestedEditingRecordKey(recordKey);
-
+    console.log("main record" + mainRecord.nestedData[0].rate);
     setDataSource((prevDataSource) =>
       prevDataSource.map((item) => ({
         ...item,
@@ -230,6 +236,13 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       const updatedDataSource = dataSource.map((record) => {
         if (record.key === key) {
           const formValues = formRef.current?.getFieldsValue();
+
+          // Convert the effectiveDate to the desired format
+          const effectiveDate = formValues?.[record.key]?.effectiveDate;
+          const effectiveDateString = effectiveDate
+            ? effectiveDate.format("DD-MM-YYYY")
+            : undefined;
+
           const updatedRecord = {
             ...record,
             ...formValues?.[record.key],
@@ -243,19 +256,16 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                 rate:
                   matchingItem?.rate !== undefined
                     ? Number(matchingItem.rate)
-                    : nestedItem.rate, // Convert rate value to a number
+                    : nestedItem.rate,
+                block: matchingItem?.block || nestedItem.block, // This line updates the block consumption value
               };
             }),
-            effectiveDate: {
-              value: formValues?.[record.key]?.effectiveDate,
-              offset: new Date().getTimezoneOffset(),
-            },
+            effectiveDate: effectiveDateString, // Use the string date
             isEditing: false,
           };
 
           return updatedRecord;
         }
-
         return record;
       });
 
@@ -346,6 +356,12 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
   };
 
   const handleAddAdditionalRow = (recordKey: React.Key) => {
+    const currentDate = new Date();
+    const currentDateString = `${("0" + currentDate.getDate()).slice(-2)}-${(
+      "0" +
+      (currentDate.getMonth() + 1)
+    ).slice(-2)}-${currentDate.getFullYear()}`;
+
     const newData: NestedDataType = {
       key: generateUniqueKey(),
       status: "",
@@ -354,7 +370,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       effectiveDate: "",
       isEditing: true,
       createdBy: "",
-      createdDate: "",
+      createDate: currentDateString,
       modifiedBy: "",
       modifiedDate: "",
     };
@@ -392,10 +408,28 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           value: string;
           offset: number;
         };
-        const date = new Date(value);
-        date.setMinutes(date.getMinutes() - offset);
-        const adjustedDate = date.toISOString().split("T")[0];
-        return adjustedDate;
+
+        // Check if value is a string before calling split function
+        if (typeof value === "string") {
+          const dateArray = value.split("-");
+          const date = new Date(
+            +dateArray[0],
+            +dateArray[1] - 1,
+            +dateArray[2]
+          );
+          date.setMinutes(date.getMinutes() - offset);
+          const adjustedDate = `${("0" + date.getDate()).slice(-2)}-${(
+            "0" +
+            (date.getMonth() + 1)
+          ).slice(-2)}-${date.getFullYear()}`;
+          return adjustedDate;
+        } else if (moment.isMoment(value)) {
+          // If value is a moment object, return its string representation
+          return (value as moment.Moment).format("DD-MM-YYYY");
+        } else {
+          // Return a default value or handle the non-string case
+          return JSON.stringify(value);
+        }
       }
       return JSON.stringify(text);
     }
@@ -430,7 +464,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           return (
             <Form.Item
               name={[record.key, "effectiveDate"]}
-              initialValue={text}
+              initialValue={
+                typeof text === "string" ? moment(text, "DD-MM-YYYY") : null
+              }
               rules={[{ required: true }]}
             >
               <ProFormDatePicker disabled={!record.isEditing} />
@@ -512,21 +548,15 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     },
     {
       title: "Rate 1",
-      dataIndex: "nestedData",
+      dataIndex: "rate1",
       key: "rate1",
-      render: (_, record) => {
+      render: (text, record) => {
         if (record.isEditing) {
           return (
             <Form.Item
               name={[record.key, "rate1"]}
-              initialValue={record.nestedData?.[0]?.rate}
-              rules={[
-                {
-                  pattern: /^\d+(\.\d{1,2})?$/,
-                  message: "Please input a valid rate.",
-                  required: true,
-                },
-              ]}
+              initialValue={text}
+              rules={[{ required: true }]}
             >
               <ProFormDigit
                 fieldProps={{ precision: 2 }}
@@ -534,15 +564,12 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
               />
             </Form.Item>
           );
-        } else {
-          return (
-            <span style={{ color: theme.colorText }}>
-              RM {record.nestedData?.[0]?.rate?.toFixed(2) || ""}
-            </span>
-          );
         }
+
+        return <span style={{ color: theme.colorText }}>RM {text}</span>;
       },
     },
+
     ...(showAdditionalColumns
       ? [
           {
@@ -552,9 +579,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             render: renderText,
           },
           {
-            title: "Created Date",
-            dataIndex: "createdDate",
-            key: "createdDate",
+            title: "Create Date",
+            dataIndex: "createDate",
+            key: "createDate",
             render: renderText,
           },
           {
@@ -642,16 +669,16 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "status",
       render: renderText,
     },
+    // Block column
     {
-      title: "Block Consumption",
+      title: "Block",
       dataIndex: "block",
       key: "block",
-      render: (_, record) => {
+      render: (text, record) => {
         if (record.isEditing) {
-          // Render editable form fields for editing mode
           return (
             <Form.Item
-              name={[record.key, "block"]}
+              name={[`${record.key}`, "block"]} // corrected here
               initialValue={record.block}
               rules={[
                 { required: true },
@@ -676,7 +703,6 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             </Form.Item>
           );
         } else {
-          // Render read-only text for non-editing mode
           return (
             <span style={{ color: theme.colorText }}>
               {record.block ? `${record.block[0]} - ${record.block[1]}m³` : ""}
@@ -687,23 +713,15 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
     },
     {
       title: "Rate",
-      dataIndex: "rate",
-      valueType: "digit",
-      key: "rate",
-      render: (_, record) => {
+      dataIndex: "rate5",
+      key: "rate5",
+      render: (text, record) => {
         if (record.isEditing) {
-          // Render editable form fields for editing mode
           return (
             <Form.Item
-              name={[record.key, "rate"]}
-              initialValue={record.rate}
-              rules={[
-                {
-                  pattern: /^\d+(\.\d{1,2})?$/,
-                  message: "Please input a valid rate.",
-                  required: true,
-                },
-              ]}
+              name={[record.key, "rate5"]}
+              initialValue={text}
+              rules={[{ required: true }]}
             >
               <ProFormDigit
                 fieldProps={{ precision: 2 }}
@@ -711,14 +729,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
               />
             </Form.Item>
           );
-        } else {
-          // Render read-only text for non-editing mode
-          return (
-            <span style={{ color: theme.colorText }}>
-              RM {record.rate !== undefined ? record.rate.toFixed(2) : ""}
-            </span>
-          );
         }
+
+        return <span style={{ color: theme.colorText }}>RM {text}</span>;
       },
     },
     ...(showAdditionalColumns
@@ -730,9 +743,9 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             render: renderText,
           },
           {
-            title: "Created Date",
-            dataIndex: "createdDate",
-            key: "createdDate",
+            title: "Create Date",
+            dataIndex: "createDate",
+            key: "createDate",
             render: renderText,
           },
           {
@@ -785,15 +798,134 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
               setExpandedRowKeys(expandedRows as React.Key[]);
             },
             expandedRowRender: (record) => {
-              const nestedRecord = dataSource.find(
-                (item) => item.key === record.key
-              );
-              const nestedData = nestedRecord?.nestedData || [];
+              const nestedData = record.nestedData || [];
 
               return (
                 <Form form={nestedFormRef.current}>
                   <ProTable<NestedDataType>
-                    columns={nestedColumns}
+                    columns={[
+                      {
+                        title: "No.",
+                        dataIndex: "no",
+                        key: "no",
+                        valueType: "indexBorder",
+                      },
+                      {
+                        title: "Status",
+                        dataIndex: "status",
+                        key: "status",
+                        render: renderText,
+                      },
+                      // Block column
+                      {
+                        title: "Block",
+                        dataIndex: "block",
+                        key: "block",
+                        render: (text, nestedRecord) => {
+                          if (nestedRecord.isEditing) {
+                            return (
+                              <Form.Item
+                                name={[
+                                  `${record.key}-${nestedRecord.key}`,
+                                  "block",
+                                ]}
+                                initialValue={nestedRecord.block}
+                                rules={[
+                                  { required: true },
+                                  () => ({
+                                    validator(_, value) {
+                                      if (!value || value[0] < value[1]) {
+                                        return Promise.resolve();
+                                      }
+                                      return Promise.reject(
+                                        new Error(
+                                          "The start of the block must be less than the end!"
+                                        )
+                                      );
+                                    },
+                                  }),
+                                ]}
+                              >
+                                <ProFormDigitRange
+                                  fieldProps={{ precision: 0 }}
+                                  disabled={!nestedRecord.isEditing}
+                                />
+                              </Form.Item>
+                            );
+                          } else {
+                            return (
+                              <span style={{ color: theme.colorText }}>
+                                {nestedRecord.block
+                                  ? `${nestedRecord.block[0]} - ${nestedRecord.block[1]}m³`
+                                  : ""}
+                              </span>
+                            );
+                          }
+                        },
+                      },
+                      // Rate column
+                      {
+                        title: "Rate",
+                        dataIndex: "rate5",
+                        key: "rate5",
+                        render: (text, record) => {
+                          if (record.isEditing) {
+                            return (
+                              <Form.Item
+                                name={[record.key, "rate5"]}
+                                initialValue={text}
+                                rules={[{ required: true }]}
+                              >
+                                <ProFormDigit
+                                  fieldProps={{ precision: 2 }}
+                                  disabled={!record.isEditing}
+                                />
+                              </Form.Item>
+                            );
+                          }
+
+                          return (
+                            console.log(record),
+                            (
+                              <span style={{ color: theme.colorText }}>
+                                RM {record.rate}
+                              </span>
+                            )
+                          );
+                        },
+                      },
+
+                      {
+                        title: "Effective Date (from)",
+                        dataIndex: "effectiveDate",
+                        key: "effectiveDate",
+                        render: renderText,
+                      },
+                      {
+                        title: "Created By",
+                        dataIndex: "createdBy",
+                        key: "createdBy",
+                        render: renderText,
+                      },
+                      {
+                        title: "Create Date",
+                        dataIndex: "createDate",
+                        key: "createDate",
+                        render: renderText,
+                      },
+                      {
+                        title: "Modified By",
+                        dataIndex: "modifiedBy",
+                        key: "modifiedBy",
+                        render: renderText,
+                      },
+                      {
+                        title: "Modified Date",
+                        dataIndex: "modifiedDate",
+                        key: "modifiedDate",
+                        render: renderText,
+                      },
+                    ]}
                     dataSource={nestedData}
                     rowKey="key"
                     search={false}
