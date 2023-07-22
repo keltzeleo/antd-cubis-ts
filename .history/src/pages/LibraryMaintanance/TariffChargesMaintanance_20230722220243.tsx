@@ -1010,7 +1010,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             top: 0,
             left: 0,
             margin: "-12 -8 -12 -8", // Ensure the overlay is behind the content
-            backdropFilter: "blur(14px)", // Use backdrop-filter for modern browsers that support it
+            backdropFilter: "blur(5px)", // Use backdrop-filter for modern browsers that support it
           }}
         >
           &nbsp; Actions &nbsp;&nbsp;&nbsp;&nbsp;{" "}
