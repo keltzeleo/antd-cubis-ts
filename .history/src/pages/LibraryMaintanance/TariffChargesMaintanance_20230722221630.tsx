@@ -1000,7 +1000,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           style={{
             fontWeight: "bold",
             height: "120%",
-            width: "auto",
+            width: "100v",
             overflow: "hidden",
             background: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
             zIndex: 1,
@@ -1031,24 +1031,29 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
               style={{
                 justifyContent: "space-evenly",
                 fontWeight: "bold",
-                height: "120%",
-                width: "94%",
+                height: "100%",
+                width: "100v",
                 overflow: "hidden",
                 backgroundColor: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
-                zIndex: -11,
+                zIndex: -1,
                 borderRadius: "4px",
-                padding: "36px 16px",
+                padding: "32px 16px",
                 // right: -10,
                 top: 0,
                 left: 0,
-                margin: "-18 -8 -18 -10", // Ensure the overlay is behind the content
+                margin: "-12 -4 -4 -8", // Ensure the overlay is behind the content
                 backdropFilter: "blur(15px)", // Use backdrop-filter for modern browsers that support it
               }}
             >
               <Button type="primary" onClick={() => handleSave(record.key)}>
                 Save
               </Button>
-              <Button onClick={() => handleCancel(record.key)}>Cancel</Button>
+              <Button
+                style={{ background: theme.colorWarning }}
+                onClick={() => handleCancel(record.key)}
+              >
+                Cancel
+              </Button>
               {hasNestedRecords && (
                 <Button
                   type="primary"
@@ -1062,23 +1067,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         }
 
         return (
-          <Space
-            style={{
-              fontWeight: "bold",
-              height: "120%",
-              width: "94%",
-              overflow: "hidden",
-              background: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
-              zIndex: 1,
-              borderRadius: "4px",
-              padding: "32px 16px",
-              // right: -10,
-              top: 0,
-              left: 0,
-              margin: "-12 -8 -12 -8", // Ensure the overlay is behind the content
-              backdropFilter: "blur(14px)", // Use backdrop-filter for modern browsers that support it
-            }}
-          >
+          <Space style={{ justifyContent: "space-evenly", width: "100%" }}>
             {hasNestedRecords && (
               <Button
                 type="primary"

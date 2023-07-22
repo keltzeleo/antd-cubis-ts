@@ -1000,7 +1000,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
           style={{
             fontWeight: "bold",
             height: "120%",
-            width: "auto",
+            width: "100v",
             overflow: "hidden",
             background: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
             zIndex: 1,
@@ -1032,7 +1032,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                 justifyContent: "space-evenly",
                 fontWeight: "bold",
                 height: "120%",
-                width: "94%",
+                width: "110v",
                 overflow: "hidden",
                 backgroundColor: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
                 zIndex: -11,
@@ -1048,7 +1048,15 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
               <Button type="primary" onClick={() => handleSave(record.key)}>
                 Save
               </Button>
-              <Button onClick={() => handleCancel(record.key)}>Cancel</Button>
+              <Button
+                style={{
+                  background: theme.colorWarning,
+                  color: "white",
+                }}
+                onClick={() => handleCancel(record.key)}
+              >
+                Cancel
+              </Button>
               {hasNestedRecords && (
                 <Button
                   type="primary"
@@ -1064,19 +1072,20 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         return (
           <Space
             style={{
+              justifyContent: "space-evenly",
               fontWeight: "bold",
               height: "120%",
-              width: "94%",
+              width: "120v",
               overflow: "hidden",
-              background: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
+              backgroundColor: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
               zIndex: 1,
-              borderRadius: "4px",
+              borderRadius: "0px",
               padding: "32px 16px",
               // right: -10,
               top: 0,
               left: 0,
-              margin: "-12 -8 -12 -8", // Ensure the overlay is behind the content
-              backdropFilter: "blur(14px)", // Use backdrop-filter for modern browsers that support it
+              margin: "-12 -10 -32 -10", // Ensure the overlay is behind the content
+              backdropFilter: "blur(15px)", // Use backdrop-filter for modern browsers that support it
             }}
           >
             {hasNestedRecords && (

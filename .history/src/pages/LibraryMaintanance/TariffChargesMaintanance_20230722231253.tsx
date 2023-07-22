@@ -1048,7 +1048,15 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
               <Button type="primary" onClick={() => handleSave(record.key)}>
                 Save
               </Button>
-              <Button onClick={() => handleCancel(record.key)}>Cancel</Button>
+              <Button
+                style={{
+                  background: theme.colorWarning,
+                  color: "white",
+                }}
+                onClick={() => handleCancel(record.key)}
+              >
+                Cancel
+              </Button>
               {hasNestedRecords && (
                 <Button
                   type="primary"
