@@ -1,0 +1,19 @@
+.blurry-actions {
+  position: relative;
+  z-index: 1;
+}
+
+.blurry-actions::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(
+    --theme-colorBaseBg
+  ); /* Use theme.colorBaseBg if available */
+  /* Adjust the blur overlay color as needed */
+  filter: blur(5px); /* Adjust the blur amount as needed */
+  z-index: -1;
+}

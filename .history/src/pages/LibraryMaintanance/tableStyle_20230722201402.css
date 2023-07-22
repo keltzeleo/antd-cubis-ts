@@ -1,0 +1,26 @@
+/* Add the background color to the Actions column */
+.blurry-actions {
+  position: relative;
+  z-index: 1;
+  background-color: var(
+    --theme-colorBorderActionsColumn
+  ); /* Use the desired theme variable here */
+}
+
+/* Add blur effect to the actions column */
+.blurry-actions::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    38,
+    63,
+    55,
+    0.85
+  ); /* Adjust the background color and opacity for the blur effect */
+  filter: blur(5px); /* Adjust the blur amount as needed */
+  z-index: -1;
+}

@@ -21,7 +21,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@umijs/max": "^4.0.68",
-    "antd": "^5.6.4",
+    "antd": "latest",
     "axios": "^1.4.0",
     "countries": "^1.0.2",
     "countries-list": "^2.6.1",
