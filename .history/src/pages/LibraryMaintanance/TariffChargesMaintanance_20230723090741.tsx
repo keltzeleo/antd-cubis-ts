@@ -1006,7 +1006,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
             zIndex: 1,
             borderRadius: "4px",
             padding: "32px 16px",
-            right: 0,
+            // right: -10,
             top: 0,
             left: 0,
             margin: "-12 -8 -12 -8", // Ensure the overlay is behind the content
@@ -1038,7 +1038,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
                 zIndex: -11,
                 borderRadius: "4px",
                 padding: "36px 16px",
-                right: 0,
+                // right: -10,
                 top: 0,
                 left: 0,
                 margin: "-18 -8 -18 -10", // Ensure the overlay is behind the content
@@ -1072,7 +1072,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
               zIndex: 1,
               borderRadius: "4px",
               padding: "32px 16px",
-              right: 0,
+              // right: -10,
               top: 0,
               left: 0,
               margin: "-12 -8 -12 -8", // Ensure the overlay is behind the content
