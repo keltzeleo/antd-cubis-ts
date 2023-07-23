@@ -3,10 +3,9 @@ import type { ProColumns } from "@ant-design/pro-components";
 import {
   EditableProTable,
   ProCard,
-  ProFormDigit,
   ProFormField,
 } from "@ant-design/pro-components";
-import { Checkbox, Form } from "antd";
+import { Checkbox } from "antd";
 import React, { useEffect, useState } from "react";
 
 interface Theme {
@@ -26,6 +25,13 @@ const waitTime = (time: number = 100) => {
 };
 
 type Tuple = [number, number]; // Define a type for tuples
+type CustomValueType =
+  | "digit"
+  | "money"
+  | "option"
+  | "text"
+  | "date"
+  | "digitRange";
 
 type DataSourceType = {
   id: React.Key;
@@ -34,7 +40,6 @@ type DataSourceType = {
   tariffCode?: string;
   tariffAbbreviation?: string;
   decs?: string;
-  monthlyMinimumCharges?: number;
 
   blockConsumption1?: Tuple | null; // Update the type to use the Tuple type
   ratespercubicm1?: number;
@@ -63,7 +68,7 @@ const defaultData: DataSourceType[] = [
 
     tariffCode: "TAR-001",
     tariffAbbreviation: "TA",
-    monthlyMinimumCharges: 100,
+    decs: "这个活动真好玩",
     effectiveDate: "07-07-2023",
     blockConsumption1: [0, 20], // Corrected to use an array of numbers
     ratespercubicm1: 0.03, // Corrected to be a number
@@ -82,7 +87,7 @@ const defaultData: DataSourceType[] = [
 
     tariffCode: "TAR-002",
     tariffAbbreviation: "TB",
-    monthlyMinimumCharges: 100,
+    decs: "这个活动真好玩",
     effectiveDate: "07-07-2023",
     blockConsumption1: [0, 15], // Corrected to use an array of numbers
     ratespercubicm1: 0.05, // Corrected to be a number
@@ -161,31 +166,6 @@ const EditableTable: React.FC<EditableTableProps> = ({ theme }) => {
         </span>
       ),
     },
-    {
-      title: "Minimum Monthly Charges",
-      dataIndex: "monthlyMinimumCharges",
-      width: "auto",
-      key: "monthlyMinimumCharges",
-      render: (text, record) => {
-        if (record.isEditing) {
-          return (
-            <Form.Item
-              name={[record.key, "monthlyMinimumCharges"]}
-              initialValue={text}
-              rules={[{ required: true }]}
-            >
-              <ProFormDigit
-                fieldProps={{ precision: 2 }}
-                disabled={!record.isEditing}
-              />
-            </Form.Item>
-          );
-        }
-
-        return <span style={{ color: theme.colorText }}>RM {text}</span>;
-      },
-    },
-
     {
       title: "Effective Date (from)",
       dataIndex: "effectiveDate",
@@ -415,12 +395,13 @@ const EditableTable: React.FC<EditableTableProps> = ({ theme }) => {
       ),
       valueType: "option",
       fixed: "right",
-      width: "138",
+      width: "140",
       render: (text: any, record: DataSourceType, _, action) => (
         <span
           style={{
+            fontWeight: "bold",
             height: "120%",
-            width: "100%",
+            width: "120%",
             overflow: "hidden",
             background: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
             zIndex: 1,

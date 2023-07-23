@@ -3,10 +3,9 @@ import type { ProColumns } from "@ant-design/pro-components";
 import {
   EditableProTable,
   ProCard,
-  ProFormDigit,
   ProFormField,
 } from "@ant-design/pro-components";
-import { Checkbox, Form } from "antd";
+import { Checkbox } from "antd";
 import React, { useEffect, useState } from "react";
 
 interface Theme {
@@ -415,7 +414,7 @@ const EditableTable: React.FC<EditableTableProps> = ({ theme }) => {
       ),
       valueType: "option",
       fixed: "right",
-      width: "138",
+      width: "auto",
       render: (text: any, record: DataSourceType, _, action) => (
         <span
           style={{

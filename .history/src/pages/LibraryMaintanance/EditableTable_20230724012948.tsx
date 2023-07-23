@@ -415,7 +415,7 @@ const EditableTable: React.FC<EditableTableProps> = ({ theme }) => {
       ),
       valueType: "option",
       fixed: "right",
-      width: "138",
+      width: "135",
       render: (text: any, record: DataSourceType, _, action) => (
         <span
           style={{

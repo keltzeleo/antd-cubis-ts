@@ -397,7 +397,7 @@ const EditableTable: React.FC<EditableTableProps> = ({ theme }) => {
           style={{
             fontWeight: "bold",
             height: "120%",
-            width: "auto",
+            width: "120",
             overflow: "hidden",
             background: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
             zIndex: 1,
@@ -415,7 +415,7 @@ const EditableTable: React.FC<EditableTableProps> = ({ theme }) => {
       ),
       valueType: "option",
       fixed: "right",
-      width: "138",
+      width: "auto",
       render: (text: any, record: DataSourceType, _, action) => (
         <span
           style={{
