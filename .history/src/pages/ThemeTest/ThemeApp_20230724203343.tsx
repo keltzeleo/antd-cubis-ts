@@ -1,6 +1,6 @@
 import { ConfigProvider, Switch } from "antd";
 import React, { useEffect, useState } from "react";
-import TariffChargesMaintenance2 from "../LibraryMaintanance/TariffChargesMaintenance2";
+import TariffChargesMaintenance2 from "../LibraryMaintanance/TariffChargesManitenance2";
 // import TariffChargesMaintenanceCard from "../LibraryMaintanance/TariffChargesMaintananceCard";
 // import ThemeTest from "../ThemeTest/ThemeTest";
 import dark from "../../tokens/dark.json";

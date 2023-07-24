@@ -148,9 +148,9 @@
 .ant-table-wrapper .ant-table-tbody > tr > td {
   transition: background 0.2s, border-color 0.2s;
   border-bottom: 1px solid #fafafa3c;
-  background: rgba(247, 251, 192, 0.02);
-  /* filter: blur(14px); */
-  backdrop-filter: blur(12px);
+  background: rgba(247, 251, 192, 0.01);
+  filter: blur(14px);
+  backdrop-filter: blur(15px);
 
   z-index: 1;
 }

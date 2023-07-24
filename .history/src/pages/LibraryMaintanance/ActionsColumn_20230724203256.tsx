@@ -1,6 +1,6 @@
 import { Popconfirm } from "antd";
 import React from "react";
-import { DataSourceType } from "./TariffChargesMaintenance2"; // Use a regular import for DataSourceType
+import { DataSourceType } from "./TariggChargesMaintenance2"; // Use a regular import for DataSourceType
 
 interface ActionsColumnProps {
   record: DataSourceType;

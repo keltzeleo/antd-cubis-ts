@@ -1,14 +1,12 @@
 import { Line } from "@ant-design/charts";
 import { CloseOutlined } from "@ant-design/icons";
 import type { ProColumns } from "@ant-design/pro-components";
-import {
-  EditableProTable,
-  ProCard,
-  ProFormField,
-} from "@ant-design/pro-components";
+import { EditableProTable, ProCard } from "@ant-design/pro-components";
 import { Button, Checkbox } from "antd";
 import React, { useEffect, useState } from "react";
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
+import "./tableStyle.css";
+
 interface Theme {
   [key: string]: string;
 }
@@ -90,15 +88,19 @@ const defaultData: DataSourceType[] = [
     ratespercubicm2: 0.08, // Corrected to be a number
     blockConsumption3: [35, 100], // Corrected to use an array of numbers
     ratespercubicm3: 0.12, // Corrected to be a number
-    blockConsumption4: [100, 999], // Corrected to use an array of numbers
+    blockConsumption4: [100, 120], // Corrected to use an array of numbers
     ratespercubicm4: 0.25,
+    blockConsumption5: [120, 140], // Corrected to use an array of numbers
+    ratespercubicm5: 0.35,
+    blockConsumption6: [140, 500], // Corrected to use an array of numbers
+    ratespercubicm6: 0.45,
     createdBy: "John Doe",
     createdDate: "01-07-2023",
     modifiedBy: "John Doe",
     modifiedDate: "07-07-2023", // Corrected to be a number
   },
 ];
-const EditableTable: React.FC<EditableTableProps> = ({ theme }) => {
+const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
   const [showAdditionalColumns, setShowAdditionalColumns] = useState(true);
@@ -543,8 +545,8 @@ const EditableTable: React.FC<EditableTableProps> = ({ theme }) => {
           theme.orange,
           theme.yellow,
           theme.green,
-          theme.blue,
-          theme.cyan,
+          theme.geekblue,
+          theme.magenta,
           theme.purple,
         ],
       };
@@ -626,16 +628,17 @@ const EditableTable: React.FC<EditableTableProps> = ({ theme }) => {
                   }}
                 >
                   <SquircleBorder
-                    size={14}
+                    size={16}
                     curvature={0.43}
                     backgroundColor="transparent"
+                    fontSize={26}
                     color={theme["cyan.6"]}
                     rotate={0}
                     borderType="solid"
                     borderWidth={1.3}
                     borderColor={theme["cyan.5"]}
                     fontWeight={700}
-                    character=" + "
+                    character=" a "
                   />
                 </div>
               );
@@ -727,7 +730,7 @@ const EditableTable: React.FC<EditableTableProps> = ({ theme }) => {
         }
         return null;
       })}
-      <ProCard title="表格数据" headerBordered collapsible defaultCollapsed>
+      {/* <ProCard title="表格数据" headerBordered collapsible defaultCollapsed>
         <ProFormField
           ignoreFormItem
           fieldProps={{
@@ -739,9 +742,9 @@ const EditableTable: React.FC<EditableTableProps> = ({ theme }) => {
           valueType="jsonCode"
           text={JSON.stringify(dataSource)}
         />
-      </ProCard>
+      </ProCard> */}
     </>
   );
 };
 
-export default EditableTable;
+export default TariffChargesMaintenance2;

@@ -42,7 +42,7 @@ const SquircleBorder: React.FC<SquircleBorderProps> = ({
   };
 
   const textStyle: CSSProperties = {
-    fontSize: `${size * 0.75}px`, // Adjust the scaling factor as per your requirements
+    fontSize: `${size * 0.68}px`, // Adjust the scaling factor as per your requirements
 
     fontWeight,
   };

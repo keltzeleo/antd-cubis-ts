@@ -18,6 +18,7 @@ const SquircleBorder: React.FC<SquircleBorderProps> = ({
   size = 50,
   curvature = 0.5,
   backgroundColor = "#000",
+  fontSize = "14",
   color = "#141d1c",
   rotate = 0,
   borderType = "solid",
@@ -31,6 +32,7 @@ const SquircleBorder: React.FC<SquircleBorderProps> = ({
     height: `${size}px`,
     borderRadius: `${size * curvature}px`,
     backgroundColor,
+    fontSize: `${fontSize}px`,
     color,
     display: "flex",
     justifyContent: "center",
@@ -42,7 +44,7 @@ const SquircleBorder: React.FC<SquircleBorderProps> = ({
   };
 
   const textStyle: CSSProperties = {
-    fontSize: `${size * 0.75}px`, // Adjust the scaling factor as per your requirements
+    fontSize: `${size * 0.65}px`, // Adjust the scaling factor as per your requirements
 
     fontWeight,
   };
