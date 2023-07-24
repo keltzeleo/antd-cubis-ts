@@ -80,7 +80,7 @@ const defaultData: DataSourceType[] = [
 
     tariffCode: "TAR-002",
     tariffAbbreviation: "TB",
-    monthlyMinimumCharges: 90,
+    monthlyMinimumCharges: 100,
     effectiveDate: "07-07-2023",
     blockConsumption1: [0, 15], // Corrected to use an array of numbers
     ratespercubicm1: 0.05, // Corrected to be a number
@@ -553,18 +553,14 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
 
       return (
         <ProCard
-          style={{ color: theme["colorText"], height: 350 }}
+          style={{ color: theme["colorText"], height: 300 }}
           headerBordered // Add a border below the title
           title={
             <div
               style={{
                 color: theme["colorText"],
-                borderRadius: 16,
-                padding: "5 24 4 20",
-                top: 0,
-                margin: "-24 0 -8 0",
-                backgroundColor: theme["colorPrimaryBg"],
-                fontSize: 14,
+                borderRadius: 8,
+                backgroundColor: theme["colorPrimary"],
               }}
             >
               :-.... Block Consumption / Rate ....-:
