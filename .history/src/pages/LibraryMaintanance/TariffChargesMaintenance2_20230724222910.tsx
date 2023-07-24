@@ -530,13 +530,13 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
         height: 320,
         xAxis: {
           title: {
-            text: "Block Consumptions ( m³ )",
+            text: "Block Consumptions ( in m³ )",
           },
           nice: true,
         },
         yAxis: {
           title: {
-            text: "Rates ( RM )",
+            text: "Rates ( in RM )",
           },
           nice: true,
         },
