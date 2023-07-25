@@ -2,7 +2,7 @@ import { Line } from "@ant-design/charts";
 import { CloseOutlined } from "@ant-design/icons";
 import type { ProColumns } from "@ant-design/pro-components";
 import { EditableProTable, ProCard } from "@ant-design/pro-components";
-import { Button, Checkbox, Popconfirm, message } from "antd";
+import { Button, Checkbox, Popconfirm } from "antd";
 import React, { useEffect, useState } from "react";
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 import "./tableStyle.css";
@@ -559,6 +559,19 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
         ],
       };
 
+      const handleSave = async (
+        rowKey: React.Key,
+        data: DataSourceType,
+        row: DataSourceType
+      ) => {
+        await waitTime(2000);
+        console.log(rowKey, data, row);
+      };
+
+      const handleCancel = async (rowKey: React.Key, data: DataSourceType) => {
+        console.log(rowKey, data);
+      };
+
       return (
         <ProCard
           style={{ color: theme["colorText"], height: 350 }}
@@ -600,19 +613,6 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
   useEffect(() => {
     setDataSource(defaultData);
   }, []);
-
-  const handleSave = async (
-    rowKey: React.Key,
-    data: DataSourceType,
-    row: DataSourceType
-  ) => {
-    await waitTime(2000);
-    console.log(rowKey, data, row);
-  };
-
-  const handleCancel = async (rowKey: React.Key, data: DataSourceType) => {
-    console.log(rowKey, data);
-  };
 
   return (
     <>
@@ -730,13 +730,8 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
             editableKeys,
             onChange: setEditableRowKeys,
             actionRender: (row, config, dom) => [dom.save, dom.cancel],
-            onSave: async (rowKey, data, row) => {
-              await waitTime(2000);
-              console.log(rowKey, data, row);
-            },
-            onCancel: async (rowKey, data) => {
-              console.log(rowKey, data);
-            },
+            onSave: handleSave,
+            onCancel: handleCancel,
             onDelete: async (rowKey, data) => {
               console.log(rowKey, data);
             },

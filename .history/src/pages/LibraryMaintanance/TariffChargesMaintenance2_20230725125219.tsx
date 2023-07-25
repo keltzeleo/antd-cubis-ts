@@ -2,7 +2,7 @@ import { Line } from "@ant-design/charts";
 import { CloseOutlined } from "@ant-design/icons";
 import type { ProColumns } from "@ant-design/pro-components";
 import { EditableProTable, ProCard } from "@ant-design/pro-components";
-import { Button, Checkbox, Popconfirm, message } from "antd";
+import { Button, Checkbox, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 import "./tableStyle.css";
@@ -110,6 +110,34 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
     "bottom"
   );
   const [collapsed, setCollapsed] = useState(false);
+  const [isSaveModalVisible, setIsSaveModalVisible] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
+  const [currentAction, setCurrentAction] = useState("");
+  const [recordToDelete, setRecordToDelete] = useState<React.Key | undefined>(
+    undefined
+  );
+
+  const handleSaveConfirmation = async () => {
+    setIsSaveModalVisible(false);
+    // Perform the save action here
+    await waitTime(2000);
+    console.log("Saving data...");
+  };
+
+  const handleCancelConfirmation = async () => {
+    setIsCancelModalVisible(false);
+    // Perform the cancel action here
+    console.log("Cancelling changes...");
+  };
+
+  const handleDeleteConfirmation = async () => {
+    setIsDeleteModalVisible(false);
+    // Perform the delete action here
+    setDataSource((prevDataSource) =>
+      prevDataSource.filter((item) => item.id !== currentAction)
+    );
+  };
 
   const handleToggleColumns = (checked: boolean, columnType: string) => {
     if (columnType === "additionalColumns") {
@@ -452,26 +480,18 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
             &nbsp;&nbsp;编辑 &nbsp;&nbsp;
           </a>
 
-          <Popconfirm
-            title="Are you sure you want to delete this entry?"
-            onConfirm={() => {
-              handleDelete(record.id);
+          <a
+            key="delete"
+            onClick={() => {
+              setDataSource(dataSource.filter((item) => item.id !== record.id));
             }}
-            onCancel={() => message.info("Delete canceled")}
-            okText="Yes"
-            cancelText="No"
           >
-            <a key="delete">&nbsp;删除 &nbsp;&nbsp;&nbsp;</a>
-          </Popconfirm>
+            &nbsp;删除 &nbsp;&nbsp;&nbsp;
+          </a>
         </span>
       ),
     },
   ];
-
-  const handleDelete = (id: React.Key) => {
-    setDataSource((prevData) => prevData.filter((item) => item.id !== id));
-    message.success("Entry deleted successfully!");
-  };
 
   const convertDataForChart = (data: DataSourceType) => {
     const chartData: {
@@ -601,19 +621,6 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
     setDataSource(defaultData);
   }, []);
 
-  const handleSave = async (
-    rowKey: React.Key,
-    data: DataSourceType,
-    row: DataSourceType
-  ) => {
-    await waitTime(2000);
-    console.log(rowKey, data, row);
-  };
-
-  const handleCancel = async (rowKey: React.Key, data: DataSourceType) => {
-    console.log(rowKey, data);
-  };
-
   return (
     <>
       <div style={{ overflowX: "auto", maxWidth: "100%" }}>
@@ -731,14 +738,18 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
             onChange: setEditableRowKeys,
             actionRender: (row, config, dom) => [dom.save, dom.cancel],
             onSave: async (rowKey, data, row) => {
-              await waitTime(2000);
-              console.log(rowKey, data, row);
+              setCurrentAction("save");
+              setIsSaveModalVisible(true);
             },
+
             onCancel: async (rowKey, data) => {
-              console.log(rowKey, data);
+              setCurrentAction("cancel");
+              setIsCancelModalVisible(true);
             },
+
             onDelete: async (rowKey, data) => {
-              console.log(rowKey, data);
+              setCurrentAction("delete");
+              setIsDeleteModalVisible(true);
             },
           }}
           {...expandableConfig} // Spread the expandableConfig here
@@ -777,6 +788,34 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
           text={JSON.stringify(dataSource)}
         />
       </ProCard> */}
+
+      {/* // Add the following code after the `EditableProTable` component */}
+      <Modal
+        title="Confirm Save"
+        visible={isSaveModalVisible}
+        onCancel={() => setIsSaveModalVisible(false)}
+        onOk={handleSaveConfirmation}
+      >
+        Are you sure you want to save the changes?
+      </Modal>
+
+      <Modal
+        title="Confirm Cancel"
+        visible={isCancelModalVisible}
+        onCancel={() => setIsCancelModalVisible(false)}
+        onOk={handleCancelConfirmation}
+      >
+        Are you sure you want to cancel the changes?
+      </Modal>
+
+      <Modal
+        title="Confirm Delete"
+        visible={isDeleteModalVisible}
+        onCancel={() => setIsDeleteModalVisible(false)}
+        onOk={handleDeleteConfirmation}
+      >
+        Are you sure you want to delete this record?
+      </Modal>
     </>
   );
 };

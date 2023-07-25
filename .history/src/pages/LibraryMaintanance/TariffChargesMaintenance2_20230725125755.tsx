@@ -2,7 +2,7 @@ import { Line } from "@ant-design/charts";
 import { CloseOutlined } from "@ant-design/icons";
 import type { ProColumns } from "@ant-design/pro-components";
 import { EditableProTable, ProCard } from "@ant-design/pro-components";
-import { Button, Checkbox, Popconfirm, message } from "antd";
+import { Button, Checkbox, Popconfirm } from "antd";
 import React, { useEffect, useState } from "react";
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 import "./tableStyle.css";
@@ -452,26 +452,18 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
             &nbsp;&nbsp;编辑 &nbsp;&nbsp;
           </a>
 
-          <Popconfirm
-            title="Are you sure you want to delete this entry?"
-            onConfirm={() => {
-              handleDelete(record.id);
+          <a
+            key="delete"
+            onClick={() => {
+              setDataSource(dataSource.filter((item) => item.id !== record.id));
             }}
-            onCancel={() => message.info("Delete canceled")}
-            okText="Yes"
-            cancelText="No"
           >
-            <a key="delete">&nbsp;删除 &nbsp;&nbsp;&nbsp;</a>
-          </Popconfirm>
+            &nbsp;删除 &nbsp;&nbsp;&nbsp;
+          </a>
         </span>
       ),
     },
   ];
-
-  const handleDelete = (id: React.Key) => {
-    setDataSource((prevData) => prevData.filter((item) => item.id !== id));
-    message.success("Entry deleted successfully!");
-  };
 
   const convertDataForChart = (data: DataSourceType) => {
     const chartData: {
@@ -601,19 +593,6 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
     setDataSource(defaultData);
   }, []);
 
-  const handleSave = async (
-    rowKey: React.Key,
-    data: DataSourceType,
-    row: DataSourceType
-  ) => {
-    await waitTime(2000);
-    console.log(rowKey, data, row);
-  };
-
-  const handleCancel = async (rowKey: React.Key, data: DataSourceType) => {
-    console.log(rowKey, data);
-  };
-
   return (
     <>
       <div style={{ overflowX: "auto", maxWidth: "100%" }}>
@@ -729,7 +708,35 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
             type: "multiple",
             editableKeys,
             onChange: setEditableRowKeys,
-            actionRender: (row, config, dom) => [dom.save, dom.cancel],
+            actionRender: (row, config, dom) => [
+              <Popconfirm
+                key="save"
+                title="Are you sure you want to save?"
+                onConfirm={() => {
+                  dom.save();
+                }}
+              >
+                {dom.save}
+              </Popconfirm>,
+              <Popconfirm
+                key="cancel"
+                title="Are you sure you want to cancel?"
+                onConfirm={() => {
+                  dom.cancel();
+                }}
+              >
+                {dom.cancel}
+              </Popconfirm>,
+              <Popconfirm
+                key="delete"
+                title="Are you sure you want to delete this record?"
+                onConfirm={() => {
+                  dom.delete();
+                }}
+              >
+                {dom.delete}
+              </Popconfirm>,
+            ],
             onSave: async (rowKey, data, row) => {
               await waitTime(2000);
               console.log(rowKey, data, row);

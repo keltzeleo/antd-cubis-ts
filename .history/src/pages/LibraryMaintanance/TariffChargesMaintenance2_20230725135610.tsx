@@ -2,7 +2,7 @@ import { Line } from "@ant-design/charts";
 import { CloseOutlined } from "@ant-design/icons";
 import type { ProColumns } from "@ant-design/pro-components";
 import { EditableProTable, ProCard } from "@ant-design/pro-components";
-import { Button, Checkbox, Popconfirm, message } from "antd";
+import { Button, Checkbox, Popconfirm } from "antd";
 import React, { useEffect, useState } from "react";
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 import "./tableStyle.css";
@@ -457,7 +457,7 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
             onConfirm={() => {
               handleDelete(record.id);
             }}
-            onCancel={() => message.info("Delete canceled")}
+            onCancel={() => onmessage.info("Delete canceled")}
             okText="Yes"
             cancelText="No"
           >
@@ -730,13 +730,8 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
             editableKeys,
             onChange: setEditableRowKeys,
             actionRender: (row, config, dom) => [dom.save, dom.cancel],
-            onSave: async (rowKey, data, row) => {
-              await waitTime(2000);
-              console.log(rowKey, data, row);
-            },
-            onCancel: async (rowKey, data) => {
-              console.log(rowKey, data);
-            },
+            onSave: handleSave,
+            onCancel: handleCancel,
             onDelete: async (rowKey, data) => {
               console.log(rowKey, data);
             },

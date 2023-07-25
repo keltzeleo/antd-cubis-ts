@@ -470,7 +470,7 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
 
   const handleDelete = (id: React.Key) => {
     setDataSource((prevData) => prevData.filter((item) => item.id !== id));
-    message.success("Entry deleted successfully!");
+    message.success("Entry deleted successfully!"); // Display success message after deletion
   };
 
   const convertDataForChart = (data: DataSourceType) => {
@@ -601,17 +601,13 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
     setDataSource(defaultData);
   }, []);
 
-  const handleSave = async (
-    rowKey: React.Key,
-    data: DataSourceType,
-    row: DataSourceType
-  ) => {
+  const handleSave = async (key: React.Key, record: DataSourceType) => {
     await waitTime(2000);
-    console.log(rowKey, data, row);
+    console.log(key, record);
   };
 
-  const handleCancel = async (rowKey: React.Key, data: DataSourceType) => {
-    console.log(rowKey, data);
+  const handleCancel = async (key: React.Key, record: DataSourceType) => {
+    console.log(key, record);
   };
 
   return (
@@ -730,13 +726,8 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
             editableKeys,
             onChange: setEditableRowKeys,
             actionRender: (row, config, dom) => [dom.save, dom.cancel],
-            onSave: async (rowKey, data, row) => {
-              await waitTime(2000);
-              console.log(rowKey, data, row);
-            },
-            onCancel: async (rowKey, data) => {
-              console.log(rowKey, data);
-            },
+            onSave: handleSave,
+            onCancel: handleCancel,
             onDelete: async (rowKey, data) => {
               console.log(rowKey, data);
             },

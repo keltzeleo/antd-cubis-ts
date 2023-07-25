@@ -601,17 +601,20 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
     setDataSource(defaultData);
   }, []);
 
-  const handleSave = async (
-    rowKey: React.Key,
-    data: DataSourceType,
-    row: DataSourceType
+  const handleSave: EditableType<DataSourceType>["onSave"] = async (
+    key,
+    record,
+    row
   ) => {
     await waitTime(2000);
-    console.log(rowKey, data, row);
+    console.log(key, record, row);
   };
 
-  const handleCancel = async (rowKey: React.Key, data: DataSourceType) => {
-    console.log(rowKey, data);
+  const handleCancel: EditableType<DataSourceType>["onCancel"] = async (
+    key,
+    record
+  ) => {
+    console.log(key, record);
   };
 
   return (
@@ -730,13 +733,8 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
             editableKeys,
             onChange: setEditableRowKeys,
             actionRender: (row, config, dom) => [dom.save, dom.cancel],
-            onSave: async (rowKey, data, row) => {
-              await waitTime(2000);
-              console.log(rowKey, data, row);
-            },
-            onCancel: async (rowKey, data) => {
-              console.log(rowKey, data);
-            },
+            onSave: handleSave,
+            onCancel: handleCancel,
             onDelete: async (rowKey, data) => {
               console.log(rowKey, data);
             },

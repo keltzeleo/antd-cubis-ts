@@ -730,13 +730,8 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
             editableKeys,
             onChange: setEditableRowKeys,
             actionRender: (row, config, dom) => [dom.save, dom.cancel],
-            onSave: async (rowKey, data, row) => {
-              await waitTime(2000);
-              console.log(rowKey, data, row);
-            },
-            onCancel: async (rowKey, data) => {
-              console.log(rowKey, data);
-            },
+            onSave: handleSave,
+            onCancel: handleCancel,
             onDelete: async (rowKey, data) => {
               console.log(rowKey, data);
             },
