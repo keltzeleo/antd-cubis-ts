@@ -1,0 +1,81 @@
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.app-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.wizard-container {
+  margin-bottom: 20px;
+}
+
+.avatar-group {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.wizard-step {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  border-radius: 50%;
+  font-size: 14px;
+  color: white;
+}
+
+.wizard-step.active {
+  font-weight: bold;
+}
+
+.wizard-form {
+  margin-top: 20px;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.status-update {
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.status-green {
+  color: #52c41a;
+}
+
+.status-red {
+  color: #f5222d;
+}
+
+.feedback-form {
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Add the following CSS styles to your main CSS file or use CSS modules */
+.ant-input {
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: #1890ff;
+  }
+
+  &:hover {
+    border-color: #40a9ff;
+  }
+}
