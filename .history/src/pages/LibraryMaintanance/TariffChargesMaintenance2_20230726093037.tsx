@@ -555,7 +555,7 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
                 borderRadius: 16,
                 padding: "5 24 6  20",
                 top: 0,
-                margin: "-23 0 -8 0",
+                margin: "-26 0 -8 0",
                 justifyContent: "center",
                 backgroundColor: theme["colorPrimaryBg"],
                 fontSize: 12,
@@ -739,7 +739,7 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
             xField: "block",
             yField: "consumption",
             seriesField: "rate",
-            height: 300,
+            height: 350,
           };
 
           return (

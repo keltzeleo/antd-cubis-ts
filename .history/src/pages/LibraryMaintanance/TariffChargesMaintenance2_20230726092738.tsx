@@ -553,9 +553,9 @@ const TariffChargesMaintenance2: React.FC<EditableTableProps> = ({ theme }) => {
               style={{
                 color: theme["colorText"],
                 borderRadius: 16,
-                padding: "5 24 6  20",
+                padding: "5 24  20",
                 top: 0,
-                margin: "-23 0 -8 0",
+                margin: "-24 0 -18 0",
                 justifyContent: "center",
                 backgroundColor: theme["colorPrimaryBg"],
                 fontSize: 12,
