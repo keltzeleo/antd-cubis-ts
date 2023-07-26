@@ -1,6 +1,5 @@
 import { Steps } from "antd";
 import React, { useState } from "react";
-import ProgressBar from "../../customComponents/ProgressBar/ProgressBar";
 import BillPaymentApprovalForm from "../Forms/BillPaymentApprovalForm";
 import ConnectionApprovalForm from "../Forms/ConnectionApprovalForm";
 import GetNeighbourAccountForm from "../Forms/GetNeighbourAccountForm";
@@ -70,17 +69,17 @@ const NapsWizard: React.FC<NapsWizardProps> = ({ theme }) => {
     // You can add more cases for additional forms if needed
     switch (currentStep) {
       case 0:
-        return <BillPaymentApprovalForm />;
+        return currentStep === 0 ? <BillPaymentApprovalForm /> : null;
       case 1:
-        return <ConnectionApprovalForm />;
+        return currentStep === 1 ? <ConnectionApprovalForm /> : null;
       case 2:
-        return <GetNeighbourAccountForm />;
+        return currentStep === 2 ? <GetNeighbourAccountForm /> : null;
       case 3:
-        return <PlanApprovalInfoForm />;
+        return currentStep === 3 ? <PlanApprovalInfoForm /> : null;
       case 4:
-        return <SiteInspectionApprovalForm />;
+        return currentStep === 4 ? <SiteInspectionApprovalForm /> : null;
       case 5:
-        return <SiteVisitApprovalForm />;
+        return currentStep === 5 ? <SiteVisitApprovalForm /> : null;
       default:
         return null;
     }
@@ -89,20 +88,15 @@ const NapsWizard: React.FC<NapsWizardProps> = ({ theme }) => {
   return (
     <div>
       {/* Custom Progress Bar */}
-      <ProgressBar
-        current={currentStep}
-        percent={(currentStep / (steps.length - 1)) * 100}
-        items={steps}
-      />
-
-      {/* Render the content of the current step */}
       <div style={{ marginTop: "24px" }}>
         <Steps current={currentStep}>
           {steps.map((step, index) => (
             <Steps.Step key={index} title={step.title} />
           ))}
         </Steps>
-        <div style={{ marginTop: "24px" }}>{getCurrentStepContent()}</div>
+        <div style={{ marginTop: "24px" }}>
+          <p>{steps[currentStep].description}</p>
+        </div>
         <div style={{ marginTop: "24px" }}>
           {currentStep > 0 && <button onClick={handlePrev}>Previous</button>}
           {currentStep < steps.length - 1 && (

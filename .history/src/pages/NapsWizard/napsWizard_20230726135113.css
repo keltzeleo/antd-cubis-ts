@@ -36,37 +36,6 @@
   transition: width 0.3s;
 }
 
-/* 环形进度条样式 */
-.naps-wizard-progress-ring {
-  display: block;
-  margin: 20px auto;
-  position: relative;
-}
-
-.naps-wizard-progress-ring-circle {
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-}
-
-.naps-wizard-progress-ring-progress {
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-  stroke-dasharray: 0 100;
-  transition: stroke-dasharray 0.3s;
-}
-
-/* 步骤号码样式 */
-.naps-wizard-step-number,
-.naps-wizard-step-title {
-  pointer-events: none;
-}
-
-.naps-wizard-step-title {
-  position: absolute;
-  top: 45px;
-  width: 100%;
-}
-
 .wizard-step {
   cursor: pointer;
   display: flex;

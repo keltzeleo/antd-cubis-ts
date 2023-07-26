@@ -9,14 +9,6 @@ import SiteInspectionApprovalForm from "../Forms/SiteInspectionApprovalForm";
 import SiteVisitApprovalForm from "../Forms/SiteVisitApprovalForm";
 import "./napsWizard.css";
 
-interface Theme {
-  [key: string]: string;
-}
-
-interface NapsWizardProps {
-  theme: Theme;
-}
-
 interface StepItem {
   title: string;
   subTitle?: string;
@@ -50,7 +42,7 @@ const steps: StepItem[] = [
   },
 ];
 
-const NapsWizard: React.FC<NapsWizardProps> = ({ theme }) => {
+const NapsWizard: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   const handleNext = () => {

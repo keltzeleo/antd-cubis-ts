@@ -1,6 +1,7 @@
-import { Steps } from "antd";
+import { Button, Form, Space, Steps, message } from "antd";
 import React, { useState } from "react";
-import ProgressBar from "../../customComponents/ProgressBar/ProgressBar";
+
+// Import the six form components with the updated paths
 import BillPaymentApprovalForm from "../Forms/BillPaymentApprovalForm";
 import ConnectionApprovalForm from "../Forms/ConnectionApprovalForm";
 import GetNeighbourAccountForm from "../Forms/GetNeighbourAccountForm";
@@ -17,44 +18,67 @@ interface NapsWizardProps {
   theme: Theme;
 }
 
-interface StepItem {
-  title: string;
-  subTitle?: string;
-  description?: string;
-}
+const waitTime = (time: number = 100) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  });
+};
 
-const steps: StepItem[] = [
+const { Step } = Steps;
+
+const steps = [
   {
-    title: "Bill & Payment Approval Form",
-    description: "Enter Amount and Payment Date",
+    title: "Step 1",
+    content: <BillPaymentApprovalForm />,
   },
   {
-    title: "Connection Approval Form",
-    description: "Select Connection Type and Address",
+    title: "Step 2",
+    content: <ConnectionApprovalForm />,
   },
   {
-    title: "Get Neighbour Account Form",
-    description: "Enter Neighbour's Name",
+    title: "Step 3",
+    content: <GetNeighbourAccountForm />,
   },
   {
-    title: "Plan Approval Info Form",
-    description: "Enter Plan Name and Description",
+    title: "Step 4",
+    content: <PlanApprovalInfoForm />,
   },
   {
-    title: "Site Inspection Approval Form",
-    description: "Enter Inspection Date, Inspector Name, and Notes",
+    title: "Step 5",
+    content: <SiteInspectionApprovalForm />,
   },
   {
-    title: "Site Visit Approval Form",
-    description: "Enter Site Name",
+    title: "Step 6",
+    content: <SiteVisitApprovalForm />,
   },
+  // Add other steps if needed
 ];
 
 const NapsWizard: React.FC<NapsWizardProps> = ({ theme }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const [form] = Form.useForm();
+
+  // Calculate the progress percentage
+  const stepsWithProgress = steps.map((step, index) => {
+    return {
+      title: step.title,
+      description: step.content,
+      subTitle:
+        currentStep === index
+          ? "In Progress"
+          : currentStep > index
+          ? "Finished"
+          : "Waiting",
+    };
+  });
 
   const handleNext = () => {
-    setCurrentStep((prevStep) => prevStep + 1);
+    form.validateFields().then(() => {
+      setCurrentStep((prevStep) => prevStep + 1);
+      form.resetFields();
+    });
   };
 
   const handlePrev = () => {
@@ -63,10 +87,13 @@ const NapsWizard: React.FC<NapsWizardProps> = ({ theme }) => {
 
   const handleFinish = () => {
     // Handle form submission logic here
-    console.log("Form submitted successfully!");
+    message.success("Form submitted successfully!");
   };
 
+  // Function to get the content of the current step
   const getCurrentStepContent = () => {
+    const stepContent = steps[currentStep].content;
+
     // You can add more cases for additional forms if needed
     switch (currentStep) {
       case 0:
@@ -82,7 +109,7 @@ const NapsWizard: React.FC<NapsWizardProps> = ({ theme }) => {
       case 5:
         return <SiteVisitApprovalForm />;
       default:
-        return null;
+        return stepContent;
     }
   };
 
@@ -92,29 +119,31 @@ const NapsWizard: React.FC<NapsWizardProps> = ({ theme }) => {
       <ProgressBar
         current={currentStep}
         percent={(currentStep / (steps.length - 1)) * 100}
-        items={steps}
+        items={stepsWithProgress}
       />
 
       {/* Render the content of the current step */}
       <div style={{ marginTop: "24px" }}>
         <Steps current={currentStep}>
           {steps.map((step, index) => (
-            <Steps.Step key={index} title={step.title} />
+            <Step key={index} title={step.title} />
           ))}
         </Steps>
         <div style={{ marginTop: "24px" }}>{getCurrentStepContent()}</div>
         <div style={{ marginTop: "24px" }}>
-          {currentStep > 0 && <button onClick={handlePrev}>Previous</button>}
-          {currentStep < steps.length - 1 && (
-            <button type="button" onClick={handleNext}>
-              Next
-            </button>
-          )}
-          {currentStep === steps.length - 1 && (
-            <button type="button" onClick={handleFinish}>
-              Submit
-            </button>
-          )}
+          <Space>
+            {currentStep > 0 && <Button onClick={handlePrev}>Previous</Button>}
+            {currentStep < steps.length - 1 && (
+              <Button type="primary" onClick={handleNext}>
+                Next
+              </Button>
+            )}
+            {currentStep === steps.length - 1 && (
+              <Button type="primary" onClick={handleFinish}>
+                Submit
+              </Button>
+            )}
+          </Space>
         </div>
       </div>
     </div>
