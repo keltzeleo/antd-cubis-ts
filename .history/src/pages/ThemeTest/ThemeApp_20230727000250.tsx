@@ -6,7 +6,7 @@ import TariffChargesMaintenance2 from "../LibraryMaintanance/TariffChargesMainte
 import dark from "../../tokens/dark.json";
 import light from "../../tokens/light.json";
 // import EditableTable from "../LibraryMaintanance/EditableTable";
-import NapsWizard2 from "../NapsWizard/NapsWizard2";
+import NapsWizard from "../NapsWizard/NapsWizard";
 interface Theme {
   [key: string]: string;
 }
@@ -38,7 +38,7 @@ const ThemeApp: React.FC = () => {
       {/* <EditableTable theme={isDarkMode ? dark : light} /> */}
       {/* <TariffChargesMaintenanceCard theme={isDarkMode ? dark : light} /> */}
       {/* <ThemeTest /> */}
-      <NapsWizard2 theme={isDarkMode ? dark : light} />
+      <NapsWizard theme={isDarkMode ? dark : light} />
     </ConfigProvider>
   );
 };

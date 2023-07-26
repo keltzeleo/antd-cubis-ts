@@ -1,0 +1,67 @@
+/* NapsWizard.css */
+
+.naps-wizard {
+  display: flex;
+  align-items: center;
+}
+
+.completed-steps,
+.current-step,
+.pending-steps {
+  display: flex;
+  align-items: center;
+}
+
+.completed-steps,
+.pending-steps {
+  overflow: hidden;
+}
+
+.current-step {
+  position: relative;
+  transition: left 0.3s ease-in-out;
+}
+
+.avatar-item {
+  margin-right: 8px;
+}
+
+.completed-count,
+.pending-count {
+  margin-left: 8px;
+}
+
+.naps-wizard2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.naps-wizard2 .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
+  background-color: #52c41a;
+}
+
+.naps-wizard2 .ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
+  background-color: #1890ff;
+}
+
+.naps-wizard2 .ant-steps-item-wait .ant-steps-item-icon > .ant-steps-icon {
+  background-color: #f1f1f1;
+}
+
+.naps-wizard2 .ant-steps-item-title {
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.naps-wizard2 .ant-steps-item-title:after {
+  content: " +";
+}
+
+.naps-wizard2 .ant-steps-item-finish:last-child .ant-steps-item-title:after {
+  content: " +" attr(data-total);
+}
+
+.naps-wizard2 .ant-steps-item-wait:last-child .ant-steps-item-title:after {
+  content: " +" attr(data-total);
+}

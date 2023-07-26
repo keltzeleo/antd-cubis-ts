@@ -5,40 +5,40 @@ import TariffChargesMaintenance2 from "../LibraryMaintanance/TariffChargesMainte
 // import ThemeTest from "../ThemeTest/ThemeTest";
 import dark from "../../tokens/dark.json";
 import light from "../../tokens/light.json";
-// import EditableTable from "../LibraryMaintanance/EditableTable";
 import NapsWizard2 from "../NapsWizard/NapsWizard2";
+// import EditableTable from "../LibraryMaintanance/EditableTable";
+// import NapsWizard from "../NapsWizard/NapsWizard";
 interface Theme {
   [key: string]: string;
 }
 
 const ThemeApp: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [token, setToken] = useState<Theme>(light);
+  const [theme, setTheme] = useState<Theme>(light);
 
   useEffect(() => {
-    document.body.style.backgroundColor = token.colorBgBase;
-  }, [token]);
+    document.body.style.backgroundColor = theme.colorBgBase;
+  }, [theme]);
 
   const handleThemeChange = () => {
-    setToken(isDarkMode ? { ...light } : { ...dark });
-
+    setTheme(isDarkMode ? { ...light } : { ...dark });
     setIsDarkMode(!isDarkMode);
   };
 
   return (
-    <ConfigProvider theme={{ token }}>
+    <ConfigProvider theme={token}>
       <div style={{ display: "flex", alignItems: "center", marginBottom: 20 }}>
         <span style={{ marginRight: 10 }}>Light</span>
         <Switch checked={isDarkMode} onChange={handleThemeChange} />
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
       {/* <AppointmentUpdates theme={isDarkMode ? dark : light} /> */}
-
       <TariffChargesMaintenance2 theme={isDarkMode ? dark : light} />
       {/* <EditableTable theme={isDarkMode ? dark : light} /> */}
       {/* <TariffChargesMaintenanceCard theme={isDarkMode ? dark : light} /> */}
       {/* <ThemeTest /> */}
       <NapsWizard2 theme={isDarkMode ? dark : light} />
+      {/* <NapsWizard theme={isDarkMode ? dark : light} /> */}
     </ConfigProvider>
   );
 };

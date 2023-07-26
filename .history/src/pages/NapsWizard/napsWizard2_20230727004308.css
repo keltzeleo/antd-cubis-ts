@@ -1,0 +1,49 @@
+/* napsWizard.css */
+
+/* 定义步骤组件整体样式 */
+.steps-content {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+/* 定义步骤头像样式 */
+.steps-icon {
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #1890ff;
+  color: #fff;
+}
+
+/* 定义当前步骤的头像样式 */
+.steps-icon-current {
+  background-color: #f5222d;
+}
+
+/* 定义已完成步骤的头像样式 */
+.steps-icon-completed {
+  background-color: #52c41a;
+}
+
+/* 定义待定步骤的头像样式 */
+.steps-icon-pending {
+  background-color: #d9d9d9;
+  color: #000;
+}
+
+/* 定义步骤标题样式 */
+.steps-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* 定义按钮样式 */
+.steps-action {
+  margin-top: 20px;
+}
