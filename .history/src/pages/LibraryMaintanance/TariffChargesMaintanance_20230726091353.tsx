@@ -1006,7 +1006,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "actions",
       fixed: "right",
       width: 120,
-      // className: "blurry-actions",
+      className: "blurry-actions",
 
       render: (_, record) => {
         const hasNestedRecords =
@@ -1032,7 +1032,23 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         }
 
         return (
-          <Space>
+          <Space
+            style={{
+              fontWeight: "bold",
+              height: "120%",
+              width: "94.5%",
+              overflow: "hidden",
+              background: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
+              zIndex: 1,
+              borderRadius: "4px",
+              padding: "16px 16px",
+              right: 0,
+              top: 0,
+              left: 0,
+              margin: "-12 -8 -12 -8", // Ensure the overlay is behind the content
+              backdropFilter: "blur(14px)", // Use backdrop-filter for modern browsers that support it
+            }}
+          >
             {hasNestedRecords && (
               <Button
                 type="primary"

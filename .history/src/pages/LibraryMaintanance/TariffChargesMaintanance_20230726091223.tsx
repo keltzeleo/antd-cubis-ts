@@ -1002,11 +1002,11 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         ]
       : []),
     {
-      title: "Actions ",
+      title: <div>&nbsp; Actions &nbsp;&nbsp;&nbsp;&nbsp; </div>,
       key: "actions",
       fixed: "right",
       width: 120,
-      // className: "blurry-actions",
+      className: "blurry-actions",
 
       render: (_, record) => {
         const hasNestedRecords =
@@ -1014,7 +1014,24 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
 
         if (record.isEditing) {
           return (
-            <Space>
+            <Space
+              style={{
+                justifyContent: "space-evenly",
+                fontWeight: "bold",
+                height: "120%",
+                width: "96%",
+                overflow: "hidden",
+                backgroundColor: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
+                zIndex: -11,
+                borderRadius: "4px",
+                padding: "16px 16px",
+                right: 0,
+                top: 0,
+                left: 0,
+                margin: "-18 -8 -18 -10", // Ensure the overlay is behind the content
+                backdropFilter: "blur(15px)", // Use backdrop-filter for modern browsers that support it
+              }}
+            >
               <Button type="primary" onClick={() => handleSave(record.key)}>
                 Save
               </Button>
@@ -1032,7 +1049,23 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
         }
 
         return (
-          <Space>
+          <Space
+            style={{
+              fontWeight: "bold",
+              height: "120%",
+              width: "94.5%",
+              overflow: "hidden",
+              background: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
+              zIndex: 1,
+              borderRadius: "4px",
+              padding: "16px 16px",
+              right: 0,
+              top: 0,
+              left: 0,
+              margin: "-12 -8 -12 -8", // Ensure the overlay is behind the content
+              backdropFilter: "blur(14px)", // Use backdrop-filter for modern browsers that support it
+            }}
+          >
             {hasNestedRecords && (
               <Button
                 type="primary"

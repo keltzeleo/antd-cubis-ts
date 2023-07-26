@@ -1006,7 +1006,7 @@ const TariffChargesMaintenance: React.FC<TariffChargesMaintenanceProps> = ({
       key: "actions",
       fixed: "right",
       width: 120,
-      // className: "blurry-actions",
+      className: "blurry-actions",
 
       render: (_, record) => {
         const hasNestedRecords =
