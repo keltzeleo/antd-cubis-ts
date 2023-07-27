@@ -1,14 +1,5 @@
 /* napsWizard2.css */
 
-/* Define CSS variables for common styles */
-:root {
-  --step-size: 28px;
-  --step-border-radius: 50%;
-  --step-font-family: "play";
-  --step-font-weight: bold;
-  --step-shadow: -1px 0px 5px rgba(19, 48, 47, 0.363);
-}
-
 /* 完成步驟的樣式 */
 .completed-steps {
   display: flex;
@@ -18,26 +9,32 @@
 
 .completed-steps .step {
   position: relative;
-  width: var(--step-size);
-  height: var(--step-size);
+  font-family: "play";
+  width: 28px;
+  height: 28px;
   background-color: #6fc6ba; /* Set the color for completed steps */
-  border-radius: var(--step-border-radius);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white; /* Set the color for completed step text */
-  font-family: var(--step-font-family);
-  font-weight: var(--step-font-weight);
+  font-weight: bold;
   margin-top: 10px;
-  margin-right: -8px; /* Adjust the overlap amount by changing the negative margin */
-  box-shadow: var(--step-shadow);
+  margin-right: -6px; /* Adjust the overlap amount by changing the negative margin */
+  box-shadow: -1px 0px 5px rgba(19, 48, 47, 0.363);
 }
 
 .completed-steps .step-number {
   font-size: 14px;
   font-weight: bold;
-  margin-right: 16px;
   color: #00a991; /* 根據您的需求設置數字的顏色 */
+}
+
+.step-title {
+  font-family: "play";
+  font-weight: bold;
+  margin-right: 4px;
+  color: #00a991; /* Add margin between the step title and step number */
 }
 
 /* 當前步驟的樣式 */
@@ -49,21 +46,25 @@
 
 .current-step .step {
   position: relative;
-  width: 44px;
-  height: 44px;
-  background-color: #00a991; /* 根據您的需求設置當前步驟的顏色 */
-  border-radius: var(--step-border-radius);
-  display: flex;
+  width: 46px;
+  height: 46px;
+  font-family: "play";
   align-items: center;
   justify-content: center;
+  background-color: #00a991; /* 根據您的需求設置當前步驟的顏色 */
+  border-radius: 50%;
+  display: flex;
   color: white; /* 根據您的需求設置當前步驟文字的顏色 */
-  font-family: var(--step-font-family);
-  font-weight: var(--step-font-weight);
+  font-weight: bold;
 }
 
 /* 待定步驟的樣式 */
 .pending-steps {
   display: flex;
+  grid-template-columns: repeat(
+    2,
+    20px
+  ); /* 控制待定步驟圖案的佈局，這裡設置每個圖案寬度為 20px */
   align-items: center;
   margin-bottom: 16px; /* 調整完成步驟區域的底部間距 */
   margin-right: 36px; /* 調整待定步驟之間的間距 */
@@ -71,31 +72,29 @@
 
 .pending-steps .step {
   position: relative;
-  width: var(--step-size);
-  height: var(--step-size);
+  font-family: "play";
+  width: 28px;
+  height: 28px;
   background-color: #d5d6d8; /* 根據您的需求設置待定步驟的顏色 */
-  border-radius: var(--step-border-radius);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white; /* 根據您的需求設置待定步驟文字的顏色 */
-  font-family: var(--step-font-family);
-  font-weight: var(--step-font-weight);
+  font-weight: bold;
   margin-top: 10px;
-  margin-right: -5px; /* Adjust the overlap amount by changing the negative margin */
-  box-shadow: var(--step-shadow);
+  margin-right: -4px; /* Adjust the overlap amount by changing the negative margin */
+  box-shadow: -1px 0px 5px rgba(19, 48, 47, 0.363);
 }
 
 .pending-steps .step-number {
   font-size: 14px;
   font-weight: bold;
   color: #6e737a;
-  margin-right: 6px;
+  margin-right: 4px; /* 根據您的需求設置數字的顏色 */
 }
 
-/* 其他樣式保持不變 */
-
-/* 新增的環形進度表相關樣式 */
+/* 其他樣式保持不變，添加以下樣式 */
 
 .steps-container {
   display: flex;
@@ -104,20 +103,34 @@
   margin-bottom: 20px;
 }
 
+.step {
+  font-size: 24px;
+  margin-right: 4px;
+}
+
+.step-number {
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
 h2 {
-  font-family: var(--step-font-family);
+  font-family: "play";
 }
 
 .circular-progress-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-bottom: 16px; */
-  margin-left: -52;
+  margin-bottom: 16px;
 }
 
 .circular-progress {
   transform: rotate(-90deg);
+}
+
+.progress-background {
+  stroke: #e5e5e5;
 }
 
 .progress {
@@ -126,5 +139,5 @@ h2 {
 }
 
 .circular-progress text {
-  display: none; /* Remove the text inside the circle */
+  font-weight: bold;
 }

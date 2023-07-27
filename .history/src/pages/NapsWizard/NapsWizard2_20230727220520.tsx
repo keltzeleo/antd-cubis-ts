@@ -73,7 +73,7 @@ const NapsWizard2: React.FC<NapsWizard2Props> = ({ theme }) => {
   };
 
   const renderCircularProgress = () => {
-    const radius = 30; // Adjust the radius as needed
+    const radius = 40; // Adjust the radius as needed
     const circumference = 2 * Math.PI * radius;
     const progress = (completedSteps / (totalSteps - 1)) * 100;
     const offset = circumference - (progress / 100) * circumference;
@@ -91,8 +91,8 @@ const NapsWizard2: React.FC<NapsWizard2Props> = ({ theme }) => {
             cy={radius}
             r={radius - 3} // Adjust the thickness of the progress ring
             fill="transparent"
-            stroke={theme["cyan.3"]}
-            strokeWidth="2" // Adjust the thickness of the progress ring
+            stroke="#e5e5e5"
+            strokeWidth="6" // Adjust the thickness of the progress ring
           />
           <circle
             className="progress"
@@ -100,7 +100,7 @@ const NapsWizard2: React.FC<NapsWizard2Props> = ({ theme }) => {
             cy={radius}
             r={radius - 3} // Adjust the thickness of the progress ring
             fill="transparent"
-            stroke={theme["cyan.6"]} // Adjust the color as needed
+            stroke="#00a991" // Adjust the color as needed
             strokeWidth="1" // Adjust the thickness of the progress ring
             strokeDasharray={circumference}
             strokeDashoffset={offset}

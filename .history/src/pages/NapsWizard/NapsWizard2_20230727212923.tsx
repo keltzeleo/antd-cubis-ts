@@ -73,7 +73,7 @@ const NapsWizard2: React.FC<NapsWizard2Props> = ({ theme }) => {
   };
 
   const renderCircularProgress = () => {
-    const radius = 30; // Adjust the radius as needed
+    const radius = 40; // Adjust the radius as needed
     const circumference = 2 * Math.PI * radius;
     const progress = (completedSteps / (totalSteps - 1)) * 100;
     const offset = circumference - (progress / 100) * circumference;
@@ -91,8 +91,8 @@ const NapsWizard2: React.FC<NapsWizard2Props> = ({ theme }) => {
             cy={radius}
             r={radius - 3} // Adjust the thickness of the progress ring
             fill="transparent"
-            stroke={theme["cyan.3"]}
-            strokeWidth="2" // Adjust the thickness of the progress ring
+            stroke="#e5e5e5"
+            strokeWidth="6" // Adjust the thickness of the progress ring
           />
           <circle
             className="progress"
@@ -100,14 +100,14 @@ const NapsWizard2: React.FC<NapsWizard2Props> = ({ theme }) => {
             cy={radius}
             r={radius - 3} // Adjust the thickness of the progress ring
             fill="transparent"
-            stroke={theme["cyan.6"]} // Adjust the color as needed
-            strokeWidth="1" // Adjust the thickness of the progress ring
+            stroke="#1890ff" // Adjust the color as needed
+            strokeWidth="6" // Adjust the thickness of the progress ring
             strokeDasharray={circumference}
             strokeDashoffset={offset}
           />
         </svg>
         <div className="current-step-indicator">
-          <div className="step-indicator"></div>
+          <div className="step-indicator">{getStepDisplay(completedSteps)}</div>
         </div>
       </div>
     );
@@ -123,15 +123,12 @@ const NapsWizard2: React.FC<NapsWizard2Props> = ({ theme }) => {
             </div>
           ))}
           {completedSteps > 2 && (
-            <div className="step-number" style={{ marginLeft: 12 }}>
-              +{completedSteps - 2}
-            </div>
+            <div className="step-number">+{completedSteps - 2}</div>
           )}
         </div>
         <div className="current-step">
-          <div className="step">
-            {" "}
-            <h2>{currentStep < totalSteps ? ` ${currentStep + 1}` : " "}</h2>
+          <div className="step-title">
+            {currentStep < totalSteps ? `Step ${currentStep + 1}` : " "}
           </div>
           {/* Add the circular progress indicator here */}
           {renderCircularProgress()}
@@ -143,9 +140,7 @@ const NapsWizard2: React.FC<NapsWizard2Props> = ({ theme }) => {
             </div>
           ))}
           {pendingSteps > 2 && (
-            <div className="step-number" style={{ marginLeft: 12 }}>
-              +{pendingSteps - 2}
-            </div>
+            <div className="step-number">+{pendingSteps - 2}</div>
           )}
         </div>
       </div>

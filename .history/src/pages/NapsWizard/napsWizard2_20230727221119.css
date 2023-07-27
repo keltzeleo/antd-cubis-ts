@@ -49,8 +49,8 @@
 
 .current-step .step {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   background-color: #00a991; /* 根據您的需求設置當前步驟的顏色 */
   border-radius: var(--step-border-radius);
   display: flex;
@@ -113,7 +113,7 @@ h2 {
   justify-content: center;
   align-items: center;
   /* margin-bottom: 16px; */
-  margin-left: -52;
+  margin-left: -60;
 }
 
 .circular-progress {

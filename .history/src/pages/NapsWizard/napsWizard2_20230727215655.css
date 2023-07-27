@@ -49,8 +49,8 @@
 
 .current-step .step {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   background-color: #00a991; /* 根據您的需求設置當前步驟的顏色 */
   border-radius: var(--step-border-radius);
   display: flex;
@@ -109,15 +109,22 @@ h2 {
 }
 
 .circular-progress-container {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* margin-bottom: 16px; */
-  margin-left: -52;
+  margin-bottom: 16px;
 }
 
 .circular-progress {
-  transform: rotate(-90deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-50%) translateX(-50%) rotate(-90deg);
+}
+
+.progress-background {
+  stroke: #e5e5e5;
 }
 
 .progress {
@@ -127,4 +134,19 @@ h2 {
 
 .circular-progress text {
   display: none; /* Remove the text inside the circle */
+}
+
+.circular-progress-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the circular progress */
+}
+
+.circular-progress {
+  transform: rotate(-90deg);
+}
+
+.progress-background {
+  stroke: #e5e5e5;
 }

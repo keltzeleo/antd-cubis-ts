@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
 import React, { useState } from "react";
 
 const IssueDepositAndInstallationBillForm: React.FC = () => {
@@ -55,9 +55,7 @@ const IssueDepositAndInstallationBillForm: React.FC = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Issue Bill
-          </Button>
+          <Button type="submit">Issue Bill</Button>
         </Form.Item>
       </div>
     </Form>

@@ -91,7 +91,7 @@ const NapsWizard2: React.FC<NapsWizard2Props> = ({ theme }) => {
             cy={radius}
             r={radius - 3} // Adjust the thickness of the progress ring
             fill="transparent"
-            stroke={theme["cyan.3"]}
+            stroke={theme["cyan.1"]}
             strokeWidth="2" // Adjust the thickness of the progress ring
           />
           <circle
