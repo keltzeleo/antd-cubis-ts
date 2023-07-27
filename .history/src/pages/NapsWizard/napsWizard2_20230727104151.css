@@ -1,0 +1,140 @@
+/* napsWizard2.css */
+
+/* 完成步驟的樣式 */
+.completed-steps {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px; /* 調整完成步驟區域的底部間距 */
+}
+
+.completed-steps .step {
+  width: 32px;
+  height: 32px;
+  background-color: #00a991; /* Set the color for completed steps */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white; /* Set the color for completed step text */
+  font-weight: bold;
+  margin-right: -8px; /* Adjust the overlap amount by changing the negative margin */
+  box-shadow: -1px 0px 5px rgba(19, 48, 47, 0.174);
+}
+
+.completed-steps .step-number {
+  font-size: 14px;
+  font-weight: bold;
+  color: #00a991; /* 根據您的需求設置數字的顏色 */
+}
+
+/* 當前步驟的樣式 */
+.current-step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px; /* 調整當前步驟區域的底部間距 */
+}
+
+.current-step .step {
+  width: 20px;
+  height: 20px;
+  background-color: #00a991; /* 根據您的需求設置當前步驟的顏色 */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white; /* 根據您的需求設置當前步驟文字的顏色 */
+  font-weight: bold;
+}
+
+/* 待定步驟的樣式 */
+.pending-steps {
+  display: flex;
+  align-items: center;
+  color: #03937e;
+}
+
+.pending-steps .step {
+  width: 20px;
+  height: 20px;
+  background-color: #f0f0f0; /* 根據您的需求設置待定步驟的顏色 */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00a991; /* 根據您的需求設置待定步驟文字的顏色 */
+  font-weight: bold;
+  margin-right: 6px; /* 調整待定步驟之間的間距 */
+}
+
+.pending-steps .step-number {
+  font-size: 14px;
+  font-weight: bold;
+  color: #bfbfbf; /* 根據您的需求設置數字的顏色 */
+}
+
+/* napsWizard2.css */
+
+.steps-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.completed-steps,
+.pending-steps {
+  display: flex;
+  align-items: center;
+}
+
+.current-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.step-number {
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+/* napsWizard2.css */
+
+/* 其他樣式保持不變，添加以下樣式 */
+
+.pending-steps {
+  display: grid;
+  grid-template-columns: repeat(
+    2,
+    20px
+  ); /* 控制待定步驟圖案的佈局，這裡設置每個圖案寬度為 20px */
+  align-items: center;
+}
+
+.pending-steps .step {
+  width: 20px;
+  height: 20px;
+  background-color: #f0f0f0; /* 根據您的需求設置待定步驟的顏色 */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00a991; /* 根據您的需求設置待定步驟文字的顏色 */
+  font-weight: bold;
+}
+
+.pending-steps .step-number {
+  font-size: 14px;
+  font-weight: bold;
+  color: #bfbfbf; /* 根據您的需求設置數字的顏色 */
+}
+
+h2 {
+  font-family: "play";
+}
