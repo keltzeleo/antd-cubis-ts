@@ -1,3 +1,4 @@
+import { PageContainer } from "@ant-design/pro-components";
 import { Button, Steps, message } from "antd";
 import React from "react";
 import BillPaymentApprovalForm from "../Forms/BillPaymentApprovalForm";
@@ -91,7 +92,7 @@ const NapsWizard2: React.FC<NapsWizard2Props> = ({ theme }) => {
             cy={radius}
             r={radius - 3} // Adjust the thickness of the progress ring
             fill="transparent"
-            stroke={theme["cyan.3"]}
+            stroke={theme["cyan.1"]}
             strokeWidth="2" // Adjust the thickness of the progress ring
           />
           <circle
@@ -115,65 +116,91 @@ const NapsWizard2: React.FC<NapsWizard2Props> = ({ theme }) => {
 
   return (
     <div>
-      <div className="steps-container">
-        <div className="completed-steps">
-          {[...Array(Math.min(completedSteps, 2))].map((_, index) => (
-            <div key={index} className="">
-              {getStepDisplay(index)}
+      <PageContainer
+        footer={[
+          <div
+            className="steps-action"
+            style={{
+              display: "flex",
+              background: "rgba(20,47,233,0)",
+              flex: 1,
+              padding: 12,
+              width: "100vh",
+              justifyContent: "space-between",
+            }}
+          >
+            <div
+              style={{
+                width: "100vh",
+                flex: 1,
+                display: "flex",
+                justifyContent: "flex-start",
+              }}
+            >
+              {currentStep > 0 && (
+                <Button onClick={handlePrev}>Previous</Button>
+              )}
             </div>
-          ))}
-          {completedSteps > 2 && (
-            <div className="step-number" style={{ marginLeft: 12 }}>
-              +{completedSteps - 2}
+            <div style={{ display: "flex", alignItems: "center" }}>
+              {currentStep < totalSteps - 1 && (
+                <Button type="primary" onClick={handleNext}>
+                  Next
+                </Button>
+              )}
+              {currentStep === totalSteps - 1 && (
+                <Button type="primary" onClick={handleFinish}>
+                  Done
+                </Button>
+              )}
             </div>
-          )}
-        </div>
-        <div className="current-step">
-          <div className="step">
-            {" "}
-            <h2>{currentStep < totalSteps ? ` ${currentStep + 1}` : " "}</h2>
+          </div>,
+        ]}
+      >
+        <div className="steps-container">
+          <div className="completed-steps">
+            {[...Array(Math.min(completedSteps, 2))].map((_, index) => (
+              <div key={index} className="">
+                {getStepDisplay(index)}
+              </div>
+            ))}
+            {completedSteps > 2 && (
+              <div className="step-number" style={{ marginLeft: 12 }}>
+                +{completedSteps - 2}
+              </div>
+            )}
           </div>
-          {/* Add the circular progress indicator here */}
-          {renderCircularProgress()}
-        </div>
-        <div className="pending-steps">
-          {Array.from({ length: Math.min(pendingSteps, 2) }).map((_, index) => (
-            <div key={index} className="step">
-              {getStepDisplay(completedSteps + index + 1)}
+          <div className="current-step">
+            <div className="step">
+              {" "}
+              <h2>{currentStep < totalSteps ? ` ${currentStep + 1}` : " "}</h2>
             </div>
-          ))}
-          {pendingSteps > 2 && (
-            <div className="step-number" style={{ marginLeft: 12 }}>
-              +{pendingSteps - 2}
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="steps-content">
-        {currentStep >= 0 && currentStep < totalSteps ? (
-          <div>
-            <h2>{`Step ${currentStep + 1}`}</h2>
-            {React.createElement(forms[currentStep])}
+            {/* Add the circular progress indicator here */}
+            {renderCircularProgress()}
           </div>
-        ) : null}
-      </div>
-      <div className="steps-action">
-        {currentStep < totalSteps - 1 && (
-          <Button type="primary" onClick={handleNext}>
-            Next
-          </Button>
-        )}
-        {currentStep === totalSteps - 1 && (
-          <Button type="primary" onClick={handleFinish}>
-            Done
-          </Button>
-        )}
-        {currentStep > 0 && (
-          <Button style={{ margin: "0 8px" }} onClick={handlePrev}>
-            Previous
-          </Button>
-        )}
-      </div>
+          <div className="pending-steps">
+            {Array.from({ length: Math.min(pendingSteps, 2) }).map(
+              (_, index) => (
+                <div key={index} className="step">
+                  {getStepDisplay(completedSteps + index + 1)}
+                </div>
+              )
+            )}
+            {pendingSteps > 2 && (
+              <div className="step-number" style={{ marginLeft: 54 }}>
+                +{pendingSteps - 2}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="steps-content">
+          {currentStep >= 0 && currentStep < totalSteps ? (
+            <div>
+              <h2>{`Step ${currentStep + 1}`}</h2>
+              {React.createElement(forms[currentStep])}
+            </div>
+          ) : null}
+        </div>
+      </PageContainer>
     </div>
   );
 };
