@@ -191,7 +191,7 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
           <div style={{ display: "flex", alignItems: "center" }}>
             {currentStep < totalSteps - 1 && (
               <Button type="primary" onClick={handleNext}>
-                Save & Proceed to Next ⇾
+                Save & Proceed to Next ⇾→
               </Button>
             )}
             {currentStep === totalSteps - 1 && (
