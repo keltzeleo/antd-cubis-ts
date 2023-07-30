@@ -4,6 +4,7 @@ import {
   ProFormDatePicker,
   ProFormItem,
   ProFormSelect,
+  ProFormText,
   ProFormTextArea,
 } from "@ant-design/pro-form";
 import { Button, Col, Form, Modal, Row, Upload } from "antd";
@@ -31,7 +32,8 @@ export interface PlanApprovalFormProps {
   onSubmit: (values: any) => void; // Form submission handler prop
 }
 
-const PlanApprovalInfoForm: React.FC<PlanApprovalFormProps> = ({ theme }) => {
+
+const PlanApprovalInfoForm: React.FC<PlanApprovalFormProps = ({theme}) => {
   const [form] = Form.useForm();
 
   const handleSubmit = (values: any) => {
@@ -459,7 +461,7 @@ const PlanApprovalInfoForm: React.FC<PlanApprovalFormProps> = ({ theme }) => {
               }}
             >
               <ProCard
-                title="Plan Entry Information"
+                title="Site Visit Entry Information"
                 bordered
                 headerBordered
                 collapsible
@@ -514,15 +516,12 @@ const PlanApprovalInfoForm: React.FC<PlanApprovalFormProps> = ({ theme }) => {
                         <ProFormSelect
                           name="ApprovedBy"
                           label="Site Visit Approval By"
-                          width="md"
                           options={[]}
                         />
-                      </Col>
-                      <Col span={12}>
+                        <div style={{ height: 32 }} />
                         <ProFormDatePicker
                           name="ApprovalDate"
                           label="Approval Date"
-                          width="md"
                         />
                       </Col>
                     </Row>

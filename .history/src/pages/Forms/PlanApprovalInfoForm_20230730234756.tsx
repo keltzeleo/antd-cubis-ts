@@ -459,7 +459,7 @@ const PlanApprovalInfoForm: React.FC<PlanApprovalFormProps> = ({ theme }) => {
               }}
             >
               <ProCard
-                title="Plan Entry Information"
+                title="Site Visit Entry Information"
                 bordered
                 headerBordered
                 collapsible

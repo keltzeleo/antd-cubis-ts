@@ -6,12 +6,9 @@ import {
   ProFormSelect,
   ProFormTextArea,
 } from "@ant-design/pro-form";
-import { Button, Col, Form, Modal, Row, Upload } from "antd";
-import { RcFile } from "antd/es/upload";
-import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
-import React, { useState } from "react";
+import { Button, Col, Form, Modal, Row } from "antd";
+import React from "react";
 import IWillFollowYou from "../../customComponents/IWillFollowYou/IWillFollowYou";
-import { acceptedFileTypes } from "../../customConstants/dragDropFileTypes";
 import "./forms.css";
 
 const { Dragger } = Upload;
@@ -31,7 +28,8 @@ export interface PlanApprovalFormProps {
   onSubmit: (values: any) => void; // Form submission handler prop
 }
 
-const PlanApprovalInfoForm: React.FC<PlanApprovalFormProps> = ({ theme }) => {
+
+const PlanApprovalInfoForm: React.FC<PlanApprovalFormProps = ({theme}) => {
   const [form] = Form.useForm();
 
   const handleSubmit = (values: any) => {
@@ -459,7 +457,7 @@ const PlanApprovalInfoForm: React.FC<PlanApprovalFormProps> = ({ theme }) => {
               }}
             >
               <ProCard
-                title="Plan Entry Information"
+                title="Site Visit Entry Information"
                 bordered
                 headerBordered
                 collapsible
@@ -514,15 +512,12 @@ const PlanApprovalInfoForm: React.FC<PlanApprovalFormProps> = ({ theme }) => {
                         <ProFormSelect
                           name="ApprovedBy"
                           label="Site Visit Approval By"
-                          width="md"
                           options={[]}
                         />
-                      </Col>
-                      <Col span={12}>
+                        <div style={{ height: 32 }} />
                         <ProFormDatePicker
                           name="ApprovalDate"
                           label="Approval Date"
-                          width="md"
                         />
                       </Col>
                     </Row>
