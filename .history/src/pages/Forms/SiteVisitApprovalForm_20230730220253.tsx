@@ -381,7 +381,7 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
           backgroundColor: "theme.colorBgBase",
         }}
       >
-        <div className="top-section-site-visit">
+        <div className="top-section">
           <div
           // style={{
           //   color: "#f3f6f9",

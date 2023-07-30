@@ -377,11 +377,11 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
       <div
         className="drag-drop-container"
         style={{
-          height: "100vh",
+          height: "0vh",
           backgroundColor: "theme.colorBgBase",
         }}
       >
-        <div className="top-section-site-visit">
+        <div className="top-section">
           <div
           // style={{
           //   color: "#f3f6f9",

@@ -373,7 +373,6 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
 
   return (
     <Form form={form} onFinish={handleSubmit}>
-      <h2>Site Visit Approval Form</h2>
       <div
         className="drag-drop-container"
         style={{
@@ -381,7 +380,7 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
           backgroundColor: "theme.colorBgBase",
         }}
       >
-        <div className="top-section-site-visit">
+        <div className="top-section">
           <div
           // style={{
           //   color: "#f3f6f9",
@@ -393,7 +392,7 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
           //   fontSize: 12,
           // }}
           >
-            {/* <h2>Site Visit Approval Form</h2> */}
+            <h2>Site Visit Approval Form</h2>
           </div>
         </div>
         {/* <div className="top-section" style={{ width: "100vh" }}></div> */}
