@@ -465,6 +465,8 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                 bordered
                 headerBordered
                 collapsible
+                defaultCollapsed
+                onCollapse={(collapse) => setCollapsed(collapse)}
                 extra={
                   <Button
                     size="small"

@@ -465,6 +465,8 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                 bordered
                 headerBordered
                 collapsible
+                defaultCollapsed
+                onCollapse={(collapse) => setCollapsed(collapse)}
                 extra={
                   <Button
                     size="small"
@@ -604,24 +606,20 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                     label="Site Visit Final Status"
                     options={[]}
                   />
-                  <div style={{ height: 32 }} />
                   <ProFormSelect
                     name="ApprovedBy"
                     label="Site Visit Approval By"
                     options={[]}
                   />
-                  <div style={{ height: 32 }} />
                   <ProFormDatePicker
                     name="ApprovalDate"
                     label="Approval Date"
                   />
-                  <div style={{ height: 32 }} />
                   <ProFormSelect
                     name="Reason"
                     label="Non Compliance Reject Reason"
                     options={[]}
                   />
-                  <div style={{ height: 32 }} />
                 </ProForm>
               </ProCard>
             </div>

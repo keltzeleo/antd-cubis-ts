@@ -51,3 +51,8 @@
   background: #ffffff;
   pointer-events: auto;
 }
+
+.ant-form-item-control-input-content {
+  display: block;
+  margin-bottom: -100px; /* Add some spacing between form items */
+}

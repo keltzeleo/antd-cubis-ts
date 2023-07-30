@@ -1,12 +1,10 @@
-import { ProCard } from "@ant-design/pro-components";
 import {
+  ProCard,
   ProForm,
   ProFormDatePicker,
-  ProFormItem,
   ProFormSelect,
   ProFormText,
-  ProFormTextArea,
-} from "@ant-design/pro-form";
+} from "@ant-design/pro-components";
 import { Button, Col, Form, Modal, Row, Upload } from "antd";
 import { RcFile } from "antd/es/upload";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
@@ -465,6 +463,8 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                 bordered
                 headerBordered
                 collapsible
+                defaultCollapsed
+                onCollapse={(collapse) => setCollapsed(collapse)}
                 extra={
                   <Button
                     size="small"
@@ -476,97 +476,81 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                   </Button>
                 }
               >
-                <ProForm
-                  style={{ marginBottom: 16 }}
-                  submitter={false}
-                  layout="vertical"
-                  onFinish={(values) => Promise.resolve()} // Return a resolved promise with void
-                  initialValues={{
-                    No: "",
-                    Task: "",
-                    VisitBy: "",
-                    VisitDate: undefined,
-                    Status: "",
-                    Reason: "",
-                    Remark: "",
-                  }}
-                >
-                  <ProForm.Group>
-                    <Row gutter={24}>
-                      <Col span={12}>
-                        <ProFormText
-                          name="No."
-                          label="Sequence No"
-                          width="md"
-                          disabled
-                        />
-                      </Col>
-                      <Col span={12}>
-                        <ProFormText
-                          name="Task"
-                          label="Task Description"
-                          width="md"
-                          disabled
-                        />
-                      </Col>
-                    </Row>
-                  </ProForm.Group>
-                  <div style={{ height: 32 }} />
-                  <ProForm.Group>
-                    <Row gutter={24}>
-                      <Col span={12}>
-                        <ProFormText
-                          name="VisitBy"
-                          label="Visit By"
-                          width="md"
-                        />
-                      </Col>
-                      <Col span={12}>
-                        <ProFormDatePicker
-                          name="VisitDate"
-                          label="Visit Date"
-                          width="md"
-                        />
-                      </Col>
-                    </Row>
-                  </ProForm.Group>
-                  <div style={{ height: 32 }} />
-                  <ProForm.Group>
-                    <Row gutter={24}>
-                      <Col span={12}>
-                        <ProFormSelect
-                          name="Status"
-                          label="Visit Status"
-                          width="md"
-                          options={[]}
-                        />
-                      </Col>
-                      <Col span={12}>
-                        <ProFormSelect
-                          name="Reason"
-                          label="Non-Compliance Reason"
-                          width="md"
-                          options={[]}
-                        />
-                      </Col>
-                    </Row>
-                  </ProForm.Group>
-                  <div style={{ height: 32 }} />
-                  <ProForm.Group>
-                    <Row gutter={24}>
-                      <Col span={24}>
-                        <ProFormItem
-                          label="Remark"
-                          labelCol={{ span: 7 }}
-                          wrapperCol={{ span: 24 }}
-                        >
-                          <ProFormTextArea name="Remark" width="xl" label="_" />
-                        </ProFormItem>
-                      </Col>
-                    </Row>
-                  </ProForm.Group>
-                  <div style={{ height: 32 }} />
-                </ProForm>
+                <div style={{ padding: 16 }}>
+                  <ProForm
+                    className="site-visit-form"
+                    layout="vertical"
+                    onFinish={(values) => Promise.resolve()} // Return a resolved promise with void
+                    initialValues={{
+                      No: "",
+                      Task: "",
+                      VisitBy: "",
+                      VisitDate: undefined,
+                      Status: "",
+                      Reason: "",
+                      Remark: "",
+                    }}
+                  >
+                    <ProForm.Group>
+                      <Row gutter={24}>
+                        <Col span={12}>
+                          <ProFormText
+                            name="No."
+                            label="Sequence No"
+                            width="md"
+                            disabled
+                          />
+                        </Col>
+                        <Col span={12}>
+                          <ProFormText
+                            name="Task"
+                            label="Task Description"
+                            width="md"
+                            disabled
+                          />
+                        </Col>
+                      </Row>
+                    </ProForm.Group>
+                    <ProForm.Group>
+                      <Row gutter={16}>
+                        <Col span={12}>
+                          <ProFormText name="VisitBy" label="Visit By" />
+                        </Col>
+                        <Col span={12}>
+                          <ProFormDatePicker
+                            name="VisitDate"
+                            label="Visit Date"
+                          />
+                        </Col>
+                      </Row>
+                    </ProForm.Group>
+                    <ProForm.Group>
+                      <Row gutter={16}>
+                        <Col span={12}>
+                          <ProFormSelect
+                            name="Status"
+                            label="Visit Status"
+                            options={[]}
+                          />
+                        </Col>
+                        <Col span={12}>
+                          <ProFormSelect
+                            name="Reason"
+                            label="Non Compliance Reason"
+                            options={[]}
+                          />
+                        </Col>
+                      </Row>
+                    </ProForm.Group>
+                    <ProForm.Group>
+                      <Row gutter={16}>
+                        <Col span={24}>
+                          <ProFormText name="Remark" label="Remark" />
+                        </Col>
+                      </Row>
+                    </ProForm.Group>
+                  </ProForm>
+                </div>
               </ProCard>
 
               <ProCard
@@ -588,8 +572,6 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                 }
               >
                 <ProForm
-                  style={{ marginBottom: 16 }}
-                  submitter={false}
                   layout="vertical"
                   onFinish={(values) => Promise.resolve()} // Return a resolved promise with void
                   initialValues={{
@@ -604,24 +586,20 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                     label="Site Visit Final Status"
                     options={[]}
                   />
-                  <div style={{ height: 32 }} />
                   <ProFormSelect
                     name="ApprovedBy"
                     label="Site Visit Approval By"
                     options={[]}
                   />
-                  <div style={{ height: 32 }} />
                   <ProFormDatePicker
                     name="ApprovalDate"
                     label="Approval Date"
                   />
-                  <div style={{ height: 32 }} />
                   <ProFormSelect
                     name="Reason"
                     label="Non Compliance Reject Reason"
                     options={[]}
                   />
-                  <div style={{ height: 32 }} />
                 </ProForm>
               </ProCard>
             </div>

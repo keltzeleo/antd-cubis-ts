@@ -51,3 +51,7 @@
   background: #ffffff;
   pointer-events: auto;
 }
+
+.ant-space-item {
+  gap: 12;
+}

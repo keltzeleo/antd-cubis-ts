@@ -465,6 +465,8 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                 bordered
                 headerBordered
                 collapsible
+                defaultCollapsed
+                onCollapse={(collapse) => setCollapsed(collapse)}
                 extra={
                   <Button
                     size="small"
@@ -560,7 +562,7 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                           labelCol={{ span: 7 }}
                           wrapperCol={{ span: 24 }}
                         >
-                          <ProFormTextArea name="Remark" width="xl" label="_" />
+                          <ProFormTextArea name="Remark" width="md" />
                         </ProFormItem>
                       </Col>
                     </Row>
@@ -588,8 +590,6 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                 }
               >
                 <ProForm
-                  style={{ marginBottom: 16 }}
-                  submitter={false}
                   layout="vertical"
                   onFinish={(values) => Promise.resolve()} // Return a resolved promise with void
                   initialValues={{
@@ -604,24 +604,20 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                     label="Site Visit Final Status"
                     options={[]}
                   />
-                  <div style={{ height: 32 }} />
                   <ProFormSelect
                     name="ApprovedBy"
                     label="Site Visit Approval By"
                     options={[]}
                   />
-                  <div style={{ height: 32 }} />
                   <ProFormDatePicker
                     name="ApprovalDate"
                     label="Approval Date"
                   />
-                  <div style={{ height: 32 }} />
                   <ProFormSelect
                     name="Reason"
                     label="Non Compliance Reject Reason"
                     options={[]}
                   />
-                  <div style={{ height: 32 }} />
                 </ProForm>
               </ProCard>
             </div>
