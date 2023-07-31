@@ -216,7 +216,6 @@ const WaterBooksScheduler: React.FC = () => {
       setScheduledBooks(newScheduledBooks);
       setSelectedValue(newDate);
       setRescheduleEventItem(null);
-      setDrawerVisible(true);
     }
   };
 

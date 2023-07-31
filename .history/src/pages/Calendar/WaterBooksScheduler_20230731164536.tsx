@@ -168,20 +168,16 @@ const WaterBooksScheduler: React.FC = () => {
       <ul className="events">
         {listData.map((item) => (
           <li key={item.content}>
-            <div>
-              {item.content}
-              <Button
-                onClick={() =>
-                  setRescheduleEventItem({
-                    type: item.type,
-                    content: item.content,
-                    originalDate: date,
-                  })
-                }
-              >
-                Reschedule
-              </Button>
-            </div>
+            {/* Make each event draggable and allow rescheduling */}
+            <div
+              onDoubleClick={() =>
+                setRescheduleEventItem({
+                  type: item.type,
+                  content: item.content,
+                  originalDate: date,
+                })
+              }
+            ></div>
           </li>
         ))}
       </ul>
@@ -216,7 +212,6 @@ const WaterBooksScheduler: React.FC = () => {
       setScheduledBooks(newScheduledBooks);
       setSelectedValue(newDate);
       setRescheduleEventItem(null);
-      setDrawerVisible(true);
     }
   };
 

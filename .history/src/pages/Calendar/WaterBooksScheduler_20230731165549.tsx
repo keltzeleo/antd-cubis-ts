@@ -165,26 +165,24 @@ const WaterBooksScheduler: React.FC = () => {
   const dateCellRender = (date: Dayjs) => {
     const listData = getListData(date);
     return (
-      <ul className="events">
+      <div>
         {listData.map((item) => (
-          <li key={item.content}>
-            <div>
-              {item.content}
-              <Button
-                onClick={() =>
-                  setRescheduleEventItem({
-                    type: item.type,
-                    content: item.content,
-                    originalDate: date,
-                  })
-                }
-              >
-                Reschedule
-              </Button>
-            </div>
-          </li>
+          <div key={item.content}>
+            {item.content}
+            <Button
+              onClick={() =>
+                setRescheduleEventItem({
+                  type: item.type,
+                  content: item.content,
+                  originalDate: date,
+                })
+              }
+            >
+              Reschedule
+            </Button>
+          </div>
         ))}
-      </ul>
+      </div>
     );
   };
 
@@ -216,7 +214,6 @@ const WaterBooksScheduler: React.FC = () => {
       setScheduledBooks(newScheduledBooks);
       setSelectedValue(newDate);
       setRescheduleEventItem(null);
-      setDrawerVisible(true);
     }
   };
 

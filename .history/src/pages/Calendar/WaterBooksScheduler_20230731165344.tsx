@@ -168,6 +168,7 @@ const WaterBooksScheduler: React.FC = () => {
       <ul className="events">
         {listData.map((item) => (
           <li key={item.content}>
+            {/* Render the event with a button to open the RescheduleForm */}
             <div>
               {item.content}
               <Button
@@ -216,7 +217,6 @@ const WaterBooksScheduler: React.FC = () => {
       setScheduledBooks(newScheduledBooks);
       setSelectedValue(newDate);
       setRescheduleEventItem(null);
-      setDrawerVisible(true);
     }
   };
 

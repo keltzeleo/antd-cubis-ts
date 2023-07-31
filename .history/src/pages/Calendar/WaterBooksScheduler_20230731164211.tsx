@@ -1,5 +1,5 @@
 import {
-  Alert,
+  Badge,
   Button,
   Calendar,
   DatePicker,
@@ -13,6 +13,7 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { CellRenderInfo } from "rc-picker/lib/interface";
 import React, { useState } from "react";
+import { useDrag } from "react-dnd";
 
 // Mock Data for demonstration purposes
 const mockScheduledBooks: Record<string, { type: string; content: string }[]> =
@@ -31,6 +32,21 @@ const mockScheduledBooks: Record<string, { type: string; content: string }[]> =
       { type: "error", content: "This is error event 4." },
     ],
   };
+
+const DraggableEvent: React.FC<{ item: { type: string; content: string } }> = ({
+  item,
+}) => {
+  const [, drag] = useDrag({
+    type: "DRAGGABLE_BADGE",
+    item: { content: item.content },
+  });
+
+  return (
+    <div ref={drag}>
+      <Badge status={item.type as BadgeProps["status"]} text={item.content} />
+    </div>
+  );
+};
 
 const RescheduleForm: React.FC<{
   visible: boolean;
@@ -121,7 +137,6 @@ const WaterBooksScheduler: React.FC = () => {
     dayjs("2023-08-5")
   );
   const [rescheduleEventItem, setRescheduleEventItem] = useState<{
-    type: string;
     content: string;
     originalDate: Dayjs;
   } | null>(null);
@@ -168,19 +183,16 @@ const WaterBooksScheduler: React.FC = () => {
       <ul className="events">
         {listData.map((item) => (
           <li key={item.content}>
-            <div>
-              {item.content}
-              <Button
-                onClick={() =>
-                  setRescheduleEventItem({
-                    type: item.type,
-                    content: item.content,
-                    originalDate: date,
-                  })
-                }
-              >
-                Reschedule
-              </Button>
+            {/* Make each event draggable and allow rescheduling */}
+            <div
+              onDoubleClick={() =>
+                setRescheduleEventItem({
+                  content: item.content,
+                  originalDate: date,
+                })
+              }
+            >
+              <DraggableEvent item={item} />
             </div>
           </li>
         ))}
@@ -216,7 +228,6 @@ const WaterBooksScheduler: React.FC = () => {
       setScheduledBooks(newScheduledBooks);
       setSelectedValue(newDate);
       setRescheduleEventItem(null);
-      setDrawerVisible(true);
     }
   };
 
