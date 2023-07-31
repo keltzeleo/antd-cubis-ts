@@ -1,6 +1,6 @@
 import { ConfigProvider, Switch } from "antd";
 import React, { useEffect, useState } from "react";
-import TariffChargesMaintenance2 from "../LibraryMaintanance/TariffChargesMaintenance2";
+// import TariffChargesMaintenance2 from "../LibraryMaintanance/TariffChargesMaintenance2";
 // import TariffChargesMaintenanceCard from "../LibraryMaintanance/TariffChargesMaintananceCard";
 // import ThemeTest from "../ThemeTest/ThemeTest";
 import dark from "../../tokens/dark.json";
@@ -40,7 +40,7 @@ const ThemeApp: React.FC = () => {
       <WaterBooksScheduler />
 
       <p></p>
-      <TariffChargesMaintenance2 theme={isDarkMode ? dark : light} />
+      {/* <TariffChargesMaintenance2 theme={isDarkMode ? dark : light} /> */}
       {/* <EditableTable theme={isDarkMode ? dark : light} /> */}
       {/* <TariffChargesMaintenanceCard theme={isDarkMode ? dark : light} /> */}
       {/* <ThemeTest /> */}

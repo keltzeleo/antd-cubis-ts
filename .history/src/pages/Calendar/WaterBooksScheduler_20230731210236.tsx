@@ -7,7 +7,7 @@ import { Alert, Button, Calendar, DatePicker, Drawer, Popconfirm } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { CellRenderInfo } from "rc-picker/lib/interface";
-import { useState } from "react";
+import React, { useState } from "react";
 import "./waterBooksSchedule.css";
 
 // Mock Data for demonstration purposes
@@ -28,26 +28,29 @@ const mockScheduledBooks: Record<string, { type: string; content: string }[]> =
     ],
   };
 
+// Step 1: Define the type for WaterBooksReschedulingForm props
 type WaterBooksReschedulingFormProps = {
-  selectedEvent: EventData;
-  currentScheduledDate: Dayjs | null; // Add currentScheduledDate prop
+  selectedEvent: {
+    date: string;
+    reader: string;
+    totalBooks: string;
+    bookNo: string;
+    bookDescription: string;
+  };
   onCancel: () => void;
   onApply: () => void;
 };
 
+// Step 2: Define the WaterBooksReschedulingForm component with proper props
 const WaterBooksReschedulingForm: React.FC<WaterBooksReschedulingFormProps> = ({
-  selectedEvent,
-  currentScheduledDate, // Use the currentScheduledDate prop
+  selectedEvent = {}, // Provide default value as an empty object
   onCancel,
   onApply,
 }) => {
   const { date, reader, totalBooks, bookNo, bookDescription } =
     selectedEvent || {};
-  const formattedDate = date ? dayjs(date).format("DD-MM-YYYY") : "";
 
-  const handleNewScheduledDateChange = (value: Dayjs | null) => {
-    // Handle changes to the new scheduling date if needed
-  };
+  const formattedDate = date ? dayjs(date).format("DD-MM-YYYY") : "";
 
   return (
     <ProForm layout="vertical" submitter={false}>
@@ -55,11 +58,7 @@ const WaterBooksReschedulingForm: React.FC<WaterBooksReschedulingFormProps> = ({
         <ProFormText
           name="currentScheduledDate"
           label="Current Scheduled Date"
-          initialValue={
-            currentScheduledDate
-              ? currentScheduledDate.format("DD-MM-YYYY")
-              : ""
-          }
+          initialValue={formattedDate}
           disabled
         />
         <ProFormText
@@ -95,16 +94,24 @@ const WaterBooksReschedulingForm: React.FC<WaterBooksReschedulingFormProps> = ({
         <ProFormDatePicker
           name="newScheduledDate"
           label="New Scheduling Date"
+          format="DD-MM-YYYY"
           initialValue={date ? dayjs(date) : null}
+          fieldProps={{ placeholder: "Select new scheduling date" }}
           style={{ width: "100%" }}
+          onChange={(value) => {
+            // Handle changes to the new scheduling date if needed
+          }}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           name="newReader"
           label="New Reader"
-          placeholder="Enter new reader"
+          fieldProps={{ placeholder: "Enter new reader" }}
           style={{ width: "100%" }}
+          onChange={(value) => {
+            // Handle changes to the new reader if needed
+          }}
         />
       </ProForm.Group>
       <ProForm.Group>
@@ -121,15 +128,6 @@ const WaterBooksReschedulingForm: React.FC<WaterBooksReschedulingFormProps> = ({
     </ProForm>
   );
 };
-
-// Step 1: Define the type for event data
-interface EventData {
-  date: string;
-  reader: string;
-  totalBooks: string;
-  bookNo: string;
-  bookDescription: string;
-}
 
 const WaterBooksScheduler: React.FC = () => {
   const [scheduledBooks, setScheduledBooks] = useState(mockScheduledBooks);
@@ -185,50 +183,19 @@ const WaterBooksScheduler: React.FC = () => {
 
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [clickedItemTitle, setClickedItemTitle] = useState("");
-  const [selectedEvent, setSelectedEvent] = useState<EventData>({
-    date: "",
-    reader: "",
-    totalBooks: "",
-    bookNo: "",
-    bookDescription: "",
-  });
+  const [selectedEvent, setSelectedEvent] =
+    useState<WaterBooksReschedulingFormProps["selectedEvent"]>();
 
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-
-  const convertToEventData = (
-    event: { type: string; content: string } | undefined
-  ): EventData => {
-    if (!event) {
-      return {
-        date: "",
-        reader: "",
-        totalBooks: "",
-        bookNo: "",
-        bookDescription: "",
-      };
-    }
-
-    return {
-      date: "",
-      reader: "",
-      totalBooks: "",
-      bookNo: "",
-      bookDescription: "",
-      ...event,
-    };
-  };
-
-  const showDrawer = (itemTitle: string, selectedDate: Dayjs) => {
+  const showDrawer = (itemTitle: string) => {
     setIsDrawerVisible(true);
     setClickedItemTitle(itemTitle);
-    setSelectedDate(selectedDate);
 
     // Find the selected event based on the itemTitle
-    const selectedDateStr = selectedDate.format("DD-MM-YYYY");
-    const listData = scheduledBooks[selectedDateStr] || [];
+    const selectedDate = value.format("DD-MM-YYYY");
+    const listData = scheduledBooks[selectedDate] || [];
     const event = listData.find((item) => item.content === itemTitle);
 
-    setSelectedEvent(convertToEventData(event));
+    setSelectedEvent(event || {});
   };
 
   const dateCellRender = (date: Dayjs) => {
@@ -238,7 +205,7 @@ const WaterBooksScheduler: React.FC = () => {
         {listData.map((item, index) => (
           <li
             key={index}
-            onClick={() => showDrawer(item.content, date)}
+            onClick={() => showDrawer(item.content)}
             className="previous-month-event-item"
           >
             {item.content}
@@ -289,12 +256,11 @@ const WaterBooksScheduler: React.FC = () => {
           visible={isDrawerVisible}
           width={550}
         >
-          {/* Pass the selectedDate prop to the WaterBooksReschedulingForm */}
+          {/* Step 3: Pass the required props to the WaterBooksReschedulingForm */}
           <WaterBooksReschedulingForm
-            selectedEvent={selectedEvent}
+            selectedEvent={selectedEvent || {}}
             onCancel={handleCancel}
             onApply={handleApply}
-            currentScheduledDate={selectedDate}
           />
         </Drawer>
       </div>

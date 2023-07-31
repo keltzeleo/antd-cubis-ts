@@ -1,0 +1,12 @@
+.previous-month-event-item {
+  cursor: pointer; /* Show pointer cursor when hovering over event items */
+  transition: background-color 0.3s; /* Add a smooth transition effect */
+
+  /* Optional: Add additional styling for the hover effect */
+}
+
+.previous-month-event-item:hover {
+  background-color: #a9b3b0;
+  border-radius: 16px;
+  padding-left: 8px; /* Change the background color on hover */
+}

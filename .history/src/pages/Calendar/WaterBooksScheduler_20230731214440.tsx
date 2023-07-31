@@ -28,16 +28,22 @@ const mockScheduledBooks: Record<string, { type: string; content: string }[]> =
     ],
   };
 
+// Step 1: Define the type for WaterBooksReschedulingForm props
 type WaterBooksReschedulingFormProps = {
-  selectedEvent: EventData;
-  currentScheduledDate: Dayjs | null; // Add currentScheduledDate prop
+  selectedEvent: {
+    date: string;
+    reader: string;
+    totalBooks: string;
+    bookNo: string;
+    bookDescription: string;
+  };
   onCancel: () => void;
   onApply: () => void;
 };
 
+// Step 2: Define the WaterBooksReschedulingForm component with proper props
 const WaterBooksReschedulingForm: React.FC<WaterBooksReschedulingFormProps> = ({
-  selectedEvent,
-  currentScheduledDate, // Use the currentScheduledDate prop
+  selectedEvent = {},
   onCancel,
   onApply,
 }) => {
@@ -55,11 +61,7 @@ const WaterBooksReschedulingForm: React.FC<WaterBooksReschedulingFormProps> = ({
         <ProFormText
           name="currentScheduledDate"
           label="Current Scheduled Date"
-          initialValue={
-            currentScheduledDate
-              ? currentScheduledDate.format("DD-MM-YYYY")
-              : ""
-          }
+          initialValue={formattedDate}
           disabled
         />
         <ProFormText
@@ -193,8 +195,6 @@ const WaterBooksScheduler: React.FC = () => {
     bookDescription: "",
   });
 
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-
   const convertToEventData = (
     event: { type: string; content: string } | undefined
   ): EventData => {
@@ -208,24 +208,17 @@ const WaterBooksScheduler: React.FC = () => {
       };
     }
 
-    return {
-      date: "",
-      reader: "",
-      totalBooks: "",
-      bookNo: "",
-      bookDescription: "",
-      ...event,
-    };
+    // Assuming 'event' has the correct shape
+    return event as EventData;
   };
 
-  const showDrawer = (itemTitle: string, selectedDate: Dayjs) => {
+  const showDrawer = (itemTitle: string) => {
     setIsDrawerVisible(true);
     setClickedItemTitle(itemTitle);
-    setSelectedDate(selectedDate);
 
     // Find the selected event based on the itemTitle
-    const selectedDateStr = selectedDate.format("DD-MM-YYYY");
-    const listData = scheduledBooks[selectedDateStr] || [];
+    const selectedDate = value.format("DD-MM-YYYY");
+    const listData = scheduledBooks[selectedDate] || [];
     const event = listData.find((item) => item.content === itemTitle);
 
     setSelectedEvent(convertToEventData(event));
@@ -238,7 +231,7 @@ const WaterBooksScheduler: React.FC = () => {
         {listData.map((item, index) => (
           <li
             key={index}
-            onClick={() => showDrawer(item.content, date)}
+            onClick={() => showDrawer(item.content)}
             className="previous-month-event-item"
           >
             {item.content}
@@ -289,12 +282,11 @@ const WaterBooksScheduler: React.FC = () => {
           visible={isDrawerVisible}
           width={550}
         >
-          {/* Pass the selectedDate prop to the WaterBooksReschedulingForm */}
+          {/* Step 3: Pass the required props to the WaterBooksReschedulingForm */}
           <WaterBooksReschedulingForm
-            selectedEvent={selectedEvent}
+            selectedEvent={selectedEvent || {}}
             onCancel={handleCancel}
             onApply={handleApply}
-            currentScheduledDate={selectedDate}
           />
         </Drawer>
       </div>

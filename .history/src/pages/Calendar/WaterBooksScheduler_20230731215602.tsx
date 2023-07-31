@@ -238,7 +238,7 @@ const WaterBooksScheduler: React.FC = () => {
         {listData.map((item, index) => (
           <li
             key={index}
-            onClick={() => showDrawer(item.content, date)}
+            onClick={() => showDrawer(item.content)}
             className="previous-month-event-item"
           >
             {item.content}

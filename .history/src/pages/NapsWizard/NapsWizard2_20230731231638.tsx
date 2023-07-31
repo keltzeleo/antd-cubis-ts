@@ -132,9 +132,9 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
                 >
                   <span
                     style={{
-                      color: theme["green.6"],
+                      color: theme["green.4"],
                       border: "1px solid",
-                      borderColor: theme["green.6"],
+                      borderColor: theme["green.4"],
                       padding: "0 8",
                       borderRadius: 4,
                     }}

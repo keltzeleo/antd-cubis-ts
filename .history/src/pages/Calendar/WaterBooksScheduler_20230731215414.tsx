@@ -218,14 +218,14 @@ const WaterBooksScheduler: React.FC = () => {
     };
   };
 
-  const showDrawer = (itemTitle: string, selectedDate: Dayjs) => {
+  const showDrawer = (itemTitle: string) => {
     setIsDrawerVisible(true);
     setClickedItemTitle(itemTitle);
     setSelectedDate(selectedDate);
 
     // Find the selected event based on the itemTitle
-    const selectedDateStr = selectedDate.format("DD-MM-YYYY");
-    const listData = scheduledBooks[selectedDateStr] || [];
+    const selectedDate = value.format("DD-MM-YYYY");
+    const listData = scheduledBooks[selectedDate] || [];
     const event = listData.find((item) => item.content === itemTitle);
 
     setSelectedEvent(convertToEventData(event));
@@ -238,7 +238,7 @@ const WaterBooksScheduler: React.FC = () => {
         {listData.map((item, index) => (
           <li
             key={index}
-            onClick={() => showDrawer(item.content, date)}
+            onClick={() => showDrawer(item.content)}
             className="previous-month-event-item"
           >
             {item.content}
