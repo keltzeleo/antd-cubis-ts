@@ -141,7 +141,6 @@ const WaterBooksScheduler: React.FC = () => {
       >
         <Alert
           message={`You selected date: ${selectedValue.format("DD-MM-YYYY")}`}
-          style={{ margin: "0 8" }}
         />
         {/* Add navigation buttons */}
         <Button onClick={handlePrevMonth}>«</Button>

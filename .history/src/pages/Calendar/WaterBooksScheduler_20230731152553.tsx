@@ -1,5 +1,5 @@
 import type { BadgeProps } from "antd";
-import { Alert, Badge, Button, Calendar, DatePicker } from "antd";
+import { Alert, Badge, Calendar } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { CellRenderInfo } from "rc-picker/lib/interface";
@@ -34,7 +34,7 @@ const DraggableBadge: React.FC<BadgeProps> = (props) => {
   return <Badge ref={drag} {...props} />;
 };
 
-const WaterBooksScheduler: React.FC = () => {
+const DroppableCalendar: React.FC = () => {
   const [scheduledBooks, setScheduledBooks] = useState(mockScheduledBooks);
   const [value, setValue] = useState<Dayjs>(dayjs("2023-08-25"));
   const [selectedValue, setSelectedValue] = useState<Dayjs>(
@@ -121,40 +121,11 @@ const WaterBooksScheduler: React.FC = () => {
     },
   });
 
-  const handlePrevMonth = () => {
-    setValue(value.subtract(1, "month")); // Use dayjs to subtract one month from the current value
-  };
-
-  const handleNextMonth = () => {
-    setValue(value.add(1, "month")); // Use dayjs to add one month to the current value
-  };
-
   return (
     <DndProvider backend={TouchBackend}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-          marginBottom: 20,
-        }}
-      >
-        <Alert
-          message={`You selected date: ${selectedValue.format("DD-MM-YYYY")}`}
-          style={{ margin: "0 8" }}
-        />
-        {/* Add navigation buttons */}
-        <Button onClick={handlePrevMonth}>«</Button>
-        {/* Month picker */}
-        <DatePicker.MonthPicker
-          value={value}
-          onChange={(newValue) => setValue(dayjs(newValue))}
-          placeholder="Select month"
-          style={{ margin: "0 8" }}
-        />
-        <Button onClick={handleNextMonth}>»</Button>
-      </div>
-
+      <Alert
+        message={`You selected date: ${selectedValue.format("DD-MM-YYYY")}`}
+      />
       <div ref={drop}>
         <Calendar
           value={value}
@@ -167,4 +138,4 @@ const WaterBooksScheduler: React.FC = () => {
   );
 };
 
-export default WaterBooksScheduler;
+export default DroppableCalendar;

@@ -7,7 +7,7 @@ import dark from "../../tokens/dark.json";
 import light from "../../tokens/light.json";
 // import EditableTable from "../LibraryMaintanance/EditableTable";
 import { DndProvider } from "react-dnd";
-import { TouchBackend } from "react-dnd-touch-backend";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
 import WaterBooksScheduler from "../Calendar/WaterBooksScheduler";
 import NapsWizard2 from "../NapsWizard/NapsWizard2";
@@ -39,7 +39,7 @@ const ThemeApp: React.FC = () => {
       </div>
       <AppointmentUpdates theme={isDarkMode ? dark : light} />
       <p></p>
-      <DndProvider backend={TouchBackend}>
+      <DndProvider backend={HTML5Backend}>
         <WaterBooksScheduler />
       </DndProvider>
 

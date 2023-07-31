@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 // import light from "./tokens/light.json"
 // import dark from "./tokens/kelDark.json"
-
 //import "./index.css";
 import ThemeApp from "./pages/ThemeTest/ThemeApp";
 // import App from "./App";
@@ -41,7 +40,9 @@ ReactDOM.render(
     {/* <AppointmentUpdates /> */}
     {/*  <ThemeTest />*/}
     {/* <DragDropArea2 /> */}
+    {/* <DndProvider backend={HTML5Backend}> */}
     <ThemeApp />
+    {/* </DndProvider> */},
     {/* <IWillFollowYou errorMessage="I Will Follow You Message Sample!" /> */}
     {/* </div> */}
     {/* <CustomerInfo /> */}

@@ -1,9 +1,11 @@
-import { ConfigProvider, theme } from "antd";
 import React from "react";
 import ReactDOM from "react-dom";
-
+// import light from "./tokens/light.json"
+// import dark from "./tokens/kelDark.json"
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 //import "./index.css";
-//import ThemeApp from "./pages/ThemeTest/ThemeApp";
+import ThemeApp from "./pages/ThemeTest/ThemeApp";
 // import App from "./App";
 //import ThemeTest from "./pages/ThemeTest/ThemeTest";
 //import "./customDarkTheme.css";
@@ -12,17 +14,17 @@ import ReactDOM from "react-dom";
 // import IWillFollowYou from "../src/customComponents/IWillFollowYou/IWillFollowYou";
 // import AppointmentUpdates from "./pages/AppointmentUpdates/AppointmentUpdates";
 // import CustomerInfo from "./pages/Forms/CustomerInfo";
-import MyForm from "./pages/MyForm";
+// import MyForm from "./pages/MyForm";
 
-const { darkAlgorithm } = theme;
+// const { useToken } = theme;
 
 ReactDOM.render(
   <React.StrictMode>
     {/* <div style={{ background: "rgba(18,29,29,0.90" }}> */}
-    <ConfigProvider
+    {/* <ConfigProvider
       theme={{
         token: {
-          colorBgBase: "#141c1b",
+          //colorBgBase: "#141c1b",
           //colorTextBase: "#f3f3f3",
           colorPrimary: "#00a991",
           colorError: "#ea7480",
@@ -33,19 +35,21 @@ ReactDOM.render(
           sizeStep: 4,
           sizeUnit: 4,
         },
-        algorithm: [darkAlgorithm],
+        algorithm: [darkAlgorithm, compactAlgorithm],
       }}
-    >
-      {/* <App /> */}
-      {/* <AppointmentUpdates /> */}
-      {/*  <ThemeTest />*/}
-      {/* <DragDropArea2 /> */}
-
-      {/* <IWillFollowYou errorMessage="I Will Follow You Message Sample!" /> */}
-      {/* </div> */}
-      {/* <CustomerInfo /> */}
-      <MyForm />
-    </ConfigProvider>
+    > */}
+    {/* <App /> */}
+    {/* <AppointmentUpdates /> */}
+    {/*  <ThemeTest />*/}
+    {/* <DragDropArea2 /> */}
+    <DndProvider backend={HTML5Backend}>
+      <ThemeApp />
+    </DndProvider>
+    ,{/* <IWillFollowYou errorMessage="I Will Follow You Message Sample!" /> */}
+    {/* </div> */}
+    {/* <CustomerInfo /> */}
+    {/* <MyForm /> */}
+    {/* </ConfigProvider> */}
   </React.StrictMode>,
   document.getElementById("root")
 );

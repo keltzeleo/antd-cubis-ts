@@ -131,30 +131,21 @@ const WaterBooksScheduler: React.FC = () => {
 
   return (
     <DndProvider backend={TouchBackend}>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-          marginBottom: 20,
-        }}
-      >
-        <Alert
-          message={`You selected date: ${selectedValue.format("DD-MM-YYYY")}`}
-          style={{ margin: "0 8" }}
-        />
+      <div style={{ display: "flex", alignItems: "center", marginBottom: 20 }}>
         {/* Add navigation buttons */}
-        <Button onClick={handlePrevMonth}>«</Button>
+        <Button onClick={handlePrevMonth}>&lt;&lt;</Button>
+        <Button onClick={handleNextMonth}>&gt;&gt;</Button>
         {/* Month picker */}
         <DatePicker.MonthPicker
           value={value}
           onChange={(newValue) => setValue(dayjs(newValue))}
           placeholder="Select month"
-          style={{ margin: "0 8" }}
         />
-        <Button onClick={handleNextMonth}>»</Button>
       </div>
 
+      <Alert
+        message={`You selected date: ${selectedValue.format("DD-MM-YYYY")}`}
+      />
       <div ref={drop}>
         <Calendar
           value={value}
