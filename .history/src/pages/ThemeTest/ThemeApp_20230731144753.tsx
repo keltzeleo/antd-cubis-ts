@@ -36,9 +36,8 @@ const ThemeApp: React.FC = () => {
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
       <AppointmentUpdates theme={isDarkMode ? dark : light} />
-      <p></p>
       <WaterBooksScheduler />
-      <p></p>
+
       <TariffChargesMaintenance2 theme={isDarkMode ? dark : light} />
       {/* <EditableTable theme={isDarkMode ? dark : light} /> */}
       {/* <TariffChargesMaintenanceCard theme={isDarkMode ? dark : light} /> */}

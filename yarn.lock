@@ -9436,6 +9436,7 @@ __metadata:
     moment: ^2.29.4
     polished: ^4.2.2
     prop-types: 15.8.1
+    rc-picker: ^3.12.0
     react: ^18.2.0
     react-dom: ^18.2.0
     react-flags-select: ^2.2.3
@@ -22260,6 +22261,34 @@ __metadata:
     react: ">=16.9.0"
     react-dom: ">=16.9.0"
   checksum: 27ac05cdaf331ba571eb19fdaf79a2e3b6cb3575fce5f011f0de5abbe88db21a4292ef5323abab3a829ff6cda396444c664f88bd55226fa477f473282a8a868e
+  languageName: node
+  linkType: hard
+
+"rc-picker@npm:^3.12.0":
+  version: 3.12.0
+  resolution: "rc-picker@npm:3.12.0"
+  dependencies:
+    "@babel/runtime": ^7.10.1
+    "@rc-component/trigger": ^1.5.0
+    classnames: ^2.2.1
+    rc-util: ^5.30.0
+  peerDependencies:
+    date-fns: ">= 2.x"
+    dayjs: ">= 1.x"
+    luxon: ">= 3.x"
+    moment: ">= 2.x"
+    react: ">=16.9.0"
+    react-dom: ">=16.9.0"
+  peerDependenciesMeta:
+    date-fns:
+      optional: true
+    dayjs:
+      optional: true
+    luxon:
+      optional: true
+    moment:
+      optional: true
+  checksum: 59659f928c008098e85bceec39dc263669345ad2fa8fada20ad0ce6e46c08f5c089fd668d090a51e06ac10960d43e23c32fe07bb32d1af2ca08af1473ec3aba8
   languageName: node
   linkType: hard
 
