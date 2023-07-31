@@ -4,7 +4,6 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { CellRenderInfo } from "rc-picker/lib/interface";
 import React, { useState } from "react";
-import { useDrag } from "react-dnd";
 
 // Mock Data for demonstration purposes
 const mockScheduledBooks: Record<string, { type: string; content: string }[]> =
@@ -24,35 +23,16 @@ const mockScheduledBooks: Record<string, { type: string; content: string }[]> =
     ],
   };
 
-const DraggableEvent: React.FC<{ item: { type: string; content: string } }> = ({
-  item,
-}) => {
-  const [, drag] = useDrag({
-    type: "DRAGGABLE_BADGE",
-    item: { content: item.content },
-  });
-
-  return (
-    <div ref={drag}>
-      <Badge status={item.type as BadgeProps["status"]} text={item.content} />
-    </div>
-  );
-};
-
 const WaterBooksScheduler: React.FC = () => {
   const [scheduledBooks, setScheduledBooks] = useState(mockScheduledBooks);
   const [value, setValue] = useState<Dayjs>(dayjs("2023-08-25"));
-  const [selectedValue, setSelectedValue] = useState<Dayjs | null>(
-    dayjs("2023-08-5")
+  const [selectedValue, setSelectedValue] = useState<Dayjs>(
+    dayjs("2023-08-25")
   );
   const [rescheduleEventItem, setRescheduleEventItem] = useState<{
     content: string;
     originalDate: Dayjs;
   } | null>(null);
-
-  const handleMonthPickerChange = (newValue: Dayjs | null) => {
-    setValue(newValue || value); // Use the current value if newValue is null
-  };
 
   const onSelect = (newValue: Dayjs) => {
     setValue(newValue);
@@ -90,18 +70,14 @@ const WaterBooksScheduler: React.FC = () => {
     return (
       <ul className="events">
         {listData.map((item) => (
-          <li key={item.content}>
-            {/* Make each event draggable and allow rescheduling */}
-            <div
-              onDoubleClick={() =>
-                setRescheduleEventItem({
-                  content: item.content,
-                  originalDate: date,
-                })
-              }
-            >
-              <DraggableEvent item={item} />
-            </div>
+          <li
+            key={item.content}
+            onDoubleClick={() => handleEventDoubleClick(item, date)}
+          >
+            <Badge
+              status={item.type as BadgeProps["status"]}
+              text={item.content}
+            />
           </li>
         ))}
       </ul>
@@ -114,8 +90,23 @@ const WaterBooksScheduler: React.FC = () => {
     return info.originNode;
   };
 
-  const handleReschedule = (newDate: Dayjs | null) => {
-    if (rescheduleEventItem && newDate) {
+  const handleEventDoubleClick = (
+    eventItem: { type: string; content: string },
+    date: Dayjs
+  ) => {
+    setRescheduleEventItem({ content: eventItem.content, originalDate: date });
+  };
+
+  const handlePrevMonth = () => {
+    setValue(value.subtract(1, "month")); // Use dayjs to subtract one month from the current value
+  };
+
+  const handleNextMonth = () => {
+    setValue(value.add(1, "month")); // Use dayjs to add one month to the current value
+  };
+
+  const handleReschedule = (newDate: Dayjs) => {
+    if (rescheduleEventItem) {
       const { content, originalDate } = rescheduleEventItem;
 
       const dateKey = newDate.format("DD-MM-YYYY");
@@ -150,21 +141,20 @@ const WaterBooksScheduler: React.FC = () => {
         }}
       >
         <Alert
-          message={`You selected date: ${selectedValue?.format("DD-MM-YYYY")}`}
+          message={`You selected date: ${selectedValue.format("DD-MM-YYYY")}`}
           style={{ margin: "0 8" }}
         />
         {/* Add navigation buttons */}
-        <Button onClick={() => setValue(value.subtract(1, "month"))}>«</Button>
+        <Button onClick={handlePrevMonth}>«</Button>
         {/* Month picker */}
         <DatePicker.MonthPicker
           value={value}
-          onChange={handleMonthPickerChange}
+          onChange={(newValue) => setValue(newValue)}
           placeholder="Select month"
           style={{ margin: "0 8" }}
         />
-        <Button onClick={() => setValue(value.add(1, "month"))}>»</Button>
+        <Button onClick={handleNextMonth}>»</Button>
       </div>
-
       <div>
         <Calendar
           value={value}
@@ -173,7 +163,6 @@ const WaterBooksScheduler: React.FC = () => {
           cellRender={cellRender}
         />
       </div>
-
       {/* Modal for rescheduling */}
       {rescheduleEventItem && (
         <div className="modal">
@@ -185,7 +174,7 @@ const WaterBooksScheduler: React.FC = () => {
           </p>
           <DatePicker
             value={selectedValue}
-            onChange={(newValue) => setSelectedValue(newValue || selectedValue)}
+            onChange={handleReschedule}
             placeholder="Select new date"
           />
           <Button onClick={() => setRescheduleEventItem(null)}>Cancel</Button>

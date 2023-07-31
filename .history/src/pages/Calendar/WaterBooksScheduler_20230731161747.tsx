@@ -4,7 +4,7 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { CellRenderInfo } from "rc-picker/lib/interface";
 import React, { useState } from "react";
-import { useDrag } from "react-dnd";
+import { DndProvider, useDrag } from "react-dnd";
 
 // Mock Data for demonstration purposes
 const mockScheduledBooks: Record<string, { type: string; content: string }[]> =
@@ -43,16 +43,12 @@ const WaterBooksScheduler: React.FC = () => {
   const [scheduledBooks, setScheduledBooks] = useState(mockScheduledBooks);
   const [value, setValue] = useState<Dayjs>(dayjs("2023-08-25"));
   const [selectedValue, setSelectedValue] = useState<Dayjs | null>(
-    dayjs("2023-08-5")
+    dayjs("2023-08-25")
   );
   const [rescheduleEventItem, setRescheduleEventItem] = useState<{
     content: string;
     originalDate: Dayjs;
   } | null>(null);
-
-  const handleMonthPickerChange = (newValue: Dayjs | null) => {
-    setValue(newValue || value); // Use the current value if newValue is null
-  };
 
   const onSelect = (newValue: Dayjs) => {
     setValue(newValue);
@@ -140,7 +136,6 @@ const WaterBooksScheduler: React.FC = () => {
   };
 
   return (
-    <>
       <div
         style={{
           display: "flex",
@@ -158,7 +153,7 @@ const WaterBooksScheduler: React.FC = () => {
         {/* Month picker */}
         <DatePicker.MonthPicker
           value={value}
-          onChange={handleMonthPickerChange}
+          onChange={(newValue) => setValue(newValue)}
           placeholder="Select month"
           style={{ margin: "0 8" }}
         />
@@ -185,7 +180,7 @@ const WaterBooksScheduler: React.FC = () => {
           </p>
           <DatePicker
             value={selectedValue}
-            onChange={(newValue) => setSelectedValue(newValue || selectedValue)}
+            onChange={(newValue) => setSelectedValue(newValue)}
             placeholder="Select new date"
           />
           <Button onClick={() => setRescheduleEventItem(null)}>Cancel</Button>
@@ -197,7 +192,6 @@ const WaterBooksScheduler: React.FC = () => {
           </Button>
         </div>
       )}
-    </>
   );
 };
 

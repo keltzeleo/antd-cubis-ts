@@ -4,7 +4,8 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { CellRenderInfo } from "rc-picker/lib/interface";
 import React, { useState } from "react";
-import { useDrag } from "react-dnd";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { TouchBackend } from "react-dnd-touch-backend";
 
 // Mock Data for demonstration purposes
 const mockScheduledBooks: Record<string, { type: string; content: string }[]> =
@@ -42,17 +43,9 @@ const DraggableEvent: React.FC<{ item: { type: string; content: string } }> = ({
 const WaterBooksScheduler: React.FC = () => {
   const [scheduledBooks, setScheduledBooks] = useState(mockScheduledBooks);
   const [value, setValue] = useState<Dayjs>(dayjs("2023-08-25"));
-  const [selectedValue, setSelectedValue] = useState<Dayjs | null>(
-    dayjs("2023-08-5")
+  const [selectedValue, setSelectedValue] = useState<Dayjs>(
+    dayjs("2023-08-25")
   );
-  const [rescheduleEventItem, setRescheduleEventItem] = useState<{
-    content: string;
-    originalDate: Dayjs;
-  } | null>(null);
-
-  const handleMonthPickerChange = (newValue: Dayjs | null) => {
-    setValue(newValue || value); // Use the current value if newValue is null
-  };
 
   const onSelect = (newValue: Dayjs) => {
     setValue(newValue);
@@ -91,17 +84,8 @@ const WaterBooksScheduler: React.FC = () => {
       <ul className="events">
         {listData.map((item) => (
           <li key={item.content}>
-            {/* Make each event draggable and allow rescheduling */}
-            <div
-              onDoubleClick={() =>
-                setRescheduleEventItem({
-                  content: item.content,
-                  originalDate: date,
-                })
-              }
-            >
-              <DraggableEvent item={item} />
-            </div>
+            {/* Make each event draggable */}
+            <DraggableEvent item={item} />
           </li>
         ))}
       </ul>
@@ -114,33 +98,43 @@ const WaterBooksScheduler: React.FC = () => {
     return info.originNode;
   };
 
-  const handleReschedule = (newDate: Dayjs | null) => {
-    if (rescheduleEventItem && newDate) {
-      const { content, originalDate } = rescheduleEventItem;
+  const rescheduleEvent = (content: string, newDate: Dayjs) => {
+    const dateKey = newDate.format("DD-MM-YYYY");
+    const newScheduledBooks = { ...scheduledBooks };
 
-      const dateKey = newDate.format("DD-MM-YYYY");
-      const newScheduledBooks = { ...scheduledBooks };
+    // Remove the event from the old date
+    const oldDateKey = selectedValue.format("DD-MM-YYYY");
+    newScheduledBooks[oldDateKey] = newScheduledBooks[oldDateKey].filter(
+      (event) => event.content !== content
+    );
 
-      // Remove the event from the old date
-      const oldDateKey = originalDate.format("DD-MM-YYYY");
-      newScheduledBooks[oldDateKey] = newScheduledBooks[oldDateKey].filter(
-        (event) => event.content !== content
-      );
-
-      // Add the event to the new date
-      if (!newScheduledBooks[dateKey]) {
-        newScheduledBooks[dateKey] = [];
-      }
-      newScheduledBooks[dateKey].push({ type: "success", content });
-
-      setScheduledBooks(newScheduledBooks);
-      setSelectedValue(newDate);
-      setRescheduleEventItem(null);
+    // Add the event to the new date
+    if (!newScheduledBooks[dateKey]) {
+      newScheduledBooks[dateKey] = [];
     }
+    newScheduledBooks[dateKey].push({ type: "success", content });
+
+    setScheduledBooks(newScheduledBooks);
+    setSelectedValue(newDate);
+  };
+
+  const [, drop] = useDrop({
+    accept: "DRAGGABLE_BADGE",
+    drop: (item: { content: string }) => {
+      rescheduleEvent(item.content, value);
+    },
+  });
+
+  const handlePrevMonth = () => {
+    setValue(value.subtract(1, "month")); // Use dayjs to subtract one month from the current value
+  };
+
+  const handleNextMonth = () => {
+    setValue(value.add(1, "month")); // Use dayjs to add one month to the current value
   };
 
   return (
-    <>
+    <DndProvider backend={TouchBackend}>
       <div
         style={{
           display: "flex",
@@ -150,22 +144,22 @@ const WaterBooksScheduler: React.FC = () => {
         }}
       >
         <Alert
-          message={`You selected date: ${selectedValue?.format("DD-MM-YYYY")}`}
+          message={`You selected date: ${selectedValue.format("DD-MM-YYYY")}`}
           style={{ margin: "0 8" }}
         />
         {/* Add navigation buttons */}
-        <Button onClick={() => setValue(value.subtract(1, "month"))}>«</Button>
+        <Button onClick={handlePrevMonth}>«</Button>
         {/* Month picker */}
         <DatePicker.MonthPicker
           value={value}
-          onChange={handleMonthPickerChange}
+          onChange={(newValue) => setValue(dayjs(newValue))}
           placeholder="Select month"
           style={{ margin: "0 8" }}
         />
-        <Button onClick={() => setValue(value.add(1, "month"))}>»</Button>
+        <Button onClick={handleNextMonth}>»</Button>
       </div>
 
-      <div>
+      <div ref={drop}>
         <Calendar
           value={value}
           onSelect={onSelect}
@@ -173,31 +167,7 @@ const WaterBooksScheduler: React.FC = () => {
           cellRender={cellRender}
         />
       </div>
-
-      {/* Modal for rescheduling */}
-      {rescheduleEventItem && (
-        <div className="modal">
-          <h3>Reschedule Event</h3>
-          <p>Event: {rescheduleEventItem.content}</p>
-          <p>
-            Original Date:{" "}
-            {rescheduleEventItem.originalDate.format("DD-MM-YYYY")}
-          </p>
-          <DatePicker
-            value={selectedValue}
-            onChange={(newValue) => setSelectedValue(newValue || selectedValue)}
-            placeholder="Select new date"
-          />
-          <Button onClick={() => setRescheduleEventItem(null)}>Cancel</Button>
-          <Button
-            type="primary"
-            onClick={() => handleReschedule(selectedValue)}
-          >
-            Reschedule
-          </Button>
-        </div>
-      )}
-    </>
+    </DndProvider>
   );
 };
 
