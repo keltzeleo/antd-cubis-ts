@@ -166,8 +166,8 @@ h2 {
 .circular-progress-container {
   /* 這裡的設置會將 container 定位到 current-step 的位置，並調整為相對於 container 的定位 */
   position: absolute;
-  top: -8;
-  left: -8;
+  top: 50%;
+  left: 50%;
   right: 0;
   transform: translateY(-50%);
   display: flex;

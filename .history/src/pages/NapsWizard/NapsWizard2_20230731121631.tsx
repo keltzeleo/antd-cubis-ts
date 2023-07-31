@@ -113,9 +113,7 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
         </Typography.Text>
         <div>
           {completedStepsList.length === 0 ? ( // Check if completedStepsList is empty
-            <Tag color={theme["shades.4"]} style={{ margin: 16 }}>
-              Not Available Yet
-            </Tag>
+            <Tag color={theme["grey.6"]}>n/a</Tag>
           ) : (
             // If completedStepsList is not empty, render completed steps
             completedStepsList.map((step) => (
@@ -125,21 +123,18 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
                 style={{ marginRight: 8 }}
                 type="link"
               >
-                <Tooltip
-                  title={forms[step - 1].displayName || forms[step - 1].name}
+                <span
+                  style={{
+                    color: theme["cyan.5"],
+                    border: "1px solid",
+                    borderColor: theme["cyan.5"],
+                    padding: "0 8",
+                    borderRadius: 4,
+                  }}
                 >
-                  <span
-                    style={{
-                      color: theme["cyan.4"],
-                      border: "1px solid",
-                      borderColor: theme["cyan.4"],
-                      padding: "0 8",
-                      borderRadius: 4,
-                    }}
-                  >
-                    Step {step}
-                  </span>
-                </Tooltip>
+                  Step {step} (
+                  {forms[step - 1].displayName || forms[step - 1].name})
+                </span>
               </Button>
             ))
           )}
@@ -163,7 +158,7 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
                 <span
                   style={{
                     color: theme["grey.6"],
-                    border: "1px dashed",
+                    border: "1px dotted",
                     borderColor: theme["grey.6"],
                     padding: "0 8",
                     borderRadius: 4,

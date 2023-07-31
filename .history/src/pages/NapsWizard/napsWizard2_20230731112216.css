@@ -139,36 +139,13 @@ h2 {
 }
 
 /* 修改 renderCircularProgress 函式中的相關 CSS 樣式 */
-/* 當前步驟的樣式 */
-.current-step {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 2px; /* 調整當前步驟區域的底部間距 */
-}
-
-.current-step .step {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  background-color: #ffaa64; /* 根據您的需求設置當前步驟的顏色 */
-  border-radius: var(--step-border-radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white; /* 根據您的需求設置當前步驟文字的顏色 */
-  font-family: var(--step-font-family);
-  font-weight: var(--step-font-weight);
-}
-
-/* 修改 renderCircularProgress 函式中的相關 CSS 樣式 */
 .circular-progress-container {
   /* 這裡的設置會將 container 定位到 current-step 的位置，並調整為相對於 container 的定位 */
   position: absolute;
-  top: -8;
-  left: -8;
+  top: 0;
+  left: 0;
   right: 0;
+  bottom: 0;
   transform: translateY(-50%);
   display: flex;
   align-items: center;
@@ -193,4 +170,8 @@ h2 {
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.circular-progress text {
+  display: none; /* Remove the text inside the circle */
 }

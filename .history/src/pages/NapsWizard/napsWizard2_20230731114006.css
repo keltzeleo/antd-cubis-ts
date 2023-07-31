@@ -167,7 +167,7 @@ h2 {
   /* 這裡的設置會將 container 定位到 current-step 的位置，並調整為相對於 container 的定位 */
   position: absolute;
   top: -8;
-  left: -8;
+  left: -9;
   right: 0;
   transform: translateY(-50%);
   display: flex;

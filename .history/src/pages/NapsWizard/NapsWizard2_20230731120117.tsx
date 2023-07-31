@@ -1,13 +1,5 @@
 import { PageContainer } from "@ant-design/pro-components";
-import {
-  Button,
-  Popover,
-  Steps,
-  Tag,
-  Tooltip,
-  Typography,
-  message,
-} from "antd";
+import { Button, Popover, Steps, Tooltip, Typography, message } from "antd";
 import React from "react";
 import BillPaymentApprovalForm from "../Forms/BillPaymentApprovalForm";
 import CompleteMeterInstallationForm from "../Forms/CompleteMeterInstallationForm";
@@ -112,37 +104,30 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
           Completed Step(s):
         </Typography.Text>
         <div>
-          {completedStepsList.length === 0 ? ( // Check if completedStepsList is empty
-            <Tag color={theme["shades.4"]} style={{ margin: 16 }}>
-              Not Available Yet
-            </Tag>
-          ) : (
-            // If completedStepsList is not empty, render completed steps
-            completedStepsList.map((step) => (
-              <Button
-                key={step}
-                onClick={() => handleStepClick(step - 1)}
-                style={{ marginRight: 8 }}
-                type="link"
+          {completedStepsList.map((step) => (
+            <Button
+              key={step}
+              onClick={() => handleStepClick(step - 1)}
+              style={{ marginRight: 8 }}
+              type="link"
+            >
+              <Tooltip
+                title={forms[step - 1].displayName || forms[step - 1].name}
               >
-                <Tooltip
-                  title={forms[step - 1].displayName || forms[step - 1].name}
+                <span
+                  style={{
+                    color: theme["cyan.6"],
+                    border: "1px dotted",
+                    borderColor: theme["cyan.6"],
+                    padding: "0 8",
+                    borderRadius: 4,
+                  }}
                 >
-                  <span
-                    style={{
-                      color: theme["cyan.4"],
-                      border: "1px solid",
-                      borderColor: theme["cyan.4"],
-                      padding: "0 8",
-                      borderRadius: 4,
-                    }}
-                  >
-                    Step {step}
-                  </span>
-                </Tooltip>
-              </Button>
-            ))
-          )}
+                  Step {step}
+                </span>
+              </Tooltip>
+            </Button>
+          ))}
         </div>
         <Typography.Text strong style={{ marginTop: 12 }}>
           Pending Step(s):
@@ -163,7 +148,7 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
                 <span
                   style={{
                     color: theme["grey.6"],
-                    border: "1px dashed",
+                    border: "1px dotted",
                     borderColor: theme["grey.6"],
                     padding: "0 8",
                     borderRadius: 4,

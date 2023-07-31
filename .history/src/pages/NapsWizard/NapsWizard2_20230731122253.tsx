@@ -113,8 +113,8 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
         </Typography.Text>
         <div>
           {completedStepsList.length === 0 ? ( // Check if completedStepsList is empty
-            <Tag color={theme["shades.4"]} style={{ margin: 16 }}>
-              Not Available Yet
+            <Tag color={theme["grey.6"]} style={{ marginLeft: 12 }}>
+              n/a
             </Tag>
           ) : (
             // If completedStepsList is not empty, render completed steps

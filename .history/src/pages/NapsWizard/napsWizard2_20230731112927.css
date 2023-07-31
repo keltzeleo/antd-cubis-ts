@@ -162,12 +162,11 @@ h2 {
   font-weight: var(--step-font-weight);
 }
 
-/* 修改 renderCircularProgress 函式中的相關 CSS 樣式 */
+/* Modify the circular-progress-container styles */
 .circular-progress-container {
-  /* 這裡的設置會將 container 定位到 current-step 的位置，並調整為相對於 container 的定位 */
   position: absolute;
-  top: -8;
-  left: -8;
+  top: 50%; /* Position the container at the center of the current step */
+  left: 0;
   right: 0;
   transform: translateY(-50%);
   display: flex;
@@ -178,19 +177,4 @@ h2 {
 .circular-progress {
   position: absolute;
   transform: rotate(-90deg);
-  /* 調整 circular-progress 的位置，使其位於 container 的正中間 */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.progress {
-  position: absolute;
-  stroke-linecap: round;
-  /* 調整 progress 的位置，使其位於 container 的正中間 */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
 }

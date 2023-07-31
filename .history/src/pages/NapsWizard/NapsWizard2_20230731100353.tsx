@@ -1,13 +1,5 @@
 import { PageContainer } from "@ant-design/pro-components";
-import {
-  Button,
-  Popover,
-  Steps,
-  Tag,
-  Tooltip,
-  Typography,
-  message,
-} from "antd";
+import { Button, Popover, Steps, Typography, message } from "antd";
 import React from "react";
 import BillPaymentApprovalForm from "../Forms/BillPaymentApprovalForm";
 import CompleteMeterInstallationForm from "../Forms/CompleteMeterInstallationForm";
@@ -47,16 +39,18 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
   const [currentStep, setCurrentStep] = React.useState(0);
   const totalSteps = forms.length;
   const [completedSteps, setCompletedSteps] = React.useState(0);
-  const pendingSteps = totalSteps - completedSteps - 1;
+  const [pendingSteps, setPendingSteps] = React.useState(totalSteps - 1);
 
   const handleNext = () => {
     setCompletedSteps(currentStep + 1);
+    setPendingSteps(totalSteps - (currentStep + 1) - 1);
     setCurrentStep(currentStep + 1);
   };
 
   const handlePrev = () => {
     if (currentStep > 0) {
       setCompletedSteps(currentStep - 1);
+      setPendingSteps(totalSteps - (currentStep - 1) - 1);
       setCurrentStep(currentStep - 1);
     }
   };
@@ -82,7 +76,7 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
   };
 
   const renderCircularProgress = () => {
-    const radius = 30.5; // Adjust the radius as needed
+    const radius = 30; // Adjust the radius as needed
     const circumference = 2 * Math.PI * radius;
     const progress = (completedSteps / (totalSteps - 1)) * 100;
     const offset = circumference - (progress / 100) * circumference;
@@ -91,88 +85,34 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
       { length: completedSteps },
       (_, index) => index + 1
     );
-
     const pendingStepsList = Array.from(
-      { length: totalSteps - (currentStep + 1) },
-      (_, index) => currentStep + index + 2
+      { length: pendingSteps },
+      (_, index) => completedSteps + index + 1
     );
 
     const stepsPopoverContent = (
       <div>
-        <Typography.Text strong>On Progress Step:</Typography.Text>
+        <Typography.Text strong>Completed Steps:</Typography.Text>
         <div>
-          <Button style={{ marginRight: 8 }} type="link" disabled>
-            <span style={{ color: theme["orange.6"] }}>
-              Step {currentStep + 1}{" "}
-              {forms[currentStep].displayName || forms[currentStep].name}
-            </span>
-          </Button>
+          {completedStepsList.map((step) => (
+            <Button
+              key={step}
+              onClick={() => setCurrentStep(step - 1)}
+              style={{ marginRight: 8 }}
+              type="link"
+            >
+              <span style={{ color: theme["green.6"] }}>Step {step}</span>
+            </Button>
+          ))}
         </div>
         <Typography.Text strong style={{ marginTop: 12 }}>
-          Completed Step(s):
-        </Typography.Text>
-        <div>
-          {completedStepsList.length === 0 ? ( // Check if completedStepsList is empty
-            <Tag color={theme["shades.4"]} style={{ margin: 16 }}>
-              Not Available Yet
-            </Tag>
-          ) : (
-            // If completedStepsList is not empty, render completed steps
-            completedStepsList.map((step) => (
-              <Button
-                key={step}
-                onClick={() => handleStepClick(step - 1)}
-                style={{ marginRight: 8 }}
-                type="link"
-              >
-                <Tooltip
-                  title={forms[step - 1].displayName || forms[step - 1].name}
-                >
-                  <span
-                    style={{
-                      color: theme["cyan.4"],
-                      border: "1px solid",
-                      borderColor: theme["cyan.4"],
-                      padding: "0 8",
-                      borderRadius: 4,
-                    }}
-                  >
-                    Step {step}
-                  </span>
-                </Tooltip>
-              </Button>
-            ))
-          )}
-        </div>
-        <Typography.Text strong style={{ marginTop: 12 }}>
-          Pending Step(s):
+          Pending Steps:
         </Typography.Text>
         <div>
           {pendingStepsList.map((step) => (
-            <Tooltip
-              key={step}
-              title={forms[step - 1].displayName || forms[step - 1].name}
-            >
-              <Button
-                // Note: Pending steps are NOT clickable.
-                // Only completed steps can be clicked.
-                style={{ marginRight: 8 }}
-                type="link"
-                disabled
-              >
-                <span
-                  style={{
-                    color: theme["grey.6"],
-                    border: "1px dashed",
-                    borderColor: theme["grey.6"],
-                    padding: "0 8",
-                    borderRadius: 4,
-                  }}
-                >
-                  Step {step}
-                </span>
-              </Button>
-            </Tooltip>
+            <Button key={step} style={{ marginRight: 8 }} type="link">
+              <span style={{ color: theme["grey.6"] }}>Step {step}</span>
+            </Button>
           ))}
         </div>
       </div>
@@ -180,51 +120,43 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
 
     return (
       <div className="circular-progress-container">
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+        <Popover
+          placement="bottom"
+          title="Steps"
+          content={stepsPopoverContent}
+          trigger="hover"
+          mouseEnterDelay={0.5}
+          mouseLeaveDelay={0.2}
         >
-          <Popover
-            placement="bottom"
-            title="Steps"
-            content={stepsPopoverContent}
-            trigger="hover"
-            mouseEnterDelay={0.1}
-            mouseLeaveDelay={0.2}
+          <svg
+            className="circular-progress"
+            height={radius * 2}
+            width={radius * 2}
           >
-            <svg
-              className="circular-progress"
-              height={radius * 2}
-              width={radius * 2}
-            >
-              <circle
-                className="progress-background"
-                cx={radius}
-                cy={radius}
-                r={radius - 3}
-                fill="transparent"
-                stroke={theme["grey.2"]}
-                strokeWidth="2"
-              />
-              <circle
-                className="progress"
-                cx={radius}
-                cy={radius}
-                r={radius - 3}
-                fill="transparent"
-                stroke={theme["orange.6"]}
-                strokeWidth="1"
-                strokeDasharray={circumference}
-                strokeDashoffset={offset}
-              />
-            </svg>{" "}
-          </Popover>
-          <div className="current-step-indicator">
-            <div className="step-indicator"></div>
-          </div>
+            <circle
+              className="progress-background"
+              cx={radius}
+              cy={radius}
+              r={radius - 3}
+              fill="transparent"
+              stroke={theme["grey.2"]}
+              strokeWidth="2"
+            />
+            <circle
+              className="progress"
+              cx={radius}
+              cy={radius}
+              r={radius - 3}
+              fill="transparent"
+              stroke={theme["orange.6"]}
+              strokeWidth="1"
+              strokeDasharray={circumference}
+              strokeDashoffset={offset}
+            />
+          </svg>
+        </Popover>
+        <div className="current-step-indicator">
+          <div className="step-indicator"></div>
         </div>
       </div>
     );
@@ -247,7 +179,6 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
   const handleStepClick = (stepIndex: number) => {
     // This function handles the click on a step in the popover
     setCurrentStep(stepIndex);
-    setCompletedSteps(stepIndex); // Update completedSteps to match the clicked step
   };
 
   return (
