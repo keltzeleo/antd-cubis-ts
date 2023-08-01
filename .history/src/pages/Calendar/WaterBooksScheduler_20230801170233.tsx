@@ -60,79 +60,75 @@ const WaterBooksReschedulingForm: React.FC<WaterBooksReschedulingFormProps> = ({
   };
 
   return (
-    <div
-      style={{ padding: "16px", backgroundColor: "#00a991", color: "#121b1c" }}
-    >
-      <ProForm layout="vertical" submitter={false}>
-        <ProForm.Group>
-          <ProFormText
-            name="currentScheduledDate"
-            label="Current Scheduled Date"
-            initialValue={
-              currentScheduledDate
-                ? currentScheduledDate.format("DD-MM-YYYY")
-                : ""
-            }
-            disabled
-          />
-          <ProFormText
-            name="reader"
-            label="Reader"
-            initialValue={reader}
-            disabled
-          />
-        </ProForm.Group>
-        <ProForm.Group>
-          <ProFormText
-            name="totalBooks"
-            label="Total Book"
-            initialValue={totalBooks}
-            disabled
-          />
-          <ProFormText
-            name="bookNo"
-            label="Book No"
-            initialValue={bookNo}
-            disabled
-          />
-        </ProForm.Group>
-        <ProForm.Group>
-          <ProFormText
-            name="bookDescription"
-            label="Book Description"
-            initialValue={bookDescription}
-            disabled
-          />
-        </ProForm.Group>
-        <ProForm.Group>
-          <ProFormDatePicker
-            name="newScheduledDate"
-            label="New Scheduling Date"
-            initialValue={date ? dayjs(date) : null}
-            style={{ width: "100%" }}
-          />
-        </ProForm.Group>
-        <ProForm.Group>
-          <ProFormText
-            name="newReader"
-            label="New Reader"
-            placeholder="Enter new reader"
-            style={{ width: "100%" }}
-          />
-        </ProForm.Group>
-        <ProForm.Group>
-          <Button onClick={onCancel}>Cancel</Button>
-          <Popconfirm
-            title="Are you sure you want to apply the new scheduling date?"
-            onConfirm={onApply}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="primary">Apply New Scheduling Date</Button>
-          </Popconfirm>
-        </ProForm.Group>
-      </ProForm>
-    </div>
+    <ProForm layout="vertical" submitter={false}>
+      <ProForm.Group>
+        <ProFormText
+          name="currentScheduledDate"
+          label="Current Scheduled Date"
+          initialValue={
+            currentScheduledDate
+              ? currentScheduledDate.format("DD-MM-YYYY")
+              : ""
+          }
+          disabled
+        />
+        <ProFormText
+          name="reader"
+          label="Reader"
+          initialValue={reader}
+          disabled
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          name="totalBooks"
+          label="Total Book"
+          initialValue={totalBooks}
+          disabled
+        />
+        <ProFormText
+          name="bookNo"
+          label="Book No"
+          initialValue={bookNo}
+          disabled
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          name="bookDescription"
+          label="Book Description"
+          initialValue={bookDescription}
+          disabled
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormDatePicker
+          name="newScheduledDate"
+          label="New Scheduling Date"
+          initialValue={date ? dayjs(date) : null}
+          style={{ width: "100%" }}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          name="newReader"
+          label="New Reader"
+          placeholder="Enter new reader"
+          style={{ width: "100%" }}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <Button onClick={onCancel}>Cancel</Button>
+        <Popconfirm
+          title="Are you sure you want to apply the new scheduling date?"
+          onConfirm={onApply}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="primary">Apply New Scheduling Date</Button>
+        </Popconfirm>
+      </ProForm.Group>
+    </ProForm>
   );
 };
 

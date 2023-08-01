@@ -61,7 +61,7 @@ const WaterBooksReschedulingForm: React.FC<WaterBooksReschedulingFormProps> = ({
 
   return (
     <div
-      style={{ padding: "16px", backgroundColor: "#00a991", color: "#121b1c" }}
+      style={{ padding: "16px", backgroundColor: "#f0f0f0", color: "#121b1c" }}
     >
       <ProForm layout="vertical" submitter={false}>
         <ProForm.Group>

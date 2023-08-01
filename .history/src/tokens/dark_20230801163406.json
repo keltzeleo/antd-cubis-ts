@@ -234,7 +234,7 @@
   "colorBgTextActive": "rgba(239, 239, 239, 0.18)",
   "colorBgTextHover": "rgba(239, 239, 239, 0.12)",
   "colorBorderActionsColumn": "#1d2425",
-  "colorBgContainer": "rgba(233,206,245,0.07)",
+  "colorBgContainer": "rgba(233,206,235,0.05)",
   "colorBgBase": "#121b1d",
   "white": "#fafafa",
   "fontFamily": "-apple-system, BlinkMacSystemFont, 'Mulish', 'Play','Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
