@@ -196,6 +196,7 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
             alignItems: "center",
           }}
         >
+          <div style={{ height: 30 }} />
           <Popover
             placement="top"
             title="Steps Status"

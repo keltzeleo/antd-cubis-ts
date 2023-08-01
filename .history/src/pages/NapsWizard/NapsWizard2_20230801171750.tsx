@@ -108,11 +108,10 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
               style={{
                 color: theme["orange.6"],
                 fontWeight: 700,
-                fontSize: 14,
+                fontSize: 12,
               }}
             >
-              Step {currentStep + 1}
-              {" :- "}
+              Step {currentStep + 1}{" "}
               {forms[currentStep].displayName || forms[currentStep].name}
             </span>
           </Button>
@@ -122,7 +121,7 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
         </Typography.Text>
         <div>
           {completedStepsList.length === 0 ? ( // Check if completedStepsList is empty
-            <Tag color={theme["shades.3"]} style={{ margin: 16 }}>
+            <Tag color={theme["shades.4"]} style={{ margin: 16 }}>
               Not Available Yet
             </Tag>
           ) : (
@@ -193,9 +192,10 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "baseline",
           }}
         >
+          <div style={{ height: 30 }} />
           <Popover
             placement="top"
             title="Steps Status"

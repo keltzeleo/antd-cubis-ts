@@ -193,9 +193,10 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "baseline",
           }}
         >
+          <div style={{ height: 30 }} />
           <Popover
             placement="top"
             title="Steps Status"
