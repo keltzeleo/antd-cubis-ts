@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import type { CellRenderInfo } from 'rc-picker/lib/interface';
 import React, { useState } from 'react';
 
-import WaterBooksPreviousMonthReschedulingForm from './waterBooksPreviousMonthReschedulingForm';
+import WaterBooksPreviousMonthReschedulingForm from './WaterBooksPreviousMonthReschedulingForm';
 import './waterBooksSchedule.css';
 
 // Mock Data for demonstration purposes
@@ -195,7 +195,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           />
           <Drawer
             title={
-              <span style={{ color: theme.colorTextBase }}>
+              <span style={{ color: '#141c1b' }}>
                 Water Books Rescheduling -{' '}
                 {clickedItemTitle || 'No Item Selected'}
               </span>

@@ -195,7 +195,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           />
           <Drawer
             title={
-              <span style={{ color: theme.colorTextBase }}>
+              <span style={{ color: '#141c1b' }}>
                 Water Books Rescheduling -{' '}
                 {clickedItemTitle || 'No Item Selected'}
               </span>
