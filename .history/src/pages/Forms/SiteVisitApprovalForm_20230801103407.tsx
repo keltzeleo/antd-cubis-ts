@@ -37,6 +37,8 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
   theme,
 }) => {
   const [form] = Form.useForm();
+  // Destructure the colorBgBase property from the theme object
+  const { colorBgContainer } = theme;
   const handleSubmit = (values: any) => {
     // Handle form submission logic here
     console.log("Form values:", values);
@@ -378,7 +380,7 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
         className="drag-drop-container"
         style={{
           height: "100vh",
-          backgroundColor: theme.colorBgContainer, // Use colorBgBase for background color
+          backgroundColor: colorBgBase, // Use colorBgBase for background color
         }}
       >
         <div className="top-section-site-visit">
@@ -462,16 +464,8 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
               }}
             >
               <ProCard
-                title={
-                  <span style={{ color: theme.colorTextBase }}>
-                    Site Visit Entry Information
-                  </span>
-                }
+                title="Site Visit Entry Information"
                 bordered
-                style={{
-                  borderColor: theme["colorBorder"],
-                  color: theme["colorTextBase"],
-                }}
                 headerBordered
                 collapsible
                 extra={
@@ -569,7 +563,7 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                           labelCol={{ span: 7 }}
                           wrapperCol={{ span: 24 }}
                         >
-                          <ProFormTextArea name="Remark" width="xl" label=" " />
+                          <ProFormTextArea name="Remark" width="xl" label="_" />
                         </ProFormItem>
                       </Col>
                     </Row>
@@ -579,16 +573,8 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
               </ProCard>
 
               <ProCard
-                title={
-                  <span style={{ color: theme.colorTextBase }}>
-                    Site Visit Final Entry Information
-                  </span>
-                }
+                title="Site Visit Final Entry Information"
                 bordered
-                style={{
-                  borderColor: theme["colorBorder"],
-                  color: theme["colorTextBase"],
-                }}
                 headerBordered
                 collapsible
                 defaultCollapsed={collapsed}

@@ -297,14 +297,7 @@ const NapsWizard2: React.FC<{ theme: Theme }> = ({ theme }) => {
             <div>
               <h2>{`Step ${currentStep + 1}`}</h2>
               {/* Render the form component based on the current step */}
-              {React.createElement(forms[currentStep], {
-                theme,
-                onSubmit: (data) => {
-                  // Handle form submission here
-                  console.log("Form submitted!", data);
-                },
-                isDarkMode: true, // You can set this to the appropriate value
-              })}
+              {React.createElement(forms[currentStep], { theme })}
             </div>
           ) : null}
         </div>

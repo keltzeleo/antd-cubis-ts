@@ -470,7 +470,7 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                 bordered
                 style={{
                   borderColor: theme["colorBorder"],
-                  color: theme["colorTextBase"],
+                  colorIcon: theme["colorTextBase"],
                 }}
                 headerBordered
                 collapsible
@@ -585,10 +585,6 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                   </span>
                 }
                 bordered
-                style={{
-                  borderColor: theme["colorBorder"],
-                  color: theme["colorTextBase"],
-                }}
                 headerBordered
                 collapsible
                 defaultCollapsed={collapsed}

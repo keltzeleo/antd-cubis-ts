@@ -462,16 +462,8 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
               }}
             >
               <ProCard
-                title={
-                  <span style={{ color: theme.colorTextBase }}>
-                    Site Visit Entry Information
-                  </span>
-                }
+                title="Site Visit Entry Information"
                 bordered
-                style={{
-                  borderColor: theme["colorBorder"],
-                  color: theme["colorTextBase"],
-                }}
                 headerBordered
                 collapsible
                 extra={
@@ -569,7 +561,7 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
                           labelCol={{ span: 7 }}
                           wrapperCol={{ span: 24 }}
                         >
-                          <ProFormTextArea name="Remark" width="xl" label=" " />
+                          <ProFormTextArea name="Remark" width="xl" />
                         </ProFormItem>
                       </Col>
                     </Row>
@@ -579,16 +571,8 @@ const SiteVisitApprovalForm: React.FC<SiteVisitApprovalFormProps> = ({
               </ProCard>
 
               <ProCard
-                title={
-                  <span style={{ color: theme.colorTextBase }}>
-                    Site Visit Final Entry Information
-                  </span>
-                }
+                title="Site Visit Final Entry Information"
                 bordered
-                style={{
-                  borderColor: theme["colorBorder"],
-                  color: theme["colorTextBase"],
-                }}
                 headerBordered
                 collapsible
                 defaultCollapsed={collapsed}
