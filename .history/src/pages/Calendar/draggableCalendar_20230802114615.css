@@ -1,0 +1,6 @@
+/* DraggableCalendar.css */
+/* Customize the appearance of the dragged event */
+div[draggable='true'] {
+    opacity: 0.5;
+    cursor: move;
+  }

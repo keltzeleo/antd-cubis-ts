@@ -3,6 +3,7 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import type { CellRenderInfo } from 'rc-picker/lib/interface';
 import React, { useState } from 'react';
+import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 
 import WaterBooksPreviousMonthReschedulingForm from './waterBooksPreviousMonthReschedulingForm';
 import './waterBooksSchedule.css';
@@ -142,25 +143,91 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setSelectedEvent(convertToEventData(event));
   };
 
-  const dateCellRender = (date: Dayjs) => {
-    const listData = getListData(date);
-    return (
-      <ul className="events">
-        {listData.map((item, index) => (
-          <li
-            key={index}
-            onClick={() => showDrawer(item.content, date)}
-            className="previous-month-event-item"
-          >
-            {item.content}
-          </li>
-        ))}
-      </ul>
-    );
+const dateCellRender = (date: Dayjs) => {
+  const listData = getListData(date);
+  return (
+    <Droppable droppableId={date.format('DD-MM-YYYY')} key={date.format('DD-MM-YYYY')}>
+      {(provided) => (
+        <ul
+          className="events"
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+        >
+          {listData.map((item, index) => (
+            <Draggable
+              key={item.content}
+              draggableId={item.content}
+              index={index}
+            >
+              {(provided) => (
+                <li
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  onClick={() => showDrawer(item.content, date)}
+                  className="previous-month-event-item"
+                >
+                  {item.content}
+                </li>
+              )}
+            </Draggable>
+          ))}
+          {provided.placeholder}
+        </ul>
+      )}
+    </Droppable>
+  );
+};
+  
+const onDragEnd = (result: DropResult) => {
+  const { destination, source, draggableId } = result;
+
+  if (!destination) {
+    return;
+  }
+
+  if (
+    destination.droppableId === source.droppableId &&
+    destination.index === source.index
+  ) {
+    return;
+  }
+
+  const start = scheduledBooks[source.droppableId];
+  const finish = scheduledBooks[destination.droppableId];
+
+  if (start === finish) {
+    const newList = Array.from(start);
+    const [removed] = newList.splice(source.index, 1);
+    newList.splice(destination.index, 0, removed);
+
+    const newScheduledBooks = {
+      ...scheduledBooks,
+      [source.droppableId]: newList,
+    };
+
+    setScheduledBooks(newScheduledBooks);
+    return;
+  }
+
+  // Moving from one list to another
+  const startList = Array.from(start);
+  const finishList = Array.from(finish);
+  const [removed] = startList.splice(source.index, 1);
+
+  finishList.splice(destination.index, 0, removed);
+
+  const newScheduledBooks = {
+    ...scheduledBooks,
+    [source.droppableId]: startList,
+    [destination.droppableId]: finishList,
   };
 
+  setScheduledBooks(newScheduledBooks);
+};
+  
   return (
-    <>
+    <DragDropContext onDragEnd={onDragEnd}>
       <div>
         <div
           style={{
@@ -217,7 +284,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           </Drawer>
         </div>
       </div>
-    </>
+    </DragDropContext>
   );
 };
 
