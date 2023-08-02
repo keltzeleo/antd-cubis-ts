@@ -283,7 +283,7 @@ const isMalaysiaHoliday = (date: Dayjs) => {
                       onClick={() => showDrawer(item.content, date)}
                       className="previous-month-event-item"
                     >
-                      <span style={{borderRadius: 16, width: "100%", backgroundColor: theme["yellow.3"], fontSize:12, fontWeight:600, margin:-6,padding:4}}>
+                      <span style={{borderRadius: 8, backgroundColor: theme["yellow.3"], fontSize:12, fontWeight:600}}>
                       {item.bookNo} - {item.totalBooks}
                       </span>
                     </li>
