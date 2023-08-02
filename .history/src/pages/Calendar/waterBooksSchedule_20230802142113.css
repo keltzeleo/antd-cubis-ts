@@ -1,0 +1,32 @@
+.previous-month-event-item {
+  cursor: pointer; /* Show pointer cursor when hovering over event items */
+  transition: background-color 0.3s; /* Add a smooth transition effect */
+
+  /* Optional: Add additional styling for the hover effect */
+}
+
+.previous-month-event-item:hover {
+  background-color: #a9b3b048;
+  border-radius: 16px;
+  padding-left: 8px; /* Change the background color on hover */
+}
+
+/* waterBooksSchedule.css */
+
+.events {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+  border-radius: 4px;
+}
+
+.previous-month-event-item {
+  margin-bottom: 8px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.events li {
+  background-color: var(--event-background-color);
+  color: var(--event-text-color);
+}

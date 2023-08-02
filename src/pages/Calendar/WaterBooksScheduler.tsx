@@ -2,21 +2,24 @@ import { Alert, Button, Calendar, DatePicker, Drawer } from 'antd';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import type { CellRenderInfo } from 'rc-picker/lib/interface';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-
+import DateHolidays from 'date-holidays'; // Import date-holidays library
+import axios from 'axios';
 import WaterBooksPreviousMonthReschedulingForm from './waterBooksPreviousMonthReschedulingForm';
 import './waterBooksSchedule.css';
+import { holidaysMY2023 } from './holidaysMY2023';
+
 
 // Mock Data for demonstration purposes
 const mockScheduledBooks: Record<string, { type: string; content: string }[]> =
   {
-    '10-07-2023': [
+    '02-08-2023': [
       { type: 'warning', content: 'This is warning event.' },
       { type: 'success', content: 'This is usual event.' },
       { type: 'error', content: 'This is error event.' },
     ],
-    '16-07-2023': [
+    '26-07-2023': [
       { type: 'warning', content: 'This is warning event' },
       { type: 'success', content: 'This is very long usual event....' },
       { type: 'error', content: 'This is error event 1.' },
@@ -25,6 +28,20 @@ const mockScheduledBooks: Record<string, { type: string; content: string }[]> =
       { type: 'error', content: 'This is error event 4.' },
     ],
   };
+
+  interface LegendItem {
+    category: string;
+    label: string;
+    color: string;
+  }
+
+  const legendData: LegendItem[] = [
+    { category: 'rest-day', label: 'Rest Day', color: 'theme["red.2"]' },
+    { category: 'holiday', label: 'Holiday', color: 'theme["geekblue.2"]' },
+    { category: 'scheduled', label: 'Scheduled', color: 'theme["yellow.2"]' },
+    { category: 'unscheduled', label: 'Unscheduled', color: 'theme["green.2"]' },
+    // Add more legend items as needed
+  ];
 
 interface Theme {
   [key: string]: string;
@@ -44,7 +61,30 @@ interface EventData {
 
 const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const [scheduledBooks, setScheduledBooks] = useState(mockScheduledBooks);
-  const [value, setValue] = useState<Dayjs>(dayjs('2023-08-25'));
+  const [value, setValue] = useState<Dayjs>(dayjs);
+
+// Function to check if a date is a holiday in Malaysia
+const isMalaysiaHoliday = (date: Dayjs) => {
+  const dateStr = date.format('DD-MM-YYYY');
+  return holidaysMY2023.some((holiday) => holiday.date === dateStr);
+};
+
+  useEffect(() => {
+    const fetchMalaysiaHolidays = async () => {
+      try {
+        const response = await axios.get('https://date.nager.at/Api/v2/PublicHoliday/2023/MY');
+        const holidayData = response.data;
+        const malaysiaHolidays = new DateHolidays('MY');
+        malaysiaHolidays.init(holidayData);
+        setScheduledBooks({ ...scheduledBooks, ...holidayData });
+      } catch (error) {
+        console.error('Failed to fetch Malaysia holidays:', error);
+      }
+    };
+
+    fetchMalaysiaHolidays();
+  }, []);
+
 
   const handleMonthPickerChange = (newValue: Dayjs | null) => {
     setValue(newValue || value);
@@ -89,10 +129,57 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     ) : null;
   };
 
-  const cellRender = (current: Dayjs, info: CellRenderInfo<Dayjs>) => {
-    if (info.type === 'date') return dateCellRender(current);
-    if (info.type === 'month') return monthCellRender(current);
-    return info.originNode;
+  const dateCellRender = (date: Dayjs) => {
+    const isWeekend = date.day() === 6 || date.day() === 0; // 6: Saturday, 0: Sunday
+    const listData = getListData(date);
+
+ // Check if the date is a holiday in Malaysia
+ const isHoliday = isMalaysiaHoliday(date);
+ const holidayName = holidaysMY2023.find((holiday) => holiday.date === date.format('DD-MM-YYYY'))?.name;
+
+ const isToday = date.isSame(dayjs(), 'day'); // Check if the date is today
+
+    return (
+      <ul className="events">
+      {isToday && (
+        <div style={{ color: 'white', backgroundColor: theme.colorPrimary, marginBottom: 5, borderRadius: 8, paddingLeft: 8, fontSize:12, fontWeight:600 }}>
+          Today
+        </div>
+      )}
+              {isWeekend && (
+          <div style={{ color: theme.colorTextSecondary, marginBottom: 5, backgroundColor: theme["red.3"], borderRadius: 8, paddingLeft: 8, fontSize: 10}}>
+            Rest Day
+          </div>
+        )}
+        {isHoliday && (
+          <div style={{color: theme.colorTextSecondary, backgroundColor: theme["geekblue.3"], marginBottom: 5, borderRadius: 8, paddingLeft: 8, fontSize: 10 }}>
+            Holiday:{holidayName}
+          </div>
+        )}
+        <Droppable droppableId={date.format('DD-MM-YYYY')}>
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {listData.map((item, index) => (
+                <Draggable key={item.content} draggableId={item.content} index={index}>
+                  {(provided) => (
+                    <li
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      onClick={() => showDrawer(item.content, date)}
+                      className="previous-month-event-item"
+                    >
+                      {item.content}
+                    </li>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </ul>
+    );
   };
 
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
@@ -143,88 +230,53 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setSelectedEvent(convertToEventData(event));
   };
 
-const dateCellRender = (date: Dayjs) => {
-  const listData = getListData(date);
-  return (
-    <Droppable droppableId={date.format('DD-MM-YYYY')} key={date.format('DD-MM-YYYY')}>
-      {(provided) => (
-        <ul
-          className="events"
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-        >
-          {listData.map((item, index) => (
-            <Draggable
-              key={item.content}
-              draggableId={item.content}
-              index={index}
-            >
-              {(provided) => (
-                <li
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  onClick={() => showDrawer(item.content, date)}
-                  className="previous-month-event-item"
-                >
-                  {item.content}
-                </li>
-              )}
-            </Draggable>
-          ))}
-          {provided.placeholder}
-        </ul>
-      )}
-    </Droppable>
-  );
-};
   
-const onDragEnd = (result: DropResult) => {
-  const { destination, source, draggableId } = result;
-
-  if (!destination) {
-    return;
-  }
-
-  if (
-    destination.droppableId === source.droppableId &&
-    destination.index === source.index
-  ) {
-    return;
-  }
-
-  const start = scheduledBooks[source.droppableId];
-  const finish = scheduledBooks[destination.droppableId];
-
-  if (start === finish) {
-    const newList = Array.from(start);
-    const [removed] = newList.splice(source.index, 1);
-    newList.splice(destination.index, 0, removed);
-
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+  
+    if (!destination) {
+      return;
+    }
+  
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+  
+    const start = scheduledBooks[source.droppableId];
+    const finish = scheduledBooks[destination.droppableId];
+  
+    if (start === finish) {
+      const newList = Array.from(start);
+      const [removed] = newList.splice(source.index, 1);
+      newList.splice(destination.index, 0, removed);
+  
+      const newScheduledBooks = {
+        ...scheduledBooks,
+        [source.droppableId]: newList,
+      };
+  
+      setScheduledBooks(newScheduledBooks);
+      return;
+    }
+  
+    // Moving from one list to another
+    const startList = Array.from(start);
+    const finishList = Array.from(finish);
+    const [removed] = startList.splice(source.index, 1);
+  
+    finishList.splice(destination.index, 0, removed);
+  
     const newScheduledBooks = {
       ...scheduledBooks,
-      [source.droppableId]: newList,
+      [source.droppableId]: startList,
+      [destination.droppableId]: finishList,
     };
-
+  
     setScheduledBooks(newScheduledBooks);
-    return;
-  }
-
-  // Moving from one list to another
-  const startList = Array.from(start);
-  const finishList = Array.from(finish);
-  const [removed] = startList.splice(source.index, 1);
-
-  finishList.splice(destination.index, 0, removed);
-
-  const newScheduledBooks = {
-    ...scheduledBooks,
-    [source.droppableId]: startList,
-    [destination.droppableId]: finishList,
   };
-
-  setScheduledBooks(newScheduledBooks);
-};
   
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -258,7 +310,7 @@ const onDragEnd = (result: DropResult) => {
             value={value}
             onSelect={onSelect}
             onPanelChange={onPanelChange}
-            cellRender={cellRender}
+            cellRender={dateCellRender}
           />
           <Drawer
             title={
