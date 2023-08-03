@@ -37,7 +37,7 @@ const Legend: React.FC<LegendProps> = ({ legendData, theme }) => {
               height: 10,
               backgroundColor: item.color,
               marginRight: 5,
-              borderRadius: 4,
+              borderRadius: 2,
             }}
           />
           <span style={{ marginRight: 16 }}>{item.label}</span>

@@ -67,15 +67,6 @@ const mockScheduledBooks: Record<string, EventData[]> = {
       totalBooks: "3",
       bookDescription: "Event 2 round",
     },
-    {
-      id: generateUniqueID(), // Add unique ID for each event
-      content: "Event 12",
-      date: "02-08-2023",
-      reader: "Jane Smith",
-      bookNo: "B0012",
-      totalBooks: "13",
-      bookDescription: "Event 12 round",
-    },
     // Add more events as needed
   ],
   "26-07-2023": [
@@ -451,7 +442,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         padding: "2px 16px", // Adjust the padding
                         fontSize: 12,
                         fontWeight: 600,
-                        margin: 0, // Adjust the margins
+                        margin: "0 8px 8px 0", // Adjust the margins
                       }}
                     >
                       <span>
@@ -483,7 +474,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       padding: "2px 16px", // Adjust the padding
                       fontSize: 12,
                       fontWeight: 600,
-                      margin: 0, // Adjust the margins
+                      margin: "0 8px 8px 0", // Adjust the margins
                     }}
                   >
                     {/* An empty span element to maintain layout */}

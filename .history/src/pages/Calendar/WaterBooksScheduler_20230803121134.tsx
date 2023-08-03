@@ -451,7 +451,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         padding: "2px 16px", // Adjust the padding
                         fontSize: 12,
                         fontWeight: 600,
-                        margin: 0, // Adjust the margins
+                        margin: "0 8px 8px 0", // Adjust the margins
                       }}
                     >
                       <span>
@@ -483,7 +483,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       padding: "2px 16px", // Adjust the padding
                       fontSize: 12,
                       fontWeight: 600,
-                      margin: 0, // Adjust the margins
+                      margin: "0 4px 4px 0", // Adjust the margins
                     }}
                   >
                     {/* An empty span element to maintain layout */}
