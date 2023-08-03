@@ -157,7 +157,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     {
       category: "unscheduled",
       label: "Unscheduled",
-      color: "transparent",
+      color: theme["shades.2"],
     },
     // Add more legend items as needed
   ];
@@ -411,10 +411,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
         )}
         <Droppable droppableId={`dateCell_${dateKey}`} isDropDisabled={false}>
           {(provided) => (
-            <div
-              ref={provided.innerRef}
-              style={{ position: "relative", height: "150px", width: "200px" }}
-            >
+            <div ref={provided.innerRef} style={{ position: "relative" }}>
               {listData.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
@@ -436,7 +433,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           backgroundColor: theme["yellow.3"],
                           fontSize: 12,
                           fontWeight: 600,
-                          margin: "0 -20 -10 0",
+                          margin: -16,
                           padding: " 2 16 2 8",
                         }}
                       >

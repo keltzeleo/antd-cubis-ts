@@ -158,6 +158,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
       category: "unscheduled",
       label: "Unscheduled",
       color: "transparent",
+      style: { borderColor: theme["shades.1"] },
     },
     // Add more legend items as needed
   ];
