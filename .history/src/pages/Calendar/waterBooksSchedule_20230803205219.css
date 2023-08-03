@@ -1,0 +1,72 @@
+.previous-month-event-item {
+  cursor: pointer; /* Show pointer cursor when hovering over event items */
+  transition: background-color 0.3s; /* Add a smooth transition effect */
+
+  /* Optional: Add additional styling for the hover effect */
+}
+
+.previous-month-event-item:hover {
+  background-color: #a9b3b048;
+  border-radius: 16px;
+  padding-left: 8px; /* Change the background color on hover */
+}
+
+/* waterBooksSchedule.css */
+
+.events {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+  border-radius: 4px;
+}
+
+.previous-month-event-item {
+  margin-bottom: 8px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.custom-red-cell {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  text-align: center;
+  line-height: 28px;
+}
+
+/* Set the z-index of the dragging item to make it appear above the calendar highlight */
+.dragging-item {
+  z-index: 1000;
+}
+
+/* Adjust the z-index of the highlight area to a lower value to prevent it from covering the dragging item */
+.ant-picker-cell-inner {
+  z-index: 900;
+}
+
+/* For WebKit based browsers (e.g., Chrome, Safari) */
+/* Custom track color */
+
+/* Style the scrollbar track (background) */
+::-webkit-scrollbar {
+  width: 5px; /* Set the width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+}
+
+/* Custom thumb color (the draggable part of the scrollbar) */
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 12px;
+}
+
+/* Change thumb color on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
