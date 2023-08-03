@@ -337,8 +337,8 @@ const renderSingleRowCalendar = () => {
                     border: "1px dotted rgba(0,20,0,0.03)",
                     padding: 8,
                     textAlign: "center",
-                    backgroundColor: "white",
-                    color: "#121b1c",
+                    backgroundColor: "white"",
+                    color: theme["colorText"],
                     fontWeight: 700,
                     fontFamily: "play",
                   }}
@@ -369,13 +369,13 @@ let colorText = theme["colorText"]; // Set a default font color (use the text co
 let fontSize = "14px"; // Set the default font size
 
 if (isWeekend) {
-  backgroundColor = theme["red.legend"];
+  backgroundColor = theme["red.2"];
   colorText = theme["colorTextLight"];
 } else if (isHoliday) {
-  backgroundColor = theme["geekblue.2"];
+  backgroundColor = theme["geekblue.3"];
   colorText = theme["colorTextLight"];
 } else if (hasScheduledEvents) {
-  backgroundColor = theme["yellow.legend"];
+  backgroundColor = theme["yellow.3"];
   colorText = theme["colorTextInverted"];
   fontSize = "16px"; // Set a larger font size for scheduled days
 }

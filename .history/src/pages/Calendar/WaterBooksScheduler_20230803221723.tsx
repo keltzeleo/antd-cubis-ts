@@ -372,7 +372,7 @@ if (isWeekend) {
   backgroundColor = theme["red.legend"];
   colorText = theme["colorTextLight"];
 } else if (isHoliday) {
-  backgroundColor = theme["geekblue.2"];
+  backgroundColor = theme["geekblue.legend"];
   colorText = theme["colorTextLight"];
 } else if (hasScheduledEvents) {
   backgroundColor = theme["yellow.legend"];
