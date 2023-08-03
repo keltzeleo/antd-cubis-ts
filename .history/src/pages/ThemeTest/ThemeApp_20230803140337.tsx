@@ -6,7 +6,7 @@ import TariffChargesMaintenance2 from "../LibraryMaintanance/TariffChargesMainte
 import dark from "../../tokens/dark.json";
 import light from "../../tokens/light.json";
 // import EditableTable from "../LibraryMaintanance/EditableTable";
-import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
+// import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
 import WaterBooksScheduler from "../Calendar/WaterBooksScheduler";
 import NapsWizard2 from "../NapsWizard/NapsWizard2";
 
@@ -35,19 +35,16 @@ const ThemeApp: React.FC = () => {
         <Switch checked={isDarkMode} onChange={handleThemeChange} />
         <span style={{ marginLeft: 10 }}>Dark</span>
       </div>
-      <AppointmentUpdates theme={isDarkMode ? dark : light} />
+      {/* <AppointmentUpdates theme={isDarkMode ? dark : light} /> */}
       <p></p>
-      <div style={{ height: 100 }} />
 
       <p></p>
       <TariffChargesMaintenance2 theme={isDarkMode ? dark : light} />
       {/* <EditableTable theme={isDarkMode ? dark : light} /> */}
       {/* <TariffChargesMaintenanceCard theme={isDarkMode ? dark : light} /> */}
       {/* <ThemeTest /> */}
-      <div style={{ height: 100 }} />
-
       <NapsWizard2 theme={isDarkMode ? dark : light} />
-      <div style={{ height: 100 }} />
+      <div style={{ height: 40 }} />
       <WaterBooksScheduler theme={isDarkMode ? dark : light} />
     </ConfigProvider>
   );

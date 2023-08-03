@@ -413,7 +413,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           {(provided) => (
             <div
               ref={provided.innerRef}
-              style={{ position: "relative", height: "100px", width: "100%" }}
+              style={{ position: "relative", height: "auto", width: "200px" }}
             >
               {listData.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
