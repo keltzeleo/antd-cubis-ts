@@ -14,6 +14,7 @@ import "./draggableCalendar.css";
 import { holidaysMY2023 } from "./holidaysMY2023";
 import WaterBooksPreviousMonthReschedulingForm from "./waterBooksPreviousMonthReschedulingForm";
 import "./waterBooksSchedule.css";
+
 // Simple Unique ID Generator Function
 const generateUniqueID = () => {
   const timestamp = new Date().getTime().toString(16); // Convert timestamp to hexadecimal
@@ -81,39 +82,6 @@ const mockScheduledBooks: Record<string, EventData[]> = {
     },
     // Add more events as needed
   ],
-  "28-07-2023": [
-    {
-      id: generateUniqueID(), // Add unique ID for each event
-      content: "Event 4",
-      date: "28-07-2023",
-      reader: "Alice Johnson",
-      bookNo: "B004",
-      totalBooks: "2",
-      bookDescription: "Event 4 round",
-    },
-    // Add more events as needed
-  ],
-  "03-08-2023": [
-    {
-      id: generateUniqueID(), // Add unique ID for each event
-      content: "Event 5",
-      date: "03-08-2023",
-      reader: "Alice Johnson",
-      bookNo: "B005",
-      totalBooks: "7",
-      bookDescription: "Event 5 round",
-    },
-    {
-      id: generateUniqueID(), // Add unique ID for each event
-      content: "Event 6",
-      date: "03-08-2023",
-      reader: "Alice Johnson",
-      bookNo: "B006",
-      totalBooks: "7",
-      bookDescription: "Event 5 round",
-    },
-    // Add more events as needed
-  ],
 };
 
 const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
@@ -163,6 +131,32 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   ];
 
   // Function to check if a date is a holiday in Malaysia
+  const isMalaysiaHoliday = (date: Dayjs) => {
+    const dateStr = date.format("DD-MM-YYYY");
+    return holidaysMY2023.some((holiday) => holiday.date === dateStr);
+  };
+
+  const fetchMalaysiaHolidays = async () => {
+    try {
+      const response = await axios.get(
+        "https://date.nager.at/Api/v2/PublicHoliday/2023/MY"
+      );
+      const holidayData = response.data;
+      const formattedHolidayData = holidayData.map((holiday: any) => {
+        return {
+          ...holiday,
+          date: dayjs(holiday.date).format("DD-MM-YYYY"),
+        };
+      });
+      setScheduledBooks({ ...scheduledBooks, ...formattedHolidayData });
+    } catch (error) {
+      console.error("Failed to fetch Malaysia holidays:", error);
+    }
+  };
+
+  const handleMonthPickerChange = (newValue: Dayjs | null) => {
+    setValue(newValue || value);
+  };
 
   const handleCancel = () => {
     setIsDrawerVisible(false);
@@ -177,9 +171,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setValue(newValue);
   };
 
-  const onPanelChange = (date: Dayjs, mode: string) => {
-    console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
-    setValue(date);
+  const onPanelChange = (date: Dayjs, mode: CalendarMode) => {
+    // Your logic for panel change here (if needed)
   };
 
   const getListData = (date: Dayjs) => {
@@ -245,139 +238,13 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setSelectedEvent(convertToEventData(event));
   };
 
-  const isMalaysiaHoliday = (date: Dayjs) => {
-    const dateStr = date.format("DD-MM-YYYY");
-    return holidaysMY2023.some((holiday) => holiday.date === dateStr);
-  };
-
-  const fetchMalaysiaHolidays = async () => {
-    try {
-      const response = await axios.get(
-        "https://date.nager.at/Api/v2/PublicHoliday/2023/MY"
-      );
-      const holidayData = response.data;
-      const formattedHolidayData = holidayData.map((holiday: any) => {
-        return {
-          ...holiday,
-          date: dayjs(holiday.date).format("DD-MM-YYYY"),
-        };
-      });
-      setScheduledBooks({ ...scheduledBooks, ...formattedHolidayData });
-    } catch (error) {
-      console.error("Failed to fetch Malaysia holidays:", error);
-    }
-  };
-
-  const handleMonthPickerChange = (newValue: Dayjs | null) => {
-    setValue(newValue || value);
-  };
-
-  // ...
-
-  const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
-
-    if (!destination) {
-      return;
-    }
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    // Get the date keys from droppableIds
-    const sourceDateKey = source.droppableId.split("_")[1]; // Extract the date part
-    const destinationDateKey = destination.droppableId.split("_")[1]; // Extract the date part
-
-    // Create Dayjs instances for source and destination dates
-    const sourceDate = dayjs(sourceDateKey, "DD-MM-YYYY");
-    const destinationDate = dayjs(destinationDateKey, "DD-MM-YYYY");
-
-    // Check if the destination date is a weekend or holiday
-    const isWeekend =
-      destinationDate.day() === 6 || destinationDate.day() === 0; // 6: Saturday, 0: Sunday
-    const isHoliday = isMalaysiaHoliday(destinationDate);
-
-    if (isWeekend || isHoliday) {
-      // Prompt an error and return the event to its original date
-      alert(
-        "Invalid date. The event has been returned to its original date or could not be moved to a restricted date."
-      );
-      return;
-    }
-
-    // Get the dragged event
-    const draggedEvent = scheduledBooks[sourceDateKey][source.index];
-
-    // If the event is dropped within the same date, just reorder the list
-    if (sourceDateKey === destinationDateKey) {
-      const newEvents = Array.from(scheduledBooks[sourceDateKey]);
-      newEvents.splice(source.index, 1);
-      newEvents.splice(destination.index, 0, draggedEvent);
-
-      const newScheduledBooks = {
-        ...scheduledBooks,
-        [sourceDateKey]: newEvents,
-      };
-
-      setScheduledBooks(newScheduledBooks);
-    } else {
-      // If the event is dropped in a different date, update the date for the event
-      const updatedEvent = {
-        ...draggedEvent,
-        date: destinationDateKey,
-      };
-
-      // Create an empty array for the destination date if it doesn't exist
-      createEmptyEventArray(destinationDate);
-
-      const sourceEvents = Array.from(scheduledBooks[sourceDateKey]);
-      sourceEvents.splice(source.index, 1);
-
-      const destinationEvents =
-        destinationDateKey in scheduledBooks
-          ? Array.from(scheduledBooks[destinationDateKey])
-          : [];
-      destinationEvents.splice(destination.index, 0, updatedEvent);
-
-      const newScheduledBooks = {
-        ...scheduledBooks,
-        [sourceDateKey]: sourceEvents,
-        [destinationDateKey]: destinationEvents,
-      };
-
-      setScheduledBooks(newScheduledBooks);
-    }
-  };
-
   const dateCellRender = (date: Dayjs) => {
     const isWeekend = date.day() === 6 || date.day() === 0; // 6: Saturday, 0: Sunday
     const listData = getListData(date);
     const isHoliday = isMalaysiaHoliday(date);
-    const isToday = date.isSame(dayjs(), "day"); // Check if the date is the same as today
-
-    const dateKey = date.format("DD-MM-YYYY"); // Get the date key
 
     return (
       <ul className="events">
-        {isToday && ( // Display the "Today" indicator
-          <div
-            style={{
-              color: theme.colorTextBase,
-              backgroundColor: theme["cyan.3"],
-              marginBottom: 5,
-              borderRadius: 8,
-              paddingLeft: 8,
-              fontSize: 10,
-              fontWeight: 700,
-            }}
-          >
-            Today
-          </div>
-        )}
         {isHoliday && (
           <div
             style={{
@@ -391,7 +258,11 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             }}
           >
             Holiday:{" "}
-            {holidaysMY2023.find((holiday) => holiday.date === dateKey)?.name}
+            {
+              holidaysMY2023.find(
+                (holiday) => holiday.date === date.format("DD-MM-YYYY")
+              )?.name
+            }
           </div>
         )}
         {isWeekend && (
@@ -409,7 +280,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             Rest Day
           </div>
         )}
-        <Droppable droppableId={`dateCell_${dateKey}`} isDropDisabled={false}>
+        <Droppable droppableId={`dateCell_${date.format("DD-MM-YYYY")}`}>
           {(provided) => (
             <div ref={provided.innerRef} style={{ position: "relative" }}>
               {listData.map((item, index) => (
@@ -444,26 +315,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                 </Draggable>
               ))}
               {provided.placeholder}
-              {/* Render an empty item as a placeholder for dropping events */}
-              <Draggable
-                key="empty-placeholder"
-                draggableId="empty-placeholder"
-                index={listData.length}
-              >
-                {(provided) => (
-                  <li
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    className="previous-month-event-item"
-                  >
-                    {/* An empty span element to maintain layout */}
-                    <span style={{ visibility: "hidden" }}>
-                      Empty Placeholder
-                    </span>
-                  </li>
-                )}
-              </Draggable>
             </div>
           )}
         </Droppable>
@@ -471,17 +322,78 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     );
   };
 
-  // ...
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
 
-  // Helper function to create an empty array for a given date if it doesn't exist
-  const createEmptyEventArray = (date: Dayjs) => {
-    const dateKey = date.format("DD-MM-YYYY");
-    if (!(dateKey in scheduledBooks)) {
-      // Create an empty array for the date if it doesn't exist
-      setScheduledBooks((prevScheduledBooks) => ({
-        ...prevScheduledBooks,
-        [dateKey]: [],
-      }));
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    // Get the date keys from droppableIds
+    const sourceDateKey = source.droppableId.split("_")[1]; // Extract the date part
+    const destinationDateKey = destination.droppableId.split("_")[1]; // Extract the date part
+
+    // Create Dayjs instances for source and destination dates
+    const sourceDate = dayjs(sourceDateKey, "DD-MM-YYYY");
+    const destinationDate = dayjs(destinationDateKey, "DD-MM-YYYY");
+
+    // Check if the destination date is a weekend, holiday, or earlier than the source date
+    const isWeekend =
+      destinationDate.day() === 6 || destinationDate.day() === 0; // 6: Saturday, 0: Sunday
+    const isHoliday = isMalaysiaHoliday(destinationDate);
+    const isEarlier = destinationDate.isBefore(sourceDate);
+
+    if (isWeekend || isHoliday || isEarlier) {
+      // Prompt an error and return the event to its original date
+      alert("Invalid date. The event has been returned to its original date.");
+      return;
+    }
+
+    // Get the dragged event
+    const draggedEvent = scheduledBooks[sourceDateKey][source.index];
+
+    // If the event is dropped within the same date, just reorder the list
+    if (sourceDateKey === destinationDateKey) {
+      const newEvents = Array.from(scheduledBooks[sourceDateKey]);
+      newEvents.splice(source.index, 1);
+      newEvents.splice(destination.index, 0, draggedEvent);
+
+      const newScheduledBooks = {
+        ...scheduledBooks,
+        [sourceDateKey]: newEvents,
+      };
+
+      setScheduledBooks(newScheduledBooks);
+    } else {
+      // If the event is dropped in a different date, update the date for the event
+      const updatedEvent = {
+        ...draggedEvent,
+        date: destinationDateKey,
+      };
+
+      const sourceEvents = Array.from(scheduledBooks[sourceDateKey]);
+      sourceEvents.splice(source.index, 1);
+
+      const destinationEvents =
+        destinationDateKey in scheduledBooks
+          ? Array.from(scheduledBooks[destinationDateKey])
+          : [];
+      destinationEvents.splice(destination.index, 0, updatedEvent);
+
+      const newScheduledBooks = {
+        ...scheduledBooks,
+        [sourceDateKey]: sourceEvents,
+        [destinationDateKey]: destinationEvents,
+      };
+
+      setScheduledBooks(newScheduledBooks);
     }
   };
 

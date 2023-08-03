@@ -110,7 +110,7 @@ const mockScheduledBooks: Record<string, EventData[]> = {
       reader: "Alice Johnson",
       bookNo: "B006",
       totalBooks: "7",
-      bookDescription: "Event 5 round",
+      bookDescription: "Event 6 round",
     },
     // Add more events as needed
   ],
@@ -272,8 +272,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setValue(newValue || value);
   };
 
-  // ...
-
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
 
@@ -361,13 +359,32 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
     const dateKey = date.format("DD-MM-YYYY"); // Get the date key
 
+    if (dateKey === "09-08-2023" && listData.length === 0) {
+      return (
+        <div
+          style={{
+            color: theme.colorTextBase,
+            backgroundColor: theme["shades.2"],
+            marginBottom: 5,
+            borderRadius: 8,
+            paddingLeft: 8,
+            fontSize: 10,
+            fontWeight: 700,
+            textAlign: "center",
+          }}
+        >
+          Unscheduled Date
+        </div>
+      );
+    }
+
     return (
       <ul className="events">
         {isToday && ( // Display the "Today" indicator
           <div
             style={{
               color: theme.colorTextBase,
-              backgroundColor: theme["cyan.3"],
+              backgroundColor: theme["green.3"],
               marginBottom: 5,
               borderRadius: 8,
               paddingLeft: 8,
@@ -444,34 +461,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                 </Draggable>
               ))}
               {provided.placeholder}
-              {/* Render an empty item as a placeholder for dropping events */}
-              <Draggable
-                key="empty-placeholder"
-                draggableId="empty-placeholder"
-                index={listData.length}
-              >
-                {(provided) => (
-                  <li
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    className="previous-month-event-item"
-                  >
-                    {/* An empty span element to maintain layout */}
-                    <span style={{ visibility: "hidden" }}>
-                      Empty Placeholder
-                    </span>
-                  </li>
-                )}
-              </Draggable>
             </div>
           )}
         </Droppable>
       </ul>
     );
   };
-
-  // ...
 
   // Helper function to create an empty array for a given date if it doesn't exist
   const createEmptyEventArray = (date: Dayjs) => {

@@ -3,12 +3,7 @@ import axios from "axios";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import React, { useState } from "react";
-import {
-  DragDropContext,
-  Draggable,
-  DropResult,
-  Droppable,
-} from "react-beautiful-dnd";
+import { DragDropContext, Draggable, DropResult } from "react-beautiful-dnd";
 import Legend from "../../customComponents/Legend/Legend";
 import "./draggableCalendar.css";
 import { holidaysMY2023 } from "./holidaysMY2023";
@@ -110,7 +105,7 @@ const mockScheduledBooks: Record<string, EventData[]> = {
       reader: "Alice Johnson",
       bookNo: "B006",
       totalBooks: "7",
-      bookDescription: "Event 5 round",
+      bookDescription: "Event 6 round",
     },
     // Add more events as needed
   ],
@@ -272,8 +267,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setValue(newValue || value);
   };
 
-  // ...
-
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
 
@@ -288,190 +281,176 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
       return;
     }
 
-    // Get the date keys from droppableIds
-    const sourceDateKey = source.droppableId.split("_")[1]; // Extract the date part
-    const destinationDateKey = destination.droppableId.split("_")[1]; // Extract the date part
-
-    // Create Dayjs instances for source and destination dates
+    const sourceDateKey = source.droppableId.split("_")[1];
+    const destinationDateKey = destination.droppableId.split("_")[1];
     const sourceDate = dayjs(sourceDateKey, "DD-MM-YYYY");
     const destinationDate = dayjs(destinationDateKey, "DD-MM-YYYY");
-
-    // Check if the destination date is a weekend or holiday
     const isWeekend =
-      destinationDate.day() === 6 || destinationDate.day() === 0; // 6: Saturday, 0: Sunday
+      destinationDate.day() === 6 || destinationDate.day() === 0;
     const isHoliday = isMalaysiaHoliday(destinationDate);
 
     if (isWeekend || isHoliday) {
-      // Prompt an error and return the event to its original date
       alert(
         "Invalid date. The event has been returned to its original date or could not be moved to a restricted date."
       );
       return;
     }
 
-    // Get the dragged event
     const draggedEvent = scheduledBooks[sourceDateKey][source.index];
+    const listData = getListData(destinationDate); // Add this line to get listData
 
-    // If the event is dropped within the same date, just reorder the list
-    if (sourceDateKey === destinationDateKey) {
-      const newEvents = Array.from(scheduledBooks[sourceDateKey]);
-      newEvents.splice(source.index, 1);
-      newEvents.splice(destination.index, 0, draggedEvent);
+    if (listData.length === 0) {
+      // Create an empty mock data event item
+      const newEvent = {
+        id: generateUniqueID(),
+        content: "Unscheduled Date",
+        date: destinationDateKey,
+        reader: "",
+        bookNo: "",
+        totalBooks: "",
+        bookDescription: "",
+      };
 
+      // Update the scheduledBooks state with the new event
       const newScheduledBooks = {
         ...scheduledBooks,
-        [sourceDateKey]: newEvents,
+        [destinationDateKey]: [newEvent],
       };
 
       setScheduledBooks(newScheduledBooks);
     } else {
-      // If the event is dropped in a different date, update the date for the event
-      const updatedEvent = {
-        ...draggedEvent,
-        date: destinationDateKey,
-      };
+      // If there are existing events in the destination date cell
+      if (sourceDateKey === destinationDateKey) {
+        const newEvents = Array.from(scheduledBooks[sourceDateKey]);
+        newEvents.splice(source.index, 1);
+        newEvents.splice(destination.index, 0, draggedEvent);
 
-      // Create an empty array for the destination date if it doesn't exist
-      createEmptyEventArray(destinationDate);
+        const newScheduledBooks = {
+          ...scheduledBooks,
+          [sourceDateKey]: newEvents,
+        };
 
-      const sourceEvents = Array.from(scheduledBooks[sourceDateKey]);
-      sourceEvents.splice(source.index, 1);
+        setScheduledBooks(newScheduledBooks);
+      } else {
+        const updatedEvent = {
+          ...draggedEvent,
+          date: destinationDateKey,
+        };
 
-      const destinationEvents =
-        destinationDateKey in scheduledBooks
-          ? Array.from(scheduledBooks[destinationDateKey])
-          : [];
-      destinationEvents.splice(destination.index, 0, updatedEvent);
+        createEmptyEventArray(destinationDate);
 
-      const newScheduledBooks = {
-        ...scheduledBooks,
-        [sourceDateKey]: sourceEvents,
-        [destinationDateKey]: destinationEvents,
-      };
+        const sourceEvents = Array.from(scheduledBooks[sourceDateKey]);
+        sourceEvents.splice(source.index, 1);
 
-      setScheduledBooks(newScheduledBooks);
+        const destinationEvents =
+          destinationDateKey in scheduledBooks
+            ? Array.from(scheduledBooks[destinationDateKey])
+            : [];
+        destinationEvents.splice(destination.index, 0, updatedEvent);
+
+        const newScheduledBooks = {
+          ...scheduledBooks,
+          [sourceDateKey]: sourceEvents,
+          [destinationDateKey]: destinationEvents,
+        };
+
+        setScheduledBooks(newScheduledBooks);
+      }
     }
   };
 
   const dateCellRender = (date: Dayjs) => {
-    const isWeekend = date.day() === 6 || date.day() === 0; // 6: Saturday, 0: Sunday
+    const isWeekend = date.day() === 6 || date.day() === 0;
     const listData = getListData(date);
     const isHoliday = isMalaysiaHoliday(date);
-    const isToday = date.isSame(dayjs(), "day"); // Check if the date is the same as today
+    const dateKey = date.format("DD-MM-YYYY");
 
-    const dateKey = date.format("DD-MM-YYYY"); // Get the date key
+    if (isHoliday) {
+      return (
+        <div
+          style={{
+            color: theme.colorTextSecondary,
+            backgroundColor: theme["geekblue.3"],
+            marginBottom: 5,
+            borderRadius: 8,
+            paddingLeft: 8,
+            fontSize: 10,
+            fontWeight: 700,
+          }}
+        >
+          Holiday:{" "}
+          {holidaysMY2023.find((holiday) => holiday.date === dateKey)?.name}
+        </div>
+      );
+    }
+
+    if (isWeekend) {
+      return (
+        <div
+          style={{
+            color: theme.colorTextSecondary,
+            marginBottom: 5,
+            backgroundColor: theme["red.3"],
+            borderRadius: 8,
+            paddingLeft: 8,
+            fontSize: 10,
+            fontWeight: 700,
+          }}
+        >
+          Rest Day
+        </div>
+      );
+    }
 
     return (
       <ul className="events">
-        {isToday && ( // Display the "Today" indicator
+        {listData.length === 0 ? (
           <div
             style={{
-              color: theme.colorTextBase,
-              backgroundColor: theme["cyan.3"],
+              color: "gray",
               marginBottom: 5,
-              borderRadius: 8,
-              paddingLeft: 8,
               fontSize: 10,
               fontWeight: 700,
             }}
           >
-            Today
+            Unscheduled Date
           </div>
-        )}
-        {isHoliday && (
-          <div
-            style={{
-              color: theme.colorTextSecondary,
-              backgroundColor: theme["geekblue.3"],
-              marginBottom: 5,
-              borderRadius: 8,
-              paddingLeft: 8,
-              fontSize: 10,
-              fontWeight: 700,
-            }}
-          >
-            Holiday:{" "}
-            {holidaysMY2023.find((holiday) => holiday.date === dateKey)?.name}
-          </div>
-        )}
-        {isWeekend && (
-          <div
-            style={{
-              color: theme.colorTextSecondary,
-              marginBottom: 5,
-              backgroundColor: theme["red.3"],
-              borderRadius: 8,
-              paddingLeft: 8,
-              fontSize: 10,
-              fontWeight: 700,
-            }}
-          >
-            Rest Day
-          </div>
-        )}
-        <Droppable droppableId={`dateCell_${dateKey}`} isDropDisabled={false}>
-          {(provided) => (
-            <div ref={provided.innerRef} style={{ position: "relative" }}>
-              {listData.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
-                    <li
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      onClick={() => showDrawer(item.content, date)}
-                      className={
-                        snapshot.isDragging
-                          ? "previous-month-event-item dragging-item"
-                          : "previous-month-event-item"
-                      }
-                    >
-                      <span
-                        style={{
-                          borderRadius: 16,
-                          width: "100%",
-                          backgroundColor: theme["yellow.3"],
-                          fontSize: 12,
-                          fontWeight: 600,
-                          margin: -6,
-                          padding: 4,
-                        }}
-                      >
-                        {item.bookNo} - {item.totalBooks}
-                      </span>
-                    </li>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-              {/* Render an empty item as a placeholder for dropping events */}
-              <Draggable
-                key="empty-placeholder"
-                draggableId="empty-placeholder"
-                index={listData.length}
-              >
-                {(provided) => (
-                  <li
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    className="previous-month-event-item"
+        ) : (
+          listData.map((item, index) => (
+            <Draggable key={item.id} draggableId={item.id} index={index}>
+              {(provided, snapshot) => (
+                <li
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  onClick={() => showDrawer(item.content, date)}
+                  className={
+                    snapshot.isDragging
+                      ? "previous-month-event-item dragging-item"
+                      : "previous-month-event-item"
+                  }
+                >
+                  <span
+                    style={{
+                      borderRadius: 16,
+                      width: "100%",
+                      backgroundColor: theme["yellow.3"],
+                      fontSize: 12,
+                      fontWeight: 600,
+                      margin: -6,
+                      padding: 4,
+                    }}
                   >
-                    {/* An empty span element to maintain layout */}
-                    <span style={{ visibility: "hidden" }}>
-                      Empty Placeholder
-                    </span>
-                  </li>
-                )}
-              </Draggable>
-            </div>
-          )}
-        </Droppable>
+                    {item.bookNo} - {item.totalBooks}
+                  </span>
+                </li>
+              )}
+            </Draggable>
+          ))
+        )}
       </ul>
     );
   };
-
-  // ...
 
   // Helper function to create an empty array for a given date if it doesn't exist
   const createEmptyEventArray = (date: Dayjs) => {

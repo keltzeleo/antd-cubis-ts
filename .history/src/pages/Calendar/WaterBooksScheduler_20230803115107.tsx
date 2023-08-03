@@ -357,7 +357,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     const isWeekend = date.day() === 6 || date.day() === 0; // 6: Saturday, 0: Sunday
     const listData = getListData(date);
     const isHoliday = isMalaysiaHoliday(date);
-    const isToday = date.isSame(dayjs(), "day"); // Check if the date is the same as today
 
     const dateKey = date.format("DD-MM-YYYY"); // Get the date key
 

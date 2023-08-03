@@ -2,7 +2,7 @@ import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
 import axios from "axios";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DragDropContext,
   Draggable,
@@ -110,7 +110,7 @@ const mockScheduledBooks: Record<string, EventData[]> = {
       reader: "Alice Johnson",
       bookNo: "B006",
       totalBooks: "7",
-      bookDescription: "Event 5 round",
+      bookDescription: "Event 6 round",
     },
     // Add more events as needed
   ],
@@ -135,7 +135,36 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const [selectedSchedulingDate, setSelectedSchedulingDate] =
     useState<Dayjs | null>(null);
 
-  // Mock Data with Unique IDs
+  const createEmptyEventItem = (date: string): EventData => {
+    const emptyEventId = generateUniqueID();
+
+    return {
+      id: emptyEventId,
+      content: "Empty Event",
+      date: date,
+      reader: "",
+      bookNo: "",
+      totalBooks: "",
+      bookDescription: "",
+    };
+  };
+
+  // Function to check if a date has mock data for event item
+  const hasMockData = (date: string) => {
+    const dateKey = date;
+    return dateKey in scheduledBooks && scheduledBooks[dateKey].length > 0;
+  };
+
+  // Check if the date 09/08/2023 is empty, and if so, create an empty mock data for event item
+  useEffect(() => {
+    const dateToCheck = "09-08-2023";
+    if (!hasMockData(dateToCheck)) {
+      setScheduledBooks((prevScheduledBooks) => ({
+        ...prevScheduledBooks,
+        [dateToCheck]: [createEmptyEventItem(dateToCheck)],
+      }));
+    }
+  }, []);
 
   const legendData: LegendItem[] = [
     {
@@ -272,8 +301,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setValue(newValue || value);
   };
 
-  // ...
-
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
 
@@ -351,6 +378,24 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
       setScheduledBooks(newScheduledBooks);
     }
+
+    // Check if the destination date is 09/08/2023 and if there are no events in that date
+    const isEmptyDropTarget =
+      destinationDateKey === "09-08-2023" &&
+      (!scheduledBooks[destinationDateKey] ||
+        scheduledBooks[destinationDateKey].length === 0);
+
+    if (isEmptyDropTarget) {
+      // If the destination is 09/08/2023 and empty, add the dragged event as an empty mock data
+      const emptyEventItem = createEmptyEventItem(destinationDateKey);
+
+      const updatedScheduledBooks = {
+        ...scheduledBooks,
+        [destinationDateKey]: [emptyEventItem],
+      };
+
+      setScheduledBooks(updatedScheduledBooks);
+    }
   };
 
   const dateCellRender = (date: Dayjs) => {
@@ -367,7 +412,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           <div
             style={{
               color: theme.colorTextBase,
-              backgroundColor: theme["cyan.3"],
+              backgroundColor: theme["green.3"],
               marginBottom: 5,
               borderRadius: 8,
               paddingLeft: 8,
@@ -444,34 +489,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                 </Draggable>
               ))}
               {provided.placeholder}
-              {/* Render an empty item as a placeholder for dropping events */}
-              <Draggable
-                key="empty-placeholder"
-                draggableId="empty-placeholder"
-                index={listData.length}
-              >
-                {(provided) => (
-                  <li
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    className="previous-month-event-item"
-                  >
-                    {/* An empty span element to maintain layout */}
-                    <span style={{ visibility: "hidden" }}>
-                      Empty Placeholder
-                    </span>
-                  </li>
-                )}
-              </Draggable>
             </div>
           )}
         </Droppable>
       </ul>
     );
   };
-
-  // ...
 
   // Helper function to create an empty array for a given date if it doesn't exist
   const createEmptyEventArray = (date: Dayjs) => {

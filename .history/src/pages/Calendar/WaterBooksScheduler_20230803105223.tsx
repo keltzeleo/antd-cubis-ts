@@ -2,7 +2,7 @@ import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
 import axios from "axios";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DragDropContext,
   Draggable,
@@ -110,7 +110,7 @@ const mockScheduledBooks: Record<string, EventData[]> = {
       reader: "Alice Johnson",
       bookNo: "B006",
       totalBooks: "7",
-      bookDescription: "Event 5 round",
+      bookDescription: "Event 6 round",
     },
     // Add more events as needed
   ],
@@ -134,9 +134,20 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [selectedSchedulingDate, setSelectedSchedulingDate] =
     useState<Dayjs | null>(null);
+  const [scheduledBooks, setScheduledBooks] =
+    useState<Record<string, EventData[]>>(mockScheduledBooks);
 
-  // Mock Data with Unique IDs
-
+  // Function to check and add an empty event for "09-08-2023" if necessary
+  const checkAndAddEmptyEvent = () => {
+    const dateKey = "09-08-2023";
+    if (!(dateKey in scheduledBooks)) {
+      // Create an empty array for the date if it doesn't exist
+      setScheduledBooks((prevScheduledBooks) => ({
+        ...prevScheduledBooks,
+        [dateKey]: [],
+      }));
+    }
+  };
   const legendData: LegendItem[] = [
     {
       category: "rest-day",
@@ -230,6 +241,10 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     };
   };
 
+  useEffect(() => {
+    checkAndAddEmptyEvent();
+  }, []);
+
   const showDrawer = (itemTitle: string, selectedDate: Dayjs) => {
     setIsDrawerVisible(true);
     setClickedItemTitle(itemTitle);
@@ -271,8 +286,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const handleMonthPickerChange = (newValue: Dayjs | null) => {
     setValue(newValue || value);
   };
-
-  // ...
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
@@ -444,34 +457,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                 </Draggable>
               ))}
               {provided.placeholder}
-              {/* Render an empty item as a placeholder for dropping events */}
-              <Draggable
-                key="empty-placeholder"
-                draggableId="empty-placeholder"
-                index={listData.length}
-              >
-                {(provided) => (
-                  <li
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    className="previous-month-event-item"
-                  >
-                    {/* An empty span element to maintain layout */}
-                    <span style={{ visibility: "hidden" }}>
-                      Empty Placeholder
-                    </span>
-                  </li>
-                )}
-              </Draggable>
             </div>
           )}
         </Droppable>
       </ul>
     );
   };
-
-  // ...
 
   // Helper function to create an empty array for a given date if it doesn't exist
   const createEmptyEventArray = (date: Dayjs) => {
