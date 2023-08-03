@@ -116,12 +116,12 @@
   position: absolute;
   top: 50%;
   /* left: calc(50% - 1px); Position the line at the center */
-  height: 0.5px;
+  height: 1px;
   left: 40; /* Adjust the height of the line */
   width: calc(
     100% - var(--step-size) - 36px
   ); /* Calculate the width to cover the space between steps */
-  background-color: #bcc0bc5a; /* Set the color of the line */
+  background-color: #4555515a; /* Set the color of the line */
   transform: translateY(-50%);
   z-index: -99;
 }
