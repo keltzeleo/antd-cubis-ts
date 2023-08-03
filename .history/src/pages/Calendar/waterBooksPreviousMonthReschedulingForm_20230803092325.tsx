@@ -100,8 +100,7 @@ const WaterBooksPreviousMonthReschedulingForm: React.FC<
           <ProFormDatePicker
             name="newScheduledDate"
             label="New Scheduling Date"
-            initialValue={dayjs()} // Get today's date in "DD-MM-YYYY" format
-            // Set the initial value to today's date in "DD-MM-YYYY" format
+            initialValue={todayDate} // Set the initial value to today's date in "DD-MM-YYYY" format
             style={{ width: "100%" }}
           />
         </ProForm.Group>

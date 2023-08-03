@@ -458,6 +458,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               onApply={handleApply}
               currentScheduledDate={selectedDate}
             />
+            <p>Current Scheduled Date: {selectedDate?.format("DD-MM-YYYY")}</p>
           </Drawer>
         </div>
       </div>

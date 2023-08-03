@@ -26,6 +26,11 @@
   cursor: pointer;
 }
 
+.events li {
+  background-color: var(--event-background-color);
+  color: var(--event-text-color);
+}
+
 .custom-red-cell {
   background-color: red;
   color: white;

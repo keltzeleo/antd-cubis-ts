@@ -1,8 +1,9 @@
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
 import axios from "axios";
+import DateHolidays from "date-holidays"; // Import date-holidays library
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DragDropContext,
   Draggable,
@@ -100,8 +101,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     bookDescription: "",
   });
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-  const [selectedSchedulingDate, setSelectedSchedulingDate] =
-    useState<Dayjs | null>(null);
 
   // Mock Data with Unique IDs
 
@@ -136,23 +135,23 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     return holidaysMY2023.some((holiday) => holiday.date === dateStr);
   };
 
-  const fetchMalaysiaHolidays = async () => {
-    try {
-      const response = await axios.get(
-        "https://date.nager.at/Api/v2/PublicHoliday/2023/MY"
-      );
-      const holidayData = response.data;
-      const formattedHolidayData = holidayData.map((holiday: any) => {
-        return {
-          ...holiday,
-          date: dayjs(holiday.date).format("DD-MM-YYYY"),
-        };
-      });
-      setScheduledBooks({ ...scheduledBooks, ...formattedHolidayData });
-    } catch (error) {
-      console.error("Failed to fetch Malaysia holidays:", error);
-    }
-  };
+  useEffect(() => {
+    const fetchMalaysiaHolidays = async () => {
+      try {
+        const response = await axios.get(
+          "https://date.nager.at/Api/v2/PublicHoliday/2023/MY"
+        );
+        const holidayData = response.data;
+        const malaysiaHolidays = new DateHolidays("MY");
+        malaysiaHolidays.init(holidayData);
+        setScheduledBooks({ ...scheduledBooks, ...holidayData });
+      } catch (error) {
+        console.error("Failed to fetch Malaysia holidays:", error);
+      }
+    };
+
+    fetchMalaysiaHolidays();
+  }, []);
 
   const handleMonthPickerChange = (newValue: Dayjs | null) => {
     setValue(newValue || value);
@@ -228,8 +227,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setClickedItemTitle(itemTitle);
     setSelectedDate(selectedDate);
 
-    setSelectedSchedulingDate(selectedDate);
-
     // Find the selected event based on the itemTitle
     const selectedDateStr = selectedDate.format("DD-MM-YYYY");
     const listData = scheduledBooks[selectedDateStr] || [];
@@ -282,22 +279,18 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
         )}
         <Droppable droppableId={`dateCell_${date.format("DD-MM-YYYY")}`}>
           {(
-            provided // Wrap the content with a single enclosing element
+            provided // Ensure only one child inside Droppable
           ) => (
             <div ref={provided.innerRef} style={{ position: "relative" }}>
               {listData.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
+                  {(provided) => (
                     <li
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       onClick={() => showDrawer(item.content, date)}
-                      className={
-                        snapshot.isDragging
-                          ? "previous-month-event-item dragging-item"
-                          : "previous-month-event-item"
-                      }
+                      className="previous-month-event-item"
                     >
                       <span
                         style={{
@@ -412,6 +405,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           }}
         >
           <Legend legendData={legendData} theme={theme} />
+
           <Alert
             message={`You selected date: ${value?.format("DD-MM-YYYY")}`}
             style={{ margin: "0 8" }}
@@ -424,8 +418,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             onChange={handleMonthPickerChange}
             placeholder="Select month"
             style={{ margin: "0 8" }}
-            format="MM-YYYY" // Add this line to set the correct format for the API call
-          />{" "}
+          />
           <Button onClick={() => setValue(value.add(1, "month"))}>»</Button>
         </div>
 
@@ -450,7 +443,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             visible={isDrawerVisible}
             width={550}
           >
-            {" "}
             <WaterBooksPreviousMonthReschedulingForm
               theme={theme}
               selectedEvent={selectedEvent}

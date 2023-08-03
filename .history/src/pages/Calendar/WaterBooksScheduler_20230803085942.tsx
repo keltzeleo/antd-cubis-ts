@@ -100,8 +100,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     bookDescription: "",
   });
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-  const [selectedSchedulingDate, setSelectedSchedulingDate] =
-    useState<Dayjs | null>(null);
 
   // Mock Data with Unique IDs
 
@@ -228,8 +226,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setClickedItemTitle(itemTitle);
     setSelectedDate(selectedDate);
 
-    setSelectedSchedulingDate(selectedDate);
-
     // Find the selected event based on the itemTitle
     const selectedDateStr = selectedDate.format("DD-MM-YYYY");
     const listData = scheduledBooks[selectedDateStr] || [];
@@ -281,8 +277,9 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           </div>
         )}
         <Droppable droppableId={`dateCell_${date.format("DD-MM-YYYY")}`}>
+          {" "}
           {(
-            provided // Wrap the content with a single enclosing element
+            provided // Ensure only one child inside Droppable
           ) => (
             <div ref={provided.innerRef} style={{ position: "relative" }}>
               {listData.map((item, index) => (
@@ -458,6 +455,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               onApply={handleApply}
               currentScheduledDate={selectedDate}
             />
+            <p>Current Scheduled Date: {selectedDate?.format("DD-MM-YYYY")}</p>
           </Drawer>
         </div>
       </div>

@@ -100,8 +100,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     bookDescription: "",
   });
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-  const [selectedSchedulingDate, setSelectedSchedulingDate] =
-    useState<Dayjs | null>(null);
 
   // Mock Data with Unique IDs
 
@@ -227,8 +225,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setIsDrawerVisible(true);
     setClickedItemTitle(itemTitle);
     setSelectedDate(selectedDate);
-
-    setSelectedSchedulingDate(selectedDate);
 
     // Find the selected event based on the itemTitle
     const selectedDateStr = selectedDate.format("DD-MM-YYYY");
@@ -458,6 +454,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               onApply={handleApply}
               currentScheduledDate={selectedDate}
             />
+            <p>Current Scheduled Date: {selectedDate?.format("DD-MM-YYYY")}</p>
           </Drawer>
         </div>
       </div>

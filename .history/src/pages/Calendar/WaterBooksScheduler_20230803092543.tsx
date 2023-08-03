@@ -457,6 +457,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               onCancel={handleCancel}
               onApply={handleApply}
               currentScheduledDate={selectedDate}
+              newScheduledDate={dayjs().format(DD - MM - YYYY)}
             />
           </Drawer>
         </div>

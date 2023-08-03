@@ -34,8 +34,6 @@ const WaterBooksPreviousMonthReschedulingForm: React.FC<
   const { date, reader, totalBooks, bookNo, bookDescription } =
     selectedEvent || {};
 
-  const todayDate = dayjs().format("DD-MM-YYYY"); // Get today's date in "DD-MM-YYYY" format
-
   const [form] = Form.useForm();
 
   const handleFinish = async (values: any) => {
@@ -100,9 +98,9 @@ const WaterBooksPreviousMonthReschedulingForm: React.FC<
           <ProFormDatePicker
             name="newScheduledDate"
             label="New Scheduling Date"
-            initialValue={dayjs()} // Get today's date in "DD-MM-YYYY" format
-            // Set the initial value to today's date in "DD-MM-YYYY" format
+            initialValue={date ? dayjs().format("DD-MM-YYYY") : ""}
             style={{ width: "100%" }}
+            // onChange={handleNewScheduledDateChange}
           />
         </ProForm.Group>
         <ProForm.Group>

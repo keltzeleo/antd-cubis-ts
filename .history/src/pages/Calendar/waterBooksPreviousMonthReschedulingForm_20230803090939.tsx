@@ -24,18 +24,24 @@ interface WaterBooksPreviousMonthReschedulingFormProps {
   theme: Theme;
   selectedEvent: EventData;
   currentScheduledDate: Dayjs | null;
+  currentScheduledDateString: string | null; // Add the prop for currentScheduledDateString
+
   onCancel: () => void;
   onApply: (newDate: Dayjs) => void; // Update the type of onApply
 }
 
 const WaterBooksPreviousMonthReschedulingForm: React.FC<
   WaterBooksPreviousMonthReschedulingFormProps
-> = ({ theme, selectedEvent, currentScheduledDate, onCancel, onApply }) => {
+> = ({
+  theme,
+  selectedEvent,
+  currentScheduledDateString,
+  onCancel,
+  onApply,
+}) => {
   const { date, reader, totalBooks, bookNo, bookDescription } =
     selectedEvent || {};
-
-  const todayDate = dayjs().format("DD-MM-YYYY"); // Get today's date in "DD-MM-YYYY" format
-
+  const formattedDate = date ? dayjs(date).format("DD-MM-YYYY") : "";
   const [form] = Form.useForm();
 
   const handleFinish = async (values: any) => {
@@ -100,9 +106,13 @@ const WaterBooksPreviousMonthReschedulingForm: React.FC<
           <ProFormDatePicker
             name="newScheduledDate"
             label="New Scheduling Date"
-            initialValue={dayjs()} // Get today's date in "DD-MM-YYYY" format
-            // Set the initial value to today's date in "DD-MM-YYYY" format
+            initialValues={{
+              currentScheduledDate: currentScheduledDateString,
+              newScheduledDate: date ? formattedDate : null,
+            }}
+            format="DD-MM-YYYY" // Set the format to "DD-MM-YYYY"
             style={{ width: "100%" }}
+            // onChange={handleNewScheduledDateChange}
           />
         </ProForm.Group>
         <ProForm.Group>
