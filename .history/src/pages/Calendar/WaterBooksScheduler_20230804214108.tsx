@@ -483,7 +483,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
                     if (isWeekend) {
                       backgroundColor = theme["red.legend"];
-                      colorText = theme["red.4"];
+                      colorText = theme["red.1"];
                     } else if (isHoliday) {
                       backgroundColor = theme["blue.legend"];
                       colorText = theme["blue.4"];
