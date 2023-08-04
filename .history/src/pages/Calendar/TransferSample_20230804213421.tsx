@@ -215,8 +215,8 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         >
           <div
             style={{
-              fontSize: 36,
-              margin: "-7px 0px 0px 10px",
+              fontSize: 40,
+              margin: "-10px 0px 0px 10px",
               fontFamily: "play",
               paddingTop: -20,
             }}
@@ -247,8 +247,8 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         >
           <div
             style={{
-              fontSize: 36,
-              margin: "-7px 0px 0px 10px",
+              fontSize: 40,
+              margin: "-10px 0px 0px 10px",
               fontFamily: "play",
               paddingTop: -20,
             }}

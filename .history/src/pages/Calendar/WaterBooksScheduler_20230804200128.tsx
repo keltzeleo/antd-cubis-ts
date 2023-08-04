@@ -137,25 +137,22 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     useState(false);
   const [previousDate, setPreviousDate] = useState<dayjs.Dayjs | null>(null); // Initialize with null or the initial date
   const [showTransfer, setShowTransfer] = useState(false);
-  const [isSingleRowCellDoubleClicked, setIsSingleRowCellDoubleClicked] =
-    useState(false);
-  const [doubleClickedDate, setDoubleClickedDate] = useState<Dayjs | null>(
-    null
-  ); // Use doubleClickedDate instead of doubleClickDate
+  const [isDateCellDoubleClicked, setIsDateCellDoubleClicked] = useState(false);
+  const [selectedDoubleClickedDate, setSelectedDoubleClickedDate] =
+    useState<Dayjs | null>(null);
 
-  // Helper function to handle date cell double-click
-  const handleDateCellDoubleClick = (date: Dayjs) => {
-    if (!isMalaysiaHoliday(date) && date.day() !== 6 && date.day() !== 0) {
-      // If it's not a rest day or holiday, handle the double-click event
-      setDoubleClickedDate(date); // Update the doubleClickedDate state with the selected date
-      setIsSingleRowCellDoubleClicked(true);
-    }
-  };
+// Helper function to handle date cell double-click
+const handleDateCellDoubleClick = (date: Dayjs) => {
+  if (!isMalaysiaHoliday(date) && date.day() !== 6 && date.day() !== 0) {
+    // If it's not a rest day or holiday, handle the double-click event
+    setIsDateCellDoubleClicked(true);
+    setSelectedDoubleClickedDate(date);
+  }
+  
 
-  // Helper function to handle the double-click on the panel (month picker)
   const handleDateValuePanelDoubleClick = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
-    setShowTransfer((prevShowTransfer) => !prevShowTransfer); // Toggle the visibility of the TransferSample component
+    setShowTransfer((prevShowTransfer) => !prevShowTransfer); // Toggle the visibility of the Transfer component
   };
 
   const handleDatePanelChange = (date: Dayjs, mode: string) => {
@@ -362,20 +359,19 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setValue(newValue || value);
   };
 
+  // Function to handle date selection for the single-row calendar
   const handleSingleRowDateSelect = (date: Dayjs) => {
-    if (isSingleRowCellDoubleClicked) {
-      // If it's a double-click, show the TransferSample component
-      setShowTransfer((prevShowTransfer) => !prevShowTransfer);
-      setIsSingleRowCellDoubleClicked(false); // Reset the double-click state
-    } else {
-      // If it's the first click, set the double-click state and reset it after 300ms
-      setIsSingleRowCellDoubleClicked(true);
-      setTimeout(() => {
-        setIsSingleRowCellDoubleClicked(false);
-      }, 300);
-    }
+    // Check if the date is already selected, and if so, deselect it
+    const isSameAsSelectedDate =
+      selectedDate && date.isSame(selectedDate, "day");
 
-    setSelectedDate(date); // Always set the selected date
+    if (handleDateSelect) {
+      // Call the provided handleDateSelect function with the selected date
+      handleDateSelect(isSameAsSelectedDate ? date : date);
+    } else {
+      // Set the selected date to null if handleDateSelect is not available
+      setSelectedDate(isSameAsSelectedDate ? null : date);
+    }
   };
 
   // Function to render the single-row view of the calendar
@@ -430,6 +426,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           }}
         >
           <div style={{ display: "flex", flexDirection: "row" }}>
+            {/* ... (existing code) */}
             {Array.from({ length: numMonthsToShow }, (_, monthIndex) => {
               const monthDate = startMonth.clone().add(monthIndex, "month");
               const monthDaysInMonth = monthDate.daysInMonth();
@@ -517,7 +514,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           fontFamily: "Play",
                           cursor: "pointer", // Add cursor pointer for clickable dates
                         }}
-                        onClick={() => handleSingleRowDateSelect(date)} // Handle single-click on the date cell
+                        onClick={() => handleSingleRowDateSelect(date)}
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
                       >
                         {date.format("D")}
@@ -532,6 +529,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
       </div>
     );
   };
+
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
 
@@ -818,13 +816,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           )}
           {/* Render the <Transfer> component if showTransfer is true */}
           <div style={{ margin: 32 }}>
-            {showTransfer && (
-              // Use doubleClickedDate instead of doubleClickDate
-              <TransferSample
-                theme={theme}
-                doubleClickedDate={selectedDate} // Use doubleClickedDate instead of doubleClickDate
-              />
-            )}
+            {showTransfer && <TransferSample theme={theme} />}
           </div>
           <Drawer
             title={

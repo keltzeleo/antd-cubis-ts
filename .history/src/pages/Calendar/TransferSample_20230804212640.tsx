@@ -215,17 +215,17 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         >
           <div
             style={{
-              fontSize: 36,
-              margin: "-7px 0px 0px 10px",
-              fontFamily: "play",
-              paddingTop: -20,
+              fontSize: 40,
+              margin: "-20px 0px 0px 10px",
             }}
           >
-            Column Selection #1:{" "}
-            {doubleClickedDate
-              ? doubleClickedDate.format("DD-MM-YYYY")
-              : "(No date selected)"}{" "}
-            {/* Display the doubleClickedDate value or a message if no date is selected */}
+            <h2>
+              Column Selection #1:{" "}
+              {doubleClickedDate
+                ? doubleClickedDate.format("DD-MM-YYYY")
+                : "(No date selected)"}{" "}
+              {/* Display the doubleClickedDate value or a message if no date is selected */}
+            </h2>
           </div>
         </div>
         <div
@@ -247,13 +247,11 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         >
           <div
             style={{
-              fontSize: 36,
-              margin: "-7px 0px 0px 10px",
-              fontFamily: "play",
-              paddingTop: -20,
+              fontSize: 40,
+              margin: "-20px 0px 0px 10px",
             }}
           >
-            (date) : Column Selection #2
+            Column Selection #2 : (date)
           </div>
         </div>
       </div>

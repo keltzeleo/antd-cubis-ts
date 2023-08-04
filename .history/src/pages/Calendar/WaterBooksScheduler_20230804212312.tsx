@@ -152,10 +152,9 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     }
   };
 
-  // Helper function to handle the double-click on the panel (month picker)
   const handleDateValuePanelDoubleClick = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
-    setShowTransfer((prevShowTransfer) => !prevShowTransfer); // Toggle the visibility of the TransferSample component
+    setShowTransfer((prevShowTransfer) => !prevShowTransfer); // Toggle the visibility of the Transfer component
   };
 
   const handleDatePanelChange = (date: Dayjs, mode: string) => {
@@ -822,7 +821,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               // Use doubleClickedDate instead of doubleClickDate
               <TransferSample
                 theme={theme}
-                doubleClickedDate={selectedDate} // Use doubleClickedDate instead of doubleClickDate
+                doubleClickedDate={doubleClickedDate} // Use doubleClickedDate instead of doubleClickDate
               />
             )}
           </div>

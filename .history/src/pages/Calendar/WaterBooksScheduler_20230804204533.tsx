@@ -139,23 +139,19 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const [showTransfer, setShowTransfer] = useState(false);
   const [isSingleRowCellDoubleClicked, setIsSingleRowCellDoubleClicked] =
     useState(false);
-  const [doubleClickedDate, setDoubleClickedDate] = useState<Dayjs | null>(
-    null
-  ); // Use doubleClickedDate instead of doubleClickDate
 
   // Helper function to handle date cell double-click
   const handleDateCellDoubleClick = (date: Dayjs) => {
     if (!isMalaysiaHoliday(date) && date.day() !== 6 && date.day() !== 0) {
       // If it's not a rest day or holiday, handle the double-click event
-      setDoubleClickedDate(date); // Update the doubleClickedDate state with the selected date
-      setIsSingleRowCellDoubleClicked(true);
+      setIsDateCellDoubleClicked(true);
+      setSelectedDoubleClickedDate(date);
     }
   };
 
-  // Helper function to handle the double-click on the panel (month picker)
   const handleDateValuePanelDoubleClick = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
-    setShowTransfer((prevShowTransfer) => !prevShowTransfer); // Toggle the visibility of the TransferSample component
+    setShowTransfer((prevShowTransfer) => !prevShowTransfer); // Toggle the visibility of the Transfer component
   };
 
   const handleDatePanelChange = (date: Dayjs, mode: string) => {
@@ -818,13 +814,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           )}
           {/* Render the <Transfer> component if showTransfer is true */}
           <div style={{ margin: 32 }}>
-            {showTransfer && (
-              // Use doubleClickedDate instead of doubleClickDate
-              <TransferSample
-                theme={theme}
-                doubleClickedDate={selectedDate} // Use doubleClickedDate instead of doubleClickDate
-              />
-            )}
+            {showTransfer && <TransferSample theme={theme} />}
           </div>
           <Drawer
             title={

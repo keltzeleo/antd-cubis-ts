@@ -1,22 +1,17 @@
 import { Space, Switch, Table, Tag, Transfer } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TransferItem, TransferProps } from "antd/es/transfer";
-import dayjs, { Dayjs } from "dayjs";
 import difference from "lodash/difference";
 import React, { useState } from "react";
 
-// Interface for theme colors
 interface Theme {
   [key: string]: string;
 }
 
-// Interface for the props of the TransferSample component
 interface TransferSampleProps {
   theme: Theme;
   doubleClickedDate: Dayjs | null; // Add the prop for double-clicked date
 }
-
-// Interface for the data in the table
 interface RecordType {
   key: string;
   title: string;
@@ -25,7 +20,6 @@ interface RecordType {
   tag: string;
 }
 
-// Interface for the data to be transferred
 interface DataType {
   key: string;
   title: string;
@@ -34,7 +28,6 @@ interface DataType {
   tag: string;
 }
 
-// Interface for the props of the TableTransfer component
 interface TableTransferProps extends TransferProps<DataType> {
   leftColumns: ColumnsType<DataType>;
   rightColumns: ColumnsType<DataType>;
@@ -149,9 +142,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
   // State variable to hold the date
 
   const onChange = (nextTargetKeys: string[]) => {
-    // Function to handle the double-click event and update the date state
-    const currentDate = dayjs(); // Get the current date as a Dayjs object
-    setSelectedDate(currentDate);
+    setTargetKeys(nextTargetKeys);
   };
 
   const triggerDisable = (checked: boolean) => {
@@ -164,8 +155,8 @@ const TransferSample: React.FC<TransferSampleProps> = ({
 
   const handleDoubleClick = (record: DataType) => {
     // Function to handle the double-click event and update the date state
-    const currentDate = dayjs(); // Get the current date as a Dayjs object
-    setSelectedDate(currentDate);
+    const currentDate = new Date().toLocaleDateString();
+    setDoubleClickedDate(currentDate);
   };
 
   return (
@@ -215,17 +206,16 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         >
           <div
             style={{
-              fontSize: 36,
-              margin: "-7px 0px 0px 10px",
-              fontFamily: "play",
-              paddingTop: -20,
+              fontSize: 40,
+              margin: "-20px 0px 0px 10px",
             }}
           >
-            Column Selection #1:{" "}
-            {doubleClickedDate
-              ? doubleClickedDate.format("DD-MM-YYYY")
-              : "(No date selected)"}{" "}
-            {/* Display the doubleClickedDate value or a message if no date is selected */}
+            <h2>
+              Column Selection #1:{" "}
+              {doubleClickedDate
+                ? doubleClickedDate.format("DD-MM-YYYY")
+                : "(date)"}
+            </h2>
           </div>
         </div>
         <div
@@ -247,13 +237,11 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         >
           <div
             style={{
-              fontSize: 36,
-              margin: "-7px 0px 0px 10px",
-              fontFamily: "play",
-              paddingTop: -20,
+              fontSize: 40,
+              margin: "-20px 0px 0px 10px",
             }}
           >
-            (date) : Column Selection #2
+            Column Selection #2 : (date)
           </div>
         </div>
       </div>

@@ -822,7 +822,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               // Use doubleClickedDate instead of doubleClickDate
               <TransferSample
                 theme={theme}
-                doubleClickedDate={selectedDate} // Use doubleClickedDate instead of doubleClickDate
+                doubleClickedDate={doubleClickedDate} // Use doubleClickedDate instead of doubleClickDate
               />
             )}
           </div>
