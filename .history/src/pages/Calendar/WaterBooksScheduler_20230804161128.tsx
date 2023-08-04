@@ -424,17 +424,15 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     style={{
                       flex: 1,
                       border: "1px dotted transparent",
-                      padding: "4 16 4 16",
+                      padding: "8 16 8 16",
                       textAlign: "center",
-                      backgroundColor: "#f3f9f6",
+                      backgroundColor: "#f3f6f9",
                       color: "#00a991",
                       fontWeight: 700,
-                      fontFamily: "Play",
-                      borderRadius: 16,
-                      margin: "2 8 4 8",
-                      fontSize: 17,
+                      fontFamily: "play",
+                      borderRadius: 24,
+                      margin: "0 8 0 8",
                       borderColor: "transparent",
-                      // textTransform: "uppercase", // Add this line to capitalize the text
                     }}
                   >
                     {monthDate.format("MMMM")}
@@ -775,7 +773,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           <Button onClick={() => setValue(value.add(1, "month"))}>»</Button>
         </div>
 
-        <div style={{ marginBottom: 32 }}>
+        <div>
           {/* Render the original calendar or the single-row calendar based on the state */}
           {showSingleRow ? (
             renderSingleRowCalendar(selectedDate, handleDateSelect)
@@ -801,8 +799,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             />
           )}
           {/* Render the <Transfer> component if showTransfer is true */}
-          <div style={{ margin: 32 }}>
-            {showTransfer && <TransferSample theme={theme} />}
+          <div style={{ Top: 32, marginTop: 32 }}>
+            {showTransfer && <TransferSample />}
           </div>
           <Drawer
             title={

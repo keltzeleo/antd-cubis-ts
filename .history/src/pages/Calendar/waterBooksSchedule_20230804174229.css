@@ -52,7 +52,7 @@
 
 /* Style the scrollbar track (background) */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 1px;
   height: 6px;
   opacity: 0; /* Set the initial opacity to 0 to hide the scrollbar */
   transition: opacity 0.3s; /* Add a transition effect for smooth fading */
@@ -69,7 +69,7 @@
 
 /* Custom thumb color (the draggable part of the scrollbar) */
 ::-webkit-scrollbar-thumb {
-  background-color: "transparent";
+  background-color: 00a991;
   border-radius: 12px;
   opacity: 0; /* Set the initial opacity to 0 to hide the scrollbar */
   transition: opacity 0.5s; /* Add a transition effect for smooth fading */

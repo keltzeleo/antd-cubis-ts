@@ -429,15 +429,15 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       backgroundColor: "#f3f9f6",
                       color: "#00a991",
                       fontWeight: 700,
-                      fontFamily: "Play",
+                      fontFamily: "play",
                       borderRadius: 16,
                       margin: "2 8 4 8",
-                      fontSize: 17,
                       borderColor: "transparent",
-                      // textTransform: "uppercase", // Add this line to capitalize the text
+                      textTransform: "capitalize", // Add this line to capitalize the text
                     }}
                   >
-                    {monthDate.format("MMMM")}
+                    {monthDate.format("MMMM").charAt(0).toUpperCase() +
+                      monthDate.format("MMMM").slice(1)}
                   </div>
                   {Array.from({ length: monthDaysInMonth }, (_, dayIndex) => {
                     const date = monthDate

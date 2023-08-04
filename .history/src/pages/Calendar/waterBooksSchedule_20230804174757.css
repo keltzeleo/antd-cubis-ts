@@ -52,7 +52,7 @@
 
 /* Style the scrollbar track (background) */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 1px;
   height: 6px;
   opacity: 0; /* Set the initial opacity to 0 to hide the scrollbar */
   transition: opacity 0.3s; /* Add a transition effect for smooth fading */
@@ -62,7 +62,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: "transparent";
+  background-color: #00a991;
   opacity: 0; /* Set the initial opacity to 0 to hide the scrollbar */
   transition: opacity 0.3s; /* Add a transition effect for smooth fading */
 }

@@ -429,12 +429,10 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       backgroundColor: "#f3f9f6",
                       color: "#00a991",
                       fontWeight: 700,
-                      fontFamily: "Play",
-                      borderRadius: 16,
+                      fontFamily: "play",
+                      borderRadius: 24,
                       margin: "2 8 4 8",
-                      fontSize: 17,
                       borderColor: "transparent",
-                      // textTransform: "uppercase", // Add this line to capitalize the text
                     }}
                   >
                     {monthDate.format("MMMM")}

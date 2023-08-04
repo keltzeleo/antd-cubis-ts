@@ -432,7 +432,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       fontFamily: "Play",
                       borderRadius: 16,
                       margin: "2 8 4 8",
-                      fontSize: 17,
+                      fontSize: 16,
                       borderColor: "transparent",
                       // textTransform: "uppercase", // Add this line to capitalize the text
                     }}
