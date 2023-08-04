@@ -278,26 +278,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setValue(newValue || value);
   };
 
-  // Function to handle date selection for the single-row calendar
-  const handleSingleRowDateSelect = (date: Dayjs) => {
-    // Check if the date is already selected, and if so, deselect it
-    const isSameAsSelectedDate =
-      selectedDate && date.isSame(selectedDate, "day");
-
-    if (handleDateSelect) {
-      // Call the provided handleDateSelect function with the selected date
-      handleDateSelect(isSameAsSelectedDate ? date : date);
-    } else {
-      // Set the selected date to null if handleDateSelect is not available
-      setSelectedDate(isSameAsSelectedDate ? null : date);
-    }
-  };
-
   // Function to render the single-row view of the calendar
-  const renderSingleRowCalendar = (
-    selectedDate: Dayjs | null,
-    handleDateSelect: (date: Dayjs) => void | null
-  ) => {
+  const renderSingleRowCalendar = () => {
     const currentMonth = value.month(); // Get the current month's index (0 to 11)
     const daysInMonth = value.daysInMonth();
     const startOfMonth = value.startOf("month");
@@ -336,9 +318,9 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             overflowX: "auto",
             overflowY: "hidden",
             position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
+            top: 0, // Place the scrollbar container at the top of the parent container
+            left: 0, // Align the scrollbar container to the left
+            width: "100%", // Set the container width to take up the available space
             maxHeight: "200px",
             borderColor: "rgba(0,0,0,0.07)",
             backgroundColor: theme["shades.2"],
@@ -407,6 +389,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         style={{
                           flex: 1,
                           width: dayColumnWidth, // Set a fixed width for each day column
+
                           border: "1px dotted rgba(0,20,0,0.15)",
                           padding: 8,
                           textAlign: "center",
@@ -415,9 +398,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                             : backgroundColor, // Use the calculated background color
                           color: theme["colorText"],
                           fontFamily: "play",
-                          cursor: "pointer", // Add cursor pointer for clickable dates
                         }}
-                        onClick={() => handleSingleRowDateSelect(date)} // Add onClick handler for date selection
                       >
                         {date.format("D")}
                       </div>
@@ -663,9 +644,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
         >
           <Legend legendData={legendData} theme={theme} />
           <Alert
-            message={`You selected date: ${
-              selectedDate ? selectedDate.format("DD-MM-YYYY") : "None"
-            }`}
+            message={`You selected date: ${value?.format("DD-MM-YYYY")}`}
             style={{ margin: "0 8" }}
           />
           <div style={{ marginRight: 16 }}>
@@ -691,20 +670,19 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
         <div>
           {/* Render the original calendar or the single-row calendar based on the state */}
-          {/* Render the original calendar or the single-row calendar based on the state */}
           {showSingleRow ? (
-            renderSingleRowCalendar(selectedDate, handleDateSelect) // Pass selectedDate here
+            renderSingleRowCalendar(selectedDate, handleDateSelect)
           ) : (
             <Calendar
               value={value}
               onSelect={(date) => {
-                handleDateSelect(date); // Call the provided handleDateSelect function for the original calendar
-                setSelectedDate(date); // Update the selectedDate state with the selected date
+                handleDateSelect(date);
+                onSelect(date); // Call the original onSelect function for the original calendar
               }}
               onPanelChange={onPanelChange}
               cellRender={dateCellRender}
             />
-          )}{" "}
+          )}
           <Drawer
             title={
               <span style={{ color: theme.colorTextBase }}>

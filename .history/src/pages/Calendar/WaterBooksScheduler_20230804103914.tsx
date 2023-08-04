@@ -278,25 +278,10 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setValue(newValue || value);
   };
 
-  // Function to handle date selection for the single-row calendar
-  const handleSingleRowDateSelect = (date: Dayjs) => {
-    // Check if the date is already selected, and if so, deselect it
-    const isSameAsSelectedDate =
-      selectedDate && date.isSame(selectedDate, "day");
-
-    if (handleDateSelect) {
-      // Call the provided handleDateSelect function with the selected date
-      handleDateSelect(isSameAsSelectedDate ? date : date);
-    } else {
-      // Set the selected date to null if handleDateSelect is not available
-      setSelectedDate(isSameAsSelectedDate ? null : date);
-    }
-  };
-
   // Function to render the single-row view of the calendar
   const renderSingleRowCalendar = (
     selectedDate: Dayjs | null,
-    handleDateSelect: (date: Dayjs) => void | null
+    handleDateSelect: (date: Dayjs) => void
   ) => {
     const currentMonth = value.month(); // Get the current month's index (0 to 11)
     const daysInMonth = value.daysInMonth();
@@ -430,6 +415,18 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
         </div>
       </div>
     );
+  };
+
+  // Function to handle date selection for the single-row calendar
+  const handleSingleRowDateSelect = (date: Dayjs) => {
+    // Check if the date is already selected, and if so, deselect it
+    const isSameAsSelectedDate =
+      selectedDate && date.isSame(selectedDate, "day");
+
+    setSelectedDate(isSameAsSelectedDate ? null : date); // Update the selectedDate state
+
+    // Call the provided handleDateSelect function
+    handleDateSelect(isSameAsSelectedDate ? null : date);
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -691,20 +688,19 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
         <div>
           {/* Render the original calendar or the single-row calendar based on the state */}
-          {/* Render the original calendar or the single-row calendar based on the state */}
           {showSingleRow ? (
-            renderSingleRowCalendar(selectedDate, handleDateSelect) // Pass selectedDate here
+            renderSingleRowCalendar(selectedDate, handleDateSelect)
           ) : (
             <Calendar
               value={value}
               onSelect={(date) => {
-                handleDateSelect(date); // Call the provided handleDateSelect function for the original calendar
-                setSelectedDate(date); // Update the selectedDate state with the selected date
+                handleDateSelect(date);
+                onSelect(date); // Call the original onSelect function for the original calendar
               }}
               onPanelChange={onPanelChange}
               cellRender={dateCellRender}
             />
-          )}{" "}
+          )}
           <Drawer
             title={
               <span style={{ color: theme.colorTextBase }}>

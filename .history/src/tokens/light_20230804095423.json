@@ -1,6 +1,6 @@
 {
   "blue": "#326bc8",
-  "blue.legend": "#aabbc9",
+  "blue.legend": "#cedadf",
   "blue.1": "#e9ebf8",
   "blue.2": "#cedbf2",
   "blue.3": "#a7bfe7",
@@ -56,7 +56,7 @@
   "magenta.8": "#6f3e59",
   "magenta.9": "#593247",
   "magenta.10": "#472838",
-  "red.legend": "#e6cacb",
+  "red.legend": "#f2cecf",
   "red": "#f56170",
   "red.1": "#feeff1",
   "red.2": "#fdd9dd",

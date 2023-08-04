@@ -63,7 +63,6 @@
 
 ::-webkit-scrollbar-track {
   background-color: "transparent";
-  opacity: 0; /* Set the initial opacity to 0 to hide the scrollbar */
 }
 
 /* Custom thumb color (the draggable part of the scrollbar) */

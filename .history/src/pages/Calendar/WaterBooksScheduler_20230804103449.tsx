@@ -1,4 +1,4 @@
-import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
+import { Calendar, Drawer } from "antd";
 import axios from "axios";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -10,7 +10,6 @@ import {
   Droppable,
 } from "react-beautiful-dnd";
 import "../../App.css";
-import Legend from "../../customComponents/Legend/Legend";
 import "./draggableCalendar.css";
 import { holidaysMY2023 } from "./holidaysMY2023";
 import WaterBooksPreviousMonthReschedulingForm from "./waterBooksPreviousMonthReschedulingForm";
@@ -278,25 +277,10 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setValue(newValue || value);
   };
 
-  // Function to handle date selection for the single-row calendar
-  const handleSingleRowDateSelect = (date: Dayjs) => {
-    // Check if the date is already selected, and if so, deselect it
-    const isSameAsSelectedDate =
-      selectedDate && date.isSame(selectedDate, "day");
-
-    if (handleDateSelect) {
-      // Call the provided handleDateSelect function with the selected date
-      handleDateSelect(isSameAsSelectedDate ? date : date);
-    } else {
-      // Set the selected date to null if handleDateSelect is not available
-      setSelectedDate(isSameAsSelectedDate ? null : date);
-    }
-  };
-
   // Function to render the single-row view of the calendar
   const renderSingleRowCalendar = (
     selectedDate: Dayjs | null,
-    handleDateSelect: (date: Dayjs) => void | null
+    handleDateSelect: (date: Dayjs) => void
   ) => {
     const currentMonth = value.month(); // Get the current month's index (0 to 11)
     const daysInMonth = value.daysInMonth();
@@ -430,6 +414,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
         </div>
       </div>
     );
+  };
+
+  // Function to handle date selection for the single-row calendar
+  const handleSingleRowDateSelect = (date: Dayjs) => {
+    setSelectedDate(date); // Update the selectedDate state with the selected date
+    handleDateSelect(date);
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -653,58 +643,21 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            marginBottom: 20,
-          }}
-        >
-          <Legend legendData={legendData} theme={theme} />
-          <Alert
-            message={`You selected date: ${
-              selectedDate ? selectedDate.format("DD-MM-YYYY") : "None"
-            }`}
-            style={{ margin: "0 8" }}
-          />
-          <div style={{ marginRight: 16 }}>
-            {/* Add the button to toggle single-row view */}
-            <Button onClick={handleToggleSingleRow}>
-              {showSingleRow
-                ? "Switch to Original Month View"
-                : "Switch to Single-Row Month View"}
-            </Button>
-          </div>
-          <Button onClick={() => setValue(value.subtract(1, "month"))}>
-            «
-          </Button>
-          <DatePicker.MonthPicker
-            value={value}
-            onChange={handleMonthPickerChange}
-            placeholder="Select month"
-            style={{ margin: "0 8" }}
-            format="MM-YYYY" // Add this line to set the correct format for the API call
-          />{" "}
-          <Button onClick={() => setValue(value.add(1, "month"))}>»</Button>
-        </div>
-
         <div>
           {/* Render the original calendar or the single-row calendar based on the state */}
-          {/* Render the original calendar or the single-row calendar based on the state */}
           {showSingleRow ? (
-            renderSingleRowCalendar(selectedDate, handleDateSelect) // Pass selectedDate here
+            renderSingleRowCalendar(selectedDate, handleDateSelect)
           ) : (
             <Calendar
               value={value}
               onSelect={(date) => {
-                handleDateSelect(date); // Call the provided handleDateSelect function for the original calendar
-                setSelectedDate(date); // Update the selectedDate state with the selected date
+                handleDateSelect(date);
+                onSelect(date); // Call the original onSelect function for the original calendar
               }}
               onPanelChange={onPanelChange}
               cellRender={dateCellRender}
             />
-          )}{" "}
+          )}
           <Drawer
             title={
               <span style={{ color: theme.colorTextBase }}>
@@ -719,7 +672,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             visible={isDrawerVisible}
             width={550}
           >
-            {" "}
             <WaterBooksPreviousMonthReschedulingForm
               theme={theme}
               selectedEvent={selectedEvent}
