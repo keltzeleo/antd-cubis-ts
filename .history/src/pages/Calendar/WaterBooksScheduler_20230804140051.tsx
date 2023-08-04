@@ -476,7 +476,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
                     // Set the background color for the highlighted day
                     if (isHighlighted) {
-                      backgroundColor = theme["cyan.3"]; // Change this to your desired highlight color
+                      backgroundColor = theme["cyan.legend"]; // Change this to your desired highlight color
                     }
 
                     // Render the day elements for each month
