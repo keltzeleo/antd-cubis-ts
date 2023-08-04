@@ -407,7 +407,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             width: "100%",
             maxHeight: "200px",
             borderColor: "rgba(0,0,0,0.07)",
-            backgroundColor: "transparent",
+            backgroundColor: theme["shades.2"],
           }}
         >
           <div style={{ display: "flex", flexDirection: "row" }}>
@@ -420,20 +420,22 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                   <div
                     style={{
                       flex: 1,
-                      border: "1px dotted transparent",
-                      padding: "8 16 8 16",
+                      width: dayColumnWidth * monthDaysInMonth, // Set the width to fit the number of days in the month
+                      border: "1px dotted rgba(0,20,0,0.15)",
                       textAlign: "center",
-                      backgroundColor: "#f3f6f9",
-                      color: "#00a991",
-                      fontWeight: 700,
+                      backgroundColor: "transparent",
+                      color: theme["colorText"],
                       fontFamily: "play",
-                      borderRadius: 24,
-                      margin: "0 8 0 8",
-                      borderColor: "transparent",
+                      cursor: "default", // Remove the cursor pointer for non-clickable months
+                      fontWeight: "bold",
+                      paddingTop: "4px",
+                      fontSize: "14px",
                     }}
                   >
-                    {monthDate.format("MMMM")}
-                  </div>
+                    {singleRowData
+                      .filter((data) => data.isMonth)
+                      .map((data) => data.value)}
+                  </div>{" "}
                   {Array.from({ length: monthDaysInMonth }, (_, dayIndex) => {
                     const date = monthDate
                       .clone()
@@ -470,13 +472,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       backgroundColor = theme["yellow.legend"];
                       colorText = theme["colorTextInverted"];
                       fontSize = "16px"; // Set a larger font size for scheduled days
-                    } else {
-                      backgroundColor = theme["shades.2"];
-                    }
-
-                    // Set the background color for the highlighted day
-                    if (isHighlighted) {
-                      backgroundColor = theme["cyan.2"]; // Change this to your desired highlight color
                     }
 
                     // Render the day elements for each month
@@ -491,7 +486,9 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           textAlign: "center",
                           backgroundColor: isToday
                             ? theme["cyan.5"]
-                            : backgroundColor, // Use the updated backgroundColor variable
+                            : isHighlighted // Use the isHighlighted flag to set the background color
+                            ? theme["green.legend"]
+                            : backgroundColor, // Use the calculated background color
                           color: theme["colorText"],
                           fontFamily: "play",
                           cursor: "pointer", // Add cursor pointer for clickable dates

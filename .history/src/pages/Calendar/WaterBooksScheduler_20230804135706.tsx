@@ -424,7 +424,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       padding: "8 16 8 16",
                       textAlign: "center",
                       backgroundColor: "#f3f6f9",
-                      color: "#00a991",
+                      color: "#121b1c",
                       fontWeight: 700,
                       fontFamily: "play",
                       borderRadius: 24,

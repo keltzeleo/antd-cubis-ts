@@ -420,16 +420,16 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                   <div
                     style={{
                       flex: 1,
-                      border: "1px dotted transparent",
-                      padding: "8 16 8 16",
+                      border: "1px solid #f0f0f0",
+                      padding: 8,
                       textAlign: "center",
-                      backgroundColor: "#f3f6f9",
-                      color: "#00a991",
+                      backgroundColor: theme["shades.2"],
+                      color: theme["colorText"],
                       fontWeight: 700,
                       fontFamily: "play",
-                      borderRadius: 24,
+                      borderRadius: 16,
                       margin: "0 8 0 8",
-                      borderColor: "transparent",
+                      padding: "0 8 0 8",
                     }}
                   >
                     {monthDate.format("MMMM")}
@@ -474,11 +474,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       backgroundColor = theme["shades.2"];
                     }
 
-                    // Set the background color for the highlighted day
-                    if (isHighlighted) {
-                      backgroundColor = theme["cyan.2"]; // Change this to your desired highlight color
-                    }
-
                     // Render the day elements for each month
                     return (
                       <div
@@ -491,7 +486,9 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           textAlign: "center",
                           backgroundColor: isToday
                             ? theme["cyan.5"]
-                            : backgroundColor, // Use the updated backgroundColor variable
+                            : isHighlighted // Use the isHighlighted flag to set the background color
+                            ? theme["green.legend"]
+                            : backgroundColor, // Use the calculated background color
                           color: theme["colorText"],
                           fontFamily: "play",
                           cursor: "pointer", // Add cursor pointer for clickable dates

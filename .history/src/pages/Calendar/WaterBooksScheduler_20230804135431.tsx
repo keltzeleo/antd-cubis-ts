@@ -420,14 +420,14 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                   <div
                     style={{
                       flex: 1,
-                      border: "1px dotted transparent",
-                      padding: "8 16 8 16",
+                      border: "1px solid #f0f0f0",
+                      padding: "4 16 4 16",
                       textAlign: "center",
-                      backgroundColor: "#f3f6f9",
-                      color: "#00a991",
+                      backgroundColor: theme["shades.2"],
+                      color: theme["colorText"],
                       fontWeight: 700,
                       fontFamily: "play",
-                      borderRadius: 24,
+                      borderRadius: 16,
                       margin: "0 8 0 8",
                       borderColor: "transparent",
                     }}
