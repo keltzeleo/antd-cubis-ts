@@ -132,31 +132,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     bookDescription: "",
   });
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-  const [isDateValuePanelDoubleClicked, setIsDateValuePanelDoubleClicked] =
-    useState(false);
-  const [previousDate, setPreviousDate] = useState<dayjs.Dayjs | null>(null); // Initialize with null or the initial date
-
-  // Function to handle double-click event on the date value panel
-  const handleDateValuePanelDoubleClick = () => {
-    setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
-  };
-
-  const handleDatePanelChange = (date: Dayjs, mode: string) => {
-    console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
-    if (mode === "date") {
-      // Add a delay to handle the double-click event
-      if (isDateValuePanelDoubleClicked) {
-        handleDateValuePanelDoubleClick(); // Switch to the single-row calendar view
-      } else {
-        // Set the double-click state and reset it after a short delay (300ms)
-        setIsDateValuePanelDoubleClicked(true);
-        setTimeout(() => {
-          setIsDateValuePanelDoubleClicked(false);
-        }, 300);
-      }
-    }
-    setValue(date);
-  };
 
   const handleDateSelect = (date: Dayjs) => {
     setSelectedDate(date);
@@ -210,47 +185,21 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
   const handlePanelChange = (date: Dayjs, mode: string) => {
     console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
-
-    // Check if it's a double-click event (mode === "date")
     if (mode === "date") {
-      if (isDateValuePanelDoubleClicked) {
-        // If it's a double-click, switch to the single-row calendar view
-        handleDatePanelDoubleClick();
-        setIsDateValuePanelDoubleClicked(false); // Reset the double-click state
-      } else {
-        // If it's the first click, set the double-click state and reset it after 300ms
-        setIsDateValuePanelDoubleClicked(true);
-        setTimeout(() => {
-          setIsDateValuePanelDoubleClicked(false);
-        }, 300);
-      }
+      handleDatePanelDoubleClick(); // Handle double-click event when in date mode
     }
-
     setValue(date);
   };
 
   const handleDatePanelDoubleClick = () => {
-    setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
+    setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow); // Switch between SingleRowCalendar and original Calendar
   };
 
   const onPanelChange = (date: Dayjs, mode: string) => {
     console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
-
-    // Check if it's a double-click event (mode === "date")
     if (mode === "date") {
-      if (isDateValuePanelDoubleClicked) {
-        // If it's a double-click, switch to the single-row calendar view
-        handleDateValuePanelDoubleClick();
-        setIsDateValuePanelDoubleClicked(false); // Reset the double-click state
-      } else {
-        // If it's the first click, set the double-click state and reset it after 300ms
-        setIsDateValuePanelDoubleClicked(true);
-        setTimeout(() => {
-          setIsDateValuePanelDoubleClicked(false);
-        }, 300);
-      }
+      handleDatePanelDoubleClick(); // Handle double-click event when in date mode
     }
-
     setValue(date);
   };
 
@@ -630,7 +579,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             <div
               ref={provided.innerRef}
               style={{ position: "relative", height: "100px", width: "100%" }}
-              onDoubleClick={() => handleDatePanelDoubleClick()} // Handle double-click on the date cell
             >
               {listData.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -743,13 +691,13 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             onChange={handleMonthPickerChange}
             placeholder="Select month"
             style={{ margin: "0 8" }}
-            format="MM-YYYY"
-            onPanelChange={handleDatePanelChange} // Use handleDatePanelChange to handle single-click and double-click events
-          />
+            format="MM-YYYY" // Add this line to set the correct format for the API call
+          />{" "}
           <Button onClick={() => setValue(value.add(1, "month"))}>»</Button>
         </div>
 
         <div>
+          {/* Render the original calendar or the single-row calendar based on the state */}
           {/* Render the original calendar or the single-row calendar based on the state */}
           {showSingleRow ? (
             renderSingleRowCalendar(selectedDate, handleDateSelect)
@@ -760,21 +708,10 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                 handleDateSelect(date);
                 onSelect(date);
               }}
-              onPanelChange={(date, mode) => {
-                // Check if the previous date is the same as the current date
-                if (previousDate && date.isSame(previousDate, "day")) {
-                  // Double-click detected, handle the event
-                  handleDatePanelDoubleClick();
-                } else {
-                  // Single-click detected, update the previousDate
-                  setPreviousDate(dayjs(date)); // Convert the date to a Dayjs object
-                }
-                onPanelChange(date, mode); // Call the original onPanelChange
-              }}
+              onPanelChange={handlePanelChange} // Use onPanelChange to handle double-click event
               cellRender={dateCellRender}
             />
-          )}
-          ;{" "}
+          )}{" "}
           <Drawer
             title={
               <span style={{ color: theme.colorTextBase }}>

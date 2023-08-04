@@ -630,7 +630,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             <div
               ref={provided.innerRef}
               style={{ position: "relative", height: "100px", width: "100%" }}
-              onDoubleClick={() => handleDatePanelDoubleClick()} // Handle double-click on the date cell
             >
               {listData.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>

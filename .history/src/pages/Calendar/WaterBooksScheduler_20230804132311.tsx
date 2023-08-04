@@ -630,7 +630,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             <div
               ref={provided.innerRef}
               style={{ position: "relative", height: "100px", width: "100%" }}
-              onDoubleClick={() => handleDatePanelDoubleClick()} // Handle double-click on the date cell
             >
               {listData.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -763,11 +762,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               onPanelChange={(date, mode) => {
                 // Check if the previous date is the same as the current date
                 if (previousDate && date.isSame(previousDate, "day")) {
-                  // Double-click detected, handle the event
-                  handleDatePanelDoubleClick();
-                } else {
-                  // Single-click detected, update the previousDate
-                  setPreviousDate(dayjs(date)); // Convert the date to a Dayjs object
+                  handleDatePanelDoubleClick(); // Double-click detected, handle the event
                 }
                 onPanelChange(date, mode); // Call the original onPanelChange
               }}

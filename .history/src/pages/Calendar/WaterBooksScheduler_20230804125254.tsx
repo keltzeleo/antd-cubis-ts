@@ -134,7 +134,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [isDateValuePanelDoubleClicked, setIsDateValuePanelDoubleClicked] =
     useState(false);
-  const [previousDate, setPreviousDate] = useState<dayjs.Dayjs | null>(null); // Initialize with null or the initial date
 
   // Function to handle double-click event on the date value panel
   const handleDateValuePanelDoubleClick = () => {
@@ -240,7 +239,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     if (mode === "date") {
       if (isDateValuePanelDoubleClicked) {
         // If it's a double-click, switch to the single-row calendar view
-        handleDateValuePanelDoubleClick();
+        handleDatePanelDoubleClick();
         setIsDateValuePanelDoubleClicked(false); // Reset the double-click state
       } else {
         // If it's the first click, set the double-click state and reset it after 300ms
@@ -630,7 +629,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             <div
               ref={provided.innerRef}
               style={{ position: "relative", height: "100px", width: "100%" }}
-              onDoubleClick={() => handleDatePanelDoubleClick()} // Handle double-click on the date cell
             >
               {listData.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -760,21 +758,10 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                 handleDateSelect(date);
                 onSelect(date);
               }}
-              onPanelChange={(date, mode) => {
-                // Check if the previous date is the same as the current date
-                if (previousDate && date.isSame(previousDate, "day")) {
-                  // Double-click detected, handle the event
-                  handleDatePanelDoubleClick();
-                } else {
-                  // Single-click detected, update the previousDate
-                  setPreviousDate(dayjs(date)); // Convert the date to a Dayjs object
-                }
-                onPanelChange(date, mode); // Call the original onPanelChange
-              }}
+              onPanelChange={onPanelChange} // Use onPanelChange to handle double-click events
               cellRender={dateCellRender}
             />
-          )}
-          ;{" "}
+          )}{" "}
           <Drawer
             title={
               <span style={{ color: theme.colorTextBase }}>

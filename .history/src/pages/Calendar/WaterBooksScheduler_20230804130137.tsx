@@ -134,9 +134,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [isDateValuePanelDoubleClicked, setIsDateValuePanelDoubleClicked] =
     useState(false);
-  const [previousDate, setPreviousDate] = useState<dayjs.Dayjs | null>(null); // Initialize with null or the initial date
 
-  // Function to handle double-click event on the date value panel
   const handleDateValuePanelDoubleClick = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
   };
@@ -630,7 +628,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             <div
               ref={provided.innerRef}
               style={{ position: "relative", height: "100px", width: "100%" }}
-              onDoubleClick={() => handleDatePanelDoubleClick()} // Handle double-click on the date cell
             >
               {listData.map((item, index) => (
                 <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -760,21 +757,16 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                 handleDateSelect(date);
                 onSelect(date);
               }}
-              onPanelChange={(date, mode) => {
-                // Check if the previous date is the same as the current date
-                if (previousDate && date.isSame(previousDate, "day")) {
-                  // Double-click detected, handle the event
-                  handleDatePanelDoubleClick();
-                } else {
-                  // Single-click detected, update the previousDate
-                  setPreviousDate(dayjs(date)); // Convert the date to a Dayjs object
-                }
-                onPanelChange(date, mode); // Call the original onPanelChange
-              }}
-              cellRender={dateCellRender}
+              onPanelChange={onPanelChange} // Use onPanelChange to handle double-click events
+              // Replace the existing cellRender prop with the updated function
+   
+                  onClick={() => handleDateValuePanelDoubleClick()} // Handle double-click on the date cell
+
+                  {" "}
+           
+              )}
             />
-          )}
-          ;{" "}
+          )}{" "}
           <Drawer
             title={
               <span style={{ color: theme.colorTextBase }}>
