@@ -240,6 +240,7 @@
   "colorBgTextHover": "rgba(0, 0, 0, 0.06)",
   "colorBorderActionsColumn": "#f5f6f6",
   "colorBgContainer": "#fafafa",
+  "colorBgContainerDisabled": "rgba(0, 0, 0, 0.04)",
   "colorBgBase": "#ffffff",
   "white": "#fafafa",
   "fontFamily": "-apple-system, BlinkMacSystemFont, 'Mulish', 'Play', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
