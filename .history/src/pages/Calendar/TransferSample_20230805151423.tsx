@@ -1,5 +1,4 @@
-import { RightCircleTwoTone } from "@ant-design/icons";
-import { Space, Switch, Table, Tag, Transfer } from "antd";
+import { Checkbox, Space, Switch, Table, Tag, Transfer } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TransferItem, TransferProps } from "antd/es/transfer";
 import dayjs, { Dayjs } from "dayjs";
@@ -80,6 +79,20 @@ const TableTransfer = ({
         selectedRowKeys: listSelectedKeys,
       };
 
+      const handleHeaderCheckboxChange = () => {
+        // Toggle the checkbox state for all items in the filteredItems
+        const allSelected = filteredItems.every((item: DataType) =>
+          targetKeys.includes(item.key)
+        );
+        const newTargetKeys = allSelected
+          ? targetKeys.filter(
+              (key: string) => !filteredItems.find((item) => item.key === key)
+            )
+          : [...targetKeys, ...filteredItems.map((item) => item.key)];
+
+        setTargetKeys(newTargetKeys);
+      };
+
       return (
         <Table<DataType>
           rowSelection={rowSelection}
@@ -123,8 +136,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
   const [targetKeys, setTargetKeys] = useState<string[]>(originTargetKeys);
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [oneWay, setOneWay] = useState(false);
-
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null); // Renamed to selectedDate
   // State variable to hold the date
 
@@ -148,14 +159,16 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     setSelectedDate(currentDate);
   };
 
-  const handleCheckboxChange = (key: string) => {
-    // Toggle the checkbox state for the specific item with the given key
-    const newTargetKeys = targetKeys.includes(key)
-      ? targetKeys.filter((itemKey) => itemKey !== key)
-      : [...targetKeys, key];
-
-    setTargetKeys(newTargetKeys);
-  };
+  const headerCheckbox = (
+    <Checkbox
+      disabled={disabled}
+      checked={
+        filteredItems.length > 0 &&
+        filteredItems.every((item) => targetKeys.includes(item.key))
+      }
+      onChange={() => handleHeaderCheckboxChange()}
+    />
+  );
 
   const leftTableColumns: ColumnsType<DataType> = [
     {
@@ -177,26 +190,16 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         return <span style={{ color: theme["colorText"] }}>{description}</span>;
       },
     },
+    // Move the selection column to the last position
     {
       dataIndex: "selection",
-      title: "",
-      width: "36", // Set the width to 'auto'
-
+      title: () => headerCheckbox,
       render: (text, record) => (
-        <>
-          {record.disabled || disabled ? (
-            <span>
-              <RightCircleTwoTone twoToneColor={theme["shades.2"]} />
-            </span>
-          ) : (
-            <span
-              style={{ cursor: "pointer" }}
-              onDoubleClick={() => handleCheckboxChange(record.key)}
-            >
-              <RightCircleTwoTone twoToneColor={theme["colorPrimary"]} />
-            </span>
-          )}
-        </>
+        <Checkbox
+          disabled={record.disabled || disabled}
+          checked={targetKeys.includes(record.key)}
+          onChange={() => handleHeaderCheckboxChange(record.key)} // Corrected function name
+        />
       ),
     },
   ];
@@ -207,13 +210,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
       title: "Name",
       render: (title) => {
         return <span style={{ color: theme["colorText"] }}>{title}</span>;
-      },
-    },
-    {
-      dataIndex: "description",
-      title: "Description",
-      render: (description) => {
-        return <span style={{ color: theme["colorText"] }}>{description}</span>;
       },
     },
   ];
@@ -229,12 +225,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           justifyContent: "flex-end",
         }}
       >
-        <Switch
-          unCheckedChildren="one way"
-          checkedChildren="one way"
-          checked={oneWay}
-          onChange={setOneWay}
-        />
         <Switch
           unCheckedChildren="disabled"
           checkedChildren="disabled"
@@ -319,7 +309,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         targetKeys={targetKeys}
         disabled={disabled}
         showSearch={showSearch}
-        oneWay={oneWay}
         onChange={onChange}
         filterOption={(inputValue, item) =>
           item.title.indexOf(inputValue) !== -1 ||

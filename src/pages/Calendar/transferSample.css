@@ -1,0 +1,9 @@
+/* CSS for the left table column header */
+.ant-transfer-list-body:not(.ant-transfer-list-body-with-search)
+  .ant-transfer-list-header:nth-child(1) {
+  /* Add your styles here */
+  /* For example: */
+  text-align: right;
+  background-color: #f0f0f0;
+  font-weight: bold;
+}

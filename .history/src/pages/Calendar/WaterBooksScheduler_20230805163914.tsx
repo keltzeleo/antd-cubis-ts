@@ -659,7 +659,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             style={{
               color: theme.colorTextSecondary,
               marginBottom: 5,
-              backgroundColor: theme["red.3"],
+              backgroundColor: theme["red.4"],
               borderRadius: 8,
               paddingLeft: 8,
               fontSize: 10,

@@ -180,7 +180,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     {
       dataIndex: "selection",
       title: "",
-      width: "36", // Set the width to 'auto'
+      width: "30", // Set the width to 'auto'
 
       render: (text, record) => (
         <>

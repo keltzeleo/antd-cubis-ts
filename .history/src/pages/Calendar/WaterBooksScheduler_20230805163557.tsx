@@ -477,7 +477,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       scheduledBooks[dateKey] &&
                       scheduledBooks[dateKey].length > 0;
                     // Set the background color based on whether it's a rest day, holiday, scheduled, or unscheduled day
-                    let backgroundColor = "transparent";
+                    let backgroundColor = theme["red.legend"];
                     let colorText = theme.colorTextBase; // Set a default font color (use the text color from the theme)
                     let fontSize = "14px"; // Set the default font size
 
@@ -485,15 +485,15 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       backgroundColor = theme["red.legend"];
                       colorText = theme["red.4"];
                     } else if (isHoliday) {
-                      backgroundColor = theme["blue.legend"];
+                      backgroundColor = "transparent";
                       colorText = theme["blue.4"];
                     } else if (hasScheduledEvents) {
                       backgroundColor = theme["yellow.legend"];
                       colorText = theme["colorText"];
                       fontSize = "16px"; // Set a larger font size for scheduled days
                     } else {
-                      backgroundColor = theme["shades.2"];
-                      colorText = "red";
+                      backgroundColor = theme["shades.1"];
+                      colorText = "theme[";
                     }
 
                     // Set the background color for the highlighted day

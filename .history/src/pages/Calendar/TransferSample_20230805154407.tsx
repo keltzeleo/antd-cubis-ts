@@ -1,5 +1,4 @@
-import { RightCircleTwoTone } from "@ant-design/icons";
-import { Space, Switch, Table, Tag, Transfer } from "antd";
+import { Checkbox, Space, Switch, Table, Tag, Transfer } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TransferItem, TransferProps } from "antd/es/transfer";
 import dayjs, { Dayjs } from "dayjs";
@@ -180,23 +179,12 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     {
       dataIndex: "selection",
       title: "",
-      width: "36", // Set the width to 'auto'
-
       render: (text, record) => (
-        <>
-          {record.disabled || disabled ? (
-            <span>
-              <RightCircleTwoTone twoToneColor={theme["shades.2"]} />
-            </span>
-          ) : (
-            <span
-              style={{ cursor: "pointer" }}
-              onDoubleClick={() => handleCheckboxChange(record.key)}
-            >
-              <RightCircleTwoTone twoToneColor={theme["colorPrimary"]} />
-            </span>
-          )}
-        </>
+        <Checkbox
+          disabled={record.disabled || disabled}
+          checked={targetKeys.includes(record.key)}
+          onChange={() => handleCheckboxChange(record.key)}
+        />
       ),
     },
   ];
@@ -207,13 +195,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
       title: "Name",
       render: (title) => {
         return <span style={{ color: theme["colorText"] }}>{title}</span>;
-      },
-    },
-    {
-      dataIndex: "description",
-      title: "Description",
-      render: (description) => {
-        return <span style={{ color: theme["colorText"] }}>{description}</span>;
       },
     },
   ];

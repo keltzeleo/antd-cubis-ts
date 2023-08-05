@@ -1,4 +1,3 @@
-import { RightCircleTwoTone } from "@ant-design/icons";
 import { Space, Switch, Table, Tag, Transfer } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TransferItem, TransferProps } from "antd/es/transfer";
@@ -61,6 +60,13 @@ const TableTransfer = ({
     }) => {
       const columns = direction === "left" ? leftColumns : rightColumns;
 
+      const columns: Column<DataType>[] = direction === "left" ? leftColumns : rightColumns;
+
+      if (direction === "left") {
+        const firstColumn = columns.shift() as Column<DataType>;
+        columns.push(firstColumn);
+      }
+
       const rowSelection = {
         getCheckboxProps: (item: DataType) => ({
           disabled: listDisabled || item.disabled,
@@ -82,21 +88,21 @@ const TableTransfer = ({
 
       return (
         <Table<DataType>
-          rowSelection={rowSelection}
-          columns={columns}
-          dataSource={filteredItems}
-          size="small"
-          style={{ pointerEvents: listDisabled ? "none" : undefined }}
-          onRow={({ key, disabled: itemDisabled }) => ({
-            onClick: () => {
-              if (itemDisabled || listDisabled) return;
-              onItemSelect(
-                key as string,
-                !listSelectedKeys.includes(key as string)
-              );
-            },
-          })}
-        />
+        rowSelection={rowSelection}
+        columns={columns} {/* Use the columns for the table */}
+        dataSource={filteredItems}
+        size="small"
+        style={{ pointerEvents: listDisabled ? "none" : undefined }}
+        onRow={({ key, disabled: itemDisabled }) => ({
+          onClick: () => {
+            if (itemDisabled || listDisabled) return;
+            onItemSelect(
+              key as string,
+              !listSelectedKeys.includes(key as string)
+            );
+          },
+        })}
+      />
       );
     }}
   </Transfer>
@@ -123,10 +129,59 @@ const TransferSample: React.FC<TransferSampleProps> = ({
   const [targetKeys, setTargetKeys] = useState<string[]>(originTargetKeys);
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [oneWay, setOneWay] = useState(false);
-
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null); // Renamed to selectedDate
   // State variable to hold the date
+
+  const leftTableColumns: ColumnsType<DataType> = [
+    {
+      title: "Selection",
+      dataIndex: "selection",
+      render: (text, record) => (
+        <span style={{ color: record.disabled ? "black" : "grey" }}>
+          {record.disabled ? "Disabled" : "Active"}
+        </span>
+      ),
+    },
+    {
+      dataIndex: "description",
+      title: "Description",
+      render: (title) => {
+        return <span style={{ color: theme["colorText"] }}>{title}</span>;
+      },
+    },
+    {
+      dataIndex: "tag",
+      title: "Tag",
+      render: (tag) => <Tag>{tag}</Tag>,
+    },
+    {
+      dataIndex: "title",
+      title: "Name",
+      render: (title) => {
+        return <span style={{ color: theme["colorText"] }}>{title}</span>;
+      },
+    },
+    // Selection column moved to the last position
+  ];
+
+  const rightTableColumns: ColumnsType<DataType> = [
+    {
+      dataIndex: "title",
+      title: "Name",
+      render: (title) => {
+        return <span style={{ color: theme["colorText"] }}>{title}</span>;
+      },
+    },
+    {
+      title: "Selection",
+      dataIndex: "selection",
+      render: (text, record) => (
+        <span style={{ color: record.disabled ? "black" : "grey" }}>
+          {record.disabled ? "Disabled" : "Active"}
+        </span>
+      ),
+    },
+  ];
 
   const onChange = (nextTargetKeys: string[]) => {
     // Function to handle the double-click event and update the date state
@@ -148,76 +203,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     setSelectedDate(currentDate);
   };
 
-  const handleCheckboxChange = (key: string) => {
-    // Toggle the checkbox state for the specific item with the given key
-    const newTargetKeys = targetKeys.includes(key)
-      ? targetKeys.filter((itemKey) => itemKey !== key)
-      : [...targetKeys, key];
-
-    setTargetKeys(newTargetKeys);
-  };
-
-  const leftTableColumns: ColumnsType<DataType> = [
-    {
-      dataIndex: "title",
-      title: "Name",
-      render: (title) => {
-        return <span style={{ color: theme["colorText"] }}>{title}</span>;
-      },
-    },
-    {
-      dataIndex: "tag",
-      title: "Tag",
-      render: (tag) => <Tag>{tag}</Tag>,
-    },
-    {
-      dataIndex: "description",
-      title: "Description",
-      render: (description) => {
-        return <span style={{ color: theme["colorText"] }}>{description}</span>;
-      },
-    },
-    {
-      dataIndex: "selection",
-      title: "",
-      width: "36", // Set the width to 'auto'
-
-      render: (text, record) => (
-        <>
-          {record.disabled || disabled ? (
-            <span>
-              <RightCircleTwoTone twoToneColor={theme["shades.2"]} />
-            </span>
-          ) : (
-            <span
-              style={{ cursor: "pointer" }}
-              onDoubleClick={() => handleCheckboxChange(record.key)}
-            >
-              <RightCircleTwoTone twoToneColor={theme["colorPrimary"]} />
-            </span>
-          )}
-        </>
-      ),
-    },
-  ];
-
-  const rightTableColumns: ColumnsType<DataType> = [
-    {
-      dataIndex: "title",
-      title: "Name",
-      render: (title) => {
-        return <span style={{ color: theme["colorText"] }}>{title}</span>;
-      },
-    },
-    {
-      dataIndex: "description",
-      title: "Description",
-      render: (description) => {
-        return <span style={{ color: theme["colorText"] }}>{description}</span>;
-      },
-    },
-  ];
-
   return (
     <>
       {" "}
@@ -229,12 +214,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           justifyContent: "flex-end",
         }}
       >
-        <Switch
-          unCheckedChildren="one way"
-          checkedChildren="one way"
-          checked={oneWay}
-          onChange={setOneWay}
-        />
         <Switch
           unCheckedChildren="disabled"
           checkedChildren="disabled"
@@ -248,18 +227,18 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           onChange={triggerShowSearch}
         />
       </Space>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+      <div style={{ display: "flex" }}>
         <div
           style={{
             flex: 1, // Added flex property
             display: "flex",
             height: 30,
             width: "30%",
-            padding: "1px 20px 1px 8px",
+            padding: "1px 24px 1px 8px",
             justifyContent: "flex-end",
             fontWeight: "bold",
             marginRight: 32,
-            borderRadius: "8px 6px 22px 8px",
+            borderRadius: "8px 6px 24px 8px",
 
             background: theme.colorPrimaryBase,
             fontFamily: "Muli",
@@ -280,7 +259,8 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             Column Selection #1:{" "}
             {doubleClickedDate
               ? doubleClickedDate.format("DD-MM-YYYY")
-              : "(No date selected)"}{" "}
+              : "(No date selected)"}
+            {" ⇀"}
             {/* Display the doubleClickedDate value or a message if no date is selected */}
           </div>
         </div>
@@ -290,7 +270,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             display: "flex",
             height: 30,
             width: "30",
-            padding: "1px 8px 1px 20px",
+            padding: "1px 8px 1px 24px",
             justifyContent: "flex-start",
             fontWeight: "bold",
             borderRadius: "22px 8px 6px 4px",
@@ -309,25 +289,27 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               paddingTop: -20,
             }}
           >
-            (date) : Column Selection #2
+            ↽ (date) : Column Selection #2
           </div>
         </div>
       </div>
       \{" "}
-      <TableTransfer
-        dataSource={mockData}
-        targetKeys={targetKeys}
-        disabled={disabled}
-        showSearch={showSearch}
-        oneWay={oneWay}
-        onChange={onChange}
-        filterOption={(inputValue, item) =>
-          item.title.indexOf(inputValue) !== -1 ||
-          item.tag.indexOf(inputValue) !== -1
-        }
-        leftColumns={leftTableColumns}
-        rightColumns={rightTableColumns}
-      />
+      <Table<DataType>
+      rowSelection={rowSelection}
+      columns={modifiedColumns} {/* Use the modifiedColumns for the table */}
+      dataSource={filteredItems}
+      size="small"
+      style={{ pointerEvents: listDisabled ? "none" : undefined }}
+      onRow={({ key, disabled: itemDisabled }) => ({
+        onClick: () => {
+          if (itemDisabled || listDisabled) return;
+          onItemSelect(
+            key as string,
+            !listSelectedKeys.includes(key as string)
+          );
+        },
+      })}
+    />
     </>
   );
 };

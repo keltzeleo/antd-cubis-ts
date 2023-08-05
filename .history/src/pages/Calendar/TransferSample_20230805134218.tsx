@@ -1,4 +1,3 @@
-import { RightCircleTwoTone } from "@ant-design/icons";
 import { Space, Switch, Table, Tag, Transfer } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TransferItem, TransferProps } from "antd/es/transfer";
@@ -61,6 +60,15 @@ const TableTransfer = ({
     }) => {
       const columns = direction === "left" ? leftColumns : rightColumns;
 
+      // Move the first column to the last position for left direction
+      if (direction === "left") {
+        const firstColumn = columns.shift() as ColumnsType<DataType>;
+        columns.push(firstColumn);
+      }
+
+      // Convert each column from ColumnsType<DataType> to ColumnType<DataType>
+      const modifiedColumns = columns.map((col) => col as ColumnType<DataType>);
+
       const rowSelection = {
         getCheckboxProps: (item: DataType) => ({
           disabled: listDisabled || item.disabled,
@@ -83,17 +91,14 @@ const TableTransfer = ({
       return (
         <Table<DataType>
           rowSelection={rowSelection}
-          columns={columns}
+          columns={modifiedColumns} {/* Use the modifiedColumns for the table */}
           dataSource={filteredItems}
           size="small"
           style={{ pointerEvents: listDisabled ? "none" : undefined }}
           onRow={({ key, disabled: itemDisabled }) => ({
             onClick: () => {
               if (itemDisabled || listDisabled) return;
-              onItemSelect(
-                key as string,
-                !listSelectedKeys.includes(key as string)
-              );
+              onItemSelect(key as string, !listSelectedKeys.includes(key as string));
             },
           })}
         />
@@ -123,10 +128,59 @@ const TransferSample: React.FC<TransferSampleProps> = ({
   const [targetKeys, setTargetKeys] = useState<string[]>(originTargetKeys);
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [oneWay, setOneWay] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
 
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null); // Renamed to selectedDate
-  // State variable to hold the date
+  // Left table columns with custom rendering for 'Selection' and 'Name'
+  const leftTableColumns: ColumnsType<DataType> = [
+    {
+      title: "Selection",
+      dataIndex: "selection",
+      render: (text, record) => (
+        <span style={{ color: record.disabled ? "black" : "grey" }}>
+          {record.disabled ? "Disabled" : "Active"}
+        </span>
+      ),
+    },
+    {
+      dataIndex: "description",
+      title: "Description",
+      render: (title) => {
+        return <span style={{ color: theme["colorText"] }}>{title}</span>;
+      },
+    },
+    {
+      dataIndex: "tag",
+      title: "Tag",
+      render: (tag) => <Tag>{tag}</Tag>,
+    },
+    {
+      dataIndex: "title",
+      title: "Name",
+      render: (title) => {
+        return <span style={{ color: theme["colorText"] }}>{title}</span>;
+      },
+    },
+  ];
+
+  // Right table columns with custom rendering for 'Name' and 'Selection'
+  const rightTableColumns: ColumnsType<DataType> = [
+    {
+      dataIndex: "title",
+      title: "Name",
+      render: (title) => {
+        return <span style={{ color: theme["colorText"] }}>{title}</span>;
+      },
+    },
+    {
+      title: "Selection",
+      dataIndex: "selection",
+      render: (text, record) => (
+        <span style={{ color: record.disabled ? "black" : "grey" }}>
+          {record.disabled ? "Disabled" : "Active"}
+        </span>
+      ),
+    },
+  ];
 
   const onChange = (nextTargetKeys: string[]) => {
     // Function to handle the double-click event and update the date state
@@ -148,79 +202,8 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     setSelectedDate(currentDate);
   };
 
-  const handleCheckboxChange = (key: string) => {
-    // Toggle the checkbox state for the specific item with the given key
-    const newTargetKeys = targetKeys.includes(key)
-      ? targetKeys.filter((itemKey) => itemKey !== key)
-      : [...targetKeys, key];
-
-    setTargetKeys(newTargetKeys);
-  };
-
-  const leftTableColumns: ColumnsType<DataType> = [
-    {
-      dataIndex: "title",
-      title: "Name",
-      render: (title) => {
-        return <span style={{ color: theme["colorText"] }}>{title}</span>;
-      },
-    },
-    {
-      dataIndex: "tag",
-      title: "Tag",
-      render: (tag) => <Tag>{tag}</Tag>,
-    },
-    {
-      dataIndex: "description",
-      title: "Description",
-      render: (description) => {
-        return <span style={{ color: theme["colorText"] }}>{description}</span>;
-      },
-    },
-    {
-      dataIndex: "selection",
-      title: "",
-      width: "36", // Set the width to 'auto'
-
-      render: (text, record) => (
-        <>
-          {record.disabled || disabled ? (
-            <span>
-              <RightCircleTwoTone twoToneColor={theme["shades.2"]} />
-            </span>
-          ) : (
-            <span
-              style={{ cursor: "pointer" }}
-              onDoubleClick={() => handleCheckboxChange(record.key)}
-            >
-              <RightCircleTwoTone twoToneColor={theme["colorPrimary"]} />
-            </span>
-          )}
-        </>
-      ),
-    },
-  ];
-
-  const rightTableColumns: ColumnsType<DataType> = [
-    {
-      dataIndex: "title",
-      title: "Name",
-      render: (title) => {
-        return <span style={{ color: theme["colorText"] }}>{title}</span>;
-      },
-    },
-    {
-      dataIndex: "description",
-      title: "Description",
-      render: (description) => {
-        return <span style={{ color: theme["colorText"] }}>{description}</span>;
-      },
-    },
-  ];
-
   return (
     <>
-      {" "}
       <div style={{ height: 48 }}></div>
       <Space
         style={{
@@ -229,12 +212,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           justifyContent: "flex-end",
         }}
       >
-        <Switch
-          unCheckedChildren="one way"
-          checkedChildren="one way"
-          checked={oneWay}
-          onChange={setOneWay}
-        />
         <Switch
           unCheckedChildren="disabled"
           checkedChildren="disabled"
@@ -248,25 +225,23 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           onChange={triggerShowSearch}
         />
       </Space>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+      <div style={{ display: "flex" }}>
         <div
           style={{
-            flex: 1, // Added flex property
+            flex: 1,
             display: "flex",
             height: 30,
             width: "30%",
-            padding: "1px 20px 1px 8px",
+            padding: "1px 24px 1px 8px",
             justifyContent: "flex-end",
             fontWeight: "bold",
             marginRight: 32,
-            borderRadius: "8px 6px 22px 8px",
-
+            borderRadius: "8px 6px 24px 8px",
             background: theme.colorPrimaryBase,
             fontFamily: "Muli",
             overflow: "hidden",
             color: "#ffffff",
-
-            margin: "8px 16px 0px 0px", // Adjusted margin to create space between the two sections
+            margin: "8px 16px 0px 0px",
           }}
         >
           <div
@@ -280,17 +255,17 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             Column Selection #1:{" "}
             {doubleClickedDate
               ? doubleClickedDate.format("DD-MM-YYYY")
-              : "(No date selected)"}{" "}
-            {/* Display the doubleClickedDate value or a message if no date is selected */}
+              : "(No date selected)"}
+            {" ⇀"}
           </div>
         </div>
         <div
           style={{
-            flex: 1, // Added flex property
+            flex: 1,
             display: "flex",
             height: 30,
             width: "30",
-            padding: "1px 8px 1px 20px",
+            padding: "1px 8px 1px 24px",
             justifyContent: "flex-start",
             fontWeight: "bold",
             borderRadius: "22px 8px 6px 4px",
@@ -298,7 +273,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             fontFamily: "Muli",
             overflow: "hidden",
             color: "#ffffff",
-            margin: "8px 0px 0px 16px", // Adjusted margin to create space between the two sections
+            margin: "8px 0px 0px 16px",
           }}
         >
           <div
@@ -309,22 +284,16 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               paddingTop: -20,
             }}
           >
-            (date) : Column Selection #2
+            ↽ (date) : Column Selection #2
           </div>
         </div>
       </div>
-      \{" "}
       <TableTransfer
         dataSource={mockData}
+        showSearch={showSearch}
         targetKeys={targetKeys}
         disabled={disabled}
-        showSearch={showSearch}
-        oneWay={oneWay}
         onChange={onChange}
-        filterOption={(inputValue, item) =>
-          item.title.indexOf(inputValue) !== -1 ||
-          item.tag.indexOf(inputValue) !== -1
-        }
         leftColumns={leftTableColumns}
         rightColumns={rightTableColumns}
       />

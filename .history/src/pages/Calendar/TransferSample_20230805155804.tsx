@@ -180,8 +180,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     {
       dataIndex: "selection",
       title: "",
-      width: "36", // Set the width to 'auto'
-
       render: (text, record) => (
         <>
           {record.disabled || disabled ? (
@@ -191,7 +189,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           ) : (
             <span
               style={{ cursor: "pointer" }}
-              onDoubleClick={() => handleCheckboxChange(record.key)}
+              onClick={() => handleCheckboxChange(record.key)}
             >
               <RightCircleTwoTone twoToneColor={theme["colorPrimary"]} />
             </span>

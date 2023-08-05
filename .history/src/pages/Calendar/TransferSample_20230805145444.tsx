@@ -1,4 +1,3 @@
-import { RightCircleTwoTone } from "@ant-design/icons";
 import { Space, Switch, Table, Tag, Transfer } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TransferItem, TransferProps } from "antd/es/transfer";
@@ -47,59 +46,63 @@ const TableTransfer = ({
   rightColumns,
   ...restProps
 }: TableTransferProps) => (
-  <Transfer<DataType>
-    {...restProps}
-    footer={(props) => <>{/* Custom footer can be added here */}</>}
-  >
-    {({
-      direction,
-      filteredItems,
-      onItemSelectAll,
-      onItemSelect,
-      selectedKeys: listSelectedKeys,
-      disabled: listDisabled,
-    }) => {
-      const columns = direction === "left" ? leftColumns : rightColumns;
+  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+    {" "}
+    {/* <-- Added div with justifyContent */}
+    <Transfer<DataType>
+      {...restProps}
+      footer={(props) => <>{/* Custom footer can be added here */}</>}
+    >
+      {({
+        direction,
+        filteredItems,
+        onItemSelectAll,
+        onItemSelect,
+        selectedKeys: listSelectedKeys,
+        disabled: listDisabled,
+      }) => {
+        const columns = direction === "left" ? leftColumns : rightColumns;
 
-      const rowSelection = {
-        getCheckboxProps: (item: DataType) => ({
-          disabled: listDisabled || item.disabled,
-        }),
-        onSelectAll(selected: boolean, selectedRows: DataType[]) {
-          const treeSelectedKeys = selectedRows
-            .filter((item) => !item.disabled)
-            .map(({ key }) => key);
-          const diffKeys = selected
-            ? difference(treeSelectedKeys, listSelectedKeys)
-            : difference(listSelectedKeys, treeSelectedKeys);
-          onItemSelectAll(diffKeys as string[], selected);
-        },
-        onSelect({ key }: TransferItem, selected: boolean) {
-          onItemSelect(key as string, selected);
-        },
-        selectedRowKeys: listSelectedKeys,
-      };
+        const rowSelection = {
+          getCheckboxProps: (item: DataType) => ({
+            disabled: listDisabled || item.disabled,
+          }),
+          onSelectAll(selected: boolean, selectedRows: DataType[]) {
+            const treeSelectedKeys = selectedRows
+              .filter((item) => !item.disabled)
+              .map(({ key }) => key);
+            const diffKeys = selected
+              ? difference(treeSelectedKeys, listSelectedKeys)
+              : difference(listSelectedKeys, treeSelectedKeys);
+            onItemSelectAll(diffKeys as string[], selected);
+          },
+          onSelect({ key }: TransferItem, selected: boolean) {
+            onItemSelect(key as string, selected);
+          },
+          selectedRowKeys: listSelectedKeys,
+        };
 
-      return (
-        <Table<DataType>
-          rowSelection={rowSelection}
-          columns={columns}
-          dataSource={filteredItems}
-          size="small"
-          style={{ pointerEvents: listDisabled ? "none" : undefined }}
-          onRow={({ key, disabled: itemDisabled }) => ({
-            onClick: () => {
-              if (itemDisabled || listDisabled) return;
-              onItemSelect(
-                key as string,
-                !listSelectedKeys.includes(key as string)
-              );
-            },
-          })}
-        />
-      );
-    }}
-  </Transfer>
+        return (
+          <Table<DataType>
+            rowSelection={rowSelection}
+            columns={columns}
+            dataSource={filteredItems}
+            size="small"
+            style={{ pointerEvents: listDisabled ? "none" : undefined }}
+            onRow={({ key, disabled: itemDisabled }) => ({
+              onClick: () => {
+                if (itemDisabled || listDisabled) return;
+                onItemSelect(
+                  key as string,
+                  !listSelectedKeys.includes(key as string)
+                );
+              },
+            })}
+          />
+        );
+      }}
+    </Transfer>
+  </div>
 );
 
 const mockTags = ["cat", "dog", "bird"];
@@ -123,8 +126,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
   const [targetKeys, setTargetKeys] = useState<string[]>(originTargetKeys);
   const [disabled, setDisabled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [oneWay, setOneWay] = useState(false);
-
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null); // Renamed to selectedDate
   // State variable to hold the date
 
@@ -148,15 +149,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     setSelectedDate(currentDate);
   };
 
-  const handleCheckboxChange = (key: string) => {
-    // Toggle the checkbox state for the specific item with the given key
-    const newTargetKeys = targetKeys.includes(key)
-      ? targetKeys.filter((itemKey) => itemKey !== key)
-      : [...targetKeys, key];
-
-    setTargetKeys(newTargetKeys);
-  };
-
   const leftTableColumns: ColumnsType<DataType> = [
     {
       dataIndex: "title",
@@ -177,28 +169,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         return <span style={{ color: theme["colorText"] }}>{description}</span>;
       },
     },
-    {
-      dataIndex: "selection",
-      title: "",
-      width: "36", // Set the width to 'auto'
-
-      render: (text, record) => (
-        <>
-          {record.disabled || disabled ? (
-            <span>
-              <RightCircleTwoTone twoToneColor={theme["shades.2"]} />
-            </span>
-          ) : (
-            <span
-              style={{ cursor: "pointer" }}
-              onDoubleClick={() => handleCheckboxChange(record.key)}
-            >
-              <RightCircleTwoTone twoToneColor={theme["colorPrimary"]} />
-            </span>
-          )}
-        </>
-      ),
-    },
   ];
 
   const rightTableColumns: ColumnsType<DataType> = [
@@ -207,13 +177,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
       title: "Name",
       render: (title) => {
         return <span style={{ color: theme["colorText"] }}>{title}</span>;
-      },
-    },
-    {
-      dataIndex: "description",
-      title: "Description",
-      render: (description) => {
-        return <span style={{ color: theme["colorText"] }}>{description}</span>;
       },
     },
   ];
@@ -229,12 +192,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           justifyContent: "flex-end",
         }}
       >
-        <Switch
-          unCheckedChildren="one way"
-          checkedChildren="one way"
-          checked={oneWay}
-          onChange={setOneWay}
-        />
         <Switch
           unCheckedChildren="disabled"
           checkedChildren="disabled"
@@ -319,7 +276,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         targetKeys={targetKeys}
         disabled={disabled}
         showSearch={showSearch}
-        oneWay={oneWay}
         onChange={onChange}
         filterOption={(inputValue, item) =>
           item.title.indexOf(inputValue) !== -1 ||

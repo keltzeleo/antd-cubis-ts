@@ -195,7 +195,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
       label: "Unscheduled",
       color: "transparent",
     },
-    { category: "today", label: "Today", color: theme["cyan.5"] },
+    { category: "today", label: "Today", backgroundColor: theme["cyan.5"] },
     {
       category: "rest-day",
       label: "Rest Day",

@@ -1,0 +1,225 @@
+import { Space, Switch, Table, Tag, Transfer, Checkbox } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import type { TransferItem, TransferProps } from "antd/es/transfer";
+import dayjs, { Dayjs } from "dayjs";
+import difference from "lodash/difference";
+import React, { useState } from "react";
+
+// Interface for theme colors
+interface Theme {
+  [key: string]: string;
+}
+
+// Interface for the props of the TransferSample component
+interface TransferSampleProps {
+  theme: Theme;
+  doubleClickedDate: Dayjs | null; // Add the prop for double-clicked date
+}
+
+// Interface for the data in the table
+interface RecordType {
+  key: string;
+  title: string;
+  description: string;
+  disabled: boolean;
+  tag: string;
+}
+
+// Interface for the data to be transferred
+interface DataType {
+  key: string;
+  title: string;
+  description: string;
+  disabled: boolean;
+  tag: string;
+}
+
+// Interface for the props of the TableTransfer component
+interface TableTransferProps extends TransferProps<DataType> {
+  leftColumns: ColumnsType<DataType>;
+  rightColumns: ColumnsType<DataType>;
+}
+
+// Customize Table Transfer
+const TableTransfer = ({
+  leftColumns,
+  rightColumns,
+  ...restProps
+}: TableTransferProps) => (
+  <Transfer<DataType>
+    {...restProps}
+    footer={(props) => <>{/* Custom footer can be added here */}</>}
+  >
+    {({
+      direction,
+      filteredItems,
+      onItemSelectAll,
+      onItemSelect,
+      selectedKeys: listSelectedKeys,
+      disabled: listDisabled,
+    }) => {
+      const columns = direction === "left" ? leftColumns : rightColumns;
+      
+      // Add the checkbox in the column header for selection
+      const headerCheckbox = (
+        <Checkbox
+          checked={filteredItems.every((item) =>
+            listSelectedKeys.includes(item.key)
+          )}
+          onChange={(e) => {
+            const keys = filteredItems.map((item) => item.key);
+            onItemSelectAll(keys, e.target.checked);
+          }}
+          indeterminate={
+            filteredItems.some((item) => listSelectedKeys.includes(item.key)) &&
+            !filteredItems.every((item) =>
+              listSelectedKeys.includes(item.key)
+            )
+          }
+          disabled={listDisabled}
+        />
+      );
+
+      const rowSelection = {
+        getCheckboxProps: (item: DataType) => ({
+          disabled: listDisabled || item.disabled,
+        }),
+        onSelectAll(selected: boolean, selectedRows: DataType[]) {
+          const treeSelectedKeys = selectedRows
+            .filter((item) => !item.disabled)
+            .map(({ key }) => key);
+          const diffKeys = selected
+            ? difference(treeSelectedKeys, listSelectedKeys)
+            : difference(listSelectedKeys, treeSelectedKeys);
+          onItemSelectAll(diffKeys as string[], selected);
+        },
+        onSelect({ key }: TransferItem, selected: boolean) {
+          onItemSelect(key as string, selected);
+        },
+        selectedRowKeys: listSelectedKeys,
+      };
+
+      return (
+        <Table<DataType>
+          rowSelection={rowSelection}
+          columns={columns.map((col) => {
+            if (col.dataIndex === "selection") {
+              // Render the checkbox in the column header for selection
+              return {
+                ...col,
+                title: () => headerCheckbox,
+                // Use custom render to display the checkbox for each row
+                render: (text, record) => (
+                  <Checkbox
+                    checked={listSelectedKeys.includes(record.key)}
+                    disabled={listDisabled || record.disabled}
+                    onChange={(e) => {
+                      onItemSelect(record.key as string, e.target.checked);
+                    }}
+                  />
+                ),
+              };
+            }
+            return col;
+          })}
+          dataSource={filteredItems}
+          size="small"
+          style={{ pointerEvents: listDisabled ? "none" : undefined }}
+          onRow={({ key, disabled: itemDisabled }) => ({
+            onClick: () => {
+              if (itemDisabled || listDisabled) return;
+              onItemSelect(
+                key as string,
+                !listSelectedKeys.includes(key as string)
+              );
+            },
+          })}
+        />
+      );
+    }}
+  </Transfer>
+);
+
+const mockTags = ["cat", "dog", "bird"];
+
+const mockData: RecordType[] = Array.from({ length: 20 }).map((_, i) => ({
+  key: i.toString(),
+  title: `content${i + 1}`,
+  description: `description of content${i + 1}`,
+  disabled: i % 4 === 0,
+  tag: mockTags[i % 3],
+}));
+
+const originTargetKeys = mockData
+  .filter((item) => Number(item.key) % 3 > 1)
+  .map((item) => item.key);
+
+const TransferSample: React.FC<TransferSampleProps> = ({
+  theme,
+  doubleClickedDate,
+}) => {
+  const [targetKeys, setTargetKeys] = useState<string[]>(originTargetKeys);
+  const [disabled, setDisabled] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null); // Renamed to selectedDate
+  // State variable to hold the date
+
+  const leftTableColumns: ColumnsType<DataType> = [
+    {
+      dataIndex: "tag",
+      title: "Tag",
+      render: (tag) => <Tag>{tag}</Tag>,
+    },
+    {
+      dataIndex: "description",
+      title: "Description",
+      render: (title) => {
+        return <span style={{ color: theme["colorText"] }}>{title}</span>;
+      },
+    },
+    {
+      dataIndex: "title",
+      title: "Name",
+      render: (title) => {
+        return <span style={{ color: theme["colorText"] }}>{title}</span>;
+      },
+    },
+    // Selection column moved to the last position
+    {
+      title: "Selection",
+      dataIndex: "selection",
+      render: (text, record) => (
+        <span style={{ color: record.disabled ? "black" : "grey" }}>
+          {record.disabled ? "Disabled" : "Active"}
+        </span>
+      ),
+    },
+  ];
+
+  const rightTableColumns: ColumnsType<DataType> = [
+    {
+      dataIndex: "title",
+      title: "Name",
+      render: (title) => {
+        return <span style={{ color: theme["colorText"] }}>{title}</span>;
+      },
+    },
+    // Selection column moved to the last position
+    {
+      title: "Selection",
+      dataIndex: "selection",
+      render: (text, record) => (
+        <span style={{ color: record.disabled ? "black" : "grey" }}>
+          {record.disabled ? "Disabled" : "Active"}
+        </span>
+      ),
+    },
+  ];
+
+  const onChange = (nextTargetKeys: string[]) => {
+    // Function to handle the double-click event and update the date state
+    const currentDate = dayjs(); // Get the current date as a Dayjs object
+    setSelectedDate(currentDate);
+  };
+
+  const

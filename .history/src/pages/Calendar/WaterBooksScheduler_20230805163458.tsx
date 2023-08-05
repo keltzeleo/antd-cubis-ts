@@ -492,8 +492,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       colorText = theme["colorText"];
                       fontSize = "16px"; // Set a larger font size for scheduled days
                     } else {
-                      backgroundColor = theme["shades.2"];
-                      colorText = "red";
+                      backgroundColor = theme["shades.1"];
+                      colorText = "theme[";
                     }
 
                     // Set the background color for the highlighted day
