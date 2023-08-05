@@ -768,7 +768,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
   const handleToggleSingleRow = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
-    setShowTransfer(false); // Hide the Transfer component when switching views
   };
 
   return (

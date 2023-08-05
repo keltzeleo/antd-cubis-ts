@@ -145,6 +145,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   ); // Use doubleClickedDate instead of doubleClickDate
   const [expandedDate, setExpandedDate] = useState<Dayjs | null>(null);
 
+
+
   // Helper function to handle date cell double-click
   const handleDateCellDoubleClick = (date: Dayjs) => {
     if (!isMalaysiaHoliday(date) && date.day() !== 6 && date.day() !== 0) {
@@ -197,11 +199,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
       label: "Unscheduled",
       color: "transparent",
     },
-    {
-      category: "today",
-      label: "Today",
-      color: theme["cyan.3"],
-    },
+    { category: "today", label: "Today", color: theme["cyan.5"] },
     {
       category: "rest-day",
       label: "Rest Day",
@@ -211,7 +209,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     {
       category: "holiday",
       label: "Holiday",
-      color: theme["blue.legend"],
+      color: theme["geekblue.5"],
     },
     // Add more legend items as needed
   ];
@@ -374,8 +372,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
       setShowTransfer((prevShowTransfer) => !prevShowTransfer);
       setIsSingleRowCellDoubleClicked(false); // Reset the double-click state
       setExpandedDate((prevExpandedDate) =>
-        prevExpandedDate?.isSame(date) ? null : date
-      );
+      prevExpandedDate?.isSame(date) ? null : date
+    );
     } else {
       // If it's the first click, set the double-click state and reset it after 300ms
       setIsSingleRowCellDoubleClicked(true);
@@ -418,8 +416,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
         isToday: isToday,
       });
     }
-    const dayColumnWidth = 36; // Set a fixed width for each day column
-    const dayColumnHeight = 60; // Set the expanded height for the double-clicked date
+    const dayColumnWidth = 40; // Set a fixed width for each day column
+    const expandedHeight = 80; // Set the expanded height for the double-clicked date
 
     const numMonthsToShow = 3; // Set the number of months to show in the range
     const startMonth = value.clone().subtract(numMonthsToShow - 2, "month");
@@ -472,12 +470,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       .startOf("month")
                       .add(dayIndex, "day");
                     const isToday = date.isSame(dayjs(), "day");
-
+                    
                     const isHighlighted = selectedDate
                       ? date.isSame(selectedDate, "day")
                       : false; // Check if the date is the same as the selected date
 
-                    const isExpanded = expandedDate
+                      const isExpanded = expandedDate
                       ? date.isSame(expandedDate, "day")
                       : false; // Check if the date is the same as the double-clicked date
 
@@ -508,13 +506,13 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       color = theme["colorTextBase"];
                       fontSize = "16px"; // Set a larger font size for scheduled days
                     } else {
-                      backgroundColor = theme["shades.1"];
+                      backgroundColor = theme["shades.2"];
                       color = theme["colorTextBase"];
                     }
 
                     // Set the background color for the highlighted day
                     if (isHighlighted) {
-                      backgroundColor = theme["colorPrimary"];
+                      backgroundColor = theme["cyan.3"];
                       color = "white"; // Change this to your desired highlight color
                     }
 
@@ -524,13 +522,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         key={`day_${date.format("YYYYMMDD")}`}
                         style={{
                           flex: 1,
-                          width: dayColumnWidth,
-                          height: dayColumnHeight, // Set a fixed width for each day column
+                          width: dayColumnWidth, // Set a fixed width for each day column
                           border: "1px dotted rgba(0,20,0,0.15)",
                           padding: 8,
                           textAlign: "center",
                           backgroundColor: isToday
-                            ? theme["cyan.4"]
+                            ? theme["cyan.5"]
                             : backgroundColor, // Use the updated backgroundColor variable
                           color: isToday ? "white" : color,
                           fontFamily: "Play",
@@ -648,7 +645,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               marginBottom: 5,
               borderRadius: 8,
               paddingLeft: 8,
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 700,
             }}
           >
@@ -659,11 +656,11 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           <div
             style={{
               color: theme.colorTextSecondary,
-              backgroundColor: theme["geekblue.legend"],
+              backgroundColor: theme["geekblue.3"],
               marginBottom: 5,
               borderRadius: 8,
               paddingLeft: 8,
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 700,
             }}
           >
@@ -679,7 +676,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               backgroundColor: theme["red.3"],
               borderRadius: 8,
               paddingLeft: 8,
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 700,
             }}
           >
@@ -712,7 +709,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           borderRadius: 16,
                           width: "100%",
                           backgroundColor: theme["yellow.3"],
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: 600,
                           margin: "0 -20 -10 0",
                           padding: "2px 16px 2px 8px",
@@ -768,7 +765,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
   const handleToggleSingleRow = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
-    setShowTransfer(false); // Hide the Transfer component when switching views
   };
 
   return (

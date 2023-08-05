@@ -648,7 +648,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               marginBottom: 5,
               borderRadius: 8,
               paddingLeft: 8,
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 700,
             }}
           >
@@ -663,7 +663,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               marginBottom: 5,
               borderRadius: 8,
               paddingLeft: 8,
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 700,
             }}
           >
@@ -679,7 +679,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               backgroundColor: theme["red.3"],
               borderRadius: 8,
               paddingLeft: 8,
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 700,
             }}
           >
@@ -712,7 +712,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           borderRadius: 16,
                           width: "100%",
                           backgroundColor: theme["yellow.3"],
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: 600,
                           margin: "0 -20 -10 0",
                           padding: "2px 16px 2px 8px",
@@ -768,7 +768,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
   const handleToggleSingleRow = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
-    setShowTransfer(false); // Hide the Transfer component when switching views
   };
 
   return (

@@ -221,7 +221,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
   return (
     <>
       {" "}
-      <div style={{ height: 72 }}></div>
+      <div style={{ height: 48, top: 32 }}></div>
       <Space
         style={{
           margin: "32px 0px 4px 0px",

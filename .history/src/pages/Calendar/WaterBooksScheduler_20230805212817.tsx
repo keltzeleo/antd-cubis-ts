@@ -200,7 +200,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     {
       category: "today",
       label: "Today",
-      color: theme["cyan.3"],
+      color: "#d9e8e3",
     },
     {
       category: "rest-day",
@@ -211,7 +211,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     {
       category: "holiday",
       label: "Holiday",
-      color: theme["blue.legend"],
+      color: theme["geekblue.5"],
     },
     // Add more legend items as needed
   ];
@@ -418,7 +418,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
         isToday: isToday,
       });
     }
-    const dayColumnWidth = 36; // Set a fixed width for each day column
+    const dayColumnWidth = 40; // Set a fixed width for each day column
     const dayColumnHeight = 60; // Set the expanded height for the double-clicked date
 
     const numMonthsToShow = 3; // Set the number of months to show in the range
@@ -508,7 +508,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       color = theme["colorTextBase"];
                       fontSize = "16px"; // Set a larger font size for scheduled days
                     } else {
-                      backgroundColor = theme["shades.1"];
+                      backgroundColor = theme["shades.2"];
                       color = theme["colorTextBase"];
                     }
 
@@ -530,7 +530,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           padding: 8,
                           textAlign: "center",
                           backgroundColor: isToday
-                            ? theme["cyan.4"]
+                            ? "theme["cyan.2"]
                             : backgroundColor, // Use the updated backgroundColor variable
                           color: isToday ? "white" : color,
                           fontFamily: "Play",
@@ -648,7 +648,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               marginBottom: 5,
               borderRadius: 8,
               paddingLeft: 8,
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 700,
             }}
           >
@@ -659,11 +659,11 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           <div
             style={{
               color: theme.colorTextSecondary,
-              backgroundColor: theme["geekblue.legend"],
+              backgroundColor: theme["geekblue.3"],
               marginBottom: 5,
               borderRadius: 8,
               paddingLeft: 8,
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 700,
             }}
           >
@@ -679,7 +679,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               backgroundColor: theme["red.3"],
               borderRadius: 8,
               paddingLeft: 8,
-              fontSize: 11,
+              fontSize: 10,
               fontWeight: 700,
             }}
           >
@@ -712,7 +712,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           borderRadius: 16,
                           width: "100%",
                           backgroundColor: theme["yellow.3"],
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: 600,
                           margin: "0 -20 -10 0",
                           padding: "2px 16px 2px 8px",
@@ -768,7 +768,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
   const handleToggleSingleRow = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
-    setShowTransfer(false); // Hide the Transfer component when switching views
   };
 
   return (
