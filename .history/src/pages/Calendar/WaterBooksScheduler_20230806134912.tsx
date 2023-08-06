@@ -409,6 +409,25 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
     return (
       <div style={{ position: "relative" }}>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          {singleRowData.map((data, index) => {
+            if (data.isMonth) {
+              return <div key={`monthName_${index}`} style={{ flex: 1 }}></div>; // Empty space for month name
+            }
+
+            const date = startDate.add(index, "days");
+            const dayName = dayNames[date.day()];
+
+            return (
+              <div
+                key={`dayName_${index}`}
+                style={{ flex: 1, textAlign: "center", fontWeight: "bold" }}
+              >
+                {dayName}
+              </div>
+            );
+          })}
+        </div>
         <div
           style={{
             overflowX: "auto",
@@ -522,8 +541,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         onClick={() => handleSingleRowDateSelect(date)} // Handle single-click on the date cell
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
                       >
-                        <div>{date.format("dd")}</div>{" "}
-                        {/* This line displays the day name */}
                         {date.format("D")}
                       </div>
                     );

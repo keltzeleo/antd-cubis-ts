@@ -424,6 +424,22 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           }}
         >
           <div style={{ display: "flex", flexDirection: "row" }}>
+            {dayNames.map((dayName) => (
+              <div
+                key={dayName}
+                style={{
+                  flex: 1,
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  padding: "4px 0",
+                  backgroundColor: "#f5f5f5",
+                }}
+              >
+                {dayName}
+              </div>
+            ))}
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
             {Array.from({ length: numMonthsToShow }, (_, monthIndex) => {
               const monthDate = startMonth.clone().add(monthIndex, "month");
               const monthDaysInMonth = monthDate.daysInMonth();
@@ -522,8 +538,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         onClick={() => handleSingleRowDateSelect(date)} // Handle single-click on the date cell
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
                       >
-                        <div>{date.format("dd")}</div>{" "}
-                        {/* This line displays the day name */}
                         {date.format("D")}
                       </div>
                     );

@@ -408,7 +408,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     const startMonth = value.clone().subtract(numMonthsToShow - 2, "month");
 
     return (
-      <div style={{ position: "relative" }}>
+
         <div
           style={{
             overflowX: "auto",
@@ -522,8 +522,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         onClick={() => handleSingleRowDateSelect(date)} // Handle single-click on the date cell
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
                       >
-                        <div>{date.format("dd")}</div>{" "}
-                        {/* This line displays the day name */}
                         {date.format("D")}
                       </div>
                     );

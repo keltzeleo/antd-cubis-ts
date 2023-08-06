@@ -368,14 +368,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setSelectedDate(date); // Always set the selected date
   };
 
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
   // Function to render the single-row view of the calendar
   const renderSingleRowCalendar = (
     selectedDate: Dayjs | null,
     handleDateSelect: (date: Dayjs) => void | null
   ) => {
-    const currentMonth = value.month(); // Get the current month's index (0 to 11)
+    const currentMonth = value.month();
     const daysInMonth = value.daysInMonth();
     const startOfMonth = value.startOf("month");
     const firstDayOfWeek = startOfMonth.day();
@@ -384,23 +382,23 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     const singleRowData = [];
     for (let i = 0; i < daysInMonth; i++) {
       const date = startDate.add(i, "days");
-      const isToday = date.isSame(dayjs(), "day"); // Check if the date is the same as today
+      const isToday = date.isSame(dayjs(), "day");
 
       if (i === 0 || date.date() === 1) {
-        // Add the month name to the first column
         singleRowData.push({
           isMonth: true,
           value: date.format("MMMM"),
         });
       }
 
-      // Add the day of the month to the data
       singleRowData.push({
         isMonth: false,
         value: date.format("D"),
         isToday: isToday,
+        dayName: date.format("ddd"), // Add dayName to the object
       });
     }
+
     const dayColumnWidth = 36; // Set a fixed width for each day column
     const dayColumnHeight = 60; // Set the expanded height for the double-clicked date
 
@@ -423,6 +421,23 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             color: "transparent",
           }}
         >
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            {/* Add day names above the dates */}
+            {singleRowData.map((item, index) => (
+              <div
+                key={`dayname_${index}`}
+                style={{
+                  flex: 1,
+                  width: 36, // Adjust the width accordingly
+                  textAlign: "center",
+                  color: theme["colorTextBase"],
+                  fontSize: 12, // Adjust the font size accordingly
+                }}
+              >
+                {item.dayName}
+              </div>
+            ))}
+          </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
             {Array.from({ length: numMonthsToShow }, (_, monthIndex) => {
               const monthDate = startMonth.clone().add(monthIndex, "month");
@@ -522,8 +537,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         onClick={() => handleSingleRowDateSelect(date)} // Handle single-click on the date cell
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
                       >
-                        <div>{date.format("dd")}</div>{" "}
-                        {/* This line displays the day name */}
                         {date.format("D")}
                       </div>
                     );

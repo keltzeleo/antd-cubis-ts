@@ -368,8 +368,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setSelectedDate(date); // Always set the selected date
   };
 
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
   // Function to render the single-row view of the calendar
   const renderSingleRowCalendar = (
     selectedDate: Dayjs | null,
@@ -522,8 +520,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         onClick={() => handleSingleRowDateSelect(date)} // Handle single-click on the date cell
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
                       >
-                        <div>{date.format("dd")}</div>{" "}
-                        {/* This line displays the day name */}
                         {date.format("D")}
                       </div>
                     );
