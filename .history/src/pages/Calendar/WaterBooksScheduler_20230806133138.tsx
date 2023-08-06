@@ -1,4 +1,5 @@
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
+import axios from "axios";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import React, { useState } from "react";
@@ -345,6 +346,24 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     return holidaysMY2023.some((holiday) => holiday.date === dateStr);
   };
 
+  const fetchMalaysiaHolidays = async () => {
+    try {
+      const response = await axios.get(
+        "https://date.nager.at/Api/v2/PublicHoliday/2023/MY"
+      );
+      const holidayData = response.data;
+      const formattedHolidayData = holidayData.map((holiday: any) => {
+        return {
+          ...holiday,
+          date: dayjs(holiday.date).format("DD-MM-YYYY"),
+        };
+      });
+      setScheduledBooks({ ...scheduledBooks, ...formattedHolidayData });
+    } catch (error) {
+      console.error("Failed to fetch Malaysia holidays:", error);
+    }
+  };
+
   const handleMonthPickerChange = (newValue: Dayjs | null) => {
     setValue(newValue || value);
   };
@@ -629,7 +648,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               marginBottom: 5,
               borderRadius: 8,
               paddingLeft: 8,
-              fontSize: 11,
+              fontSize: 1,
               fontWeight: 700,
             }}
           >
@@ -693,7 +712,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           borderRadius: 16,
                           width: "100%",
                           backgroundColor: theme["yellow.3"],
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: 600,
                           margin: "0 -20 -10 0",
                           padding: "2px 16px 2px 8px",

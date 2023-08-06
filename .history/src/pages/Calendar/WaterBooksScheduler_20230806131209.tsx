@@ -1,4 +1,5 @@
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
+import axios from "axios";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import React, { useState } from "react";
@@ -154,19 +155,13 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   // Helper function to handle the double-click on the panel (month picker)
-  const handleDateValuePanelDoubleClick = () => {
-    setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
-    setShowTransfer((prevShowTransfer) => !prevShowTransfer); // Toggle the visibility of the TransferSample component
-  };
-
   const handleDatePanelChange = (date: Dayjs, mode: string) => {
     console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
     if (mode === "date") {
-      // Add a delay to handle the double-click event
       if (isDateValuePanelDoubleClicked) {
-        handleDateValuePanelDoubleClick(); // Switch to the single-row calendar view
+        handleDateValuePanelDoubleClick();
+        setIsDateValuePanelDoubleClicked(false);
       } else {
-        // Set the double-click state and reset it after a short delay (300ms)
         setIsDateValuePanelDoubleClicked(true);
         setTimeout(() => {
           setIsDateValuePanelDoubleClicked(false);
@@ -343,6 +338,24 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const isMalaysiaHoliday = (date: Dayjs) => {
     const dateStr = date.format("DD-MM-YYYY");
     return holidaysMY2023.some((holiday) => holiday.date === dateStr);
+  };
+
+  const fetchMalaysiaHolidays = async () => {
+    try {
+      const response = await axios.get(
+        "https://date.nager.at/Api/v2/PublicHoliday/2023/MY"
+      );
+      const holidayData = response.data;
+      const formattedHolidayData = holidayData.map((holiday: any) => {
+        return {
+          ...holiday,
+          date: dayjs(holiday.date).format("DD-MM-YYYY"),
+        };
+      });
+      setScheduledBooks({ ...scheduledBooks, ...formattedHolidayData });
+    } catch (error) {
+      console.error("Failed to fetch Malaysia holidays:", error);
+    }
   };
 
   const handleMonthPickerChange = (newValue: Dayjs | null) => {
@@ -749,6 +762,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
   const handleToggleSingleRow = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
+    setShowTransfer(false); // Hide the Transfer component when switching views
   };
 
   return (

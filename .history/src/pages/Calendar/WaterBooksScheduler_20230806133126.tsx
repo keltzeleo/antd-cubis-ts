@@ -1,7 +1,8 @@
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
+import axios from "axios";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   DragDropContext,
   Draggable,
@@ -15,11 +16,11 @@ import "./draggableCalendar.css";
 import { holidaysMY2023 } from "./holidaysMY2023";
 import WaterBooksPreviousMonthReschedulingForm from "./waterBooksPreviousMonthReschedulingForm";
 import "./waterBooksSchedule.css";
-// Simple Unique ID Generator Function
+
 const generateUniqueID = () => {
-  const timestamp = new Date().getTime().toString(16); // Convert timestamp to hexadecimal
-  const randomNum = Math.random().toString(16).substr(2); // Generate random hexadecimal number
-  return timestamp + randomNum; // Combine timestamp and random number
+  const timestamp = new Date().getTime().toString(16);
+  const randomNum = Math.random().toString(16).substr(2);
+  return timestamp + randomNum;
 };
 interface LegendItem {
   category: string;
@@ -144,39 +145,25 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   ); // Use doubleClickedDate instead of doubleClickDate
   const [expandedDate, setExpandedDate] = useState<Dayjs | null>(null);
 
-  // Helper function to handle date cell double-click
-  const handleDateCellDoubleClick = (date: Dayjs) => {
-    if (!isMalaysiaHoliday(date) && date.day() !== 6 && date.day() !== 0) {
-      // If it's not a rest day or holiday, handle the double-click event
-      setDoubleClickedDate(date); // Update the doubleClickedDate state with the selected date
-      setIsSingleRowCellDoubleClicked(true);
-    }
-  };
-
   // Helper function to handle the double-click on the panel (month picker)
-  const handleDateValuePanelDoubleClick = () => {
-    setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
-    setShowTransfer((prevShowTransfer) => !prevShowTransfer); // Toggle the visibility of the TransferSample component
-  };
-
-  const handleDatePanelChange = (date: Dayjs, mode: string) => {
-    console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
-    if (mode === "date") {
-      // Add a delay to handle the double-click event
-      if (isDateValuePanelDoubleClicked) {
-        handleDateValuePanelDoubleClick(); // Switch to the single-row calendar view
-      } else {
-        // Set the double-click state and reset it after a short delay (300ms)
-        setIsDateValuePanelDoubleClicked(true);
-        setTimeout(() => {
-          setIsDateValuePanelDoubleClicked(false);
-        }, 300);
+  const handleDatePanelChange = useCallback(
+    (date, mode) => {
+      if (mode === "date") {
+        if (isDateValuePanelDoubleClicked) {
+          handleDatePanelDoubleClick();
+        } else {
+          setIsDateValuePanelDoubleClicked(true);
+          setTimeout(() => {
+            setIsDateValuePanelDoubleClicked(false);
+          }, 300);
+        }
       }
-    }
-    setValue(date);
-  };
+      setValue(date);
+    },
+    [isDateValuePanelDoubleClicked]
+  );
 
-  const handleDateSelect = (date: Dayjs) => {
+  const handleDateSelect = (date) => {
     setSelectedDate(date);
   };
 
@@ -343,6 +330,24 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const isMalaysiaHoliday = (date: Dayjs) => {
     const dateStr = date.format("DD-MM-YYYY");
     return holidaysMY2023.some((holiday) => holiday.date === dateStr);
+  };
+
+  const fetchMalaysiaHolidays = async () => {
+    try {
+      const response = await axios.get(
+        "https://date.nager.at/Api/v2/PublicHoliday/2023/MY"
+      );
+      const holidayData = response.data;
+      const formattedHolidayData = holidayData.map((holiday: any) => {
+        return {
+          ...holiday,
+          date: dayjs(holiday.date).format("DD-MM-YYYY"),
+        };
+      });
+      setScheduledBooks({ ...scheduledBooks, ...formattedHolidayData });
+    } catch (error) {
+      console.error("Failed to fetch Malaysia holidays:", error);
+    }
   };
 
   const handleMonthPickerChange = (newValue: Dayjs | null) => {
@@ -749,6 +754,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
   const handleToggleSingleRow = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
+    setShowTransfer(false); // Hide the Transfer component when switching views
   };
 
   return (

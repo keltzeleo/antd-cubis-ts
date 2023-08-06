@@ -1,151 +1,57 @@
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
-import type { Dayjs } from "dayjs";
+import axios from "axios";
 import dayjs from "dayjs";
-import React, { useState } from "react";
-import {
-  DragDropContext,
-  Draggable,
-  DropResult,
-  Droppable,
-} from "react-beautiful-dnd";
-import "../../App.css";
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Legend from "../../customComponents/Legend/Legend";
 import TransferSample from "./TransferSample";
-import "./draggableCalendar.css";
 import { holidaysMY2023 } from "./holidaysMY2023";
-import WaterBooksPreviousMonthReschedulingForm from "./waterBooksPreviousMonthReschedulingForm";
-import "./waterBooksSchedule.css";
-// Simple Unique ID Generator Function
-const generateUniqueID = () => {
-  const timestamp = new Date().getTime().toString(16); // Convert timestamp to hexadecimal
-  const randomNum = Math.random().toString(16).substr(2); // Generate random hexadecimal number
-  return timestamp + randomNum; // Combine timestamp and random number
-};
-interface LegendItem {
-  category: string;
-  label: string;
-  color: string;
-  style?: React.CSSProperties; // Add style property here
-}
 
-interface Theme {
-  [key: string]: string;
-}
-
-interface WaterBooksSchedulerProps {
-  theme: Theme;
-}
-
-interface EventData {
-  id: string; // Add unique ID for each event
-  content: string; // Add the 'content' property
-  date: string;
-  reader: string;
-  bookNo: string;
-  totalBooks: string;
-  bookDescription: string;
-}
-
-// Mock Data with Unique IDs
-const mockScheduledBooks: Record<string, EventData[]> = {
-  "02-08-2023": [
-    {
-      id: generateUniqueID(), // Add unique ID for each event
-      content: "Event 1",
-      date: "02-08-2023",
-      reader: "John Doe",
-      bookNo: "B001",
-      totalBooks: "5",
-      bookDescription: "Event 1 round",
-    },
-    {
-      id: generateUniqueID(), // Add unique ID for each event
-      content: "Event 2",
-      date: "02-08-2023",
-      reader: "Jane Smith",
-      bookNo: "B002",
-      totalBooks: "3",
-      bookDescription: "Event 2 round",
-    },
-    // Add more events as needed
-  ],
-  "26-07-2023": [
-    {
-      id: generateUniqueID(), // Add unique ID for each event
-      content: "Event 3",
-      date: "26-07-2023",
-      reader: "Alice Johnson",
-      bookNo: "B003",
-      totalBooks: "2",
-      bookDescription: "Event 3 round",
-    },
-    // Add more events as needed
-  ],
-  "28-07-2023": [
-    {
-      id: generateUniqueID(), // Add unique ID for each event
-      content: "Event 4",
-      date: "28-07-2023",
-      reader: "Alice Johnson",
-      bookNo: "B004",
-      totalBooks: "2",
-      bookDescription: "Event 4 round",
-    },
-    // Add more events as needed
-  ],
-  "03-08-2023": [
-    {
-      id: generateUniqueID(), // Add unique ID for each event
-      content: "Event 5",
-      date: "03-08-2023",
-      reader: "Alice Johnson",
-      bookNo: "B005",
-      totalBooks: "7",
-      bookDescription: "Event 5 round",
-    },
-    {
-      id: generateUniqueID(), // Add unique ID for each event
-      content: "Event 6",
-      date: "03-08-2023",
-      reader: "Alice Johnson",
-      bookNo: "B006",
-      totalBooks: "7",
-      bookDescription: "Event 5 round",
-    },
-    // Add more events as needed
-  ],
-};
-
-const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
-  const [scheduledBooks, setScheduledBooks] =
-    useState<Record<string, EventData[]>>(mockScheduledBooks);
-  const [value, setValue] = useState<Dayjs>(dayjs);
-  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-  const [clickedItemTitle, setClickedItemTitle] = useState("");
-  const [selectedEvent, setSelectedEvent] = useState<EventData>({
-    id: "",
-    content: "", // Add the 'content' property
-    date: "",
-    reader: "",
-    bookNo: "",
-    totalBooks: "",
-    bookDescription: "",
-  });
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-  const [isDateValuePanelDoubleClicked, setIsDateValuePanelDoubleClicked] =
-    useState(false);
-  const [previousDate, setPreviousDate] = useState<dayjs.Dayjs | null>(null); // Initialize with null or the initial date
-  const [showTransfer, setShowTransfer] = useState(false);
+const WaterBooksScheduler = ({ theme }) => {
+  const [waterBooks, setWaterBooks] = useState([]);
+  const [holidays, setHolidays] = useState([]);
+  const [value, setValue] = useState(dayjs());
+  const [visible, setVisible] = useState(false);
+  const [doubleClickedDate, setDoubleClickedDate] = useState(null);
   const [isSingleRowCellDoubleClicked, setIsSingleRowCellDoubleClicked] =
     useState(false);
+  const [showSingleRow, setShowSingleRow] = useState(false);
+  const [showTransfer, setShowTransfer] = useState(false);
+  const [isDateValuePanelDoubleClicked, setIsDateValuePanelDoubleClicked] =
+    useState(false);
 
-  const [doubleClickedDate, setDoubleClickedDate] = useState<Dayjs | null>(
-    null
-  ); // Use doubleClickedDate instead of doubleClickDate
-  const [expandedDate, setExpandedDate] = useState<Dayjs | null>(null);
+  // Function to fetch water books data
+  const fetchWaterBooks = async () => {
+    try {
+      const response = await axios.get("/api/water-books");
+      setWaterBooks(response.data);
+    } catch (error) {
+      console.error("Error fetching water books:", error);
+    }
+  };
 
-  // Helper function to handle date cell double-click
-  const handleDateCellDoubleClick = (date: Dayjs) => {
+  // Function to fetch Malaysia holidays data
+  const fetchMalaysiaHolidays = () => {
+    setHolidays(holidaysMY2023);
+  };
+
+  // Helper function to check if a date is a Malaysia holiday
+  const isMalaysiaHoliday = (date) => {
+    return holidays.some((holiday) => date.isSame(holiday, "day"));
+  };
+
+  // Function to handle the drag and drop reordering of water books
+  const handleDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const reorderedWaterBooks = Array.from(waterBooks);
+    const [removed] = reorderedWaterBooks.splice(result.source.index, 1);
+    reorderedWaterBooks.splice(result.destination.index, 0, removed);
+    setWaterBooks(reorderedWaterBooks);
+  };
+
+  // Helper function to handle double-click on the date cell
+  const handleDateCellDoubleClick = (date) => {
     if (!isMalaysiaHoliday(date) && date.day() !== 6 && date.day() !== 0) {
       // If it's not a rest day or holiday, handle the double-click event
       setDoubleClickedDate(date); // Update the doubleClickedDate state with the selected date
@@ -153,13 +59,14 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     }
   };
 
-  // Helper function to handle the double-click on the panel (month picker)
+  // Function to handle the double-click on the panel (month picker)
   const handleDateValuePanelDoubleClick = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
     setShowTransfer((prevShowTransfer) => !prevShowTransfer); // Toggle the visibility of the TransferSample component
   };
 
-  const handleDatePanelChange = (date: Dayjs, mode: string) => {
+  // Function to handle the change in the month picker panel
+  const handleDatePanelChange = (date, mode) => {
     console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
     if (mode === "date") {
       // Add a delay to handle the double-click event
@@ -175,6 +82,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     }
     setValue(date);
   };
+
+  // Fetch water books data on component mount
+  useEffect(() => {
+    fetchWaterBooks();
+    fetchMalaysiaHolidays();
+  }, []);
 
   const handleDateSelect = (date: Dayjs) => {
     setSelectedDate(date);
@@ -343,6 +256,24 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const isMalaysiaHoliday = (date: Dayjs) => {
     const dateStr = date.format("DD-MM-YYYY");
     return holidaysMY2023.some((holiday) => holiday.date === dateStr);
+  };
+
+  const fetchMalaysiaHolidays = async () => {
+    try {
+      const response = await axios.get(
+        "https://date.nager.at/Api/v2/PublicHoliday/2023/MY"
+      );
+      const holidayData = response.data;
+      const formattedHolidayData = holidayData.map((holiday: any) => {
+        return {
+          ...holiday,
+          date: dayjs(holiday.date).format("DD-MM-YYYY"),
+        };
+      });
+      setScheduledBooks({ ...scheduledBooks, ...formattedHolidayData });
+    } catch (error) {
+      console.error("Failed to fetch Malaysia holidays:", error);
+    }
   };
 
   const handleMonthPickerChange = (newValue: Dayjs | null) => {
@@ -749,6 +680,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
   const handleToggleSingleRow = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
+    setShowTransfer(false); // Hide the Transfer component when switching views
   };
 
   return (
