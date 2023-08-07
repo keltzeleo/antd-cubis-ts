@@ -377,7 +377,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const renderSingleRowCalendar = (
     selectedDate: Dayjs | null,
     handleDateSelect: (date: Dayjs) => void | null,
-    selectedRightTableColumnDate: Dayjs | null, // Receive selectedRightTableColumnDate as a prop
+    selectedRightTableColumnDate: Dayjs | null, // Add selectedRightTableColumnDate as a prop
     handleRightTableColumnDateChange: (date: Dayjs) => void | null
   ) => {
     const currentMonth = value.month(); // Get the current month's index (0 to 11)
@@ -817,8 +817,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
   };
 
-  const handleRightTableColumnDateChange = (date: Dayjs | null) => {
-    setSelectedRightTableColumnDate(date); // Update the selectedRightTableColumnDate state
+  const handleRightTableColumnDateChange = (date: Dayjs) => {
+    setSelectedRightTableColumnDate(date);
   };
 
   return (

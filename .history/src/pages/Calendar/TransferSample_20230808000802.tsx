@@ -40,16 +40,12 @@ interface DataType {
 interface TableTransferProps extends TransferProps<DataType> {
   leftColumns: ColumnsType<DataType>;
   rightColumns: ColumnsType<DataType>;
-  selectedRightTableColumnDate: Dayjs | null;
-  handleRightTableColumnDateChange: (date: Dayjs | null) => void; // Add handleRightTableColumnDateChange prop
 }
 
 // Customize Table Transfer
 const TableTransfer = ({
   leftColumns,
   rightColumns,
-  selectedRightTableColumnDate,
-  handleRightTableColumnDateChange, // Add handleRightTableColumnDateChange prop here
   ...restProps
 }: TableTransferProps) => (
   <Transfer<DataType>

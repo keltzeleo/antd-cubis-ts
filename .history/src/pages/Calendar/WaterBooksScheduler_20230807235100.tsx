@@ -460,14 +460,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       .add(dayIndex, "day");
                     const isToday = date.isSame(dayjs(), "day");
 
-                    const isHighlighted = selectedDate
-                      ? date.isSame(selectedDate, "day")
-                      : false;
+                    const isHighlighted =
+                      selectedDate && date.isSame(selectedDate, "day");
 
                     const isHighlightedRightColumn =
-                      selectedRightTableColumnDate
-                        ? date.isSame(selectedRightTableColumnDate, "day")
-                        : false;
+                      selectedRightTableColumnDate &&
+                      date.isSame(selectedRightTableColumnDate, "day");
 
                     const isExpanded = expandedDate
                       ? date.isSame(expandedDate, "day")
@@ -818,7 +816,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const handleRightTableColumnDateChange = (date: Dayjs | null) => {
-    setSelectedRightTableColumnDate(date); // Update the selectedRightTableColumnDate state
+    setSelectedRightTableColumnDate(date);
   };
 
   return (

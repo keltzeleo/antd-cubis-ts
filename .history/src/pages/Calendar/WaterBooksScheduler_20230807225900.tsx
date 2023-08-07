@@ -377,7 +377,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const renderSingleRowCalendar = (
     selectedDate: Dayjs | null,
     handleDateSelect: (date: Dayjs) => void | null,
-    selectedRightTableColumnDate: Dayjs | null, // Receive selectedRightTableColumnDate as a prop
+    selectedRightTableColumnDate: Dayjs | null, // Add selectedRightTableColumnDate as a prop
     handleRightTableColumnDateChange: (date: Dayjs) => void | null
   ) => {
     const currentMonth = value.month(); // Get the current month's index (0 to 11)
@@ -568,17 +568,16 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         {isHighlightedRightColumn && showTransfer && (
                           <div
                             style={{
-                              position: "absolute", // Use absolute positioning
-                              // paddingTop: 24,
-                              top: 0, // Adjust the position as needed
-                              left: 0, // Adjust the position as needed
-                              width: "100%", // Cover the full width of the date cell
-                              height: "100%", // Cover the full height of the date cell
-                              backgroundColor: "rgba(0, 0, 0, 0.2)", // Use a semi-transparent black overlay
-                              color: "rgba(255, 255, 255, 1)", // Set the text color to white
-                              display: "flex", // Use flex layout
-                              justifyContent: "center", // Center the text horizontally
-                              alignItems: "center", // Center the text vertically
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                              width: "100%",
+                              height: "100%",
+                              backgroundColor: "rgba(0, 0, 0, 0.2)",
+                              color: "rgba(255, 255, 255, 1)",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
                               fontWeight: 700,
                               fontSize: 24,
                               fontFamily: "play",
@@ -598,6 +597,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
       </div>
     );
   };
+
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
 
@@ -817,8 +817,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
   };
 
-  const handleRightTableColumnDateChange = (date: Dayjs | null) => {
-    setSelectedRightTableColumnDate(date); // Update the selectedRightTableColumnDate state
+  const handleRightTableColumnDateChange = (date: Dayjs) => {
+    setSelectedRightTableColumnDate(date);
   };
 
   return (

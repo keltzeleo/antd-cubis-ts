@@ -518,7 +518,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     // Render the day elements for each month
                     return (
                       <div
-                        key={`day_${date.format("YYYYMMDD")}`}
+                        key={`day_${date.format("DDMMYYYY")}`}
                         // className={`day ${
                         //   isHighlighted ? "highlighted-day-lefttablecolumn" : ""
                         // }`}
@@ -553,7 +553,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               width: "100%", // Cover the full width of the date cell
                               height: "100%", // Cover the full height of the date cell
                               backgroundColor: "rgba(0, 0, 0, 0.2)", // Use a semi-transparent black overlay
-                              color: "rgba(255, 255, 255, 1)", // Set the text color to white
+                              color: "rgba(0, 0, 0, 0.2)", // Set the text color to white
                               display: "flex", // Use flex layout
                               justifyContent: "center", // Center the text horizontally
                               alignItems: "center", // Center the text vertically
@@ -568,14 +568,14 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         {isHighlightedRightColumn && showTransfer && (
                           <div
                             style={{
-                              position: "absolute", // Use absolute positioning
+                              position: "relative", // Use absolute positioning
                               // paddingTop: 24,
                               top: 0, // Adjust the position as needed
                               left: 0, // Adjust the position as needed
                               width: "100%", // Cover the full width of the date cell
                               height: "100%", // Cover the full height of the date cell
                               backgroundColor: "rgba(0, 0, 0, 0.2)", // Use a semi-transparent black overlay
-                              color: "rgba(255, 255, 255, 1)", // Set the text color to white
+                              color: "rgba(0, 0, 0, 0.2)", // Set the text color to white
                               display: "flex", // Use flex layout
                               justifyContent: "center", // Center the text horizontally
                               alignItems: "center", // Center the text vertically
@@ -818,7 +818,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const handleRightTableColumnDateChange = (date: Dayjs | null) => {
-    setSelectedRightTableColumnDate(date); // Update the selectedRightTableColumnDate state
+    setSelectedRightTableColumnDate(date);
   };
 
   return (

@@ -542,7 +542,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       >
                         <div>{date.format("dd")}</div>{" "}
                         {/* This line displays the day name */}
-                        {date.format("D")}
+                        {/* {date.format("D")} */}
                         {isHighlighted && showTransfer && (
                           <div
                             style={{
@@ -818,7 +818,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const handleRightTableColumnDateChange = (date: Dayjs | null) => {
-    setSelectedRightTableColumnDate(date); // Update the selectedRightTableColumnDate state
+    setSelectedRightTableColumnDate(date);
   };
 
   return (

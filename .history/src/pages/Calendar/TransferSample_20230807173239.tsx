@@ -40,16 +40,12 @@ interface DataType {
 interface TableTransferProps extends TransferProps<DataType> {
   leftColumns: ColumnsType<DataType>;
   rightColumns: ColumnsType<DataType>;
-  selectedRightTableColumnDate: Dayjs | null;
-  handleRightTableColumnDateChange: (date: Dayjs | null) => void; // Add handleRightTableColumnDateChange prop
 }
 
 // Customize Table Transfer
 const TableTransfer = ({
   leftColumns,
   rightColumns,
-  selectedRightTableColumnDate,
-  handleRightTableColumnDateChange, // Add handleRightTableColumnDateChange prop here
   ...restProps
 }: TableTransferProps) => (
   <Transfer<DataType>
@@ -326,14 +322,10 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               label=""
               placeholder="Select a date"
               fieldProps={{
-                format: "DD-MM-YYYY",
-                value: selectedRightTableColumnDate || undefined,
                 onChange: (date: Dayjs | null) =>
                   handleRightTableColumnDateChange(date),
               }}
             />
-          </div>
-          <div>
             {selectedRightTableColumnDate
               ? selectedRightTableColumnDate.format("DD-MM-YYYY")
               : "(No date selected)"}{" "}
@@ -342,6 +334,11 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         </div>
       </div>
       \{" "}
+      {renderSingleRowCalendar(
+        selectedDate,
+        handleDateSelect,
+        selectedRightTableColumnDate // Pass the selectedRightTableColumnDate
+      )}
       <TableTransfer
         dataSource={mockData}
         targetKeys={targetKeys}
@@ -355,8 +352,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         }
         leftColumns={leftTableColumns}
         rightColumns={rightTableColumns}
-        selectedRightTableColumnDate={selectedRightTableColumnDate} // Pass the selectedRightTableColumnDate as a prop
-        handleRightTableColumnDateChange={handleRightTableColumnDateChange} // Pass the handleRightTableColumnDateChange function
       />
     </>
   );

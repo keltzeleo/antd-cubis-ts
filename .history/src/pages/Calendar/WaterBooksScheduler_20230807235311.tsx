@@ -461,7 +461,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     const isToday = date.isSame(dayjs(), "day");
 
                     const isHighlighted = selectedDate
-                      ? date.isSame(selectedDate, "day")
+                       date.isSame(selectedDate, "day")
                       : false;
 
                     const isHighlightedRightColumn =
@@ -818,7 +818,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const handleRightTableColumnDateChange = (date: Dayjs | null) => {
-    setSelectedRightTableColumnDate(date); // Update the selectedRightTableColumnDate state
+    setSelectedRightTableColumnDate(date);
   };
 
   return (

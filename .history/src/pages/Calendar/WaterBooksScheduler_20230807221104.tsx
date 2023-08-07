@@ -565,7 +565,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                             #1
                           </div>
                         )}
-                        {isHighlightedRightColumn && showTransfer && (
+                        {isHighlightedRightColumn && (
                           <div
                             style={{
                               position: "absolute", // Use absolute positioning
@@ -818,7 +818,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const handleRightTableColumnDateChange = (date: Dayjs | null) => {
-    setSelectedRightTableColumnDate(date); // Update the selectedRightTableColumnDate state
+    setSelectedRightTableColumnDate(date);
   };
 
   return (

@@ -16,6 +16,7 @@ interface Theme {
 interface TransferSampleProps {
   theme: Theme;
   doubleClickedDate: Dayjs | null; // Add the prop for double-clicked date
+  setSelectedRightTableColumnDate: Dayjs | null;
 }
 
 // Interface for the data in the table
@@ -40,16 +41,12 @@ interface DataType {
 interface TableTransferProps extends TransferProps<DataType> {
   leftColumns: ColumnsType<DataType>;
   rightColumns: ColumnsType<DataType>;
-  selectedRightTableColumnDate: Dayjs | null;
-  handleRightTableColumnDateChange: (date: Dayjs | null) => void; // Add handleRightTableColumnDateChange prop
 }
 
 // Customize Table Transfer
 const TableTransfer = ({
   leftColumns,
   rightColumns,
-  selectedRightTableColumnDate,
-  handleRightTableColumnDateChange, // Add handleRightTableColumnDateChange prop here
   ...restProps
 }: TableTransferProps) => (
   <Transfer<DataType>
@@ -124,6 +121,7 @@ const originTargetKeys = mockData
 const TransferSample: React.FC<TransferSampleProps> = ({
   theme,
   doubleClickedDate,
+  setSelectedRightTableColumnDate,
 }) => {
   const [targetKeys, setTargetKeys] = useState<string[]>(originTargetKeys);
   const [disabled, setDisabled] = useState(false);
@@ -156,7 +154,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     setSelectedDate(currentDate);
   };
 
-  const handleRightTableColumnDateChange = (date: Dayjs | null) => {
+  const handleRightTableColumnDateChange = (date: Dayjs) => {
     setSelectedRightTableColumnDate(date);
   };
 
@@ -355,8 +353,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         }
         leftColumns={leftTableColumns}
         rightColumns={rightTableColumns}
-        selectedRightTableColumnDate={selectedRightTableColumnDate} // Pass the selectedRightTableColumnDate as a prop
-        handleRightTableColumnDateChange={handleRightTableColumnDateChange} // Pass the handleRightTableColumnDateChange function
       />
     </>
   );

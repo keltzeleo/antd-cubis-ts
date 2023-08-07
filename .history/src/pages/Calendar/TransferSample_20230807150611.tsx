@@ -40,16 +40,12 @@ interface DataType {
 interface TableTransferProps extends TransferProps<DataType> {
   leftColumns: ColumnsType<DataType>;
   rightColumns: ColumnsType<DataType>;
-  selectedRightTableColumnDate: Dayjs | null;
-  handleRightTableColumnDateChange: (date: Dayjs | null) => void; // Add handleRightTableColumnDateChange prop
 }
 
 // Customize Table Transfer
 const TableTransfer = ({
   leftColumns,
   rightColumns,
-  selectedRightTableColumnDate,
-  handleRightTableColumnDateChange, // Add handleRightTableColumnDateChange prop here
   ...restProps
 }: TableTransferProps) => (
   <Transfer<DataType>
@@ -154,10 +150,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     // Function to handle the double-click event and update the date state
     const currentDate = dayjs(); // Get the current date as a Dayjs object
     setSelectedDate(currentDate);
-  };
-
-  const handleRightTableColumnDateChange = (date: Dayjs | null) => {
-    setSelectedRightTableColumnDate(date);
   };
 
   const handleCheckboxChange = (key: string) => {
@@ -321,24 +313,20 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               paddingTop: -20,
             }}
           >
-            <ProFormDatePicker
-              name="datePicker"
-              label=""
-              placeholder="Select a date"
-              fieldProps={{
-                format: "DD-MM-YYYY",
-                value: selectedRightTableColumnDate || undefined,
-                onChange: (date: Dayjs | null) =>
-                  handleRightTableColumnDateChange(date),
-              }}
-            />
-          </div>
-          <div>
             {selectedRightTableColumnDate
               ? selectedRightTableColumnDate.format("DD-MM-YYYY")
               : "(No date selected)"}{" "}
             : Column Selection #2
           </div>
+          <ProFormDatePicker
+            name="datePicker"
+            label=""
+            placeholder="Select a date"
+            fieldProps={{
+              onChange: (date: Dayjs | null) =>
+                setSelectedRightTableColumnDate(date),
+            }}
+          />
         </div>
       </div>
       \{" "}
@@ -355,8 +343,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         }
         leftColumns={leftTableColumns}
         rightColumns={rightTableColumns}
-        selectedRightTableColumnDate={selectedRightTableColumnDate} // Pass the selectedRightTableColumnDate as a prop
-        handleRightTableColumnDateChange={handleRightTableColumnDateChange} // Pass the handleRightTableColumnDateChange function
       />
     </>
   );

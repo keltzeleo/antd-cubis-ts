@@ -377,8 +377,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const renderSingleRowCalendar = (
     selectedDate: Dayjs | null,
     handleDateSelect: (date: Dayjs) => void | null,
-    selectedRightTableColumnDate: Dayjs | null, // Receive selectedRightTableColumnDate as a prop
-    handleRightTableColumnDateChange: (date: Dayjs) => void | null
+    selectedRightTableColumnDate: Dayjs | null // Pass selectedRightTableColumnDate as a parameter
   ) => {
     const currentMonth = value.month(); // Get the current month's index (0 to 11)
     const daysInMonth = value.daysInMonth();
@@ -432,6 +431,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             {Array.from({ length: numMonthsToShow }, (_, monthIndex) => {
               const monthDate = startMonth.clone().add(monthIndex, "month");
               const monthDaysInMonth = monthDate.daysInMonth();
+
               return (
                 <React.Fragment key={`month_${monthIndex}`}>
                   <div
@@ -462,12 +462,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
                     const isHighlighted = selectedDate
                       ? date.isSame(selectedDate, "day")
-                      : false;
-
-                    const isHighlightedRightColumn =
-                      selectedRightTableColumnDate
-                        ? date.isSame(selectedRightTableColumnDate, "day")
-                        : false;
+                      : false; // Check if the date is the same as the selected date
 
                     const isExpanded = expandedDate
                       ? date.isSame(expandedDate, "day")
@@ -487,7 +482,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     // Set the background color based on whether it's a rest day, holiday, scheduled, or unscheduled day
                     let backgroundColor = "transparent";
                     let color = theme["colorTextBase"]; // Set a default font color (use the text color from the theme)
-                    // let fontSize = "14px"; // Set the default font size
+                    let fontSize = "14px"; // Set the default font size
 
                     if (isWeekend) {
                       backgroundColor = theme["red.legend"];
@@ -498,7 +493,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     } else if (hasScheduledEvents) {
                       backgroundColor = theme["yellow.legend"];
                       color = theme["colorTextBase"];
-                      // fontSize = "16px"; // Set a larger font size for scheduled days
+                      fontSize = "16px"; // Set a larger font size for scheduled days
                     } else {
                       backgroundColor = theme["shades.1"];
                       color = theme["colorTextBase"];
@@ -509,6 +504,11 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       backgroundColor = theme["colorPrimary"];
                       color = "white"; // Change this to your desired highlight color
                     }
+
+                    const isHighlightedRightColumn =
+                      selectedRightTableColumnDate
+                        ? date.isSame(selectedRightTableColumnDate, "day")
+                        : false;
 
                     if (isHighlightedRightColumn) {
                       backgroundColor = theme["colorPrimary"];
@@ -553,7 +553,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               width: "100%", // Cover the full width of the date cell
                               height: "100%", // Cover the full height of the date cell
                               backgroundColor: "rgba(0, 0, 0, 0.2)", // Use a semi-transparent black overlay
-                              color: "rgba(255, 255, 255, 1)", // Set the text color to white
+                              color: "rgba(0, 0, 0, 0.2)", // Set the text color to white
                               display: "flex", // Use flex layout
                               justifyContent: "center", // Center the text horizontally
                               alignItems: "center", // Center the text vertically
@@ -569,19 +569,19 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           <div
                             style={{
                               position: "absolute", // Use absolute positioning
-                              // paddingTop: 24,
+                              paddingTop: 24,
                               top: 0, // Adjust the position as needed
                               left: 0, // Adjust the position as needed
                               width: "100%", // Cover the full width of the date cell
                               height: "100%", // Cover the full height of the date cell
                               backgroundColor: "rgba(0, 0, 0, 0.2)", // Use a semi-transparent black overlay
-                              color: "rgba(255, 255, 255, 1)", // Set the text color to white
+                              color: "rgba(0, 0, 0, 0.2)", // Set the text color to white
                               display: "flex", // Use flex layout
                               justifyContent: "center", // Center the text horizontally
                               alignItems: "center", // Center the text vertically
                               fontWeight: 700,
                               fontSize: 24,
-                              fontFamily: "play",
+                              fontFamily: "play", // Set the font size (adjust as needed)
                             }}
                           >
                             #2
@@ -817,10 +817,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
   };
 
-  const handleRightTableColumnDateChange = (date: Dayjs | null) => {
-    setSelectedRightTableColumnDate(date); // Update the selectedRightTableColumnDate state
-  };
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div>
@@ -866,16 +862,13 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           {showSingleRow ? (
             renderSingleRowCalendar(
               selectedDate,
-              handleDateSelect,
-              selectedRightTableColumnDate, // Pass selectedRightTableColumnDate here
-              handleRightTableColumnDateChange // Pass the callback function
+              handleSingleRowDateSelect,
+              selectedRightTableColumnDate
             )
           ) : (
             <Calendar
               value={value}
               onSelect={(date) => {
-                setSelectedDate(date);
-
                 handleDateSelect(date);
                 onSelect(date);
               }}
