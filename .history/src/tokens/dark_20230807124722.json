@@ -241,7 +241,7 @@
   "colorBorderActionsColumn": "#1d2425",
   "colorBgContainer": "rgba(223,243,215,0.0)",
   "colorBgContainerDisabled": "rgba(253, 233, 240, 0.24)",
-  "colorBgBase": "#141c1d",
+  "colorBgBase": "#141b1d",
   "white": "#fafafa",
   "fontFamily": "-apple-system, BlinkMacSystemFont, 'Mulish', 'Play','Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
   "fontFamilies.Heading": "Play",
