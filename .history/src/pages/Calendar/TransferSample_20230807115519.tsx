@@ -323,8 +323,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             label=""
             placeholder="Select a date"
             fieldProps={{
-              onChange: (date: Dayjs | null) =>
-                setSelectedRightTableColumnDate(date),
+              onChange: (date: Dayjs) => setSelectedRightTableColumnDate(date),
             }}
           />
         </div>

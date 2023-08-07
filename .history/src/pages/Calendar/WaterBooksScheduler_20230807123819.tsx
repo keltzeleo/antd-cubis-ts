@@ -543,7 +543,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               display: "flex", // Use flex layout
                               justifyContent: "center", // Center the text horizontally
                               alignItems: "center", // Center the text vertically
-                              fontWeight: 700,
+                              fontWeight: 600,
                               fontSize: 24,
                               fontFamily: "Mulish", // Set the font size (adjust as needed)
                             }}

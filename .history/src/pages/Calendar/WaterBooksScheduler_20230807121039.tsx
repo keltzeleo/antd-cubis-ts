@@ -485,7 +485,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       color = theme["red.5"];
                     } else if (isHoliday) {
                       backgroundColor = theme["blue.legend"];
-                      color = theme["blue.5"];
+                      color = theme["blue.3"];
                     } else if (hasScheduledEvents) {
                       backgroundColor = theme["yellow.legend"];
                       color = theme["colorTextBase"];
@@ -498,16 +498,13 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     // Set the background color for the highlighted day
                     if (isHighlighted) {
                       backgroundColor = theme["colorPrimary"];
-                      color = "white"; // Change this to your desired highlight color
+                      color = "white; // Change this to your desired highlight color
                     }
 
                     // Render the day elements for each month
                     return (
                       <div
                         key={`day_${date.format("YYYYMMDD")}`}
-                        // className={`day ${
-                        //   isHighlighted ? "highlighted-day-lefttablecolumn" : ""
-                        // }`}
                         style={{
                           flex: 1,
                           width: dayColumnWidth,
@@ -521,7 +518,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           color: isToday ? theme["colorPrimaryText"] : color,
                           fontFamily: "Play",
                           cursor: "pointer", // Add cursor pointer for clickable dates
-                          position: "relative", // Add position: relative to the style
                         }}
                         onClick={() => handleSingleRowDateSelect(date)} // Handle single-click on the date cell
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
@@ -529,28 +525,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         <div>{date.format("dd")}</div>{" "}
                         {/* This line displays the day name */}
                         {date.format("D")}
-                        {isHighlighted && showTransfer && (
-                          <div
-                            style={{
-                              position: "absolute", // Use absolute positioning
-                              paddingTop: 24,
-                              top: 0, // Adjust the position as needed
-                              left: 0, // Adjust the position as needed
-                              width: "100%", // Cover the full width of the date cell
-                              height: "100%", // Cover the full height of the date cell
-                              backgroundColor: "rgba(0, 0, 0, 0.2)", // Use a semi-transparent black overlay
-                              color: "rgba(0, 0, 0, 0.2)", // Set the text color to white
-                              display: "flex", // Use flex layout
-                              justifyContent: "center", // Center the text horizontally
-                              alignItems: "center", // Center the text vertically
-                              fontWeight: 700,
-                              fontSize: 24,
-                              fontFamily: "Mulish", // Set the font size (adjust as needed)
-                            }}
-                          >
-                            #1
-                          </div>
-                        )}
                       </div>
                     );
                   })}

@@ -1,11 +1,12 @@
 import { RightCircleTwoTone } from "@ant-design/icons";
-import { ProFormDatePicker } from "@ant-design/pro-form";
 import { Space, Switch, Table, Tag, Transfer } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TransferItem, TransferProps } from "antd/es/transfer";
 import dayjs, { Dayjs } from "dayjs";
 import difference from "lodash/difference";
 import React, { useState } from "react";
+import ProForm, { ProFormDatePicker } from '@ant-design/pro-form';
+
 
 // Interface for theme colors
 interface Theme {
@@ -129,8 +130,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null); // Renamed to selectedDate
   // State variable to hold the date
 
-  const [selectedRightTableColumnDate, setSelectedRightTableColumnDate] =
-    useState<Dayjs | null>(null);
+  const [selectedRightTableColumnDate, setSelectedRightTableColumnDate] = useState<Dayjs | null>(null);
 
   const onChange = (nextTargetKeys: string[]) => {
     // Function to handle the double-click event and update the date state
@@ -313,20 +313,14 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               paddingTop: -20,
             }}
           >
-            {selectedRightTableColumnDate
-              ? selectedRightTableColumnDate.format("DD-MM-YYYY")
-              : "(No date selected)"}{" "}
-            : Column Selection #2
+            {selectedRightTableColumnDate ? selectedRightTableColumnDate.format("DD-MM-YYYY")} :"(No date selected)"} : Column Selection #2
           </div>
           <ProFormDatePicker
-            name="datePicker"
-            label=""
-            placeholder="Select a date"
-            fieldProps={{
-              onChange: (date: Dayjs | null) =>
-                setSelectedRightTableColumnDate(date),
-            }}
-          />
+          name="datePicker"
+          label=""
+          placeholder="Select a date"
+          onChange={(date) => setSelectedRightTableColumnDate(date)}
+        />
         </div>
       </div>
       \{" "}

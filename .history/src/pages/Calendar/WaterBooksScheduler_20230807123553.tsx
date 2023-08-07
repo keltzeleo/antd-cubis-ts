@@ -505,9 +505,9 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     return (
                       <div
                         key={`day_${date.format("YYYYMMDD")}`}
-                        // className={`day ${
-                        //   isHighlighted ? "highlighted-day-lefttablecolumn" : ""
-                        // }`}
+                        className={`day ${
+                          isHighlighted ? "highlighted-day-lefttablecolumn" : ""
+                        }`}
                         style={{
                           flex: 1,
                           width: dayColumnWidth,
@@ -533,7 +533,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           <div
                             style={{
                               position: "absolute", // Use absolute positioning
-                              paddingTop: 24,
+                              paddingTop: 20,
                               top: 0, // Adjust the position as needed
                               left: 0, // Adjust the position as needed
                               width: "100%", // Cover the full width of the date cell
@@ -543,9 +543,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               display: "flex", // Use flex layout
                               justifyContent: "center", // Center the text horizontally
                               alignItems: "center", // Center the text vertically
-                              fontWeight: 700,
-                              fontSize: 24,
-                              fontFamily: "Mulish", // Set the font size (adjust as needed)
+                              fontSize: "2em", // Set the font size (adjust as needed)
                             }}
                           >
                             #1
