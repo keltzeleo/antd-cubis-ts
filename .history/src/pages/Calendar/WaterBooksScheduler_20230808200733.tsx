@@ -528,7 +528,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           width: dayColumnWidth,
                           height: dayColumnHeight, // Set a fixed width for each day column
                           border: "1px dotted rgba(0,20,0,0.15)",
-                          padding: 10,
+                          padding: 8,
                           textAlign: "center",
                           backgroundColor: isToday
                             ? theme["colorPrimaryBg"]

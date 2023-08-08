@@ -345,7 +345,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           </div>
         </div>
       </div>
-      \\\\\\\\\\\\\{" "}
+      \{" "}
       <TableTransfer
         dataSource={mockData}
         targetKeys={targetKeys}

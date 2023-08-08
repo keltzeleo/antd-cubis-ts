@@ -291,8 +291,8 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             }}
           >
             {/* Column Selection #1:{" "} */}
-            <RightCircleTwoTone twoToneColor={theme["colorPrimary"]} /> .::
-            Scheduler ::.{" "}
+            <RightCircleTwoTone twoToneColor={theme["colorPrimary"]} />{" "}
+            Scheduler::{" "}
             {doubleClickedDate
               ? doubleClickedDate.format("DD-MM-YYYY")
               : "(No date selected)"}{" "}
@@ -345,7 +345,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           </div>
         </div>
       </div>
-      \\\\\\\\\\\\\{" "}
+      \{" "}
       <TableTransfer
         dataSource={mockData}
         targetKeys={targetKeys}

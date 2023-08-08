@@ -407,7 +407,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
         isToday: isToday,
       });
     }
-    const dayColumnWidth = 42; // Set a fixed width for each day column
+    const dayColumnWidth = 36; // Set a fixed width for each day column
     const dayColumnHeight = 60; // Set the expanded height for the double-clicked date
 
     const numMonthsToShow = 3; // Set the number of months to show in the range
@@ -528,13 +528,13 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           width: dayColumnWidth,
                           height: dayColumnHeight, // Set a fixed width for each day column
                           border: "1px dotted rgba(0,20,0,0.15)",
-                          padding: 10,
+                          padding: 8,
                           textAlign: "center",
                           backgroundColor: isToday
                             ? theme["colorPrimaryBg"]
                             : backgroundColor, // Use the updated backgroundColor variable
                           color: isToday ? theme["colorPrimaryText"] : color,
-                          fontFamily: "play",
+                          fontFamily: "Play",
                           cursor: "pointer", // Add cursor pointer for clickable dates
                           position: "relative", // Add position: relative to the style
                         }}
@@ -574,9 +574,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               fontFamily: "play", // Set the font size (adjust as needed)
                             }}
                           >
-                            <RightCircleTwoTone
-                              twoToneColor={theme["colorPrimary"]}
-                            />{" "}
+                            <RightCircleTwoTone twoToneColor="#00a991" />{" "}
                           </div>
                         )}
                         {isHighlightedRightColumn && showTransfer && (

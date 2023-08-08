@@ -407,7 +407,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
         isToday: isToday,
       });
     }
-    const dayColumnWidth = 42; // Set a fixed width for each day column
+    const dayColumnWidth = 36; // Set a fixed width for each day column
     const dayColumnHeight = 60; // Set the expanded height for the double-clicked date
 
     const numMonthsToShow = 3; // Set the number of months to show in the range
@@ -528,13 +528,13 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           width: dayColumnWidth,
                           height: dayColumnHeight, // Set a fixed width for each day column
                           border: "1px dotted rgba(0,20,0,0.15)",
-                          padding: 10,
+                          padding: 8,
                           textAlign: "center",
                           backgroundColor: isToday
                             ? theme["colorPrimaryBg"]
                             : backgroundColor, // Use the updated backgroundColor variable
                           color: isToday ? theme["colorPrimaryText"] : color,
-                          fontFamily: "play",
+                          fontFamily: "Play",
                           cursor: "pointer", // Add cursor pointer for clickable dates
                           position: "relative", // Add position: relative to the style
                         }}
@@ -559,24 +559,22 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           <div
                             style={{
                               position: "absolute", // Use absolute positioning
-                              paddingTop: 22,
+                              paddingTop: 24,
                               top: 0, // Adjust the position as needed
                               left: 0, // Adjust the position as needed
                               width: "100%", // Cover the full width of the date cell
                               height: "100%", // Cover the full height of the date cell
-                              // backgroundColor: "rgba(0, 169, 145, 0.2)", // Use a semi-transparent black overlay
-                              color: "rgba(0, 169, 145, 0.42)", // Set the text color to white
+                              backgroundColor: "rgba(0, 0, 0, 0.2)", // Use a semi-transparent black overlay
+                              color: "rgba(0, 169, 145, 0.02)", // Set the text color to white
                               display: "flex", // Use flex layout
                               justifyContent: "center", // Center the text horizontally
                               alignItems: "center", // Center the text vertically
-                              fontWeight: 600,
+                              fontWeight: 700,
                               fontSize: 24,
                               fontFamily: "play", // Set the font size (adjust as needed)
                             }}
                           >
-                            <RightCircleTwoTone
-                              twoToneColor={theme["colorPrimary"]}
-                            />{" "}
+                            <RightCircleTwoTone twoToneColor="theme.colorPrimaryBg" />{" "}
                           </div>
                         )}
                         {isHighlightedRightColumn && showTransfer && (
