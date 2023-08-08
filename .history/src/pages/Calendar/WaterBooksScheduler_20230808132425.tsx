@@ -880,7 +880,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                 selectedDate,
                 handleDateSelect,
                 selectedRightTableColumnDate,
-                handleRightTableColumnDateChange, // Pass the highlightedDates array here
+                highlightedDates, // Pass the highlightedDates array here
               )}
               <div style={{ margin: 32 }}>
                 {showTransfer && (

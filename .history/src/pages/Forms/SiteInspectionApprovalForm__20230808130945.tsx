@@ -1,12 +1,12 @@
-import { Button, DatePicker, Form, Input } from 'antd';
-import React from 'react';
+import { Button, DatePicker, Form, Input } from "antd";
+import React from "react";
 
 const SiteInspectionApprovalForm: React.FC = () => {
   const [form] = Form.useForm();
 
   const handleSubmit = (values: any) => {
     // Handle form submission logic here
-    console.log('Form values:', values);
+    console.log("Form values:", values);
   };
 
   return (
@@ -19,7 +19,7 @@ const SiteInspectionApprovalForm: React.FC = () => {
         rules={[
           {
             required: true,
-            message: 'Inspection Date is required',
+            message: "Inspection Date is required",
           },
         ]}
       >
@@ -45,7 +45,7 @@ const SiteInspectionApprovalForm: React.FC = () => {
         rules={[
           {
             required: true,
-            message: 'Inspection Notes are required',
+            message: "Inspection Notes are required",
           },
         ]}
       >
@@ -60,8 +60,9 @@ const SiteInspectionApprovalForm: React.FC = () => {
         </Button>
       </Form.Item>
     </Form>
+    <>
+<div></div>
   );
-  <div>aaa</div>;
 };
 
 export default SiteInspectionApprovalForm;

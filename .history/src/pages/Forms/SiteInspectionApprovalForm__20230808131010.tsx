@@ -61,7 +61,6 @@ const SiteInspectionApprovalForm: React.FC = () => {
       </Form.Item>
     </Form>
   );
-  <div>aaa</div>;
 };
 
 export default SiteInspectionApprovalForm;

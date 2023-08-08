@@ -875,22 +875,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
         <div style={{ marginBottom: 32 }}>
           {/* Render the original calendar or the single-row calendar based on the state */}
           {showSingleRow ? (
-            <>
-              {renderSingleRowCalendar(
-                selectedDate,
-                handleDateSelect,
-                selectedRightTableColumnDate,
-                handleRightTableColumnDateChange, // Pass the highlightedDates array here
-              )}
-              <div style={{ margin: 32 }}>
-                {showTransfer && (
-                  <TransferSample
-                    theme={theme}
-                    doubleClickedDate={selectedDate}
-                  />
-                )}
-              </div>
-            </>
+            renderSingleRowCalendar(
+              selectedDate,
+              handleDateSelect,
+              selectedRightTableColumnDate, // Pass selectedRightTableColumnDate here
+              handleRightTableColumnDateChange, // Pass the callback function
+            )
           ) : (
             <Calendar
               value={value}
@@ -916,7 +906,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           )}
           {/* Render the <Transfer> component if showTransfer is true */}
           <div style={{ margin: 32 }}>
-            {showTransfer && (
+            {!showSingleRow && showTransfer && (
               // Use doubleClickedDate instead of doubleClickDate
               <TransferSample theme={theme} doubleClickedDate={selectedDate} />
             )}

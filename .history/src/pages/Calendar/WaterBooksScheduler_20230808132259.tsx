@@ -1,20 +1,20 @@
-import { Alert, Button, Calendar, DatePicker, Drawer } from 'antd';
-import type { Dayjs } from 'dayjs';
-import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
+import React, { useState } from "react";
 import {
   DragDropContext,
   Draggable,
   DropResult,
   Droppable,
-} from 'react-beautiful-dnd';
-import '../../App.css';
-import Legend from '../../customComponents/Legend/Legend';
-import TransferSample from './TransferSample';
-import './draggableCalendar.css';
-import { holidaysMY2023 } from './holidaysMY2023';
-import WaterBooksPreviousMonthReschedulingForm from './waterBooksPreviousMonthReschedulingForm';
-import './waterBooksSchedule.css';
+} from "react-beautiful-dnd";
+import "../../App.css";
+import Legend from "../../customComponents/Legend/Legend";
+import TransferSample from "./TransferSample";
+import "./draggableCalendar.css";
+import { holidaysMY2023 } from "./holidaysMY2023";
+import WaterBooksPreviousMonthReschedulingForm from "./waterBooksPreviousMonthReschedulingForm";
+import "./waterBooksSchedule.css";
 // Simple Unique ID Generator Function
 const generateUniqueID = () => {
   const timestamp = new Date().getTime().toString(16); // Convert timestamp to hexadecimal
@@ -48,69 +48,69 @@ interface EventData {
 
 // Mock Data with Unique IDs
 const mockScheduledBooks: Record<string, EventData[]> = {
-  '02-08-2023': [
+  "02-08-2023": [
     {
       id: generateUniqueID(), // Add unique ID for each event
-      content: 'Event 1',
-      date: '02-08-2023',
-      reader: 'John Doe',
-      bookNo: 'B001',
-      totalBooks: '5',
-      bookDescription: 'Event 1 round',
+      content: "Event 1",
+      date: "02-08-2023",
+      reader: "John Doe",
+      bookNo: "B001",
+      totalBooks: "5",
+      bookDescription: "Event 1 round",
     },
     {
       id: generateUniqueID(), // Add unique ID for each event
-      content: 'Event 2',
-      date: '02-08-2023',
-      reader: 'Jane Smith',
-      bookNo: 'B002',
-      totalBooks: '3',
-      bookDescription: 'Event 2 round',
-    },
-    // Add more events as needed
-  ],
-  '26-07-2023': [
-    {
-      id: generateUniqueID(), // Add unique ID for each event
-      content: 'Event 3',
-      date: '26-07-2023',
-      reader: 'Alice Johnson',
-      bookNo: 'B003',
-      totalBooks: '2',
-      bookDescription: 'Event 3 round',
+      content: "Event 2",
+      date: "02-08-2023",
+      reader: "Jane Smith",
+      bookNo: "B002",
+      totalBooks: "3",
+      bookDescription: "Event 2 round",
     },
     // Add more events as needed
   ],
-  '28-07-2023': [
+  "26-07-2023": [
     {
       id: generateUniqueID(), // Add unique ID for each event
-      content: 'Event 4',
-      date: '28-07-2023',
-      reader: 'Alice Johnson',
-      bookNo: 'B004',
-      totalBooks: '2',
-      bookDescription: 'Event 4 round',
+      content: "Event 3",
+      date: "26-07-2023",
+      reader: "Alice Johnson",
+      bookNo: "B003",
+      totalBooks: "2",
+      bookDescription: "Event 3 round",
     },
     // Add more events as needed
   ],
-  '03-08-2023': [
+  "28-07-2023": [
     {
       id: generateUniqueID(), // Add unique ID for each event
-      content: 'Event 5',
-      date: '03-08-2023',
-      reader: 'Alice Johnson',
-      bookNo: 'B005',
-      totalBooks: '7',
-      bookDescription: 'Event 5 round',
+      content: "Event 4",
+      date: "28-07-2023",
+      reader: "Alice Johnson",
+      bookNo: "B004",
+      totalBooks: "2",
+      bookDescription: "Event 4 round",
+    },
+    // Add more events as needed
+  ],
+  "03-08-2023": [
+    {
+      id: generateUniqueID(), // Add unique ID for each event
+      content: "Event 5",
+      date: "03-08-2023",
+      reader: "Alice Johnson",
+      bookNo: "B005",
+      totalBooks: "7",
+      bookDescription: "Event 5 round",
     },
     {
       id: generateUniqueID(), // Add unique ID for each event
-      content: 'Event 6',
-      date: '03-08-2023',
-      reader: 'Alice Johnson',
-      bookNo: 'B006',
-      totalBooks: '7',
-      bookDescription: 'Event 5 round',
+      content: "Event 6",
+      date: "03-08-2023",
+      reader: "Alice Johnson",
+      bookNo: "B006",
+      totalBooks: "7",
+      bookDescription: "Event 5 round",
     },
     // Add more events as needed
   ],
@@ -121,15 +121,15 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     useState<Record<string, EventData[]>>(mockScheduledBooks);
   const [value, setValue] = useState<Dayjs>(dayjs);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
-  const [clickedItemTitle, setClickedItemTitle] = useState('');
+  const [clickedItemTitle, setClickedItemTitle] = useState("");
   const [selectedEvent, setSelectedEvent] = useState<EventData>({
-    id: '',
-    content: '', // Add the 'content' property
-    date: '',
-    reader: '',
-    bookNo: '',
-    totalBooks: '',
-    bookDescription: '',
+    id: "",
+    content: "", // Add the 'content' property
+    date: "",
+    reader: "",
+    bookNo: "",
+    totalBooks: "",
+    bookDescription: "",
   });
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [isDateValuePanelDoubleClicked, setIsDateValuePanelDoubleClicked] =
@@ -140,7 +140,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     useState(false);
 
   const [doubleClickedDate, setDoubleClickedDate] = useState<Dayjs | null>(
-    null,
+    null
   ); // Use doubleClickedDate instead of doubleClickDate
   const [expandedDate, setExpandedDate] = useState<Dayjs | null>(null);
 
@@ -163,8 +163,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const handleDatePanelChange = (date: Dayjs, mode: string) => {
-    console.log('Panel change event:', date.format('YYYY-MM-DD'), mode);
-    if (mode === 'date') {
+    console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
+    if (mode === "date") {
       // Add a delay to handle the double-click event
       if (isDateValuePanelDoubleClicked) {
         handleDateValuePanelDoubleClick(); // Switch to the single-row calendar view
@@ -190,30 +190,30 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
   const legendData: LegendItem[] = [
     {
-      category: 'scheduled',
-      label: 'Scheduled',
-      color: theme['yellow.3'],
+      category: "scheduled",
+      label: "Scheduled",
+      color: theme["yellow.3"],
     },
     {
-      category: 'unscheduled',
-      label: 'Unscheduled',
-      color: 'transparent',
+      category: "unscheduled",
+      label: "Unscheduled",
+      color: "transparent",
     },
     {
-      category: 'today',
-      label: 'Today',
-      color: theme['cyan.3'],
+      category: "today",
+      label: "Today",
+      color: theme["cyan.3"],
     },
     {
-      category: 'rest-day',
-      label: 'Rest Day',
-      color: theme['red.3'],
-      style: { backgroundColor: theme['red.2'] }, // Specify the style here
+      category: "rest-day",
+      label: "Rest Day",
+      color: theme["red.3"],
+      style: { backgroundColor: theme["red.2"] }, // Specify the style here
     },
     {
-      category: 'holiday',
-      label: 'Holiday',
-      color: theme['blue.legend'],
+      category: "holiday",
+      label: "Holiday",
+      color: theme["blue.legend"],
     },
     // Add more legend items as needed
   ];
@@ -234,10 +234,10 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const handlePanelChange = (date: Dayjs, mode: string) => {
-    console.log('Panel change event:', date.format('YYYY-MM-DD'), mode);
+    console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
 
     // Check if it's a double-click event (mode === "date")
-    if (mode === 'date') {
+    if (mode === "date") {
       if (isDateValuePanelDoubleClicked) {
         // If it's a double-click, switch to the single-row calendar view
         handleDatePanelDoubleClick();
@@ -260,10 +260,10 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const onPanelChange = (date: Dayjs, mode: string) => {
-    console.log('Panel change event:', date.format('YYYY-MM-DD'), mode);
+    console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
 
     // Check if it's a double-click event (mode === "date")
-    if (mode === 'date') {
+    if (mode === "date") {
       if (isDateValuePanelDoubleClicked) {
         // If it's a double-click, switch to the single-row calendar view
         handleDateValuePanelDoubleClick();
@@ -281,7 +281,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const getListData = (date: Dayjs) => {
-    const dateKey = date.format('DD-MM-YYYY');
+    const dateKey = date.format("DD-MM-YYYY");
     return scheduledBooks[dateKey] || [];
   };
 
@@ -313,13 +313,13 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const convertToEventData = (event: EventData | undefined): EventData => {
     if (!event) {
       return {
-        id: '',
-        content: '', // Add 'content' property
-        date: '',
-        reader: '',
-        totalBooks: '',
-        bookNo: '',
-        bookDescription: '',
+        id: "",
+        content: "", // Add 'content' property
+        date: "",
+        reader: "",
+        totalBooks: "",
+        bookNo: "",
+        bookDescription: "",
       };
     }
 
@@ -336,7 +336,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setSelectedSchedulingDate(selectedDate);
 
     // Find the selected event based on the itemTitle
-    const selectedDateStr = selectedDate.format('DD-MM-YYYY');
+    const selectedDateStr = selectedDate.format("DD-MM-YYYY");
     const listData = scheduledBooks[selectedDateStr] || [];
     const event = listData.find((item) => item.content === itemTitle);
 
@@ -344,7 +344,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const isMalaysiaHoliday = (date: Dayjs) => {
-    const dateStr = date.format('DD-MM-YYYY');
+    const dateStr = date.format("DD-MM-YYYY");
     return holidaysMY2023.some((holiday) => holiday.date === dateStr);
   };
 
@@ -358,7 +358,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
       setShowTransfer((prevShowTransfer) => !prevShowTransfer);
       setIsSingleRowCellDoubleClicked(false); // Reset the double-click state
       setExpandedDate((prevExpandedDate) =>
-        prevExpandedDate?.isSame(date) ? null : date,
+        prevExpandedDate?.isSame(date) ? null : date
       );
     } else {
       // If it's the first click, set the double-click state and reset it after 300ms
@@ -371,38 +371,38 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setSelectedDate(date); // Always set the selected date
   };
 
-  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   // Function to render the single-row view of the calendar
   const renderSingleRowCalendar = (
     selectedDate: Dayjs | null,
     handleDateSelect: (date: Dayjs) => void | null,
     selectedRightTableColumnDate: Dayjs | null, // Receive selectedRightTableColumnDate as a prop
-    handleRightTableColumnDateChange: (date: Dayjs) => void | null,
+    handleRightTableColumnDateChange: (date: Dayjs) => void | null
   ) => {
     const currentMonth = value.month(); // Get the current month's index (0 to 11)
     const daysInMonth = value.daysInMonth();
-    const startOfMonth = value.startOf('month');
+    const startOfMonth = value.startOf("month");
     const firstDayOfWeek = startOfMonth.day();
-    const startDate = startOfMonth.subtract(firstDayOfWeek, 'days');
+    const startDate = startOfMonth.subtract(firstDayOfWeek, "days");
 
     const singleRowData = [];
     for (let i = 0; i < daysInMonth; i++) {
-      const date = startDate.add(i, 'days');
-      const isToday = date.isSame(dayjs(), 'day'); // Check if the date is the same as today
+      const date = startDate.add(i, "days");
+      const isToday = date.isSame(dayjs(), "day"); // Check if the date is the same as today
 
       if (i === 0 || date.date() === 1) {
         // Add the month name to the first column
         singleRowData.push({
           isMonth: true,
-          value: date.format('MMMM'),
+          value: date.format("MMMM"),
         });
       }
 
       // Add the day of the month to the data
       singleRowData.push({
         isMonth: false,
-        value: date.format('D'),
+        value: date.format("D"),
         isToday: isToday,
       });
     }
@@ -410,67 +410,67 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     const dayColumnHeight = 60; // Set the expanded height for the double-clicked date
 
     const numMonthsToShow = 3; // Set the number of months to show in the range
-    const startMonth = value.clone().subtract(numMonthsToShow - 2, 'month');
+    const startMonth = value.clone().subtract(numMonthsToShow - 2, "month");
 
     return (
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: "relative" }}>
         <div
           style={{
-            overflowX: 'auto',
-            overflowY: 'hidden',
-            position: 'absolute',
+            overflowX: "auto",
+            overflowY: "hidden",
+            position: "absolute",
             top: 0,
             left: 0,
-            width: '100%',
-            maxHeight: '200px',
-            borderColor: 'rgba(0,0,0,0.07)',
-            backgroundColor: 'transparent',
-            color: 'transparent',
+            width: "100%",
+            maxHeight: "200px",
+            borderColor: "rgba(0,0,0,0.07)",
+            backgroundColor: "transparent",
+            color: "transparent",
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div style={{ display: "flex", flexDirection: "row" }}>
             {Array.from({ length: numMonthsToShow }, (_, monthIndex) => {
-              const monthDate = startMonth.clone().add(monthIndex, 'month');
+              const monthDate = startMonth.clone().add(monthIndex, "month");
               const monthDaysInMonth = monthDate.daysInMonth();
               return (
                 <React.Fragment key={`month_${monthIndex}`}>
                   <div
                     style={{
                       flex: 1,
-                      border: '1px dotted transparent',
-                      padding: '4 16 4 16',
-                      textAlign: 'center',
-                      backgroundColor: '#f5faf9',
-                      color: '#00a991',
+                      border: "1px dotted transparent",
+                      padding: "4 16 4 16",
+                      textAlign: "center",
+                      backgroundColor: "#f5faf9",
+                      color: "#00a991",
                       fontWeight: 700,
-                      fontFamily: 'Play',
+                      fontFamily: "Play",
                       borderRadius: 16,
-                      margin: '2 8 4 8',
+                      margin: "2 8 4 8",
                       fontSize: 17,
-                      borderColor: 'transparent',
+                      borderColor: "transparent",
                       // textTransform: "uppercase", // Add this line to capitalize the text
                     }}
                   >
-                    {monthDate.format('MMMM')}
+                    {monthDate.format("MMMM")}
                   </div>
                   {Array.from({ length: monthDaysInMonth }, (_, dayIndex) => {
                     const date = monthDate
                       .clone()
-                      .startOf('month')
-                      .add(dayIndex, 'day');
-                    const isToday = date.isSame(dayjs(), 'day');
+                      .startOf("month")
+                      .add(dayIndex, "day");
+                    const isToday = date.isSame(dayjs(), "day");
 
                     const isHighlighted = selectedDate
-                      ? date.isSame(selectedDate, 'day')
+                      ? date.isSame(selectedDate, "day")
                       : false;
 
                     const isHighlightedRightColumn =
                       selectedRightTableColumnDate
-                        ? date.isSame(selectedRightTableColumnDate, 'day')
+                        ? date.isSame(selectedRightTableColumnDate, "day")
                         : false;
 
                     const isExpanded = expandedDate
-                      ? date.isSame(expandedDate, 'day')
+                      ? date.isSame(expandedDate, "day")
                       : false; // Check if the date is the same as the double-clicked date
 
                     // Check if the date is a weekend (rest day)
@@ -480,45 +480,45 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     const isHoliday = isMalaysiaHoliday(date);
 
                     // Check if the date has scheduled events
-                    const dateKey = date.format('DD-MM-YYYY');
+                    const dateKey = date.format("DD-MM-YYYY");
                     const hasScheduledEvents =
                       scheduledBooks[dateKey] &&
                       scheduledBooks[dateKey].length > 0;
                     // Set the background color based on whether it's a rest day, holiday, scheduled, or unscheduled day
-                    let backgroundColor = 'transparent';
-                    let color = theme['colorTextBase']; // Set a default font color (use the text color from the theme)
+                    let backgroundColor = "transparent";
+                    let color = theme["colorTextBase"]; // Set a default font color (use the text color from the theme)
                     // let fontSize = "14px"; // Set the default font size
 
                     if (isWeekend) {
-                      backgroundColor = theme['red.legend'];
-                      color = theme['red.5'];
+                      backgroundColor = theme["red.legend"];
+                      color = theme["red.5"];
                     } else if (isHoliday) {
-                      backgroundColor = theme['blue.legend'];
-                      color = theme['blue.5'];
+                      backgroundColor = theme["blue.legend"];
+                      color = theme["blue.5"];
                     } else if (hasScheduledEvents) {
-                      backgroundColor = theme['yellow.legend'];
-                      color = theme['colorTextBase'];
+                      backgroundColor = theme["yellow.legend"];
+                      color = theme["colorTextBase"];
                       // fontSize = "16px"; // Set a larger font size for scheduled days
                     } else {
-                      backgroundColor = theme['shades.1'];
-                      color = theme['colorTextBase'];
+                      backgroundColor = theme["shades.1"];
+                      color = theme["colorTextBase"];
                     }
 
                     // Set the background color for the highlighted day
                     if (isHighlighted) {
-                      backgroundColor = theme['colorPrimary'];
-                      color = 'white'; // Change this to your desired highlight color
+                      backgroundColor = theme["colorPrimary"];
+                      color = "white"; // Change this to your desired highlight color
                     }
 
                     if (isHighlightedRightColumn) {
-                      backgroundColor = theme['colorPrimary'];
-                      color = 'white'; // Change this to your desired highlight color
+                      backgroundColor = theme["colorPrimary"];
+                      color = "white"; // Change this to your desired highlight color
                     }
 
                     // Render the day elements for each month
                     return (
                       <div
-                        key={`day_${date.format('YYYYMMDD')}`}
+                        key={`day_${date.format("YYYYMMDD")}`}
                         // className={`day ${
                         //   isHighlighted ? "highlighted-day-lefttablecolumn" : ""
                         // }`}
@@ -526,16 +526,16 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           flex: 1,
                           width: dayColumnWidth,
                           height: dayColumnHeight, // Set a fixed width for each day column
-                          border: '1px dotted rgba(0,20,0,0.15)',
+                          border: "1px dotted rgba(0,20,0,0.15)",
                           padding: 8,
-                          textAlign: 'center',
+                          textAlign: "center",
                           backgroundColor: isToday
-                            ? theme['colorPrimaryBg']
+                            ? theme["colorPrimaryBg"]
                             : backgroundColor, // Use the updated backgroundColor variable
-                          color: isToday ? theme['colorPrimaryText'] : color,
-                          fontFamily: 'Play',
-                          cursor: 'pointer', // Add cursor pointer for clickable dates
-                          position: 'relative', // Add position: relative to the style
+                          color: isToday ? theme["colorPrimaryText"] : color,
+                          fontFamily: "Play",
+                          cursor: "pointer", // Add cursor pointer for clickable dates
+                          position: "relative", // Add position: relative to the style
                         }}
                         onClick={() => handleSingleRowDateSelect(date)} // Handle single-click on the date cell
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
@@ -543,34 +543,34 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         <div>
                           {selectedRightTableColumnDate && (
                             <span>
-                              Date Selected:{' '}
+                              Date Selected:{" "}
                               {selectedRightTableColumnDate.format(
-                                'DD-MM-YYYY',
+                                "DD-MM-YYYY"
                               )}
                             </span>
                           )}
-                        </div>{' '}
-                        {''}
-                        <div>{date.format('dd')}</div>{' '}
+                        </div>{" "}
+                        {""}
+                        <div>{date.format("dd")}</div>{" "}
                         {/* This line displays the day name */}
-                        {date.format('D')}
+                        {date.format("D")}
                         {isHighlighted && showTransfer && (
                           <div
                             style={{
-                              position: 'absolute', // Use absolute positioning
+                              position: "absolute", // Use absolute positioning
                               paddingTop: 24,
                               top: 0, // Adjust the position as needed
                               left: 0, // Adjust the position as needed
-                              width: '100%', // Cover the full width of the date cell
-                              height: '100%', // Cover the full height of the date cell
-                              backgroundColor: 'rgba(0, 0, 0, 0.2)', // Use a semi-transparent black overlay
-                              color: 'rgba(255, 255, 255, 1)', // Set the text color to white
-                              display: 'flex', // Use flex layout
-                              justifyContent: 'center', // Center the text horizontally
-                              alignItems: 'center', // Center the text vertically
+                              width: "100%", // Cover the full width of the date cell
+                              height: "100%", // Cover the full height of the date cell
+                              backgroundColor: "rgba(0, 0, 0, 0.2)", // Use a semi-transparent black overlay
+                              color: "rgba(255, 255, 255, 1)", // Set the text color to white
+                              display: "flex", // Use flex layout
+                              justifyContent: "center", // Center the text horizontally
+                              alignItems: "center", // Center the text vertically
                               fontWeight: 700,
                               fontSize: 24,
-                              fontFamily: 'play', // Set the font size (adjust as needed)
+                              fontFamily: "play", // Set the font size (adjust as needed)
                             }}
                           >
                             #1
@@ -579,20 +579,20 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         {isHighlightedRightColumn && showTransfer && (
                           <div
                             style={{
-                              position: 'absolute', // Use absolute positioning
+                              position: "absolute", // Use absolute positioning
                               // paddingTop: 24,
                               top: 0, // Adjust the position as needed
                               left: 0, // Adjust the position as needed
-                              width: '100%', // Cover the full width of the date cell
-                              height: '100%', // Cover the full height of the date cell
-                              backgroundColor: 'rgba(0, 0, 0, 0.2)', // Use a semi-transparent black overlay
-                              color: 'rgba(255, 255, 255, 1)', // Set the text color to white
-                              display: 'flex', // Use flex layout
-                              justifyContent: 'center', // Center the text horizontally
-                              alignItems: 'center', // Center the text vertically
+                              width: "100%", // Cover the full width of the date cell
+                              height: "100%", // Cover the full height of the date cell
+                              backgroundColor: "rgba(0, 0, 0, 0.2)", // Use a semi-transparent black overlay
+                              color: "rgba(255, 255, 255, 1)", // Set the text color to white
+                              display: "flex", // Use flex layout
+                              justifyContent: "center", // Center the text horizontally
+                              alignItems: "center", // Center the text vertically
                               fontWeight: 700,
                               fontSize: 24,
-                              fontFamily: 'play',
+                              fontFamily: "play",
                             }}
                           >
                             #2
@@ -624,12 +624,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     }
 
     // Get the date keys from droppableIds
-    const sourceDateKey = source.droppableId.split('_')[1]; // Extract the date part
-    const destinationDateKey = destination.droppableId.split('_')[1]; // Extract the date part
+    const sourceDateKey = source.droppableId.split("_")[1]; // Extract the date part
+    const destinationDateKey = destination.droppableId.split("_")[1]; // Extract the date part
 
     // Create Dayjs instances for source and destination dates
-    const sourceDate = dayjs(sourceDateKey, 'DD-MM-YYYY');
-    const destinationDate = dayjs(destinationDateKey, 'DD-MM-YYYY');
+    const sourceDate = dayjs(sourceDateKey, "DD-MM-YYYY");
+    const destinationDate = dayjs(destinationDateKey, "DD-MM-YYYY");
 
     // Check if the destination date is a weekend or holiday
     const isWeekend =
@@ -639,7 +639,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     if (isWeekend || isHoliday) {
       // Prompt an error and return the event to its original date
       alert(
-        'Invalid date. The event has been returned to its original date or could not be moved to a restricted date.',
+        "Invalid date. The event has been returned to its original date or could not be moved to a restricted date."
       );
       return;
     }
@@ -692,9 +692,9 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     const isWeekend = date.day() === 6 || date.day() === 0; // 6: Saturday, 0: Sunday
     const listData = getListData(date);
     const isHoliday = isMalaysiaHoliday(date);
-    const isToday = date.isSame(dayjs(), 'day'); // Check if the date is the same as today
+    const isToday = date.isSame(dayjs(), "day"); // Check if the date is the same as today
 
-    const dateKey = date.format('DD-MM-YYYY'); // Get the date key
+    const dateKey = date.format("DD-MM-YYYY"); // Get the date key
 
     return (
       <ul className="events">
@@ -702,7 +702,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           <div
             style={{
               color: theme.colorTextBase,
-              backgroundColor: theme['cyan.3'],
+              backgroundColor: theme["cyan.3"],
               marginBottom: 5,
               borderRadius: 8,
               paddingLeft: 8,
@@ -717,7 +717,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           <div
             style={{
               color: theme.colorTextSecondary,
-              backgroundColor: theme['geekblue.legend'],
+              backgroundColor: theme["geekblue.legend"],
               marginBottom: 5,
               borderRadius: 8,
               paddingLeft: 8,
@@ -725,7 +725,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               fontWeight: 700,
             }}
           >
-            Holiday:{' '}
+            Holiday:{" "}
             {holidaysMY2023.find((holiday) => holiday.date === dateKey)?.name}
           </div>
         )}
@@ -734,7 +734,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             style={{
               color: theme.colorTextSecondary,
               marginBottom: 5,
-              backgroundColor: theme['red.3'],
+              backgroundColor: theme["red.3"],
               borderRadius: 8,
               paddingLeft: 8,
               fontSize: 11,
@@ -748,7 +748,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           {(provided) => (
             <div
               ref={provided.innerRef}
-              style={{ position: 'relative', height: '100px', width: '100%' }}
+              style={{ position: "relative", height: "100px", width: "100%" }}
               onDoubleClick={() => handleDatePanelDoubleClick()} // Handle double-click on the date cell
             >
               {listData.map((item, index) => (
@@ -761,19 +761,19 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       onClick={() => showDrawer(item.content, date)}
                       className={
                         snapshot.isDragging
-                          ? 'previous-month-event-item dragging-item'
-                          : 'previous-month-event-item'
+                          ? "previous-month-event-item dragging-item"
+                          : "previous-month-event-item"
                       }
                     >
                       <span
                         style={{
                           borderRadius: 16,
-                          width: '100%',
-                          backgroundColor: theme['yellow.3'],
+                          width: "100%",
+                          backgroundColor: theme["yellow.3"],
                           fontSize: 14,
                           fontWeight: 600,
-                          margin: '0 -20 -10 0',
-                          padding: '2px 16px 2px 8px',
+                          margin: "0 -20 -10 0",
+                          padding: "2px 16px 2px 8px",
                         }}
                       >
                         {item.bookNo} - {item.totalBooks}
@@ -797,7 +797,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     className="previous-month-event-item"
                   >
                     {/* An empty span element to maintain layout */}
-                    <span style={{ visibility: 'hidden' }}>
+                    <span style={{ visibility: "hidden" }}>
                       Empty Placeholder
                     </span>
                   </li>
@@ -814,7 +814,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
   // Helper function to create an empty array for a given date if it doesn't exist
   const createEmptyEventArray = (date: Dayjs) => {
-    const dateKey = date.format('DD-MM-YYYY');
+    const dateKey = date.format("DD-MM-YYYY");
     if (!(dateKey in scheduledBooks)) {
       // Create an empty array for the date if it doesn't exist
       setScheduledBooks((prevScheduledBooks) => ({
@@ -837,60 +837,57 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
       <div>
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
             marginBottom: 20,
           }}
         >
           <Legend legendData={legendData} theme={theme} />
           <Alert
             message={`You selected date: ${
-              selectedDate ? selectedDate.format('DD-MM-YYYY') : 'None'
+              selectedDate ? selectedDate.format("DD-MM-YYYY") : "None"
             }`}
-            style={{ margin: '0 8' }}
+            style={{ margin: "0 8" }}
           />
           <div style={{ marginRight: 16 }}>
             {/* Add the button to toggle single-row view */}
             <Button onClick={handleToggleSingleRow}>
               {showSingleRow
-                ? 'Switch to Original Month View'
-                : 'Switch to Single-Row 3 Months View'}
+                ? "Switch to Original Month View"
+                : "Switch to Single-Row 3 Months View"}
             </Button>
           </div>
-          <Button onClick={() => setValue(value.subtract(1, 'month'))}>
+          <Button onClick={() => setValue(value.subtract(1, "month"))}>
             «
           </Button>
           <DatePicker.MonthPicker
             value={value}
             onChange={handleMonthPickerChange}
             placeholder="Select month"
-            style={{ margin: '0 8' }}
+            style={{ margin: "0 8" }}
             format="MM-YYYY"
             onPanelChange={handleDatePanelChange} // Use handleDatePanelChange to handle single-click and double-click events
           />
-          <Button onClick={() => setValue(value.add(1, 'month'))}>»</Button>
+          <Button onClick={() => setValue(value.add(1, "month"))}>»</Button>
         </div>
 
         <div style={{ marginBottom: 32 }}>
           {/* Render the original calendar or the single-row calendar based on the state */}
           {showSingleRow ? (
-            <>
-              {renderSingleRowCalendar(
-                selectedDate,
-                handleDateSelect,
-                selectedRightTableColumnDate,
-                handleRightTableColumnDateChange, // Pass the highlightedDates array here
-              )}
-              <div style={{ margin: 32 }}>
-                {showTransfer && (
-                  <TransferSample
-                    theme={theme}
-                    doubleClickedDate={selectedDate}
-                  />
-                )}
-              </div>
-            </>
+          {renderSingleRowCalendar(
+            selectedDate,
+            handleDateSelect,
+            selectedRightTableColumnDate,
+            highlightedDates // Pass the highlightedDates array here
+          )}
+          <div style={{ margin: 32 }}>
+            {showTransfer && (
+              <TransferSample
+                theme={theme}
+                doubleClickedDate={selectedDate}
+              />
+            )}
           ) : (
             <Calendar
               value={value}
@@ -902,7 +899,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
               }}
               onPanelChange={(date, mode) => {
                 // Check if the previous date is the same as the current date
-                if (previousDate && date.isSame(previousDate, 'day')) {
+                if (previousDate && date.isSame(previousDate, "day")) {
                   // Double-click detected, handle the event
                   handleDatePanelDoubleClick();
                 } else {
@@ -924,8 +921,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           <Drawer
             title={
               <span style={{ color: theme.colorTextBase }}>
-                Water Books Rescheduling -{' '}
-                {clickedItemTitle || 'No Item Selected'}
+                Water Books Rescheduling -{" "}
+                {clickedItemTitle || "No Item Selected"}
               </span>
             }
             placement="right"
@@ -935,7 +932,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             visible={isDrawerVisible}
             width={550}
           >
-            {' '}
+            {" "}
             <WaterBooksPreviousMonthReschedulingForm
               theme={theme}
               selectedEvent={selectedEvent}
