@@ -303,7 +303,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             display: "flex",
             height: 30,
             width: "30",
-            padding: "8px 8px 1px 20px",
+            padding: "1px 8px 1px 20px",
             justifyContent: "flex-start",
             fontWeight: "bold",
             borderRadius: "22px 8px 6px 4px",
@@ -328,7 +328,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               placeholder="Select a date"
               fieldProps={{
                 format: "DD-MM-YYYY",
-                value: selectedRightTableColumnDate,
+                value: selectedRightTableColumnDate || undefined,
                 onChange: (date: Dayjs | null) =>
                   handleRightTableColumnDateChange(date),
               }}

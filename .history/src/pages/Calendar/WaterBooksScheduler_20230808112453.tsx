@@ -541,14 +541,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
                       >
                         <div>
-                          {selectedRightTableColumnDate && (
-                            <span>
-                              Date Selected:{" "}
-                              {selectedRightTableColumnDate.format(
-                                "DD-MM-YYYY"
-                              )}
-                            </span>
-                          )}
+                          {" "}
+                          {selectedRightTableColumnDate?.format("dd-mm-yyyy")}
                         </div>{" "}
                         {""}
                         <div>{date.format("dd")}</div>{" "}

@@ -267,9 +267,8 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             display: "flex",
             height: 30,
             width: "30%",
-            padding: "8px 20px 1px 8px",
+            padding: "1px 20px 1px 8px",
             justifyContent: "flex-end",
-            alignContent: "center",
             fontWeight: "bold",
             marginRight: 32,
             borderRadius: "8px 6px 22px 8px",
@@ -287,7 +286,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               fontSize: 30,
               margin: "-7px 0px 0px 10px",
               fontFamily: "play",
-              paddingTop: -20,
+              paddingTop: -30,
             }}
           >
             Column Selection #1:{" "}
@@ -303,7 +302,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             display: "flex",
             height: 30,
             width: "30",
-            padding: "8px 8px 1px 20px",
+            padding: "1px 8px 1px 20px",
             justifyContent: "flex-start",
             fontWeight: "bold",
             borderRadius: "22px 8px 6px 4px",
@@ -328,7 +327,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               placeholder="Select a date"
               fieldProps={{
                 format: "DD-MM-YYYY",
-                value: selectedRightTableColumnDate,
+                value: selectedRightTableColumnDate || undefined,
                 onChange: (date: Dayjs | null) =>
                   handleRightTableColumnDateChange(date),
               }}

@@ -540,17 +540,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         onClick={() => handleSingleRowDateSelect(date)} // Handle single-click on the date cell
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
                       >
-                        <div>
-                          {selectedRightTableColumnDate && (
-                            <span>
-                              Date Selected:{" "}
-                              {selectedRightTableColumnDate.format(
-                                "DD-MM-YYYY"
-                              )}
-                            </span>
-                          )}
-                        </div>{" "}
-                        {""}
                         <div>{date.format("dd")}</div>{" "}
                         {/* This line displays the day name */}
                         {date.format("D")}

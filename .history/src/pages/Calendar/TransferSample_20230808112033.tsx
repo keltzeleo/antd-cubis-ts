@@ -319,7 +319,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               fontSize: 36,
               margin: "-7px 0px 0px 10px",
               fontFamily: "play",
-              paddingTop: -20,
+              paddingTop: -40,
             }}
           >
             <ProFormDatePicker
@@ -328,7 +328,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               placeholder="Select a date"
               fieldProps={{
                 format: "DD-MM-YYYY",
-                value: selectedRightTableColumnDate,
+                value: selectedRightTableColumnDate || undefined,
                 onChange: (date: Dayjs | null) =>
                   handleRightTableColumnDateChange(date),
               }}

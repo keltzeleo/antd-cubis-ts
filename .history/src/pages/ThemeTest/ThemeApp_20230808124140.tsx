@@ -6,8 +6,8 @@ import TariffChargesMaintenance2 from "../LibraryMaintanance/TariffChargesMainte
 import dark from "../../tokens/dark.json";
 import light from "../../tokens/light.json";
 // import EditableTable from "../LibraryMaintanance/EditableTable";
+// import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
 import "../../App.css";
-import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
 import WaterBooksScheduler from "../Calendar/WaterBooksScheduler";
 import NapsWizard2 from "../NapsWizard/NapsWizard2";
 
@@ -49,14 +49,9 @@ const ThemeApp: React.FC = () => {
       <div style={{ height: 100 }} />
 
       <NapsWizard2 theme={isDarkMode ? dark : light} />
-      <div style={{ height: 100 }} />
-      <AppointmentUpdates theme={isDarkMode ? dark : light} />
-      <div style={{ height: 100 }} />
-
       <WaterBooksScheduler theme={isDarkMode ? dark : light} />
 
       <div style={{ height: 100 }} />
-      <AppointmentUpdates theme={isDarkMode ? dark : light} />
     </ConfigProvider>
   );
 };

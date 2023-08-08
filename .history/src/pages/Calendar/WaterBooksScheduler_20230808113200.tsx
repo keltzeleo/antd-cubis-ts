@@ -34,6 +34,7 @@ interface Theme {
 
 interface WaterBooksSchedulerProps {
   theme: Theme;
+  selectedRightTableColumnDate: Dayjs | null;
 }
 
 interface EventData {

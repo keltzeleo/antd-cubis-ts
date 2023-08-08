@@ -34,6 +34,7 @@ interface Theme {
 
 interface WaterBooksSchedulerProps {
   theme: Theme;
+  selectedRightTableColumnDate: Dayjs | null;
 }
 
 interface EventData {
@@ -116,7 +117,10 @@ const mockScheduledBooks: Record<string, EventData[]> = {
   ],
 };
 
-const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
+const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({
+  theme,
+  selectedRightTableColumnDate,
+}) => {
   const [scheduledBooks, setScheduledBooks] =
     useState<Record<string, EventData[]>>(mockScheduledBooks);
   const [value, setValue] = useState<Dayjs>(dayjs);
