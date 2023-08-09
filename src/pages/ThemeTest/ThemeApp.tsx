@@ -1,5 +1,6 @@
 import { ConfigProvider, Switch } from "antd";
 import React, { useEffect, useState } from "react";
+
 // import TariffChargesMaintenance2 from "../LibraryMaintanance/TariffChargesMaintenance2";
 // import TariffChargesMaintenanceCard from "../LibraryMaintanance/TariffChargesMaintananceCard";
 // import ThemeTest from "../ThemeTest/ThemeTest";
@@ -9,6 +10,7 @@ import light from "../../tokens/light.json";
 import "../../App.css";
 import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
 import WaterBooksScheduler from "../Calendar/WaterBooksScheduler";
+import LoginCUBIS from "../LoginCUBIS";
 import NapsWizard2 from "../NapsWizard/NapsWizard2";
 
 interface Theme {
@@ -39,6 +41,7 @@ const ThemeApp: React.FC = () => {
       {/* <AppointmentUpdates theme={isDarkMode ? dark : light} /> */}
 
       <p></p>
+      <LoginCUBIS />
       <div style={{ height: 100 }} />
 
       <p></p>
