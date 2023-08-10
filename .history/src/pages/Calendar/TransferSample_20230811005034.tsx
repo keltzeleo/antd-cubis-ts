@@ -125,6 +125,7 @@ const originTargetKeys = mockData
 const TransferSample: React.FC<TransferSampleProps> = ({
   theme,
   doubleClickedDate,
+  handleRightTableColumnDateChange,
 }) => {
   const [targetKeys, setTargetKeys] = useState<string[]>(originTargetKeys);
   const [disabled, setDisabled] = useState(false);

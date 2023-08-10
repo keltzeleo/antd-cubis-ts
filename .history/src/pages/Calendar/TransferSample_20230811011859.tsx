@@ -125,6 +125,7 @@ const originTargetKeys = mockData
 const TransferSample: React.FC<TransferSampleProps> = ({
   theme,
   doubleClickedDate,
+  handleRightTableColumnDateChange,
 }) => {
   const [targetKeys, setTargetKeys] = useState<string[]>(originTargetKeys);
   const [disabled, setDisabled] = useState(false);
@@ -157,12 +158,12 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     setSelectedDate(currentDate);
   };
 
-  const handleRightTableColumnDateChange = (date: Dayjs | null) => {
+  const localHandleRightTableColumnDateChange = (date: Dayjs | null) => {
     console.log(
       "Inside handleRightTableColumnDateChange with date:",
       date?.format("DD-MM-YYYY")
     );
-    setSelectedRightTableColumnDate(date); // Use the passed date directly
+    setSelectedRightTableColumnDate(date);
   };
 
   const handleCheckboxChange = (key: string) => {
@@ -343,7 +344,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
                       "Date from ProFormDatePicker:",
                       date?.format("DD-MM-YYYY")
                     );
-                    handleRightTableColumnDateChange(date);
+                    localHandleRightTableColumnDateChange(date);
                   },
                 }}
               />

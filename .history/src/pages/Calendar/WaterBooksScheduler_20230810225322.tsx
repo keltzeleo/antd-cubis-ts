@@ -1,4 +1,4 @@
-import { LeftCircleTwoTone, RightCircleTwoTone } from "@ant-design/icons";
+import { RightCircleTwoTone } from "@ant-design/icons";
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -150,7 +150,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
   useEffect(() => {
     console.log(
-      "selectedRightTableColumnDate changed:",
+      "Component re-rendered due to change in selectedRightTableColumnDate:",
       selectedRightTableColumnDate?.format("DD-MM-YYYY")
     );
   }, [selectedRightTableColumnDate]);
@@ -382,12 +382,12 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   // Function to render the single-row view of the calendar
-  function renderSingleRowCalendar(
+  const renderSingleRowCalendar = (
     selectedDate: Dayjs | null,
     handleDateSelect: (date: Dayjs) => void | null,
-    selectedRightTableColumnDate: Dayjs | null,
+    selectedRightTableColumnDate: Dayjs | null, // Receive selectedRightTableColumnDate as a prop
     handleRightTableColumnDateChange: (date: Dayjs) => void | null
-  ) {
+  ) => {
     const currentMonth = value.month(); // Get the current month's index (0 to 11)
     const daysInMonth = value.daysInMonth();
     const startOfMonth = value.startOf("month");
@@ -479,11 +479,11 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
 
                     console.log(
                       "Current cell date:",
-                      handleRightTableColumnDateChange
+                      date.isSame(selectedRightTableColumnDate, "day")
                     );
                     console.log(
                       "Selected date from ProFormDatePicker:",
-                      selectedRightTableColumnDate
+                      setSelectedRightTableColumnDate(dst)
                     );
 
                     const isExpanded = expandedDate
@@ -504,8 +504,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     // Set the background color based on whether it's a rest day, holiday, scheduled, or unscheduled day
                     let backgroundColor = "transparent";
                     let color = theme["colorTextBase"]; // Set a default font color (use the text color from the theme)
-
                     // let fontSize = "14px"; // Set the default font size
+
                     if (isWeekend) {
                       backgroundColor = theme["red.legend"];
                       color = theme["red.5"];
@@ -552,23 +552,30 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         style={{
                           flex: 1,
                           width: dayColumnWidth,
-                          height: dayColumnHeight,
+                          height: dayColumnHeight, // Set a fixed width for each day column
                           border: "1px dotted rgba(0,20,0,0.15)",
                           padding: 10,
                           textAlign: "center",
                           backgroundColor: isToday
                             ? theme["colorPrimaryBg"]
-                            : backgroundColor,
+                            : backgroundColor, // Use the updated backgroundColor variable
                           color: isToday ? theme["colorPrimaryText"] : color,
                           fontFamily: "play",
-                          cursor: "pointer",
+                          cursor: "pointer", // Add cursor pointer for clickable dates
                           position: "relative", // Add position: relative to the style
                         }}
                         onClick={() => handleSingleRowDateSelect(date)} // Handle single-click on the date cell
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
                       >
                         <div>
-                          {selectedRightTableColumnDate && <span> </span>}
+                          {selectedRightTableColumnDate && (
+                            <span>
+                              Date Selected:{" "}
+                              {selectedRightTableColumnDate.format(
+                                "DD-MM-YYYY"
+                              )}
+                            </span>
+                          )}
                         </div>{" "}
                         {""}
                         <div>{date.format("dd")}</div>{" "}
@@ -577,18 +584,17 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         {isHighlighted && showTransfer && (
                           <div
                             style={{
-                              position: "absolute",
+                              position: "absolute", // Use absolute positioning
                               paddingTop: 22,
-                              top: 0,
-                              left: 0,
-                              width: "91%",
-                              height: "100%",
-                              border: "2px solid #f3f6f9",
+                              top: 0, // Adjust the position as needed
+                              left: 0, // Adjust the position as needed
+                              width: "100%", // Cover the full width of the date cell
+                              height: "100%", // Cover the full height of the date cell
                               // backgroundColor: "rgba(0, 169, 145, 0.2)", // Use a semi-transparent black overlay
-                              color: "rgba(0, 169, 145, 0.32)",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
+                              color: "rgba(0, 169, 145, 0.42)", // Set the text color to white
+                              display: "flex", // Use flex layout
+                              justifyContent: "center", // Center the text horizontally
+                              alignItems: "center", // Center the text vertically
                               fontWeight: 600,
                               fontSize: 24,
                               fontFamily: "play", // Set the font size (adjust as needed)
@@ -602,28 +608,23 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         {isHighlightedRightColumn && showTransfer && (
                           <div
                             style={{
-                              position: "absolute",
-
-                              paddingTop: 22,
-                              top: 0,
-                              left: 0,
-                              width: "91%",
-                              height: "95%",
-                              border: "2px solid #f3f6f9",
-
-                              // backgroundColor: "rgba(0, 0, 0, 0.2)",
-                              color: "rgba(0, 169, 145, 0.32)",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
+                              position: "absolute", // Use absolute positioning
+                              // paddingTop: 24,
+                              top: 0, // Adjust the position as needed
+                              left: 0, // Adjust the position as needed
+                              width: "100%", // Cover the full width of the date cell
+                              height: "100%", // Cover the full height of the date cell
+                              backgroundColor: "rgba(0, 0, 0, 0.2)", // Use a semi-transparent black overlay
+                              color: "rgba(255, 255, 255, 1)", // Set the text color to white
+                              display: "flex", // Use flex layout
+                              justifyContent: "center", // Center the text horizontally
+                              alignItems: "center", // Center the text vertically
                               fontWeight: 700,
                               fontSize: 24,
                               fontFamily: "play",
                             }}
                           >
-                            <LeftCircleTwoTone
-                              twoToneColor={theme["colorPrimary"]}
-                            />{" "}
+                            #2
                           </div>
                         )}
                       </div>
@@ -636,7 +637,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
         </div>
       </div>
     );
-  }
+  };
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
 
@@ -857,15 +858,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const handleRightTableColumnDateChange = (date: Dayjs | null) => {
-    console.log(
-      "Inside handleRightTableColumnDateChange with date:",
-      date?.format("DD-MM-YYYY")
-    );
-    setSelectedRightTableColumnDate(date); // Use the passed date directly
-  };
-
-  const handleRightTableColumnDateChangeInScheduler = (date: Dayjs | null) => {
-    setSelectedRightTableColumnDate(date);
+    setSelectedRightTableColumnDate(date); // Update the selectedRightTableColumnDate state
   };
 
   return (
@@ -944,13 +937,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
           <div style={{ margin: 32 }}>
             {showTransfer && (
               // Use doubleClickedDate instead of doubleClickDate
-              <TransferSample
-                theme={theme}
-                doubleClickedDate={selectedDate}
-                handleRightTableColumnDateChange={
-                  handleRightTableColumnDateChangeInScheduler
-                }
-              />
+              <TransferSample theme={theme} doubleClickedDate={selectedDate} />
             )}
           </div>
           <Drawer

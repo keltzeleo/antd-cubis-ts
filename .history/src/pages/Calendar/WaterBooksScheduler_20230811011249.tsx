@@ -568,7 +568,15 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
                       >
                         <div>
-                          {selectedRightTableColumnDate && <span> </span>}
+                          {selectedRightTableColumnDate && (
+                            <span>
+                              {/* {" Date Selected:{" "}
+                              {selectedRightTableColumnDate.format(
+                                "DD-MM-YYYY""}
+                              )} */}
+                              {""}
+                            </span>
+                          )}
                         </div>{" "}
                         {""}
                         <div>{date.format("dd")}</div>{" "}
@@ -581,11 +589,11 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               paddingTop: 22,
                               top: 0,
                               left: 0,
-                              width: "91%",
+                              width: "100%",
                               height: "100%",
-                              border: "2px solid #f3f6f9",
+                              border: 1px solid rgba(225, 225, 225, 0.52),
                               // backgroundColor: "rgba(0, 169, 145, 0.2)", // Use a semi-transparent black overlay
-                              color: "rgba(0, 169, 145, 0.32)",
+                              color: "rgba(0, 169, 145, 0.52)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -599,33 +607,33 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                             />{" "}
                           </div>
                         )}
-                        {isHighlightedRightColumn && showTransfer && (
-                          <div
-                            style={{
-                              position: "absolute",
+                        {selectedRightTableColumnDate &&
+                          isHighlightedRightColumn &&
+                          showTransfer && (
+                            <div
+                              style={{
+                                position: "absolute",
 
-                              paddingTop: 22,
-                              top: 0,
-                              left: 0,
-                              width: "91%",
-                              height: "95%",
-                              border: "2px solid #f3f6f9",
-
-                              // backgroundColor: "rgba(0, 0, 0, 0.2)",
-                              color: "rgba(0, 169, 145, 0.32)",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              fontWeight: 700,
-                              fontSize: 24,
-                              fontFamily: "play",
-                            }}
-                          >
-                            <LeftCircleTwoTone
-                              twoToneColor={theme["colorPrimary"]}
-                            />{" "}
-                          </div>
-                        )}
+                                paddingTop: 22,
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                // backgroundColor: "rgba(0, 0, 0, 0.2)",
+                                color: "rgba(0, 169, 145, 0.52)",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                fontWeight: 700,
+                                fontSize: 24,
+                                fontFamily: "play",
+                              }}
+                            >
+                              <LeftCircleTwoTone
+                                twoToneColor={theme["colorPrimary"]}
+                              />{" "}
+                            </div>
+                          )}
                       </div>
                     );
                   })}

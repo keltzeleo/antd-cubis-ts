@@ -581,7 +581,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               paddingTop: 22,
                               top: 0,
                               left: 0,
-                              width: "91%",
+                              width: "93%",
                               height: "100%",
                               border: "2px solid #f3f6f9",
                               // backgroundColor: "rgba(0, 169, 145, 0.2)", // Use a semi-transparent black overlay

@@ -1,5 +1,5 @@
 import { RightCircleTwoTone } from "@ant-design/icons";
-import ProForm, { ProFormDatePicker } from "@ant-design/pro-form";
+import { ProFormDatePicker } from "@ant-design/pro-form";
 import { Space, Switch, Table, Tag, Transfer } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TransferItem, TransferProps } from "antd/es/transfer";
@@ -15,8 +15,7 @@ interface Theme {
 // Interface for the props of the TransferSample component
 interface TransferSampleProps {
   theme: Theme;
-  doubleClickedDate: Dayjs | null;
-  handleRightTableColumnDateChange: (date: Dayjs | null) => void; // <-- Add this line
+  doubleClickedDate: Dayjs | null; // Add the prop for double-clicked date
 }
 
 // Interface for the data in the table
@@ -140,7 +139,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
   const onChange = (nextTargetKeys: string[]) => {
     // Function to handle the double-click event and update the date state
     const currentDate = dayjs(); // Get the current date as a Dayjs object
-    setSelectedRightTableColumnDate(currentDate);
+    setSelectedDate(currentDate);
   };
 
   const triggerDisable = (checked: boolean) => {
@@ -162,7 +161,8 @@ const TransferSample: React.FC<TransferSampleProps> = ({
       "Inside handleRightTableColumnDateChange with date:",
       date?.format("DD-MM-YYYY")
     );
-    setSelectedRightTableColumnDate(date); // Use the passed date directly
+
+    setSelectedRightTableColumnDate(date);
   };
 
   const handleCheckboxChange = (key: string) => {
@@ -330,34 +330,28 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               paddingTop: -20,
             }}
           >
-            <ProForm>
-              <ProFormDatePicker
-                name="datePicker"
-                label=""
-                placeholder="Select a date"
-                fieldProps={{
-                  format: "DD-MM-YYYY",
-                  value: selectedRightTableColumnDate,
-                  onChange: (date) => {
-                    console.log(
-                      "Date from ProFormDatePicker:",
-                      date?.format("DD-MM-YYYY")
-                    );
-                    handleRightTableColumnDateChange(date);
-                  },
-                }}
-              />
-            </ProForm>
+            <ProFormDatePicker
+              name="datePicker"
+              label=""
+              placeholder="Select a date"
+              fieldProps={{
+                format: "DD-MM-YYYY",
+                value: selectedRightTableColumnDate,
+                onChange: (date) => {
+                  console.log(
+                    "Date from ProFormDatePicker:",
+                    date?.format("DD-MM-YYYY")
+                  );
+                  setSelectedRightTableColumnDate(date);
+                },
+              }}
+            />
+            <div></div>
           </div>
           <div>
-            {selectedRightTableColumnDate ? (
-              <div>
-                Selected Date:{" "}
-                {selectedRightTableColumnDate.format("DD-MM-YYYY")}
-              </div>
-            ) : (
-              "(No date selected)"
-            )}
+            {selectedRightTableColumnDate
+              ? selectedRightTableColumnDate.format("DD-MM-YYYY")
+              : "(No date selected)"}{" "}
             : Column Selection #2
           </div>
         </div>
@@ -376,7 +370,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         }
         leftColumns={leftTableColumns}
         rightColumns={rightTableColumns}
-        selectedRightTableColumnDate={selectedRightTableColumnDate} // Pass the selectedRightTableColumnDate as a prop
+        selectedRightTableColumnDate={setSelectedRightTableColumnDate} // Pass the selectedRightTableColumnDate as a prop
         handleRightTableColumnDateChange={handleRightTableColumnDateChange} // Pass the handleRightTableColumnDateChange function
       />
     </>

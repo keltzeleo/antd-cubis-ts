@@ -377,7 +377,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         leftColumns={leftTableColumns}
         rightColumns={rightTableColumns}
         selectedRightTableColumnDate={selectedRightTableColumnDate} // Pass the selectedRightTableColumnDate as a prop
-        handleRightTableColumnDateChange={handleRightTableColumnDateChange} // Pass the handleRightTableColumnDateChange function
+        handleRightTableColumnDateChange={setSelectedRightTableColumnDate} // Pass the handleRightTableColumnDateChange function
       />
     </>
   );

@@ -15,8 +15,7 @@ interface Theme {
 // Interface for the props of the TransferSample component
 interface TransferSampleProps {
   theme: Theme;
-  doubleClickedDate: Dayjs | null;
-  handleRightTableColumnDateChange: (date: Dayjs | null) => void; // <-- Add this line
+  doubleClickedDate: Dayjs | null; // Add the prop for double-clicked date
 }
 
 // Interface for the data in the table
@@ -164,7 +163,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     );
     setSelectedRightTableColumnDate(date); // Use the passed date directly
   };
-
   const handleCheckboxChange = (key: string) => {
     // Toggle the checkbox state for the specific item with the given key
     const newTargetKeys = targetKeys.includes(key)
@@ -377,7 +375,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         leftColumns={leftTableColumns}
         rightColumns={rightTableColumns}
         selectedRightTableColumnDate={selectedRightTableColumnDate} // Pass the selectedRightTableColumnDate as a prop
-        handleRightTableColumnDateChange={handleRightTableColumnDateChange} // Pass the handleRightTableColumnDateChange function
+        handleRightTableColumnDateChange={setSelectedRightTableColumnDate} // Pass the handleRightTableColumnDateChange function
       />
     </>
   );

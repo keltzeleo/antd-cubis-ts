@@ -1,4 +1,4 @@
-import { LeftCircleTwoTone, RightCircleTwoTone } from "@ant-design/icons";
+import { RightCircleTwoTone } from "@ant-design/icons";
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -568,7 +568,14 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         onDoubleClick={() => handleDateCellDoubleClick(date)} // Handle double-click on the date cell
                       >
                         <div>
-                          {selectedRightTableColumnDate && <span> </span>}
+                          {selectedRightTableColumnDate && (
+                            <span>
+                              Date Selected:{" "}
+                              {selectedRightTableColumnDate.format(
+                                "DD-MM-YYYY"
+                              )}
+                            </span>
+                          )}
                         </div>{" "}
                         {""}
                         <div>{date.format("dd")}</div>{" "}
@@ -581,11 +588,11 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               paddingTop: 22,
                               top: 0,
                               left: 0,
-                              width: "91%",
+                              width: "100%",
                               height: "100%",
-                              border: "2px solid #f3f6f9",
+
                               // backgroundColor: "rgba(0, 169, 145, 0.2)", // Use a semi-transparent black overlay
-                              color: "rgba(0, 169, 145, 0.32)",
+                              color: "rgba(0, 169, 145, 0.42)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -604,15 +611,13 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                             style={{
                               position: "absolute",
 
-                              paddingTop: 22,
+                              // paddingTop: 24,
                               top: 0,
                               left: 0,
-                              width: "91%",
-                              height: "95%",
-                              border: "2px solid #f3f6f9",
-
-                              // backgroundColor: "rgba(0, 0, 0, 0.2)",
-                              color: "rgba(0, 169, 145, 0.32)",
+                              width: "100%",
+                              height: "100%",
+                              backgroundColor: "rgba(0, 0, 0, 0.2)",
+                              color: "rgba(255, 255, 255, 1)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -621,9 +626,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               fontFamily: "play",
                             }}
                           >
-                            <LeftCircleTwoTone
-                              twoToneColor={theme["colorPrimary"]}
-                            />{" "}
+                            #2
                           </div>
                         )}
                       </div>
@@ -865,7 +868,11 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const handleRightTableColumnDateChangeInScheduler = (date: Dayjs | null) => {
-    setSelectedRightTableColumnDate(date);
+    console.log(
+      "Inside handleRightTableColumnDateChangeInScheduler with date:",
+      date?.format("DD-MM-YYYY")
+    );
+    setSelectedRightTableColumnDate(date); // Use the passed date directly
   };
 
   return (
