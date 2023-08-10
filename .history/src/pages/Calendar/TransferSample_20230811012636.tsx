@@ -352,7 +352,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           <div>
             {selectedRightTableColumnDate ? (
               <div>
-                <span> &nbsp; </span>
+                <span> </span>
                 Selected Date:{" "}
                 {selectedRightTableColumnDate.format("DD-MM-YYYY")}
               </div>
