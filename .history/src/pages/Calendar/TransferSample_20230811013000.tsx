@@ -290,7 +290,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           <div
             style={{
               fontSize: 30,
-              margin: "-7px 4px 0px 10px",
+              margin: "-7px 0px 0px 10px",
               fontFamily: "play",
               paddingTop: -20,
             }}
@@ -322,15 +322,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             margin: "8px 0px 0px 16px", // Adjusted margin to create space between the two sections
           }}
         >
-          <LeftCircleTwoTone
-            twoToneColor={theme["colorPrimary"]}
-            style={{
-              fontSize: 30,
-              margin: "-8px 0px 0px 0px",
-              fontFamily: "play",
-              paddingTop: -20,
-            }}
-          />
+          <LeftCircleTwoTone twoToneColor={theme["colorPrimary"]} />
           <div
             style={{
               fontSize: 36,
