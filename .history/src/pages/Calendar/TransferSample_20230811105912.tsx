@@ -163,8 +163,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         "Inside handleRightTableColumnDateChange with date:",
         date.format("DD-MM-YYYY")
       );
-      setSelectedRightTableColumnDate(date); // Set the local state
-
       handleRightTableColumnDateChange(date);
     }
   };
@@ -301,7 +299,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           >
             {/* Column Selection #1:{" "} */}
             <RightCircleTwoTone twoToneColor={theme["colorPrimary"]} /> .::
-            Scheduler Date ::.{" "}
+            Scheduler ::.{" "}
             {doubleClickedDate
               ? doubleClickedDate.format("DD-MM-YYYY")
               : "(No date selected)"}{" "}
@@ -350,7 +348,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
                   label=""
                   placeholder="Select a date"
                   fieldProps={{
-                    format: "YYYY-MM-DD",
+                    format: "DD-MM-YYYY",
                     value: selectedRightTableColumnDate,
                     onChange: (date) => {
                       console.log(
@@ -366,18 +364,10 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             </ProForm>
           </div>
           <div>
-            {selectedRightTableColumnDate ? (
-              <div
-                style={{
-                  fontSize: 30,
-                  margin: "-7px 4px 0px 10px",
-                  fontFamily: "play",
-                  paddingTop: -20,
-                }}
-              >
-                <span>&nbsp;</span>
-                .:: Scheduler Date ::.{" "}
-                {selectedRightTableColumnDate.format("YYYY-MM-DD")}
+            {localHandleRightTableColumnDateChange ? (
+              <div>
+                Selected Date:{" "}
+                {localHandleRightTableColumnDateChange.format("DD-MM-YYYY")}
               </div>
             ) : (
               "(No date selected)"

@@ -611,7 +611,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
-                              fontWeight: 600,
+                              fontWeight: 700,
                               fontSize: 24,
                               fontFamily: "play",
                               zIndex: 30,

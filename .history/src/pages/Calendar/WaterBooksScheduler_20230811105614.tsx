@@ -579,7 +579,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               left: 0,
                               width: "91%",
                               height: "100%",
-                              border: "2px solid #f3f6f9",
+                              border: "1px solid #f3f6f9",
                               // backgroundColor: "rgba(0, 169, 145, 0.2)", // Use a semi-transparent black overlay
                               color: "rgba(0, 169, 145, 0.42)",
                               display: "flex",
@@ -605,16 +605,15 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               left: 0,
                               width: "91%",
                               height: "100%",
-                              // backgroundColor: "rgba(0, 169, 145, 0.5)",
-                              border: "2px solid #f3f6f9",
+                              backgroundColor: theme.colorPrimary,
+                              border: "1px solid #f3f6f9",
                               color: "rgba(255, 255, 255, 1)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
-                              fontWeight: 600,
+                              fontWeight: 700,
                               fontSize: 24,
                               fontFamily: "play",
-                              zIndex: 30,
                             }}
                           >
                             <LeftCircleTwoTone

@@ -350,7 +350,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
                   label=""
                   placeholder="Select a date"
                   fieldProps={{
-                    format: "YYYY-MM-DD",
+                    format: "DD-MM-YYYY",
                     value: selectedRightTableColumnDate,
                     onChange: (date) => {
                       console.log(
@@ -377,7 +377,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               >
                 <span>&nbsp;</span>
                 .:: Scheduler Date ::.{" "}
-                {selectedRightTableColumnDate.format("YYYY-MM-DD")}
+                {selectedRightTableColumnDate.format("DD-MM-YYYY")}
               </div>
             ) : (
               "(No date selected)"

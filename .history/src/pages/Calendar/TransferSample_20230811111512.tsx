@@ -376,7 +376,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
                 }}
               >
                 <span>&nbsp;</span>
-                .:: Scheduler Date ::.{" "}
+                .: Date Scheduler ::.{" "}
                 {selectedRightTableColumnDate.format("YYYY-MM-DD")}
               </div>
             ) : (
