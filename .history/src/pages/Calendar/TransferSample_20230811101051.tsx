@@ -16,7 +16,7 @@ interface Theme {
 interface TransferSampleProps {
   theme: Theme;
   doubleClickedDate: Dayjs | null;
-  handleRightTableColumnDateChange: (date: Dayjs) => void;
+  handleRightTableColumnDateChange: (date: Dayjs | null) => void; // <-- Add this line
 }
 
 // Interface for the data in the table
@@ -125,7 +125,6 @@ const originTargetKeys = mockData
 const TransferSample: React.FC<TransferSampleProps> = ({
   theme,
   doubleClickedDate,
-  handleRightTableColumnDateChange,
 }) => {
   const [targetKeys, setTargetKeys] = useState<string[]>(originTargetKeys);
   const [disabled, setDisabled] = useState(false);
@@ -157,14 +156,13 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     const currentDate = dayjs(); // Get the current date as a Dayjs object
     setSelectedDate(currentDate);
   };
+
   const localHandleRightTableColumnDateChange = (date: Dayjs | null) => {
-    if (date) {
-      console.log(
-        "Inside handleRightTableColumnDateChange with date:",
-        date.format("DD-MM-YYYY")
-      );
-      handleRightTableColumnDateChange(date);
-    }
+    console.log(
+      "Inside handleRightTableColumnDateChange with date:",
+      date?.format("DD-MM-YYYY")
+    );
+    setSelectedRightTableColumnDate(date); // Use the passed date directly
   };
 
   const handleCheckboxChange = (key: string) => {
@@ -366,9 +364,10 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           <div>
             {selectedRightTableColumnDate ? (
               <div>
-                Selected Date:{" "}
-                {selectedRightTableColumnDate.format("DD-MM-YYYY")}
+                <span> &nbsp; </span>
+                "Selected Date:" 
               </div>
+              setSelectedRightTableColumnDate
             ) : (
               "(No date selected)"
             )}

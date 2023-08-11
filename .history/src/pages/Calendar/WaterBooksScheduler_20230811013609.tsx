@@ -483,7 +483,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     );
                     console.log(
                       "Selected date from ProFormDatePicker:",
-                      handleRightTableColumnDateChange
+                      selectedRightTableColumnDate
                     );
 
                     const isExpanded = expandedDate
@@ -532,6 +532,16 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       color = "white"; // Change this to your desired highlight color
                     }
 
+                    console.log("Rendering date:", date.format("DD-MM-YYYY"));
+                    console.log(
+                      "Selected Right Column Date:",
+                      selectedRightTableColumnDate
+                    );
+                    console.log(
+                      "Is Highlighted Right Column:",
+                      isHighlightedRightColumn
+                    );
+
                     // Render the day elements for each month
                     return (
                       <div
@@ -559,12 +569,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       >
                         <div>
                           {selectedRightTableColumnDate && (
-                            <span>
-                              Date Selected:{" "}
-                              {selectedRightTableColumnDate?.format(
-                                "DD-MM-YYYY"
-                              )}
-                            </span>
+                            <span> &nbsp; </span>
                           )}
                         </div>{" "}
                         {""}
@@ -578,11 +583,11 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               paddingTop: 22,
                               top: 0,
                               left: 0,
-                              width: "100%",
+                              width: "91%",
                               height: "100%",
-
+                              border: "2px solid #f3f6f9",
                               // backgroundColor: "rgba(0, 169, 145, 0.2)", // Use a semi-transparent black overlay
-                              color: "rgba(0, 169, 145, 0.42)",
+                              color: "rgba(0, 169, 145, 0.32)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -601,13 +606,15 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                             style={{
                               position: "absolute",
 
-                              // paddingTop: 24,
+                              paddingTop: 22,
                               top: 0,
                               left: 0,
-                              width: "100%",
-                              height: "100%",
-                              backgroundColor: "rgba(0, 0, 0, 0.2)",
-                              color: "rgba(255, 255, 255, 1)",
+                              width: "91%",
+                              height: "95%",
+                              border: "2px solid #f3f6f9",
+
+                              // backgroundColor: "rgba(0, 0, 0, 0.2)",
+                              color: "rgba(0, 169, 145, 0.32)",
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
@@ -616,7 +623,9 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               fontFamily: "play",
                             }}
                           >
-                            <LeftCircleTwoTone />
+                            <LeftCircleTwoTone
+                              twoToneColor={theme["colorPrimary"]}
+                            />{" "}
                           </div>
                         )}
                       </div>

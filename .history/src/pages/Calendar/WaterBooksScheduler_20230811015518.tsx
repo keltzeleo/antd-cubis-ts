@@ -1,4 +1,4 @@
-import { LeftCircleTwoTone, RightCircleTwoTone } from "@ant-design/icons";
+import { RightCircleTwoTone } from "@ant-design/icons";
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -483,7 +483,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     );
                     console.log(
                       "Selected date from ProFormDatePicker:",
-                      handleRightTableColumnDateChange
+                      selectedRightTableColumnDate
                     );
 
                     const isExpanded = expandedDate
@@ -532,6 +532,16 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       color = "white"; // Change this to your desired highlight color
                     }
 
+                    console.log("Rendering date:", date.format("DD-MM-YYYY"));
+                    console.log(
+                      "Selected Right Column Date:",
+                      selectedRightTableColumnDate
+                    );
+                    console.log(
+                      "Is Highlighted Right Column:",
+                      isHighlightedRightColumn
+                    );
+
                     // Render the day elements for each month
                     return (
                       <div
@@ -561,7 +571,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                           {selectedRightTableColumnDate && (
                             <span>
                               Date Selected:{" "}
-                              {selectedRightTableColumnDate?.format(
+                              {selectedRightTableColumnDate.format(
                                 "DD-MM-YYYY"
                               )}
                             </span>
@@ -616,7 +626,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               fontFamily: "play",
                             }}
                           >
-                            <LeftCircleTwoTone />
+                            #2
                           </div>
                         )}
                       </div>

@@ -1,4 +1,4 @@
-import { LeftCircleTwoTone, RightCircleTwoTone } from "@ant-design/icons";
+import { RightCircleTwoTone } from "@ant-design/icons";
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -483,7 +483,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                     );
                     console.log(
                       "Selected date from ProFormDatePicker:",
-                      handleRightTableColumnDateChange
+                      selectedRightTableColumnDate
                     );
 
                     const isExpanded = expandedDate
@@ -532,6 +532,16 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       color = "white"; // Change this to your desired highlight color
                     }
 
+                    console.log("Rendering date:", date.format("DD-MM-YYYY"));
+                    console.log(
+                      "Selected Right Column Date:",
+                      selectedRightTableColumnDate
+                    );
+                    console.log(
+                      "Is Highlighted Right Column:",
+                      isHighlightedRightColumn
+                    );
+
                     // Render the day elements for each month
                     return (
                       <div
@@ -560,10 +570,11 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         <div>
                           {selectedRightTableColumnDate && (
                             <span>
-                              Date Selected:{" "}
-                              {selectedRightTableColumnDate?.format(
-                                "DD-MM-YYYY"
-                              )}
+                              {/* {" Date Selected:{" "}
+                              {selectedRightTableColumnDate.format(
+                                "DD-MM-YYYY""}
+                              )} */}
+                              {""}
                             </span>
                           )}
                         </div>{" "}
@@ -596,29 +607,31 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                             />{" "}
                           </div>
                         )}
-                        {isHighlightedRightColumn && showTransfer && (
-                          <div
-                            style={{
-                              position: "absolute",
+                        {selectedRightTableColumnDate &&
+                          isHighlightedRightColumn &&
+                          showTransfer && (
+                            <div
+                              style={{
+                                position: "absolute",
 
-                              // paddingTop: 24,
-                              top: 0,
-                              left: 0,
-                              width: "100%",
-                              height: "100%",
-                              backgroundColor: "rgba(0, 0, 0, 0.2)",
-                              color: "rgba(255, 255, 255, 1)",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              fontWeight: 700,
-                              fontSize: 24,
-                              fontFamily: "play",
-                            }}
-                          >
-                            <LeftCircleTwoTone />
-                          </div>
-                        )}
+                                paddingTop: 22,
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                backgroundColor: "rgba(0, 0, 0, 0.2)",
+                                color: "rgba(255, 255, 255, 1)",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                fontWeight: 700,
+                                fontSize: 24,
+                                fontFamily: "play",
+                              }}
+                            >
+                              #2
+                            </div>
+                          )}
                       </div>
                     );
                   })}

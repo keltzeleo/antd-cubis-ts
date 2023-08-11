@@ -157,14 +157,14 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     const currentDate = dayjs(); // Get the current date as a Dayjs object
     setSelectedDate(currentDate);
   };
-  const localHandleRightTableColumnDateChange = (date: Dayjs | null) => {
-    if (date) {
-      console.log(
-        "Inside handleRightTableColumnDateChange with date:",
-        date.format("DD-MM-YYYY")
-      );
-      handleRightTableColumnDateChange(date);
-    }
+
+  const localHandleRightTableColumnDateChange = (date: Dayjs) => {
+    console.log(
+      "Inside handleRightTableColumnDateChange with date:",
+      date?.format("DD-MM-YYYY")
+    );
+    setSelectedRightTableColumnDate(date); // Use the passed date directly
+    handleRightTableColumnDateChange(date);
   };
 
   const handleCheckboxChange = (key: string) => {
@@ -391,7 +391,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         leftColumns={leftTableColumns}
         rightColumns={rightTableColumns}
         selectedRightTableColumnDate={selectedRightTableColumnDate} // Pass the selectedRightTableColumnDate as a prop
-        handleRightTableColumnDateChange={setSelectedRightTableColumnDate} // Pass the handleRightTableColumnDateChange function
+        localHandleRightTableColumnDateChange={setSelectedRightTableColumnDate} // Pass the handleRightTableColumnDateChange function
       />
     </>
   );

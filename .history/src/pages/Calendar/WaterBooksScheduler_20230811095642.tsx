@@ -1,4 +1,4 @@
-import { LeftCircleTwoTone, RightCircleTwoTone } from "@ant-design/icons";
+import { RightCircleTwoTone } from "@ant-design/icons";
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -473,7 +473,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       : false;
 
                     const isHighlightedRightColumn =
-                      selectedRightTableColumnDate
+                      handleRightTableColumnDateChange
                         ? date.isSame(selectedRightTableColumnDate, "day")
                         : false;
 
@@ -616,7 +616,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               fontFamily: "play",
                             }}
                           >
-                            <LeftCircleTwoTone />
+                            #2
                           </div>
                         )}
                       </div>

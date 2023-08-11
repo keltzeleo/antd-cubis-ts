@@ -163,7 +163,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
         "Inside handleRightTableColumnDateChange with date:",
         date.format("DD-MM-YYYY")
       );
-      handleRightTableColumnDateChange(date);
+      props.handleRightTableColumnDateChange(date);
     }
   };
 

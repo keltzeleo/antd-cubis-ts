@@ -1,5 +1,5 @@
-import { LeftCircleTwoTone, RightCircleTwoTone } from "@ant-design/icons";
-import ProForm, { ProFormDatePicker } from "@ant-design/pro-form";
+import { RightCircleTwoTone } from "@ant-design/icons";
+import { ProFormDatePicker } from "@ant-design/pro-form";
 import { Space, Switch, Table, Tag, Transfer } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TransferItem, TransferProps } from "antd/es/transfer";
@@ -15,8 +15,7 @@ interface Theme {
 // Interface for the props of the TransferSample component
 interface TransferSampleProps {
   theme: Theme;
-  doubleClickedDate: Dayjs | null;
-  handleRightTableColumnDateChange: (date: Dayjs) => void;
+  doubleClickedDate: Dayjs | null; // Add the prop for double-clicked date
 }
 
 // Interface for the data in the table
@@ -125,7 +124,6 @@ const originTargetKeys = mockData
 const TransferSample: React.FC<TransferSampleProps> = ({
   theme,
   doubleClickedDate,
-  handleRightTableColumnDateChange,
 }) => {
   const [targetKeys, setTargetKeys] = useState<string[]>(originTargetKeys);
   const [disabled, setDisabled] = useState(false);
@@ -137,6 +135,11 @@ const TransferSample: React.FC<TransferSampleProps> = ({
 
   const [selectedRightTableColumnDate, setSelectedRightTableColumnDate] =
     useState<Dayjs | null>(null);
+
+  const [
+    handleRightTableColumnDateChange,
+    onHandlehandleRightTableColumnDateChange,
+  ];
 
   const onChange = (nextTargetKeys: string[]) => {
     // Function to handle the double-click event and update the date state
@@ -157,14 +160,14 @@ const TransferSample: React.FC<TransferSampleProps> = ({
     const currentDate = dayjs(); // Get the current date as a Dayjs object
     setSelectedDate(currentDate);
   };
-  const localHandleRightTableColumnDateChange = (date: Dayjs | null) => {
-    if (date) {
-      console.log(
-        "Inside handleRightTableColumnDateChange with date:",
-        date.format("DD-MM-YYYY")
-      );
-      handleRightTableColumnDateChange(date);
-    }
+
+  const handleRightTableColumnDateChange = (date: Dayjs | null) => {
+    console.log(
+      "Inside handleRightTableColumnDateChange with date:",
+      date?.format("DD-MM-YYYY")
+    );
+
+    setSelectedRightTableColumnDate(date);
   };
 
   const handleCheckboxChange = (key: string) => {
@@ -292,7 +295,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
           <div
             style={{
               fontSize: 30,
-              margin: "-7px 4px 0px 10px",
+              margin: "-7px 0px 0px 10px",
               fontFamily: "play",
               paddingTop: -20,
             }}
@@ -324,15 +327,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             margin: "8px 0px 0px 16px", // Adjusted margin to create space between the two sections
           }}
         >
-          <LeftCircleTwoTone
-            twoToneColor={theme["colorPrimary"]}
-            style={{
-              fontSize: 30,
-              margin: "-8px 0px 0px 0px",
-              fontFamily: "play",
-              paddingTop: -20,
-            }}
-          />
           <div
             style={{
               fontSize: 36,
@@ -341,27 +335,22 @@ const TransferSample: React.FC<TransferSampleProps> = ({
               paddingTop: -20,
             }}
           >
-            <ProForm>
-              <div style={{ paddingTop: 2 }}>
-                <ProFormDatePicker
-                  name="datePicker"
-                  label=""
-                  placeholder="Select a date"
-                  fieldProps={{
-                    format: "DD-MM-YYYY",
-                    value: selectedRightTableColumnDate,
-                    onChange: (date) => {
-                      console.log(
-                        "Date from ProFormDatePicker:",
-                        date?.format("DD-MM-YYYY")
-                      );
-
-                      localHandleRightTableColumnDateChange(date);
-                    },
-                  }}
-                />
-              </div>
-            </ProForm>
+            <ProFormDatePicker
+              name="datePicker"
+              label=""
+              placeholder="Select a date"
+              fieldProps={{
+                format: "DD-MM-YYYY",
+                value: selectedRightTableColumnDate,
+                onChange: (date) => {
+                  console.log(
+                    "Date from ProFormDatePicker:",
+                    date?.format("DD-MM-YYYY")
+                  );
+                  handleRightTableColumnDateChange(date);
+                },
+              }}
+            />
           </div>
           <div>
             {selectedRightTableColumnDate ? (

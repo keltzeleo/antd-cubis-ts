@@ -1,4 +1,4 @@
-import { LeftCircleTwoTone, RightCircleTwoTone } from "@ant-design/icons";
+import { RightCircleTwoTone } from "@ant-design/icons";
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -473,17 +473,16 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                       : false;
 
                     const isHighlightedRightColumn =
-                      selectedRightTableColumnDate
                         ? date.isSame(selectedRightTableColumnDate, "day")
                         : false;
 
                     console.log(
                       "Current cell date:",
-                      handleRightTableColumnDateChange
+                      selectedRightTableColumnDate
                     );
                     console.log(
                       "Selected date from ProFormDatePicker:",
-                      handleRightTableColumnDateChange
+                      selectedRightTableColumnDate
                     );
 
                     const isExpanded = expandedDate
@@ -616,7 +615,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                               fontFamily: "play",
                             }}
                           >
-                            <LeftCircleTwoTone />
+                            #2
                           </div>
                         )}
                       </div>
