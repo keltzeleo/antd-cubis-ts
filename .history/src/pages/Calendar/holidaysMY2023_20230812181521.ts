@@ -1,6 +1,9 @@
 // holidays2023.ts
 
-export const holidaysMY2023 = [
+import { Dayjs } from "dayjs";
+import { EventData } from "./WaterBooksScheduler";
+
+const holidaysMY2023 = [
   {
     date: "01-01-2023",
     name: "New Year's Day",
@@ -142,3 +145,23 @@ export const holidaysMY2023 = [
     name: "Christmas Day",
   },
 ];
+
+export const isMalaysiaHoliday = (date: Dayjs) => {
+  const dateStr = date.format("DD-MM-YYYY");
+  return holidaysMY2023.some((holiday) => holiday.date === dateStr);
+};
+
+export const convertToEventData = (event: EventData | undefined): EventData => {
+  if (!event) {
+    return {
+      id: "",
+      content: "",
+      date: "",
+      reader: "",
+      totalBooks: "",
+      bookNo: "",
+      bookDescription: "",
+    };
+  }
+  return { ...event };
+};

@@ -75,7 +75,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     useState<Dayjs | null>(null);
 
   useEffect(() => {
-    console.log(
       "selectedRightTableColumnDate changed:",
       selectedRightTableColumnDate?.format("DD-MM-YYYY")
     );
@@ -97,7 +96,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const handleDatePanelChange = (date: Dayjs, mode: string) => {
-    console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
     if (mode === "date") {
       // Add a delay to handle the double-click event
       if (isDateValuePanelDoubleClicked) {
@@ -167,13 +165,32 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setValue(newValue);
   };
 
+  const handlePanelChange = (date: Dayjs, mode: string) => {
+
+    // Check if it's a double-click event (mode === "date")
+    if (mode === "date") {
+      if (isDateValuePanelDoubleClicked) {
+        // If it's a double-click, switch to the single-row calendar view
+        handleDatePanelDoubleClick();
+        setIsDateValuePanelDoubleClicked(false); // Reset the double-click state
+      } else {
+        // If it's the first click, set the double-click state and reset it after 300ms
+        setIsDateValuePanelDoubleClicked(true);
+        setTimeout(() => {
+          setIsDateValuePanelDoubleClicked(false);
+        }, 300);
+      }
+    }
+
+    setValue(date);
+  };
+
   const handleDatePanelDoubleClick = () => {
     setShowSingleRow((prevShowSingleRow) => !prevShowSingleRow);
     setShowTransfer((prevShowTransfer) => !prevShowTransfer); // Toggle the visibility of the Transfer component
   };
 
   const onPanelChange = (date: Dayjs, mode: string) => {
-    console.log("Panel change event:", date.format("YYYY-MM-DD"), mode);
 
     // Check if it's a double-click event (mode === "date")
     if (mode === "date") {
@@ -205,7 +222,23 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     return null;
   };
 
+  const monthCellRender = (date: Dayjs) => {
+    const num = getMonthData(date);
+    return num ? (
+      <div className="notes-month">
+        <section>{num}</section>
+        <span>Backlog number</span>
+      </div>
+    ) : null;
+  };
+
   // Function to get the index of the item within the date cell
+  const getItemIndex = (itemId: string, dateKey: string) => {
+    const dateEvents = scheduledBooks[dateKey];
+    if (!dateEvents) return -1;
+
+    return dateEvents.findIndex((event) => event.id === itemId);
+  };
 
   const convertToEventData = (event: EventData | undefined): EventData => {
     if (!event) {
@@ -268,6 +301,8 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     setSelectedDate(date); // Always set the selected date
   };
 
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
   // Function to render the single-row view of the calendar
   function renderSingleRowCalendar(
     selectedDate: Dayjs | null,
@@ -275,6 +310,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     selectedRightTableColumnDate: Dayjs | null,
     handleRightTableColumnDateChange: (date: Dayjs) => void | null
   ) {
+    const currentMonth = value.month(); // Get the current month's index (0 to 11)
     const daysInMonth = value.daysInMonth();
     const startOfMonth = value.startOf("month");
     const firstDayOfWeek = startOfMonth.day();
@@ -363,14 +399,16 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                         ? date.isSame(selectedRightTableColumnDate, "day")
                         : false;
 
-                    console.log(
                       "Current cell date:",
                       handleRightTableColumnDateChange
                     );
-                    console.log(
                       "Selected date from ProFormDatePicker:",
                       handleRightTableColumnDateChange
                     );
+
+                    const isExpanded = expandedDate
+                      ? date.isSame(expandedDate, "day")
+                      : false; // Check if the date is the same as the double-clicked date
 
                     // Check if the date is a weekend (rest day)
                     const isWeekend = date.day() === 6 || date.day() === 0; // 6: Saturday, 0: Sunday
@@ -516,7 +554,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     );
   }
   const onDragEnd = (result: DropResult) => {
-    const { destination, source } = result;
+    const { destination, source, draggableId } = result;
 
     if (!destination) {
       return;
@@ -534,6 +572,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     const destinationDateKey = destination.droppableId.split("_")[1]; // Extract the date part
 
     // Create Dayjs instances for source and destination dates
+    const sourceDate = dayjs(sourceDateKey, "DD-MM-YYYY");
     const destinationDate = dayjs(destinationDateKey, "DD-MM-YYYY");
 
     // Check if the destination date is a weekend or holiday
@@ -734,7 +773,6 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   };
 
   const handleRightTableColumnDateChange = (date: Dayjs | null) => {
-    console.log(
       "Inside handleRightTableColumnDateChange with date:",
       date?.format("DD-MM-YYYY")
     );
