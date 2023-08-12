@@ -29,9 +29,7 @@ const LoginPage: React.FC = () => {
           {/* Logo Image */}
           <h1 className="brand-name">cUBIS</h1> {/* Brand Name */}
         </div>
-        <div>
-          <Title level={4}>.:: Login ::.</Title>
-        </div>
+        <Title level={4}>.:: Login ::.</Title>
         <Form name="normal_login" onFinish={onFinish}>
           <Form.Item
             name="username"

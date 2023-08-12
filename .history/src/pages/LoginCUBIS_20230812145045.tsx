@@ -30,7 +30,17 @@ const LoginPage: React.FC = () => {
           <h1 className="brand-name">cUBIS</h1> {/* Brand Name */}
         </div>
         <div>
-          <Title level={4}>.:: Login ::.</Title>
+          <Title
+            style={{
+              border: "2px solid #00a991", // Added width (2px) and style (solid)
+              height: 20,
+              borderRadius: 16,
+              padding: 16,
+            }}
+            level={4}
+          >
+            .:: Login ::.
+          </Title>
         </div>
         <Form name="normal_login" onFinish={onFinish}>
           <Form.Item

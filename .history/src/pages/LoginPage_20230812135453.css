@@ -38,9 +38,9 @@
 }
 
 .brand-name {
-  font-size: 36px; /* Adjust the brand name size as needed */
+  font-size: 40px; /* Adjust the brand name size as needed */
   font-weight: bold; /* Bold text for the brand name */
   color: #f3f6f9; /* Color for the brand name (adjust as needed) */
-  margin-bottom: 0px; /* Spacing below the brand name */
+  margin-bottom: 10px; /* Spacing below the brand name */
   font-family: "kuBook";
 }

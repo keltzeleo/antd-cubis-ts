@@ -20,18 +20,10 @@ const LoginPage: React.FC = () => {
     <div className="login-container">
       <div className="blur-border"></div> {/* Blurred border behind the form */}
       <div className="form-container">
-        <div className="logo-container">
-          <img
-            src="https://res.cloudinary.com/tyappreg/image/upload/v1682262051/logoCUBIS_r1dbxm.svg"
-            alt="cUBIS Logo"
-            className="logo"
-          />{" "}
-          {/* Logo Image */}
-          <h1 className="brand-name">cUBIS</h1> {/* Brand Name */}
-        </div>
-        <div>
-          <Title level={4}>.:: Login ::.</Title>
-        </div>
+        <img src="../logo.svg" alt="cUBIS Logo" className="logo" />{" "}
+        {/* Logo Image */}
+        <h1 className="brand-name">cUBIS</h1> {/* Brand Name */}
+        <Title level={3}>Login</Title>
         <Form name="normal_login" onFinish={onFinish}>
           <Form.Item
             name="username"

@@ -25,22 +25,14 @@
   /* text-align: center; Center the logo and brand name */
 }
 
-.logo-container {
-  display: flex; /* Enable flexbox layout */
-  align-items: center; /* Vertically align the logo and brand name */
-  justify-content: center; /* Horizontally center the logo and brand name */
-  margin-bottom: 20px; /* Spacing below the logo and brand name */
-}
-
 .logo {
-  width: 56px;
-  margin-right: 10px; /* Spacing between the logo and brand name */
+  width: 72px; /* Adjust the logo size as needed */
+  margin-top: 30px; /* Spacing below the logo */
 }
 
 .brand-name {
-  font-size: 36px; /* Adjust the brand name size as needed */
+  font-size: 24px; /* Adjust the brand name size as needed */
   font-weight: bold; /* Bold text for the brand name */
-  color: #f3f6f9; /* Color for the brand name (adjust as needed) */
-  margin-bottom: 0px; /* Spacing below the brand name */
-  font-family: "kuBook";
+  color: #00a991; /* Color for the brand name (adjust as needed) */
+  margin-bottom: 20px; /* Spacing below the brand name */
 }
