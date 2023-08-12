@@ -15,7 +15,7 @@
   background: rgba(202, 239, 227, 0.228); /* Semi-transparent background */
   backdrop-filter: blur(15px);
   /* filter: blur(15px); */
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0 4px 6px rgba(40, 33, 33, 0.1); /* Optional: Add a soft shadow */
 }
 

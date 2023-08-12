@@ -15,7 +15,7 @@
   background: rgba(202, 239, 227, 0.228); /* Semi-transparent background */
   backdrop-filter: blur(15px);
   /* filter: blur(15px); */
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0 4px 6px rgba(40, 33, 33, 0.1); /* Optional: Add a soft shadow */
 }
 
@@ -49,6 +49,5 @@
   font-size: 12px; /* Adjust the font size as needed */
   color: #00a991; /* Adjust the color as needed */
   text-align: center; /* Center the text */
-  margin-top: 20px; /* Spacing above the text */
-  font-family: "Muli";
+  margin-top: 10px; /* Spacing above the text */
 }
