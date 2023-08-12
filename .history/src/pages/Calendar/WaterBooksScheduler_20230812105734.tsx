@@ -18,16 +18,6 @@ import WaterBooksPreviousMonthReschedulingForm from "./waterBooksPreviousMonthRe
 import "./waterBooksSchedule.css";
 import { mockScheduledBooks } from "./waterBooksSchedulerMockData";
 
-type EventData = {
-  id: string; // Add unique ID for each event
-  content: string; // Add the 'content' property
-  date: string;
-  reader: string;
-  bookNo: string;
-  totalBooks: string;
-  bookDescription: string;
-};
-
 interface LegendItem {
   category: string;
   label: string;

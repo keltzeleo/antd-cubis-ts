@@ -1,0 +1,17 @@
+.login-container {
+  background: url("../../public/bg/bgCUBIS.svg") no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-frame {
+  width: 300px;
+  background: rgba(255, 255, 255, 0.5); /* Translucent white background */
+  backdrop-filter: blur(10px); /* Apply blur */
+  padding: 20px;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a soft shadow */
+}

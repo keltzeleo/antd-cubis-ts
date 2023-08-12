@@ -17,9 +17,15 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="blur-border"></div> {/* Blurred border behind the form */}
-      <div className="form-container">
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <div style={{ width: 300 }}>
         <Title level={3}>Login</Title>
         <Form name="normal_login" onFinish={onFinish}>
           <Form.Item

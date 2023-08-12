@@ -18,7 +18,6 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className="login-container">
-      <div className="blur-border"></div> {/* Blurred border behind the form */}
       <div className="form-container">
         <Title level={3}>Login</Title>
         <Form name="normal_login" onFinish={onFinish}>

@@ -11,22 +11,13 @@ import {
 } from "react-beautiful-dnd";
 import "../../App.css";
 import Legend from "../../customComponents/Legend/Legend";
+import { generateUniqueID } from "../../customConstants/generateUniqueID";
+import {waterBooksSchedulerMockDatatsts};
 import TransferSample from "./TransferSample";
 import "./draggableCalendar.css";
 import { holidaysMY2023 } from "./holidaysMY2023";
 import WaterBooksPreviousMonthReschedulingForm from "./waterBooksPreviousMonthReschedulingForm";
 import "./waterBooksSchedule.css";
-import { mockScheduledBooks } from "./waterBooksSchedulerMockData";
-
-type EventData = {
-  id: string; // Add unique ID for each event
-  content: string; // Add the 'content' property
-  date: string;
-  reader: string;
-  bookNo: string;
-  totalBooks: string;
-  bookDescription: string;
-};
 
 interface LegendItem {
   category: string;
@@ -42,6 +33,9 @@ interface Theme {
 interface WaterBooksSchedulerProps {
   theme: Theme;
 }
+
+
+
 
 const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
   const [scheduledBooks, setScheduledBooks] =
