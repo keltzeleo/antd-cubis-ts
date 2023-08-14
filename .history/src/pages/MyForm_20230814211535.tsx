@@ -326,7 +326,7 @@ const MyForm: React.FC = () => {
                           marginLeft: 64,
                           background: sendViaEmailSMS
                             ? light["colorPrimary"]
-                            : "rgba(30,50,60,0.1)",
+                            : "rgba(30,50,60,0.12)",
                           border: "1px solid #e3e6e9",
                           borderRadius: 8,
                           transition: "background 0.3s ease-in-out",

@@ -52,7 +52,7 @@ const ThemeApp: React.FC = () => {
       {/* <ThemeTest /> */}
       <WaterBooksScheduler theme={isDarkMode ? dark : light} />
 
-      <div style={{ height: 200 }} />
+      <div style={{ height: 120 }} />
 
       <NapsWizard2 theme={isDarkMode ? dark : light} />
       <div style={{ height: 100 }} />

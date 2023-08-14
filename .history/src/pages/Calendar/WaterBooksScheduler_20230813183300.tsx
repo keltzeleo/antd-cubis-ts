@@ -307,7 +307,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     const startMonth = value.clone().subtract(numMonthsToShow - 2, "month");
 
     return (
-      <div style={{ position: "relative", margin: "0 8" }}>
+      <div style={{ position: "relative" }}>
         <div
           style={{
             overflowX: "auto",
@@ -774,10 +774,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
                 : "Switch to Single-Row 3 Months View"}
             </Button>
           </div>
-          <Button
-            onClick={() => setValue(value.subtract(1, "month"))}
-            style={{ height: 40 }}
-          >
+          <Button onClick={() => setValue(value.subtract(1, "month"))}>
             «
           </Button>
           <DatePicker.MonthPicker
@@ -788,12 +785,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             format="MM-YYYY"
             onPanelChange={handleDatePanelChange} // Use handleDatePanelChange to handle single-click and double-click events
           />
-          <Button
-            onClick={() => setValue(value.add(1, "month"))}
-            style={{ marginRight: 24, height: 40 }}
-          >
-            »
-          </Button>
+          <Button onClick={() => setValue(value.add(1, "month"))}>»</Button>
         </div>
 
         <div style={{ marginBottom: 32 }}>

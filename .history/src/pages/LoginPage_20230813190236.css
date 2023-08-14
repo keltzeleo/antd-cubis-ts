@@ -13,7 +13,7 @@
   justify-content: center;
   width: 350px; /* Width including padding */
   height: 480px; /* Height including padding */
-  background: rgba(202, 239, 227, 0.18);
+  background: rgba(202, 239, 227, 0.21);
   /* background: rgba(196, 158, 170, 0.055); Semi-transparent background */
   backdrop-filter: blur(15px);
   /* filter: blur(15px); */

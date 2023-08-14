@@ -325,8 +325,8 @@ const MyForm: React.FC = () => {
                           padding: 10,
                           marginLeft: 64,
                           background: sendViaEmailSMS
-                            ? light["cyan.3"]
-                            : "#fff",
+                            ? light["colorPrimary"]
+                            : "#d1d1d2",
                           border: "1px solid #e3e6e9",
                           borderRadius: 8,
                           transition: "background 0.3s ease-in-out",
@@ -375,7 +375,9 @@ const MyForm: React.FC = () => {
                           flexWrap: "wrap",
                           padding: 10,
                           marginLeft: 22,
-                          background: printForm ? light["cyan.3"] : "#fff",
+                          background: printForm
+                            ? light["colorPrimary"]
+                            : "#d1d1d2",
                           border: "1px solid #e3e6e9",
                           transition: "background 0.3s ease-in-out",
                         }}

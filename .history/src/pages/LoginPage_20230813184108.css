@@ -1,6 +1,6 @@
 .login-container {
   background: url("../../public/bg/bgCUBIS.svg") no-repeat center center fixed;
-  /* background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%); */
+  background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
   background-size: cover;
   height: 100vh;
   display: flex;
@@ -13,8 +13,7 @@
   justify-content: center;
   width: 350px; /* Width including padding */
   height: 480px; /* Height including padding */
-  background: rgba(202, 239, 227, 0.18);
-  /* background: rgba(196, 158, 170, 0.055); Semi-transparent background */
+  background: rgba(202, 239, 227, 0.228); /* Semi-transparent background */
   backdrop-filter: blur(15px);
   /* filter: blur(15px); */
   border-radius: 12px;
@@ -49,8 +48,8 @@
 
 .powered-by {
   font-size: 12px; /* Adjust the font size as needed */
+  color: #00a991; /* Adjust the color as needed */
   text-align: center; /* Center the text */
   margin-top: 20px; /* Spacing above the text */
-  color: #00a991;
   font-family: "Muli";
 }

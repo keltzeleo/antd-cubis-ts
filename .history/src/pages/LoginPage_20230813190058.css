@@ -13,9 +13,9 @@
   justify-content: center;
   width: 350px; /* Width including padding */
   height: 480px; /* Height including padding */
-  background: rgba(202, 239, 227, 0.18);
-  /* background: rgba(196, 158, 170, 0.055); Semi-transparent background */
-  backdrop-filter: blur(15px);
+  /* background: rgba(202, 239, 227, 0.228);  */
+  background: rgba(196, 158, 170, 0.055); /* Semi-transparent background */
+  backdrop-filter: blur(5px);
   /* filter: blur(15px); */
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(40, 33, 33, 0.1); /* Optional: Add a soft shadow */

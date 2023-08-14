@@ -32,7 +32,7 @@ interface FormFields {
 
 const { Option } = Select;
 
-const MyFormDummy: React.FC = () => {
+const MyForm: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState("MyKad");
   const [selectedItem, setSelectedItem] = useState("newWaterSupply");
   const [idNumber, setIdNumber] = useState("");
@@ -325,8 +325,8 @@ const MyFormDummy: React.FC = () => {
                           padding: 10,
                           marginLeft: 64,
                           background: sendViaEmailSMS
-                            ? light["cyan.3"]
-                            : "#fff",
+                            ? light["cyan.4"]
+                            : "#b1b3b5",
                           border: "1px solid #e3e6e9",
                           borderRadius: 8,
                           transition: "background 0.3s ease-in-out",
@@ -375,7 +375,9 @@ const MyFormDummy: React.FC = () => {
                           flexWrap: "wrap",
                           padding: 10,
                           marginLeft: 22,
-                          background: printForm ? light["cyan.3"] : "#fff",
+                          background: printForm
+                            ? light["colorPrimary"]
+                            : "#d3d6d9",
                           border: "1px solid #e3e6e9",
                           transition: "background 0.3s ease-in-out",
                         }}
@@ -647,4 +649,4 @@ const MyFormDummy: React.FC = () => {
   );
 };
 
-export default MyFormDummy;
+export default MyForm;

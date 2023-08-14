@@ -46,13 +46,12 @@ const ThemeApp: React.FC = () => {
 
       <p></p>
       <TariffChargesMaintenance2 theme={isDarkMode ? dark : light} />
-      <div style={{ height: 100 }} />
       {/* <EditableTable theme={isDarkMode ? dark : light} /> */}
       {/* <TariffChargesMaintenanceCard theme={isDarkMode ? dark : light} /> */}
       {/* <ThemeTest /> */}
       <WaterBooksScheduler theme={isDarkMode ? dark : light} />
 
-      <div style={{ height: 200 }} />
+      <div style={{ height: 100 }} />
 
       <NapsWizard2 theme={isDarkMode ? dark : light} />
       <div style={{ height: 100 }} />

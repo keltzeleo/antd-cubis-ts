@@ -307,7 +307,7 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
     const startMonth = value.clone().subtract(numMonthsToShow - 2, "month");
 
     return (
-      <div style={{ position: "relative", margin: "0 8" }}>
+      <div style={{ position: "relative" }}>
         <div
           style={{
             overflowX: "auto",
