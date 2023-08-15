@@ -519,6 +519,7 @@ const MyForm: React.FC = () => {
               margin: 8,
               display: "flex",
               borderRadius: "8px",
+              border: "1px dotted #e3e6e9",
             }}
           >
             <Button
@@ -530,7 +531,6 @@ const MyForm: React.FC = () => {
                 alignItems: "center",
                 width: "auto",
                 height: "auto",
-                border: "1px dashed #00a991",
               }}
               shape="default"
               icon={
@@ -560,7 +560,6 @@ const MyForm: React.FC = () => {
                 alignItems: "center",
                 width: "auto",
                 height: "auto",
-                border: "1px dashed #00a991",
               }}
               shape="default"
               icon={
@@ -593,7 +592,6 @@ const MyForm: React.FC = () => {
                 alignItems: "center",
                 width: "auto",
                 height: "auto",
-                border: "1px dashed #00a991",
               }}
               type={selectedItem === "tempSup" ? "primary" : "default"}
               onClick={() => handleButtonClick("tempSup")}
@@ -622,7 +620,6 @@ const MyForm: React.FC = () => {
                 alignItems: "center",
                 width: "auto",
                 height: "auto",
-                border: "1px dashed #00a991",
               }}
               type={selectedItem === "cof" ? "primary" : "default"}
               onClick={() => handleButtonClick("cof")}
