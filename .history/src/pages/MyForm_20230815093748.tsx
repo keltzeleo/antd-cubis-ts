@@ -377,7 +377,7 @@ const MyForm: React.FC = () => {
                           marginLeft: 22,
                           background: printForm
                             ? light["colorPrimary"]
-                            : "rgba(230,250,250,0.1)",
+                            : "rgba(30,50,60,0.1)",
                           border: "1px solid #e3e6e9",
                           transition: "background 0.3s ease-in-out",
                         }}
