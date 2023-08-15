@@ -515,7 +515,7 @@ const MyForm: React.FC = () => {
 
           <div
             style={{
-              background: "rgba(245, 250, 240,0.1)",
+              background: "rgba(230,250,250, 0.1)",
               margin: 8,
               display: "flex",
               borderRadius: "8px",
@@ -531,6 +531,7 @@ const MyForm: React.FC = () => {
                 width: "auto",
                 height: "auto",
                 border: "1px dashed #00a991",
+                backgroundColor: "#f5faf9",
               }}
               shape="default"
               icon={

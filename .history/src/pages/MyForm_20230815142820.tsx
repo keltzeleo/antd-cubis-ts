@@ -515,7 +515,7 @@ const MyForm: React.FC = () => {
 
           <div
             style={{
-              background: "rgba(245, 250, 240,0.1)",
+              background: "rgba(245, 250, 24,0.1)",
               margin: 8,
               display: "flex",
               borderRadius: "8px",
