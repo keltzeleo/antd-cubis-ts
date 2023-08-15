@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
       <div className="form-container">
         <div className="logo-container">
           <img
-            src="https://res.cloudinary.com/tyappreg/image/upload/v1692092892/logoCUBIS02_gnu3od.png"
+            src="https://res.cloudinary.com/tyappreg/image/upload/v1692092468/logoCUBIS01_rbqaio.png"
             alt="cUBIS Logo"
             className="logo"
           />{" "}
