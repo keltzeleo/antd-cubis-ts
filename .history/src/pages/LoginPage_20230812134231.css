@@ -1,0 +1,38 @@
+.login-container {
+  background: url("../../public/bg/bgCUBIS.svg") no-repeat center center fixed;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blur-border {
+  position: absolute; /* Positioning behind the form */
+  justify-content: center;
+  width: 350px; /* Width including padding */
+  height: 480px; /* Height including padding */
+  background: rgba(202, 239, 227, 0.228); /* Semi-transparent background */
+  backdrop-filter: blur(15px);
+  /* filter: blur(15px); */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(40, 33, 33, 0.1); /* Optional: Add a soft shadow */
+}
+
+.form-container {
+  width: 300px;
+  z-index: 1; /* Position in front of the blur border */
+  text-align: center; /* Center the logo and brand name */
+}
+
+.logo {
+  width: 100px; /* Adjust the logo size as needed */
+  margin-top: 30px; /* Spacing below the logo */
+}
+
+.brand-name {
+  font-size: 24px; /* Adjust the brand name size as needed */
+  font-weight: bold; /* Bold text for the brand name */
+  color: #00a991; /* Color for the brand name (adjust as needed) */
+  margin-bottom: 20px; /* Spacing below the brand name */
+}

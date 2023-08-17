@@ -28,6 +28,7 @@
     "@types/react-dnd-touch-backend": "^0.5.0",
     "@types/react-dom": "^18.0.0",
     "@umijs/max": "^4.0.68",
+    "ant-design-pro": "^2.3.2",
     "antd": "latest",
     "antd-pro": "^0.7.0",
     "axios": "^1.4.0",
