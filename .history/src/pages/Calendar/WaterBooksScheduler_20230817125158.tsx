@@ -134,16 +134,15 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
       color: "#edeeef",
     },
     {
-      category: "selectedDay",
-      label: "Selected Day",
-      color: theme["colorPrimary"],
-    },
-    {
       category: "today",
       label: "Today",
       color: theme["cyan.3"],
     },
-
+    {
+      category: "selectedDay",
+      label: "Selected Day",
+      color: theme["colorPrimary"],
+    },
     {
       category: "restDay",
       label: "Rest Day",
