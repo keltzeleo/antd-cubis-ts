@@ -389,20 +389,11 @@ const TransferSample: React.FC<TransferSampleProps> = ({
                 }}
               >
                 {" "}
-                .:: No Selected Date Yet ::.{" "}
+                .:: No Selected Date Yet{" "}
               </div>
             )}
             : Column Selection #2
           </div>
-          <LeftCircleTwoTone
-            twoToneColor={theme["colorPrimary"]}
-            style={{
-              fontSize: 30,
-              margin: "-8px 0px 0px 0px",
-              fontFamily: "play",
-              paddingTop: -20,
-            }}
-          />
         </div>
       </div>
       \\\\\\\\\\\\\{" "}

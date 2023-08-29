@@ -386,6 +386,7 @@ const TransferSample: React.FC<TransferSampleProps> = ({
                   margin: "-7px 4px 0px 10px",
                   fontFamily: "play",
                   paddingTop: -20,
+                  fontColor: theme["colorPrimary"],
                 }}
               >
                 {" "}
@@ -394,15 +395,6 @@ const TransferSample: React.FC<TransferSampleProps> = ({
             )}
             : Column Selection #2
           </div>
-          <LeftCircleTwoTone
-            twoToneColor={theme["colorPrimary"]}
-            style={{
-              fontSize: 30,
-              margin: "-8px 0px 0px 0px",
-              fontFamily: "play",
-              paddingTop: -20,
-            }}
-          />
         </div>
       </div>
       \\\\\\\\\\\\\{" "}
