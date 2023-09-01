@@ -1,4 +1,9 @@
-import { LeftCircleTwoTone, RightCircleTwoTone } from "@ant-design/icons";
+import {
+  CalendarTwoTone,
+  LeftCircleTwoTone,
+  RightCircleTwoTone,
+  TableOutlined,
+} from "@ant-design/icons";
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -774,13 +779,13 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             <Button
               onClick={handleToggleSingleRow}
               style={{ paddingTop: 8, height: 40 }}
-              // icon={
-              //   showSingleRow ? (
-              //     <TableOutlined style={{ color: theme["colorPrimary"] }} />
-              //   ) : (
-              //     <CalendarTwoTone twoToneColor={theme["colorPrimary"]} />
-              //   )
-              // } // Use conditional rendering for icons
+              icon={
+                showSingleRow ? (
+                  <TableOutlined style={{ color: theme["colorPrimary"] }} />
+                ) : (
+                  <CalendarTwoTone twoToneColor={theme["colorPrimary"]} />
+                )
+              } // Use conditional rendering for icons
             >
               {showSingleRow
                 ? "Switch to Original Monthly View"

@@ -1,4 +1,4 @@
-import { LeftCircleTwoTone, RightCircleTwoTone } from "@ant-design/icons";
+import { LeftCircleTwoTone, RightCircleTwoTone,CalendarTwoTone  } from "@ant-design/icons";
 import { Alert, Button, Calendar, DatePicker, Drawer } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -769,24 +769,20 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             }`}
             style={{ marginRight: 16 }}
           />
-          <div style={{ marginRight: 16 }}>
-            {/* Add the button to toggle single-row view */}
-            <Button
-              onClick={handleToggleSingleRow}
-              style={{ paddingTop: 8, height: 40 }}
-              // icon={
-              //   showSingleRow ? (
-              //     <TableOutlined style={{ color: theme["colorPrimary"] }} />
-              //   ) : (
-              //     <CalendarTwoTone twoToneColor={theme["colorPrimary"]} />
-              //   )
-              // } // Use conditional rendering for icons
-            >
-              {showSingleRow
-                ? "Switch to Original Monthly View"
-                : "Switch to Single-Row 3 Months View"}
-            </Button>
-          </div>
+        <div style={{ marginRight: 16 }}>
+  {/* Add the button to toggle single-row view */}
+  <Button
+    onClick={handleToggleSingleRow}
+    style={{ paddingBottom: 8, height: 40 }}
+  >
+    {showSingleRow ? (
+      <CalendarTwoTone twoToneColor="#00a991" />
+      "Switch to Original Month View" 
+    ) : (
+      "Switch to Single-Row 3 Months View"
+    )}
+  </Button>
+</div>
           <Button
             onClick={() => setValue(value.subtract(1, "month"))}
             style={{ height: 40 }}
