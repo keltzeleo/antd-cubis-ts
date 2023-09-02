@@ -22,7 +22,6 @@ const LoginPage: React.FC = () => {
       <div className="form-container">
         <div className="logo-container">
           <img
-            //src="https://res.cloudinary.com/tyappreg/image/upload/v1693615430/logoCUBIS06_icsyba.png"
             //src="https://res.cloudinary.com/tyappreg/image/upload/v1693614448/logoCUBIS06_umw0zx.png"
             src="https://res.cloudinary.com/tyappreg/image/upload/v1693442076/logoCUBIS05_jxwhds.png"
             //src="https://res.cloudinary.com/tyappreg/image/upload/v1692191404/logoCUBIS04_joezug.png"
