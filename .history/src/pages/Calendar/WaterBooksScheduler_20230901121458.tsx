@@ -773,18 +773,16 @@ const WaterBooksScheduler: React.FC<WaterBooksSchedulerProps> = ({ theme }) => {
             {/* Add the button to toggle single-row view */}
             <Button
               onClick={handleToggleSingleRow}
-              style={{ paddingTop: 8, height: 40 }}
-              // icon={
-              //   showSingleRow ? (
-              //     <TableOutlined style={{ color: theme["colorPrimary"] }} />
-              //   ) : (
-              //     <CalendarTwoTone twoToneColor={theme["colorPrimary"]} />
-              //   )
-              // } // Use conditional rendering for icons
+              style={{ paddingBottom: 8, height: 40 }}
             >
-              {showSingleRow
-                ? "Switch to Original Monthly View"
-                : "Switch to Single-Row 3 Months View"}
+              {showSingleRow ? (
+                <CalendarTwoTone twoToneColor="#00a991" />
+                  {" "}
+                  "Switch to Original Month View"{" "}
+  
+              ) : (
+                "Switch to Single-Row 3 Months View"
+              )}
             </Button>
           </div>
           <Button
