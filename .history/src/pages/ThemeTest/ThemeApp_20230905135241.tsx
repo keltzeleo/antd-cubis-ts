@@ -42,7 +42,7 @@ const ThemeApp: React.FC = () => {
       {/* <AppointmentUpdates theme={isDarkMode ? dark : light} /> */}
 
       <p></p>
-      <InquireAccountPage theme={isDarkMode ? dark : light} />
+      <InquireAccountPage />
       <div style={{ height: 100 }} />
       <LoginCUBIS />
       <div style={{ height: 100 }} />
