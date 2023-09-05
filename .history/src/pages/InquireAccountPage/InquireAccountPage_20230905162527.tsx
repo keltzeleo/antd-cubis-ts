@@ -35,13 +35,13 @@ const InquireAccountPage: React.FC<InquireAccountPageProps> = ({ theme }) => {
         <div
           style={{
             background: theme["colorPrimary"], // Background color
-            // border: "1px solid #91d5ff", // Border style
+            border: "1px solid #91d5ff", // Border style
             padding: "16px", // Padding
             display: "inline-flex", // Align items horizontally
             alignItems: "center", // Center items vertically
             width: "100%",
             color: "white",
-            borderRadius: "32px",
+            borderRadius: "16px",
           }}
         >
           <UserOutlined style={{ marginRight: "8px" }} /> Account Information

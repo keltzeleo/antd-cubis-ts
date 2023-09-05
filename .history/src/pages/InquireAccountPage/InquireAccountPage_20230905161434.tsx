@@ -1,4 +1,4 @@
-import { ExclamationCircleOutlined, UserOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import ProLayout, { PageContainer } from "@ant-design/pro-layout";
 import {
   Alert,
@@ -31,22 +31,7 @@ const InquireAccountPage: React.FC<InquireAccountPageProps> = ({ theme }) => {
 
   const columns = [
     {
-      title: (
-        <div
-          style={{
-            background: theme["colorPrimary"], // Background color
-            // border: "1px solid #91d5ff", // Border style
-            padding: "16px", // Padding
-            display: "inline-flex", // Align items horizontally
-            alignItems: "center", // Center items vertically
-            width: "100%",
-            color: "white",
-            borderRadius: "32px",
-          }}
-        >
-          <UserOutlined style={{ marginRight: "8px" }} /> Account Information
-        </div>
-      ),
+      title: "Account Information",
       dataIndex: "name",
       key: "name",
     },

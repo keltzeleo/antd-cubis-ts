@@ -31,22 +31,7 @@ const InquireAccountPage: React.FC<InquireAccountPageProps> = ({ theme }) => {
 
   const columns = [
     {
-      title: (
-        <div
-          style={{
-            background: theme["colorPrimary"], // Background color
-            // border: "1px solid #91d5ff", // Border style
-            padding: "16px", // Padding
-            display: "inline-flex", // Align items horizontally
-            alignItems: "center", // Center items vertically
-            width: "100%",
-            color: "white",
-            borderRadius: "32px",
-          }}
-        >
-          <UserOutlined style={{ marginRight: "8px" }} /> Account Information
-        </div>
-      ),
+      title: "Name",
       dataIndex: "name",
       key: "name",
     },
@@ -91,13 +76,19 @@ const InquireAccountPage: React.FC<InquireAccountPageProps> = ({ theme }) => {
           </Col>
         </Row>
 
-        {/* Customer Information (Left) and Function Tabs (Right) */}
+        {/* Account Information with User Icon */}
         <Row gutter={16}>
-          <Col span={6}>
+          <Col span={12}>
+            <div style={{ marginBottom: "16px" }}>
+              <UserOutlined style={{ fontSize: "24px", marginRight: "8px" }} />
+              <span style={{ fontSize: "18px", fontWeight: "bold" }}>
+                Account Information
+              </span>
+            </div>
             {/* Customer Information */}
             <Table dataSource={mockCustomerData} columns={columns} />
           </Col>
-          <Col span={18}>
+          <Col span={12}>
             {/* Function Tabs */}
             <Tabs>
               <TabPane tab="Statement of Account" key="1">
@@ -106,30 +97,7 @@ const InquireAccountPage: React.FC<InquireAccountPageProps> = ({ theme }) => {
               <TabPane tab="Events" key="2">
                 {/* Your Content Here */}
               </TabPane>
-              <TabPane tab="Bills" key="3">
-                {/* Your Content Here */}
-              </TabPane>
-              <TabPane tab="Payment" key="4">
-                {/* Your Content Here */}
-              </TabPane>
-              <TabPane tab="Deposit" key="5">
-                {/* Your Content Here */}
-              </TabPane>
-              <TabPane tab="Instalment" key="6">
-                {/* Your Content Here */}
-              </TabPane>
-              <TabPane tab="Meter" key="7">
-                {/* Your Content Here */}
-              </TabPane>
-              <TabPane tab="Sewerage" key="8">
-                {/* Your Content Here */}
-              </TabPane>
-              <TabPane tab="Stale Cheque" key="9">
-                {/* Your Content Here */}
-              </TabPane>
-              <TabPane tab="Cancel Bill History" key="10">
-                {/* Your Content Here */}
-              </TabPane>
+              {/* Add more tabs */}
             </Tabs>
           </Col>
         </Row>

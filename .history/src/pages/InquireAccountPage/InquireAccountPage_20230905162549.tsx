@@ -41,7 +41,7 @@ const InquireAccountPage: React.FC<InquireAccountPageProps> = ({ theme }) => {
             alignItems: "center", // Center items vertically
             width: "100%",
             color: "white",
-            borderRadius: "32px",
+            borderRadius: "16px",
           }}
         >
           <UserOutlined style={{ marginRight: "8px" }} /> Account Information

@@ -1,4 +1,4 @@
-import { ExclamationCircleOutlined, UserOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import ProLayout, { PageContainer } from "@ant-design/pro-layout";
 import {
   Alert,
@@ -31,22 +31,7 @@ const InquireAccountPage: React.FC<InquireAccountPageProps> = ({ theme }) => {
 
   const columns = [
     {
-      title: (
-        <div
-          style={{
-            background: theme["colorPrimary"], // Background color
-            // border: "1px solid #91d5ff", // Border style
-            padding: "16px", // Padding
-            display: "inline-flex", // Align items horizontally
-            alignItems: "center", // Center items vertically
-            width: "100%",
-            color: "white",
-            borderRadius: "32px",
-          }}
-        >
-          <UserOutlined style={{ marginRight: "8px" }} /> Account Information
-        </div>
-      ),
+      title: "Name",
       dataIndex: "name",
       key: "name",
     },
@@ -56,29 +41,32 @@ const InquireAccountPage: React.FC<InquireAccountPageProps> = ({ theme }) => {
   return (
     <ProLayout navTheme="dark">
       <PageContainer>
-        {/* Account Selection */}
         <Row gutter={[16, 16]}>
-          <Col span={2}>
-            <Dropdown overlay={<StationDropdownMenu stations={mockStations} />}>
-              <Button>Select Station</Button>
-            </Dropdown>
-          </Col>
-          <Col span={8}>
-            <Input
-              type="text"
-              placeholder="Enter Account Number"
-              value={accountNumber}
-              onChange={(e) => setAccountNumber(e.target.value)}
-            />
-          </Col>
-          <Col span={8}>
-            <Button type="primary">View Account</Button>
-          </Col>
-        </Row>
-
-        {/* Alert Message */}
-        <Row style={{ marginTop: "12px" }}>
-          <Col span={24}>
+          {/* Left Column (Customer Information) */}
+          <Col span={12}>
+            {/* Account Selection */}
+            <Row gutter={[16, 16]}>
+              <Col span={2}>
+                <Dropdown
+                  overlay={<StationDropdownMenu stations={mockStations} />}
+                >
+                  <Button>Select Station</Button>
+                </Dropdown>
+              </Col>
+              <Col span={8}>
+                <Input
+                  type="text"
+                  placeholder="Enter Account Number"
+                  value={accountNumber}
+                  onChange={(e) => setAccountNumber(e.target.value)}
+                />
+              </Col>
+              <Col span={8}>
+                <Button type="primary">View Account</Button>
+              </Col>
+            </Row>
+            {""}
+            {/* Alert Message */}
             {accountNumber.length === 0 && (
               <Alert
                 message="Account Number Required"
@@ -86,18 +74,15 @@ const InquireAccountPage: React.FC<InquireAccountPageProps> = ({ theme }) => {
                 type="warning"
                 showIcon
                 icon={<ExclamationCircleOutlined />}
+                style={{ marginTop: "12px" }}
               />
             )}
-          </Col>
-        </Row>
-
-        {/* Customer Information (Left) and Function Tabs (Right) */}
-        <Row gutter={16}>
-          <Col span={6}>
             {/* Customer Information */}
             <Table dataSource={mockCustomerData} columns={columns} />
           </Col>
-          <Col span={18}>
+
+          {/* Right Column (Function Tabs) */}
+          <Col span={12}>
             {/* Function Tabs */}
             <Tabs>
               <TabPane tab="Statement of Account" key="1">
@@ -131,16 +116,16 @@ const InquireAccountPage: React.FC<InquireAccountPageProps> = ({ theme }) => {
                 {/* Your Content Here */}
               </TabPane>
             </Tabs>
+
+            {/* Expandable Sections */}
+            <Collapse>
+              <Panel header="Event Details" key="1">
+                {/* Your Content Here */}
+              </Panel>
+              {/* Add more panels */}
+            </Collapse>
           </Col>
         </Row>
-
-        {/* Expandable Sections */}
-        <Collapse>
-          <Panel header="Event Details" key="1">
-            {/* Your Content Here */}
-          </Panel>
-          {/* Add more panels */}
-        </Collapse>
       </PageContainer>
     </ProLayout>
   );
