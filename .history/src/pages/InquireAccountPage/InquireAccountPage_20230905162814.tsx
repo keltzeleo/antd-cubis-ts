@@ -36,7 +36,7 @@ const InquireAccountPage: React.FC<InquireAccountPageProps> = ({ theme }) => {
           style={{
             background: theme["colorPrimary"], // Background color
             // border: "1px solid #91d5ff", // Border style
-            padding: "10 10 10 16", // Padding
+            padding: "12px", // Padding
             display: "inline-flex", // Align items horizontally
             alignItems: "center", // Center items vertically
             width: "100%",
