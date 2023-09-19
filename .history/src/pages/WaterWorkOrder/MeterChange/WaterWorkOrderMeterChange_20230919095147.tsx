@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SpotlightButton from "../../../customComponents/SpotLightButton/SpotLightButton";
+import SpotlightButton from "../../../customComponents/SpotLightButton/SpotLightButton"; // Import the SpotlightButton component
 
 interface Theme {
   [key: string]: string;
@@ -19,11 +19,12 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
     // Perform any other actions or state management specific to this component if needed
   };
 
+  // Define a configuration object for scenario data with dynamic labels and icons
   const spotlightButtonData = [
     {
       scenario: "issueNewWorkOrder",
-      iconSrc: "./icons/icon_IssueWorkOrder.png",
-      label: "Issue New Work Order",
+      iconSrc: "./icons/icon_IndividualApplication.png",
+      label: "Isuue New Work Order",
     },
     {
       scenario: "completeWorkOrder",
@@ -35,13 +36,15 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
       iconSrc: "./icons/icon_temporarySupply.png",
       label: "Cancel Work Order",
     },
+
     // Add more scenarios as needed
   ];
 
   return (
     <div>
       <h1>Water Work Order - Meter Change</h1>
-      <div style={{ display: "flex", flexDirection: "row" }}>
+      aaaaaaa
+      <div>
         {spotlightButtonData.map(({ scenario, iconSrc, label }) => (
           <SpotlightButton
             key={scenario}
