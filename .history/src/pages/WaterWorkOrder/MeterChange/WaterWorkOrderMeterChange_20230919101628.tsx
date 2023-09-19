@@ -41,27 +41,17 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
   return (
     <div>
       <h1>Water Work Order - Meter Change</h1>
-
       <div style={{ display: "flex", flexDirection: "row" }}>
-        <div
-          style={{
-            background: "rgba(245, 250, 240,0.1)",
-            margin: 8,
-            display: "flex",
-            borderRadius: "8px",
-          }}
-        >
-          {spotlightButtonData.map(({ scenario, iconSrc, label }) => (
-            <SpotlightButton
-              key={scenario}
-              scenario={scenario}
-              iconSrc={iconSrc}
-              label={label}
-              isSelected={selectedItem === scenario}
-              onClick={() => handleButtonClick(scenario)}
-            />
-          ))}
-        </div>
+        {spotlightButtonData.map(({ scenario, iconSrc, label }) => (
+          <SpotlightButton
+            key={scenario}
+            scenario={scenario}
+            iconSrc={iconSrc}
+            label={label}
+            isSelected={selectedItem === scenario}
+            onClick={() => handleButtonClick(scenario)}
+          />
+        ))}
       </div>
       {/* Add the rest of your component content */}
     </div>
