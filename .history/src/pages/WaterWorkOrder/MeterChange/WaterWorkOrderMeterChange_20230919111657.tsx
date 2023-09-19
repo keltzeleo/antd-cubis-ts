@@ -46,7 +46,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
         <div
           style={{
             background: "rgba(245, 250, 240,0.1)",
-            margin: 16,
+            margin: 12,
             display: "flex",
             borderRadius: "8px",
           }}

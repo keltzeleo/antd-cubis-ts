@@ -24,8 +24,8 @@ const SpotlightButton: React.FC<SpotlightButtonProps> = ({
       justifyContent: "center",
       flexDirection: "column",
       alignItems: "center",
-      width: "auto",
-      height: "auto",
+      width: "70%",
+      height: "70%",
       border: "1px dashed #00a991",
     }}
     type={isSelected ? "primary" : "default"}
