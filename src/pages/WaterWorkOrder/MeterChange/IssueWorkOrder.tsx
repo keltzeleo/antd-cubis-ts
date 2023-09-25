@@ -1,11 +1,26 @@
-import { Button, DatePicker, Form, Select } from "antd";
+import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
 import React from "react";
+import WorkOrderTypeSelection from "../../../customComponents/Select/WorkOrderTypeSelection";
+
 const { Option } = Select;
 
-const IssueWorkOrder: React.FC = () => {
+interface Theme {
+  [key: string]: string;
+}
+
+interface IssueWorkOrderProps {
+  theme?: Theme;
+}
+
+const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
   const handleSubmit = (values: any) => {
     // Handle form submission here, e.g., send data to the server
     console.log("Form values:", values);
+  };
+
+  const handleWorkOrderSelect = (selectedWorkOrder: string) => {
+    // Implement logic for handling work order selection
+    console.log(`Selected work order code: ${selectedWorkOrder}`);
   };
 
   return (
@@ -14,8 +29,34 @@ const IssueWorkOrder: React.FC = () => {
       <Form layout="vertical" onFinish={handleSubmit}>
         {/* Filtering Entry */}
         <h2>Filtering Entry</h2>
-        {/* Fields for Account No and Work Order Type */}
-        {/* Add similar fields for Account Information, Meter Information, and Work Order Information here */}
+        <Row gutter={16}>
+          {/* Work Order Type */}
+          <Col span={2}>
+            <Form.Item
+              label="Work Order Type"
+              name="workOrderType"
+              rules={[{ required: true, message: "Missing Work Order Type" }]}
+            >
+              <WorkOrderTypeSelection
+                onSelect={handleWorkOrderSelect}
+                theme={{ cyan: "#00a991" }}
+              />
+            </Form.Item>
+          </Col>
+
+          {/* Account Number */}
+          <Col span={3}>
+            <Form.Item
+              label="Account Number"
+              name="accountNumber"
+              rules={[{ required: true, message: "Missing Account Number" }]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        {/* Fields for Account Information, Meter Information, and Work Order Information here */}
 
         {/* Work Order Information */}
         <h2>Work Order Information</h2>

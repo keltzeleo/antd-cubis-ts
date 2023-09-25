@@ -43,7 +43,7 @@ const ThemeApp: React.FC = () => {
       {/* <AppointmentUpdates theme={isDarkMode ? dark : light} /> */}
 
       <p></p>
-      <IssueWorkOrder />
+      <IssueWorkOrder theme={isDarkMode ? dark : light} />
       {/* <InquireAccountPage theme={isDarkMode ? dark : light} /> */}
       <div style={{ height: 100 }} />
       <WaterWorkOrderMeterChange theme={isDarkMode ? dark : light} />
