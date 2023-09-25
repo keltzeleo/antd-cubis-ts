@@ -41,7 +41,7 @@ const SpotlightButton: React.FC<SpotlightButtonProps> = ({
         }}
         src={iconSrc}
       />
-      <div style={{ padding: "8px" }}>{label}</div>
+      <div style={{ padding: "10px" }}>{label}</div>
     </div>
   </Button>
 );

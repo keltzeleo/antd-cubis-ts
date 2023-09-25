@@ -38,7 +38,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
         {/* Filtering Entry */}
         <h2>Filtering Entry</h2>
         <Row gutter={16}>
-          <Col span={3}>
+          {/* Work Order Type */}
+          <Col span={6}>
             <Form.Item
               label="Work Order Type"
               name="workOrderType"
@@ -50,7 +51,9 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               />
             </Form.Item>
           </Col>
-          <Col span={3}>
+
+          {/* Account Number */}
+          <Col span={6}>
             <Form.Item
               label="Account Number"
               name="accountNumber"
@@ -59,8 +62,10 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item style={{ marginTop: 30 }}>
+
+          {/* Search and Reset Buttons */}
+          <Col span={6} offset={6}>
+            <Form.Item>
               <Button type="primary" htmlType="submit">
                 Search
               </Button>

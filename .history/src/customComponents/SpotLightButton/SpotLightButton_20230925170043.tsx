@@ -36,8 +36,8 @@ const SpotlightButton: React.FC<SpotlightButtonProps> = ({
       <Avatar
         style={{
           backgroundColor: "#f3f6f9",
-          marginTop: "6px",
-          marginBottom: "-4px",
+          marginTop: "4px",
+          marginBottom: "-8px",
         }}
         src={iconSrc}
       />

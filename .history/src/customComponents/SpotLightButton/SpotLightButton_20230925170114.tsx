@@ -36,12 +36,12 @@ const SpotlightButton: React.FC<SpotlightButtonProps> = ({
       <Avatar
         style={{
           backgroundColor: "#f3f6f9",
-          marginTop: "6px",
+          marginTop: "4px",
           marginBottom: "-4px",
         }}
         src={iconSrc}
       />
-      <div style={{ padding: "8px" }}>{label}</div>
+      <div style={{ padding: "12px" }}>{label}</div>
     </div>
   </Button>
 );
