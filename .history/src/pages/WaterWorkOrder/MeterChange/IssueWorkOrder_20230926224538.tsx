@@ -54,7 +54,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
         {/* Work Order Type */}
         <h2>Filtering Entry</h2>
         <Row gutter={16}>
-          <Col style={{ width: 220 }}>
+          <Col style={{ width: 240 }}>
             <Form.Item
               label="Work Order Type"
               name="workOrderType"
@@ -69,7 +69,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               />
             </Form.Item>
           </Col>
-          <Col style={{ width: 260 }}>
+          <Col style={{ width: 300 }}>
             {/* Account Number */}
             <Form.Item
               label="Account Number"

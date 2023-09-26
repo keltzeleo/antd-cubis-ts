@@ -69,7 +69,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               />
             </Form.Item>
           </Col>
-          <Col style={{ width: 260 }}>
+          <Col style={{ width: 300 }}>
             {/* Account Number */}
             <Form.Item
               label="Account Number"
