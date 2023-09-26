@@ -77,14 +77,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               rules={[{ required: true, message: "Missing Account Number" }]}
             >
               <Input
-                inputMode="numeric" // Allow only numeric input
-                pattern="[0-9]*" // Allow only digits
                 value={accountNumber}
-                onChange={(e) => {
-                  // Use a regular expression to remove non-digit characters
-                  const sanitizedValue = e.target.value.replace(/\D/g, "");
-                  setAccountNumber(sanitizedValue);
-                }}
+                onChange={(e) => setAccountNumber(e.target.value)}
               />
             </Form.Item>
           </Col>

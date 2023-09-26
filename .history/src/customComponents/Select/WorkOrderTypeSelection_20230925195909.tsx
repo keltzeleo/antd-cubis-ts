@@ -1,4 +1,4 @@
-// WorkOrderTypeSelection.tsx
+// WorkOrderSelectionType.tsx
 
 import { Select } from "antd";
 import React from "react";
@@ -12,22 +12,16 @@ interface Theme {
 }
 
 interface WorkOrderSelectionProps {
-  onSelect: (selectedWorkOrder: string, description: string) => void; // Update the type definition
+  onSelect: (value: string) => void;
   theme: Theme;
 }
 
 const WorkOrderTypeSelection: React.FC<WorkOrderSelectionProps> = ({
-  onSelect, // Use the onSelect prop to handle selection changes
+  onSelect,
   theme,
 }) => {
   const handleChange = (value: string) => {
-    // Retrieve the description based on the selected value
-    const selectedWorkOrder = workOrderType.find(
-      (workOrder) => workOrder.code === value
-    );
-    const description = selectedWorkOrder ? selectedWorkOrder.description : "";
-
-    onSelect(value, description); // Pass both the value and description
+    onSelect(value);
   };
 
   return (
@@ -39,6 +33,8 @@ const WorkOrderTypeSelection: React.FC<WorkOrderSelectionProps> = ({
       {workOrderType.map((workOrder) => (
         <Option key={workOrder.code} value={workOrder.code}>
           <div style={{ display: "flex", alignItems: "center" }}>
+            {/* You can customize this part based on your requirements */}
+            {/* Here, we use workOrder.description as the Work Order Title */}
             <div style={{ display: "flex", alignItems: "center" }}>
               <SquircleBorder
                 size={20}
@@ -50,10 +46,11 @@ const WorkOrderTypeSelection: React.FC<WorkOrderSelectionProps> = ({
                 borderWidth={1}
                 borderColor={theme["cyan"]}
                 fontWeight={700}
-                character={workOrder.code}
+                character={workOrder.code} // Use workOrder.code as character value
               />
               <span style={{ marginLeft: "8px" }}>{workOrder.description}</span>
             </div>
+            {/* End of customization */}
           </div>
         </Option>
       ))}

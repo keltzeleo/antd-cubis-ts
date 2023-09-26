@@ -1,5 +1,5 @@
 import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import RealType from "../../../customComponents/RealTimeTextDisplay/RealType";
 import WorkOrderTypeSelection from "../../../customComponents/Select/WorkOrderTypeSelection";
 const { Option } = Select;
@@ -13,11 +13,6 @@ interface IssueWorkOrderProps {
 }
 
 const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
-  const [workOrderType, setWorkOrderType] = useState("");
-  const [selectedWorkOrder, setSelectedWorkOrder] = useState(""); // Initialize with an empty string
-
-  const [workOrderDescription, setWorkOrderDescription] = useState("");
-  const [accountNumber, setAccountNumber] = useState("");
   const [form] = Form.useForm();
 
   const handleSubmit = (values: any) => {
@@ -31,19 +26,9 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
     form.resetFields();
   };
 
-  const handleWorkOrderSelect = (selectedWorkOrder: {
-    code: string;
-    description: string;
-  }) => {
+  const handleWorkOrderSelect = (selectedWorkOrder: string) => {
     // Implement logic for handling work order selection
-    console.log(`Selected work order code: ${selectedWorkOrder.code}`);
-    console.log(
-      `Selected work order description: ${selectedWorkOrder.description}`
-    );
-
-    // Call both setWorkOrderType and setWorkOrderDescription
-    setWorkOrderType(selectedWorkOrder.code);
-    setWorkOrderDescription(selectedWorkOrder.description);
+    console.log(`Selected work order code: ${selectedWorkOrder}`);
   };
 
   return (
@@ -51,41 +36,27 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
       <h1>Issue Work Order</h1>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         {/* Filtering Entry */}
-        {/* Work Order Type */}
         <h2>Filtering Entry</h2>
         <Row gutter={16}>
-          <Col span={4}>
+          <Col span={3}>
             <Form.Item
               label="Work Order Type"
               name="workOrderType"
               rules={[{ required: true, message: "Missing Work Order Type" }]}
             >
               <WorkOrderTypeSelection
-                onSelect={(selectedWorkOrder, description) => {
-                  setSelectedWorkOrder(selectedWorkOrder);
-                  setWorkOrderDescription(description);
-                }}
+                onSelect={handleWorkOrderSelect}
                 theme={{ cyan: "#00a991" }}
               />
             </Form.Item>
           </Col>
-          <Col span={4}>
-            {/* Account Number */}
+          <Col span={3}>
             <Form.Item
               label="Account Number"
               name="accountNumber"
               rules={[{ required: true, message: "Missing Account Number" }]}
             >
-              <Input
-                inputMode="numeric" // Allow only numeric input
-                pattern="[0-9]*" // Allow only digits
-                value={accountNumber}
-                onChange={(e) => {
-                  // Use a regular expression to remove non-digit characters
-                  const sanitizedValue = e.target.value.replace(/\D/g, "");
-                  setAccountNumber(sanitizedValue);
-                }}
-              />
+              <Input />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -99,13 +70,10 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
             </Form.Item>
           </Col>
         </Row>
-        {/* RealType for real-time text display */}
-        <RealType
-          primaryText={workOrderType}
-          secondaryText={workOrderDescription}
-          additionalText={accountNumber}
-        />{" "}
+
         {/* Fields for Account Information, Meter Information, and Work Order Information here */}
+
+        {/* Work Order Information */}
         <h2>Work Order Information</h2>
         <Form.Item
           label="Schedule Start Date"
@@ -114,7 +82,15 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
         >
           <DatePicker format="DD/MM/YYYY" />
         </Form.Item>
+
         {/* Add other fields for Work Order Information here */}
+
+        {/* RealType for real-time text display */}
+        <RealType
+          primaryText={values.workOrderType} // Pass the selected work order code
+          secondaryText={values.workOrderDescription} // You can set the workOrderDescription as needed
+          additionalText={values.accountNumber} // You can set the account number as needed
+        />
       </Form>
     </div>
   );

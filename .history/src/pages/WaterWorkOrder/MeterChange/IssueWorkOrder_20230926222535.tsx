@@ -54,7 +54,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
         {/* Work Order Type */}
         <h2>Filtering Entry</h2>
         <Row gutter={16}>
-          <Col span={4}>
+          <Col span={3}>
             <Form.Item
               label="Work Order Type"
               name="workOrderType"
@@ -69,7 +69,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               />
             </Form.Item>
           </Col>
-          <Col span={4}>
+          <Col span={3}>
             {/* Account Number */}
             <Form.Item
               label="Account Number"
@@ -77,14 +77,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               rules={[{ required: true, message: "Missing Account Number" }]}
             >
               <Input
-                inputMode="numeric" // Allow only numeric input
-                pattern="[0-9]*" // Allow only digits
                 value={accountNumber}
-                onChange={(e) => {
-                  // Use a regular expression to remove non-digit characters
-                  const sanitizedValue = e.target.value.replace(/\D/g, "");
-                  setAccountNumber(sanitizedValue);
-                }}
+                onChange={(e) => setAccountNumber(e.target.value)}
               />
             </Form.Item>
           </Col>

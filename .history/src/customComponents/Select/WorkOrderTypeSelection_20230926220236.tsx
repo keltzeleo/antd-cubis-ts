@@ -12,7 +12,7 @@ interface Theme {
 }
 
 interface WorkOrderSelectionProps {
-  onSelect: (selectedWorkOrder: string, description: string) => void; // Update the type definition
+  onSelect: (value: string) => void; // Add this prop to handle selection
   theme: Theme;
 }
 
@@ -21,13 +21,18 @@ const WorkOrderTypeSelection: React.FC<WorkOrderSelectionProps> = ({
   theme,
 }) => {
   const handleChange = (value: string) => {
-    // Retrieve the description based on the selected value
+    // Find the selected work order object based on the value
     const selectedWorkOrder = workOrderType.find(
       (workOrder) => workOrder.code === value
     );
-    const description = selectedWorkOrder ? selectedWorkOrder.description : "";
 
-    onSelect(value, description); // Pass both the value and description
+    if (selectedWorkOrder) {
+      // Pass an object containing code and description to the onSelect function
+      onSelect({
+        code: selectedWorkOrder.code,
+        description: selectedWorkOrder.description,
+      });
+    }
   };
 
   return (
