@@ -139,9 +139,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
           </Col>
           <Col span={18}>
             {/* Function Tabs */}
-            <h3>Meter Information</h3>
-            <Table />
-            <h3>Work Order Information</h3>
             <Table />
           </Col>
         </Row>

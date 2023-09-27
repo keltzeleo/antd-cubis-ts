@@ -141,8 +141,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
             {/* Function Tabs */}
             <h3>Meter Information</h3>
             <Table />
-            <h3>Work Order Information</h3>
-            <Table />
           </Col>
         </Row>
         {/* Fields for Account Information, Meter Information, and Work Order Information here */}

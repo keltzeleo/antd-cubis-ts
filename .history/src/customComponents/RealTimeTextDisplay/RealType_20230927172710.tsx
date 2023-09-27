@@ -39,7 +39,7 @@ const RealType: React.FC<RealTypeProps> = ({
     >
       <div
         style={{
-          fontSize: 30,
+          fontSize: 28,
           color: darkerColour, // Text color
           display: "flex",
           alignItems: "center",
@@ -50,7 +50,7 @@ const RealType: React.FC<RealTypeProps> = ({
       </div>
       <div
         style={{
-          fontSize: 30,
+          fontSize: 28,
           color: darkerColour, // Text color
           overflowWrap: "break-word",
           wordWrap: "break-word",

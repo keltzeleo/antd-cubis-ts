@@ -9,6 +9,7 @@ import {
   Row,
   Select,
   Table,
+  Tabs,
 } from "antd";
 import React, { useState } from "react";
 import RealType from "../../../customComponents/RealTimeTextDisplay/RealType";
@@ -131,18 +132,45 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
           additionalText={accountNumber}
         />{" "}
         {/* Customer Information (Left) and Function Tabs (Right) */}
-        <Row gutter={16} style={{ marginTop: 16 }}>
+        <Row gutter={16}>
           <Col span={6}>
             {/* Customer Information */}
-            <h3> Account Information</h3>
-            <Table />
+            <Table dataSource={mockCustomerData} columns={columns} />
           </Col>
           <Col span={18}>
             {/* Function Tabs */}
-            <h3>Meter Information</h3>
-            <Table />
-            <h3>Work Order Information</h3>
-            <Table />
+            <Tabs>
+              <TabPane tab="Statement of Account" key="1">
+                {/* Your Content Here */}
+              </TabPane>
+              <TabPane tab="Events" key="2">
+                {/* Your Content Here */}
+              </TabPane>
+              <TabPane tab="Bills" key="3">
+                {/* Your Content Here */}
+              </TabPane>
+              <TabPane tab="Payment" key="4">
+                {/* Your Content Here */}
+              </TabPane>
+              <TabPane tab="Deposit" key="5">
+                {/* Your Content Here */}
+              </TabPane>
+              <TabPane tab="Instalment" key="6">
+                {/* Your Content Here */}
+              </TabPane>
+              <TabPane tab="Meter" key="7">
+                {/* Your Content Here */}
+              </TabPane>
+              <TabPane tab="Sewerage" key="8">
+                {/* Your Content Here */}
+              </TabPane>
+              <TabPane tab="Stale Cheque" key="9">
+                {/* Your Content Here */}
+              </TabPane>
+              <TabPane tab="Cancel Bill History" key="10">
+                {/* Your Content Here */}
+              </TabPane>
+            </Tabs>
           </Col>
         </Row>
         {/* Fields for Account Information, Meter Information, and Work Order Information here */}
