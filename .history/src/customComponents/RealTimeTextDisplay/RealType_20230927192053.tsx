@@ -24,7 +24,7 @@ const RealType: React.FC<RealTypeProps> = ({
     <div
       style={{
         height: "auto",
-        width: "100%",
+        width: "100vh",
         padding: "1px 4px",
         display: "flex",
         flexWrap: "wrap",

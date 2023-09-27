@@ -265,7 +265,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     </Form.Item>
                   </Col>
                 </Row>
-                <Row gutter={16}>
+                <Row gutter={18}>
                   <Col span={12}>
                     <Form.Item label="Arrears">
                       <span
@@ -306,7 +306,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               </Form>
             </div>{" "}
           </Col>
-          <Col span={18} style={{ marginLeft: 16, alignContent: "center" }}>
+          <Col span={18}>
             {/* Function Tabs */}
             <h3>Meter Information</h3>
             <Table
