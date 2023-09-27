@@ -1,6 +1,4 @@
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Alert, Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
-
+import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
 import React, { useState } from "react";
 import RealType from "../../../customComponents/RealTimeTextDisplay/RealType";
 import WorkOrderTypeSelection from "../../../customComponents/Select/WorkOrderTypeSelection";
@@ -99,20 +97,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                 Reset
               </Button>
             </Form.Item>
-          </Col>
-        </Row>
-        {/* Alert Message */}
-        <Row style={{ marginTop: "-18px", marginBottom: "12px" }}>
-          <Col span={24}>
-            {accountNumber.length === 0 && (
-              <Alert
-                message="Account Number Required"
-                description="Please enter a valid account number to proceed."
-                type="warning"
-                showIcon
-                icon={<ExclamationCircleOutlined />}
-              />
-            )}
           </Col>
         </Row>
         {/* RealType for real-time text display */}

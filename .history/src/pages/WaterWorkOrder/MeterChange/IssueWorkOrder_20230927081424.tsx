@@ -1,6 +1,4 @@
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Alert, Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
-
+import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
 import React, { useState } from "react";
 import RealType from "../../../customComponents/RealTimeTextDisplay/RealType";
 import WorkOrderTypeSelection from "../../../customComponents/Select/WorkOrderTypeSelection";
@@ -73,19 +71,27 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
           </Col>
           <Col style={{ width: 260 }}>
             {/* Account Number */}
-
             <Form.Item
               label="Account Number"
               name="accountNumber"
               rules={[{ required: true, message: "Missing Account Number" }]}
             >
               <Input
-                type="text"
+                inputMode="numeric" // Allow only numeric input
+                pattern="[0-9]*" // Allow only digits
                 value={accountNumber}
                 onChange={(e) => {
                   // Use a regular expression to remove non-digit characters
                   const sanitizedValue = e.target.value.replace(/\D/g, "");
                   setAccountNumber(sanitizedValue);
+                }}
+                onBlur={(e) => {
+                  // Handle onBlur event to ensure the field is cleared if it contains non-digit characters
+                  const sanitizedValue = e.target.value.replace(/\D/g, "");
+                  if (sanitizedValue !== e.target.value) {
+                    e.target.value = "";
+                    setAccountNumber("");
+                  }
                 }}
               />
             </Form.Item>
@@ -99,20 +105,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                 Reset
               </Button>
             </Form.Item>
-          </Col>
-        </Row>
-        {/* Alert Message */}
-        <Row style={{ marginTop: "-18px", marginBottom: "12px" }}>
-          <Col span={24}>
-            {accountNumber.length === 0 && (
-              <Alert
-                message="Account Number Required"
-                description="Please enter a valid account number to proceed."
-                type="warning"
-                showIcon
-                icon={<ExclamationCircleOutlined />}
-              />
-            )}
           </Col>
         </Row>
         {/* RealType for real-time text display */}

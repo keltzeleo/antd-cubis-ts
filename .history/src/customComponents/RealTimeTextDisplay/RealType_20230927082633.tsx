@@ -16,8 +16,8 @@ const RealType: React.FC<RealTypeProps> = ({
 
   // Your logic for adjusting the background color based on selectedOption goes here
 
-  const backgroundHue = adjustHue(0.27, idTypeBgColour); // Extract the hue from the background color
-  const greyColour = "rgba(33,18,18, 0.45)"; // Replace with your desired grey color value
+  const backgroundHue = adjustHue(0.23, idTypeBgColour); // Extract the hue from the background color
+  const greyColour = "rgba(33,18,18, 0.43)"; // Replace with your desired grey color value
   const darkerColour = mix(0.38, backgroundHue, greyColour); // Adjust the darkness level (0.2) as per your preference
 
   return (

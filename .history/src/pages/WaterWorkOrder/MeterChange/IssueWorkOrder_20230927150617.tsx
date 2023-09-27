@@ -102,7 +102,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
           </Col>
         </Row>
         {/* Alert Message */}
-        <Row style={{ marginTop: "-18px", marginBottom: "12px" }}>
+        <Row style={{ marginTop: "-20px", marginBottom: "16px" }}>
           <Col span={24}>
             {accountNumber.length === 0 && (
               <Alert
