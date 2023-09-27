@@ -132,7 +132,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
         />{" "}
         {/* Customer Information (Left) and Function Tabs (Right) */}
         <Row gutter={16} style={{ marginTop: 16 }}>
-          <Col span={5}>
+          <Col span={4}>
             {/* Customer Information */}
             <h3> Account Information</h3>
             <div
@@ -140,7 +140,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                 height: "auto",
                 overflowY: "scroll",
                 border: "1px solid #ccc",
-                padding: 32,
+                padding: 16,
                 borderRadius: 8,
                 textAlign: "left", // Align the content inside the scrollable div to the left
               }}
@@ -279,7 +279,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           fontWeight: "bold",
                         }}
                       >
-                        RM160.00
+                        $100.00
                       </span>{" "}
                       {/* Replace with the actual value */}
                     </Form.Item>
@@ -297,7 +297,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           fontWeight: "bold",
                         }}
                       >
-                        123 Main St, City, postcode, State
+                        123 Main St, City
                       </span>{" "}
                       {/* Replace with the actual value */}
                     </Form.Item>

@@ -140,7 +140,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                 height: "auto",
                 overflowY: "scroll",
                 border: "1px solid #ccc",
-                padding: 32,
+                padding: 16,
                 borderRadius: 8,
                 textAlign: "left", // Align the content inside the scrollable div to the left
               }}

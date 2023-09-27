@@ -20,7 +20,7 @@ interface Theme {
 }
 
 interface IssueWorkOrderProps {
-  theme: Theme;
+  theme?: Theme;
 }
 
 const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
@@ -132,7 +132,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
         />{" "}
         {/* Customer Information (Left) and Function Tabs (Right) */}
         <Row gutter={16} style={{ marginTop: 16 }}>
-          <Col span={5}>
+          <Col span={4}>
             {/* Customer Information */}
             <h3> Account Information</h3>
             <div
@@ -140,7 +140,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                 height: "auto",
                 overflowY: "scroll",
                 border: "1px solid #ccc",
-                padding: 32,
+                padding: 16,
                 borderRadius: 8,
                 textAlign: "left", // Align the content inside the scrollable div to the left
               }}
@@ -174,12 +174,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Form.Item label="Account Status">
                       <span
                         style={{
-                          background: theme["cyan.3"],
-                          paddingLeft: 16,
-                          paddingRight: 16,
-                          paddingTop: 4,
-                          paddingBottom: 4,
-                          borderRadius: 8,
+                          background: "cyan.1",
+                          padding: "4px, 16px",
                           fontWeight: "bold",
                         }}
                       >
@@ -194,12 +190,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Form.Item label="Consumer Type">
                       <span
                         style={{
-                          background: theme["cyan.3"],
-                          paddingLeft: 16,
-                          paddingRight: 16,
-                          paddingTop: 4,
-                          paddingBottom: 4,
-                          borderRadius: 8,
+                          background: "cyan.1",
+                          padding: "4px, 16px",
                           fontWeight: "bold",
                         }}
                       >
@@ -212,12 +204,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Form.Item label="Tariff">
                       <span
                         style={{
-                          background: theme["cyan.3"],
-                          paddingLeft: 16,
-                          paddingRight: 16,
-                          paddingTop: 4,
-                          paddingBottom: 4,
-                          borderRadius: 8,
+                          background: "cyan.1",
+                          padding: "4px, 16px",
                           fontWeight: "bold",
                         }}
                       >
@@ -232,12 +220,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Form.Item label="Book No">
                       <span
                         style={{
-                          background: theme["cyan.3"],
-                          paddingLeft: 16,
-                          paddingRight: 16,
-                          paddingTop: 4,
-                          paddingBottom: 4,
-                          borderRadius: 8,
+                          background: "cyan.1",
+                          padding: "4px, 16px",
                           fontWeight: "bold",
                         }}
                       >
@@ -250,12 +234,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Form.Item label="Account Type">
                       <span
                         style={{
-                          background: theme["cyan.3"],
-                          paddingLeft: 16,
-                          paddingRight: 16,
-                          paddingTop: 4,
-                          paddingBottom: 4,
-                          borderRadius: 8,
+                          background: "cyan.1",
+                          padding: "4px, 16px",
                           fontWeight: "bold",
                         }}
                       >
@@ -270,16 +250,12 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Form.Item label="Arrears">
                       <span
                         style={{
-                          background: theme["cyan.3"],
-                          paddingLeft: 16,
-                          paddingRight: 16,
-                          paddingTop: 4,
-                          paddingBottom: 4,
-                          borderRadius: 8,
+                          background: "cyan.1",
+                          padding: "4px, 16px",
                           fontWeight: "bold",
                         }}
                       >
-                        RM160.00
+                        $100.00
                       </span>{" "}
                       {/* Replace with the actual value */}
                     </Form.Item>
@@ -288,16 +264,12 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Form.Item label="Address">
                       <span
                         style={{
-                          background: theme["cyan.3"],
-                          paddingLeft: 16,
-                          paddingRight: 16,
-                          paddingTop: 4,
-                          paddingBottom: 4,
-                          borderRadius: 8,
+                          background: "cyan.1",
+                          padding: "px, 16px",
                           fontWeight: "bold",
                         }}
                       >
-                        123 Main St, City, postcode, State
+                        123 Main St, City
                       </span>{" "}
                       {/* Replace with the actual value */}
                     </Form.Item>
