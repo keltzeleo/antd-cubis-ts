@@ -297,7 +297,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           fontWeight: "bold",
                         }}
                       >
-                        123 Main St, City, Postcode, State
+                        123 Main St, City, postcode, State
                       </span>{" "}
                       {/* Replace with the actual value */}
                     </Form.Item>

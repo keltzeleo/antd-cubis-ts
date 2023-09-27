@@ -141,7 +141,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                 overflowY: "scroll",
                 border: "1px solid #ccc",
                 padding: 32,
-                borderRadius: 16,
+                borderRadius: 10,
                 textAlign: "left", // Align the content inside the scrollable div to the left
               }}
             >
@@ -297,7 +297,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           fontWeight: "bold",
                         }}
                       >
-                        123 Main St, City, Postcode, State
+                        123 Main St, City, postcode, State
                       </span>{" "}
                       {/* Replace with the actual value */}
                     </Form.Item>
