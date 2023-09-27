@@ -132,7 +132,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
         />{" "}
         {/* Customer Information (Left) and Function Tabs (Right) */}
         <Row gutter={16} style={{ marginTop: 16 }}>
-          <Col style={{ width: 680 }}>
+          <Col style={{ width: 650 }}>
             {/* Customer Information */}
             <h3> Account Information</h3>
             <div

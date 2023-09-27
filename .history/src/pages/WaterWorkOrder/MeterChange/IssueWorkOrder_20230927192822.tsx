@@ -132,7 +132,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
         />{" "}
         {/* Customer Information (Left) and Function Tabs (Right) */}
         <Row gutter={16} style={{ marginTop: 16 }}>
-          <Col style={{ width: 680 }}>
+          <Col style={{ width: 650 }}>
             {/* Customer Information */}
             <h3> Account Information</h3>
             <div
@@ -140,7 +140,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                 height: "auto",
                 overflowY: "scroll",
                 border: "1px solid #ccc",
-                padding: 24,
+                padding: 32,
                 borderRadius: 16,
                 textAlign: "left", // Align the content inside the scrollable div to the left
               }}
@@ -182,7 +182,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           paddingBottom: 4,
                           borderRadius: 8,
                           fontWeight: "bold",
-                          fontSize: 16,
                         }}
                       >
                         Active
@@ -203,7 +202,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           paddingBottom: 4,
                           borderRadius: 8,
                           fontWeight: "bold",
-                          fontSize: 16,
                         }}
                       >
                         Individual
@@ -222,7 +220,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           paddingBottom: 4,
                           borderRadius: 8,
                           fontWeight: "bold",
-                          fontSize: 16,
                         }}
                       >
                         Residential
@@ -243,7 +240,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           paddingBottom: 4,
                           borderRadius: 8,
                           fontWeight: "bold",
-                          fontSize: 16,
                         }}
                       >
                         12345
@@ -262,7 +258,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           paddingBottom: 4,
                           borderRadius: 8,
                           fontWeight: "bold",
-                          fontSize: 16,
                         }}
                       >
                         Regular
@@ -283,7 +278,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           paddingBottom: 4,
                           borderRadius: 8,
                           fontWeight: "bold",
-                          fontSize: 16,
                         }}
                       >
                         RM160.00
@@ -302,7 +296,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           paddingBottom: 4,
                           borderRadius: 8,
                           fontWeight: "bold",
-                          fontSize: 16,
                         }}
                       >
                         123 Main St, City, Postcode, State
