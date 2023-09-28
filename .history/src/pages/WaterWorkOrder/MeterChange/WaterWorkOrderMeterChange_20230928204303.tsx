@@ -43,18 +43,10 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
     <div style={{ marginLeft: 24 }}>
       <h1>Water Work Order - Meter Change</h1>
 
-      <div
-        style={{
-          background: "rgba(188, 195, 200,0.1)",
-          borderRadius: "8px",
-
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
+      <div style={{ display: "flex", flexDirection: "row" }}>
         <div
           style={{
-            // background: "rgba(245, 250, 240,0.1)",
+            background: "rgba(245, 250, 240,0.1)",
             margin: 16,
             display: "flex",
             borderRadius: "8px",
@@ -72,7 +64,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           ))}
         </div>
       </div>
-      <IssueWorkOrder theme={{}} />
+      <IssueWorkOrder theme={isDarkMode ? dark : light} />
       {/* Add the rest of your component content */}
     </div>
   );

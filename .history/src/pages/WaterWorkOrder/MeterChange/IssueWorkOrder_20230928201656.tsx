@@ -12,7 +12,6 @@ import {
   Select,
   Space,
   Table,
-  TimePicker,
 } from "antd";
 import React, { useState } from "react";
 import RealType from "../../../customComponents/RealTimeTextDisplay/RealType";
@@ -51,26 +50,14 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
     setPrintForm(checked);
   };
 
-  const handleClearWorkOrderInfo = () => {
-    form.setFieldsValue({
-      scheduleStartDate: undefined,
-      scheduleEndDate: undefined,
-      scheduleStartTime: undefined,
-      workOrderRemark: undefined,
-      departmentInCharge: undefined,
-      meterRemark: undefined,
-      assignTo: undefined,
-    });
-  };
-
   const handleReset = () => {
     // Reset the form and clear the filter
     form.resetFields();
   };
 
   return (
-    <div style={{ marginLeft: 32 }}>
-      {/* <h1 style={{ color: theme["colorTextBase"] }}>Issue Work Order</h1> */}
+    <div style={{ marginLeft: 24 }}>
+      <h1 style={{ color: theme["colorTextBase"] }}>Issue Work Order</h1>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         {/* Filtering Entry */}
         {/* Work Order Type */}
@@ -86,6 +73,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                 onSelect={(selectedWorkOrder, description) => {
                   setSelectedWorkOrder(selectedWorkOrder);
                   setWorkOrderDescription(description);
+                  setSelectedWorkOrderType(selectedWorkOrder); // Add this line
                 }}
                 theme={{ cyan: "#00a991" }}
               />
@@ -395,7 +383,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                         fontSize: 16,
                       }}
                     >
-                      {selectedWorkOrder} - {workOrderDescription}
+                      {selectedWorkOrder}
                     </span>{" "}
                   </Form.Item>
                 </Col>
@@ -413,7 +401,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                         fontSize: 16,
                       }}
                     >
-                      29/09/2023
+                      29-09-2023
                     </span>
                   </Form.Item>
                 </Col>
@@ -476,7 +464,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               </Row>
               {/* Input fields */}
               <Row gutter={16}>
-                <Col span={8} style={{ width: "250px" }}>
+                <Col span={8}>
                   <Form.Item
                     label="Schedule Start Date"
                     name="scheduleStartDate"
@@ -484,28 +472,22 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <DatePicker format="DD/MM/YYYY" />
                   </Form.Item>
                 </Col>
-                <Col span={8} style={{ width: "250px" }}>
+                <Col span={8}>
                   <Form.Item label="Schedule End Date" name="scheduleEndDate">
                     <DatePicker format="DD/MM/YYYY" />
                   </Form.Item>
                 </Col>
-                <Col style={{ maxWidth: "220px" }}>
+              </Row>
+              <Row gutter={16}>
+                <Col span={8}>
                   <Form.Item
                     label="Schedule Start Time"
                     name="scheduleStartTime"
                   >
-                    <TimePicker
-                      format="hh:mm A"
-                      use12Hours
-                      minuteStep={5}
-                      style={{ width: "100%" }}
-                      placeholder="Select time"
-                    />{" "}
+                    <Input />
                   </Form.Item>
                 </Col>
-              </Row>
-              <Row gutter={16}>
-                <Col span={24}>
+                <Col span={8}>
                   <Form.Item label="Work Order Remark" name="workOrderRemark">
                     <Input />
                   </Form.Item>
@@ -605,9 +587,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Button style={{ marginRight: 8 }} onClick={handleReset}>
                       Reset
                     </Button>
-                    {/* <Button type="link" onClick={handleClearWorkOrderInfo}>
-                      Clear Work Order Information
-                    </Button> */}
                     <Button type="primary" htmlType="submit">
                       Submit
                     </Button>

@@ -69,8 +69,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
   };
 
   return (
-    <div style={{ marginLeft: 32 }}>
-      {/* <h1 style={{ color: theme["colorTextBase"] }}>Issue Work Order</h1> */}
+    <div style={{ marginLeft: 24 }}>
+      <h1 style={{ color: theme["colorTextBase"] }}>Issue Work Order</h1>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         {/* Filtering Entry */}
         {/* Work Order Type */}
@@ -395,7 +395,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                         fontSize: 16,
                       }}
                     >
-                      {selectedWorkOrder} - {workOrderDescription}
+                      {selectedWorkOrder} &bull; {workOrderDescription}
                     </span>{" "}
                   </Form.Item>
                 </Col>
@@ -605,9 +605,9 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Button style={{ marginRight: 8 }} onClick={handleReset}>
                       Reset
                     </Button>
-                    {/* <Button type="link" onClick={handleClearWorkOrderInfo}>
+                    <Button type="link" onClick={handleClearWorkOrderInfo}>
                       Clear Work Order Information
-                    </Button> */}
+                    </Button>
                     <Button type="primary" htmlType="submit">
                       Submit
                     </Button>

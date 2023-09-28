@@ -45,7 +45,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
 
       <div
         style={{
-          background: "rgba(188, 195, 200,0.1)",
+          background: "rgba(188, 195, 230,0.06)",
           borderRadius: "8px",
 
           display: "flex",
