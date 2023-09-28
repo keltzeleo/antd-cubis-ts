@@ -1,0 +1,351 @@
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Row,
+  Select,
+} from "antd";
+import React, { useState } from "react";
+import RealType from "../../../customComponents/RealTimeTextDisplay/RealType";
+import WorkOrderTypeSelection from "../../../customComponents/Select/WorkOrderTypeSelection";
+const { Option } = Select;
+
+interface Theme {
+  [key: string]: string;
+}
+
+interface IssueWorkOrderProps {
+  theme: Theme;
+}
+
+const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
+  const [workOrderType, setWorkOrderType] = useState("");
+  const [selectedWorkOrder, setSelectedWorkOrder] = useState("");
+  const [workOrderDescription, setWorkOrderDescription] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [form] = Form.useForm();
+
+  const handleSubmit = (values: any) => {
+    // Handle form submission here, e.g., send data to the server
+    console.log("Form values:", values);
+    // Add logic to apply the filter and fetch data here
+  };
+
+  const handleReset = () => {
+    // Reset the form and clear the filter
+    form.resetFields();
+  };
+
+  const displayOnlyData = {
+    workOrderType: "Display Value",
+    workOrderDate: "Display Value",
+    workOrderIssueBy: "Display Value",
+    workOrderNo: "Display Value",
+    workOrderStatus: "Display Value",
+  };
+
+  return (
+    <div style={{ marginLeft: 24 }}>
+      <h1>Issue Work Order</h1>
+      <Form form={form} layout="vertical" onFinish={handleSubmit}>
+        {/* Filtering Entry */}
+        {/* Work Order Type */}
+        <h2>Filtering Entry</h2>
+        <Row gutter={16}>
+          <Col style={{ width: 220 }}>
+            <Form.Item
+              label="Work Order Type"
+              name="workOrderType"
+              rules={[{ required: true, message: "Missing Work Order Type" }]}
+            >
+              <WorkOrderTypeSelection
+                onSelect={(selectedWorkOrder, description) => {
+                  setSelectedWorkOrder(selectedWorkOrder);
+                  setWorkOrderDescription(description);
+                }}
+                theme={{ cyan: "#00a991" }}
+              />
+            </Form.Item>
+          </Col>
+          <Col style={{ width: 260 }}>
+            {/* Account Number */}
+            <Form.Item
+              label="Account Number"
+              name="accountNumber"
+              rules={[{ required: true, message: "Missing Account Number" }]}
+            >
+              <Input
+                type="text"
+                value={accountNumber}
+                onChange={(e) => {
+                  // Use a regular expression to remove non-digit characters
+                  const sanitizedValue = e.target.value.replace(/\D/g, "");
+                  setAccountNumber(sanitizedValue);
+                }}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item style={{ marginTop: 30 }}>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+              <Button style={{ marginLeft: 8 }} onClick={handleReset}>
+                Reset
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
+        {/* Alert Message */}
+        <Row style={{ marginTop: "-18px", marginBottom: "24px" }}>
+          <Col span={24}>
+            {accountNumber.length === 0 && (
+              <Alert
+                message="Account Number Required"
+                description="Please enter a valid account number to proceed."
+                type="warning"
+                showIcon
+                icon={<ExclamationCircleOutlined />}
+              />
+            )}
+          </Col>
+        </Row>
+        {/* RealType for real-time text display */}
+        <RealType
+          primaryText={workOrderType}
+          secondaryText={workOrderDescription}
+          additionalText={accountNumber}
+        />
+        {/* Customer Information (Left) and Function Tabs (Right) */}
+        <Row gutter={16} style={{ marginTop: 16 }}>
+          <Col style={{ width: 680 }}>
+            {/* Customer Information */}
+            <h2>Account Information</h2>
+            <div
+              style={{
+                height: "auto",
+                overflowY: "scroll",
+                border: "1px solid #ccc",
+                padding: 24,
+                borderRadius: 16,
+                textAlign: "left",
+              }}
+            >
+              <Form layout="vertical">
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item label="Name">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        John Doe
+                      </span>
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="Account Status">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Active
+                      </span>
+                    </Form.Item>
+                  </Col>
+                </Row>
+                {/* Add more customer information fields here */}
+              </Form>
+            </div>
+          </Col>
+          <Col span={18} style={{ marginLeft: 16, alignContent: "center" }}>
+            {/* Function Tabs */}
+            <h2>Meter Information</h2>
+            <Table
+              dataSource={[
+                {
+                  key: "1",
+                  meterNo: "12345",
+                  meterStatus: "Active",
+                  lastControlReading: "5000",
+                  lastActualReading: "5200",
+                  lastReadCode: "A1",
+                  replacedMeterConsumption: "100",
+                  meterFaulty: true,
+                },
+                // Add more rows as needed
+              ]}
+              columns={[
+                {
+                  title: "Meter No",
+                  dataIndex: "meterNo",
+                  key: "meterNo",
+                },
+                {
+                  title: "Meter Status",
+                  dataIndex: "meterStatus",
+                  key: "meterStatus",
+                },
+                {
+                  title: "Last Control Reading",
+                  dataIndex: "lastControlReading",
+                  key: "lastControlReading",
+                },
+                {
+                  title: "Last Actual Reading",
+                  dataIndex: "lastActualReading",
+                  key: "lastActualReading",
+                },
+                {
+                  title: "Last Read Code",
+                  dataIndex: "lastReadCode",
+                  key: "lastReadCode",
+                },
+                {
+                  title: "Replaced Meter Consumption",
+                  dataIndex: "replacedMeterConsumption",
+                  key: "replacedMeterConsumption",
+                },
+                {
+                  title: "Meter Faulty",
+                  dataIndex: "meterFaulty",
+                  key: "meterFaulty",
+                  render: (value) => (value ? "Yes" : "No"),
+                },
+              ]}
+              pagination={false}
+            />
+            <h2>Work Order Information</h2>
+            <Form layout="vertical">
+              {/* Display-only fields */}
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Form.Item label="Work Order Type">
+                    <span>{displayOnlyData.workOrderType}</span>
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item label="Work Order Date">
+                    <span>{displayOnlyData.workOrderDate}</span>
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item label="Work Order Issue By">
+                    <span>{displayOnlyData.workOrderIssueBy}</span>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Form.Item label="Work Order No">
+                    <span>{displayOnlyData.workOrderNo}</span>
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item label="Work Order Status">
+                    <span>{displayOnlyData.workOrderStatus}</span>
+                  </Form.Item>
+                </Col>
+              </Row>
+              {/* Input fields */}
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Form.Item label="Print Work Order" valuePropName="checked">
+                    <Checkbox />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item label="Schedule Start Date" name="startDate">
+                    <DatePicker format="DD/MM/YYYY" />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item label="Schedule End Date" name="endDate">
+                    <DatePicker format="DD/MM/YYYY" />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Form.Item label="Schedule Start Time" name="startTime">
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item label="Work Order Remark" name="remark">
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item label="Department In Charge" name="department">
+                    <Select>
+                      {/* Add options for the department in charge */}
+                      <Option value="department1">Department 1</Option>
+                      <Option value="department2">Department 2</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Form.Item label="Assign To" name="assignTo">
+                    <Select>
+                      {/* Add options for who to assign to */}
+                      <Option value="user1">User 1</Option>
+                      <Option value="user2">User 2</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item label="Meter Remark" name="meterRemark">
+                    <Select>
+                      {/* Add options for meter remark */}
+                      <Option value="remark1">Remark 1</Option>
+                      <Option value="remark2">Remark 2</Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+          </Col>
+        </Row>
+        {/* Submit and Reset buttons */}
+        <Row gutter={16}>
+          <Col span={24}>
+            <Form.Item style={{ textAlign: "right" }}>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+              <Button style={{ marginLeft: 8 }} onClick={handleReset}>
+                Reset
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
+    </div>
+  );
+};
+
+export default IssueWorkOrder;

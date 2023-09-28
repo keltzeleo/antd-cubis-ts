@@ -56,7 +56,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
 
   return (
     <div style={{ marginLeft: 24 }}>
-      <h1 style={{ color: theme["colorTextBase"] }}>Issue Work Order</h1>
+      <h1>Issue Work Order</h1>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         {/* Filtering Entry */}
         {/* Work Order Type */}
@@ -82,7 +82,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
             <Form.Item
               label="Account Number"
               name="accountNumber"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: "Missing Account Number" }]}
             >
               <Input
                 type="text"
@@ -107,7 +107,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
           </Col>
         </Row>
         {/* Alert Message */}
-        <Row style={{ marginTop: "-16px", marginBottom: "10px" }}>
+        <Row style={{ marginTop: "-18px", marginBottom: "24px" }}>
           <Col span={24}>
             {accountNumber.length === 0 && (
               <Alert
@@ -361,7 +361,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               style={{
                 marginLeft: 0,
                 marginTop: 0,
-                background: "transparent",
+                background: "#ffffff",
                 padding: 32,
               }}
             >
@@ -488,21 +488,16 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                             >
                               <Avatar
                                 style={{
-                                  backgroundColor: "#ffffff",
+                                  backgroundColor: "#fff",
                                   marginRight: "8px",
                                   width: 40,
                                   height: 40,
                                 }}
                                 src="./icons/icon_printDoc.png"
                               />
-                              <span
-                                style={{
-                                  flex: 1,
-                                  color: theme["colorTextBase"],
-                                }}
-                              >
-                                <b>Generate/Print out</b> a single hard copy of
-                                the <b>Issue New Work Order Document.</b>{" "}
+                              <span style={{ flex: 1 }}>
+                                Please <b>Print out</b> a single hard copy of{" "}
+                                <b>Issue New Work Order Document.</b>{" "}
                               </span>
                             </div>
                           </Checkbox>

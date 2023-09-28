@@ -82,7 +82,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
             <Form.Item
               label="Account Number"
               name="accountNumber"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: "Missing Account Number" }]}
             >
               <Input
                 type="text"
@@ -107,7 +107,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
           </Col>
         </Row>
         {/* Alert Message */}
-        <Row style={{ marginTop: "-16px", marginBottom: "10px" }}>
+        <Row style={{ marginTop: "-16px", marginBottom: "24px" }}>
           <Col span={24}>
             {accountNumber.length === 0 && (
               <Alert
@@ -501,8 +501,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                                   color: theme["colorTextBase"],
                                 }}
                               >
-                                <b>Generate/Print out</b> a single hard copy of
-                                the <b>Issue New Work Order Document.</b>{" "}
+                                Please <b>Print out</b> a single hard copy of{" "}
+                                <b>Issue New Work Order Document.</b>{" "}
                               </span>
                             </div>
                           </Checkbox>

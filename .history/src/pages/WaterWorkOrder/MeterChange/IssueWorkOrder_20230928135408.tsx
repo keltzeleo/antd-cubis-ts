@@ -56,7 +56,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
 
   return (
     <div style={{ marginLeft: 24 }}>
-      <h1 style={{ color: theme["colorTextBase"] }}>Issue Work Order</h1>
+      <h1>Issue Work Order</h1>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         {/* Filtering Entry */}
         {/* Work Order Type */}
@@ -82,7 +82,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
             <Form.Item
               label="Account Number"
               name="accountNumber"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: "Missing Account Number" }]}
             >
               <Input
                 type="text"
@@ -107,7 +107,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
           </Col>
         </Row>
         {/* Alert Message */}
-        <Row style={{ marginTop: "-16px", marginBottom: "10px" }}>
+        <Row style={{ marginTop: "-18px", marginBottom: "24px" }}>
           <Col span={24}>
             {accountNumber.length === 0 && (
               <Alert
@@ -133,7 +133,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
             <h2>Account Information</h2>
             <div
               style={{
-                height: "auto",
+                height: "100%",
                 bottom: 0,
                 overflowY: "scroll",
                 border: "1px solid #ccc",
@@ -355,13 +355,13 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               ]}
               pagination={false}
             />
-            <h2 style={{ marginTop: 32 }}>Work Order Information</h2>
+            <h2>Work Order Information</h2>
             <Form
               layout="vertical"
               style={{
                 marginLeft: 0,
                 marginTop: 0,
-                background: "transparent",
+                background: "#ffffff",
                 padding: 32,
               }}
             >
@@ -425,8 +425,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Input />
                   </Form.Item>
                 </Col>
-              </Row>
-              <Row gutter={16}>
                 <Col span={8}>
                   <Form.Item
                     label="Department In Charge"
@@ -435,14 +433,15 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Select>{/* Add options here */}</Select>
                   </Form.Item>
                 </Col>
-
+              </Row>
+              <Row gutter={16}>
                 <Col span={8}>
-                  <Form.Item label="Meter Remark" name="meterRemark">
+                  <Form.Item label="Assign To" name="assignTo">
                     <Select>{/* Add options here */}</Select>
                   </Form.Item>
                 </Col>
                 <Col span={8}>
-                  <Form.Item label="Assign To" name="assignTo">
+                  <Form.Item label="Meter Remark" name="meterRemark">
                     <Select>{/* Add options here */}</Select>
                   </Form.Item>
                 </Col>
@@ -457,7 +456,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                             display: "flex",
                             alignItems: "center",
                             borderRadius: "8px",
-                            width: "100%",
+                            width: "550px",
                             minWidth: "400px",
                             flexWrap: "wrap",
                             padding: 10,
@@ -488,21 +487,16 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                             >
                               <Avatar
                                 style={{
-                                  backgroundColor: "#ffffff",
+                                  backgroundColor: "#fff",
                                   marginRight: "8px",
                                   width: 40,
                                   height: 40,
                                 }}
                                 src="./icons/icon_printDoc.png"
                               />
-                              <span
-                                style={{
-                                  flex: 1,
-                                  color: theme["colorTextBase"],
-                                }}
-                              >
-                                <b>Generate/Print out</b> a single hard copy of
-                                the <b>Issue New Work Order Document.</b>{" "}
+                              <span style={{ flex: 1 }}>
+                                <b>Print out one Hard Copy</b> for New Work
+                                Order.{" "}
                               </span>
                             </div>
                           </Checkbox>
@@ -513,7 +507,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                 </div>
               </Row>
 
-              <Row gutter={16} style={{ textAlign: "right" }}>
+              <Row gutter={16}>
                 <Col span={24}>
                   <Form.Item>
                     <Button type="primary" htmlType="submit">

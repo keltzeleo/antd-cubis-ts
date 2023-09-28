@@ -501,8 +501,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                                   color: theme["colorTextBase"],
                                 }}
                               >
-                                <b>Generate/Print out</b> a single hard copy of
-                                the <b>Issue New Work Order Document.</b>{" "}
+                                <b>Print out</b> a single hard copy of the{" "}
+                                <b>Issue New Work Order Document.</b>{" "}
                               </span>
                             </div>
                           </Checkbox>
