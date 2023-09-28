@@ -462,7 +462,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                             flexWrap: "wrap",
                             padding: 10,
                             marginLeft: 8,
-                            marginTop: 16,
                             background: printForm
                               ? theme["colorPrimary"]
                               : "rgba(230,250,250,0.1)",
@@ -479,6 +478,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           >
                             <div
                               style={{
+                                marginTop: 16,
                                 display: "flex",
                                 alignItems: "center",
                                 borderRadius: "8px",
