@@ -127,8 +127,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
           additionalText={accountNumber}
         />
         {/* Customer Information (Left) and Function Tabs (Right) */}
-        <Row gutter={16} style={{ paddingLeft: 16, marginTop: 16 }}>
-          <Col style={{ width: 420 }}>
+        <Row gutter={16} style={{ marginTop: 16 }}>
+          <Col style={{ width: 480 }}>
             {/* Customer Information */}
             <h2>Account Information</h2>
             <div
@@ -569,11 +569,11 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               <Row gutter={16} style={{ textAlign: "right" }}>
                 <Col span={24}>
                   <Form.Item>
-                    <Button style={{ marginRight: 8 }} onClick={handleReset}>
-                      Reset
-                    </Button>
                     <Button type="primary" htmlType="submit">
                       Submit
+                    </Button>
+                    <Button style={{ marginLeft: 8 }} onClick={handleReset}>
+                      Reset
                     </Button>
                   </Form.Item>
                 </Col>

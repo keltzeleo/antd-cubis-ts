@@ -95,7 +95,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               />
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col span={10}>
             <Form.Item style={{ marginTop: 30 }}>
               <Button type="primary" htmlType="submit">
                 Search
@@ -127,8 +127,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
           additionalText={accountNumber}
         />
         {/* Customer Information (Left) and Function Tabs (Right) */}
-        <Row gutter={16} style={{ paddingLeft: 16, marginTop: 16 }}>
-          <Col style={{ width: 420 }}>
+        <Row gutter={16} style={{ marginTop: 16 }}>
+          <Col style={{ width: 480 }}>
             {/* Customer Information */}
             <h2>Account Information</h2>
             <div
@@ -144,7 +144,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
             >
               <Form layout="vertical">
                 <Row gutter={16}>
-                  <Col span={12}>
+                  <Col span={10}>
                     <Form.Item label="Name">
                       <span
                         style={{
@@ -162,7 +162,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                       </span>
                     </Form.Item>
                   </Col>
-                  <Col span={12}>
+                  <Col span={10}>
                     <Form.Item label="Account Status">
                       <span
                         style={{
@@ -182,7 +182,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   </Col>
                 </Row>
                 <Row gutter={16}>
-                  <Col span={12}>
+                  <Col span={10}>
                     <Form.Item label="Consumer Type">
                       <span
                         style={{
@@ -200,7 +200,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                       </span>
                     </Form.Item>
                   </Col>
-                  <Col span={12}>
+                  <Col span={10}>
                     <Form.Item label="Tariff">
                       <span
                         style={{
@@ -220,7 +220,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   </Col>
                 </Row>
                 <Row gutter={16}>
-                  <Col span={12}>
+                  <Col span={11}>
                     <Form.Item label="Book No">
                       <span
                         style={{
@@ -238,7 +238,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                       </span>
                     </Form.Item>
                   </Col>
-                  <Col span={12}>
+                  <Col span={10}>
                     <Form.Item label="Account Type">
                       <span
                         style={{
@@ -258,7 +258,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   </Col>
                 </Row>
                 <Row gutter={16}>
-                  <Col span={12}>
+                  <Col span={10}>
                     <Form.Item label="Arrears">
                       <span
                         style={{
@@ -569,11 +569,11 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               <Row gutter={16} style={{ textAlign: "right" }}>
                 <Col span={24}>
                   <Form.Item>
-                    <Button style={{ marginRight: 8 }} onClick={handleReset}>
-                      Reset
-                    </Button>
                     <Button type="primary" htmlType="submit">
                       Submit
+                    </Button>
+                    <Button style={{ marginLeft: 8 }} onClick={handleReset}>
+                      Reset
                     </Button>
                   </Form.Item>
                 </Col>

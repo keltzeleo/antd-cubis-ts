@@ -569,7 +569,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               <Row gutter={16} style={{ textAlign: "right" }}>
                 <Col span={24}>
                   <Form.Item>
-                    <Button style={{ marginRight: 8 }} onClick={handleReset}>
+                    <Button style={{ marginLeft: 8 }} onClick={handleReset}>
                       Reset
                     </Button>
                     <Button type="primary" htmlType="submit">
