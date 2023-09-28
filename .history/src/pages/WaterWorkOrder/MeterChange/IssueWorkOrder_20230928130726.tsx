@@ -134,7 +134,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
         <Row gutter={16} style={{ marginTop: 16 }}>
           <Col style={{ width: 680 }}>
             {/* Customer Information */}
-            <h2> Account Information</h2>
+            <h3> Account Information</h3>
             <div
               style={{
                 height: "auto",
@@ -371,7 +371,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               ]}
               pagination={false} // Remove pagination if not needed
             />
-            <h2>Work Order Information</h2>
+            <h3>Work Order Information</h3>
             <Table />
           </Col>
         </Row>
