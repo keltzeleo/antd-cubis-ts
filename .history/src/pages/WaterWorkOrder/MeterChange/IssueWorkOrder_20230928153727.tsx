@@ -374,65 +374,26 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Work Order Date">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      2023-09-27
-                    </span>
+                    <span>2023-09-27</span>
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Work Order Issue By">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      Jason Ng
-                    </span>
+                    <span>Jason Ng</span>
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
                 <Col span={8}>
                   <Form.Item label="Work Order No">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      WO36353
-                    </span>
+                    <span>WO36353</span>
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Work Order Status">
                     <span
                       style={{
-                        background: theme["orange.3"],
+                        background: theme["Shades.3"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,

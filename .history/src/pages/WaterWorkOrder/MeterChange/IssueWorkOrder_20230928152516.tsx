@@ -95,7 +95,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
               />
             </Form.Item>
           </Col>
-          <Col span={10}>
+          <Col span={8}>
             <Form.Item style={{ marginTop: 30 }}>
               <Button type="primary" htmlType="submit">
                 Search
@@ -127,8 +127,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
           additionalText={accountNumber}
         />
         {/* Customer Information (Left) and Function Tabs (Right) */}
-        <Row gutter={16} style={{ marginTop: 16 }}>
-          <Col style={{ width: 480 }}>
+        <Row gutter={18} style={{ marginTop: 16 }}>
+          <Col style={{ width: 680 }}>
             {/* Customer Information */}
             <h2>Account Information</h2>
             <div
@@ -144,7 +144,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
             >
               <Form layout="vertical">
                 <Row gutter={16}>
-                  <Col span={10}>
+                  <Col span={12}>
                     <Form.Item label="Name">
                       <span
                         style={{
@@ -162,7 +162,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                       </span>
                     </Form.Item>
                   </Col>
-                  <Col span={10}>
+                  <Col span={12}>
                     <Form.Item label="Account Status">
                       <span
                         style={{
@@ -182,7 +182,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   </Col>
                 </Row>
                 <Row gutter={16}>
-                  <Col span={10}>
+                  <Col span={12}>
                     <Form.Item label="Consumer Type">
                       <span
                         style={{
@@ -200,7 +200,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                       </span>
                     </Form.Item>
                   </Col>
-                  <Col span={10}>
+                  <Col span={12}>
                     <Form.Item label="Tariff">
                       <span
                         style={{
@@ -220,7 +220,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   </Col>
                 </Row>
                 <Row gutter={16}>
-                  <Col span={10}>
+                  <Col span={12}>
                     <Form.Item label="Book No">
                       <span
                         style={{
@@ -238,7 +238,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                       </span>
                     </Form.Item>
                   </Col>
-                  <Col span={10}>
+                  <Col span={12}>
                     <Form.Item label="Account Type">
                       <span
                         style={{
@@ -258,7 +258,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   </Col>
                 </Row>
                 <Row gutter={16}>
-                  <Col span={10}>
+                  <Col span={12}>
                     <Form.Item label="Arrears">
                       <span
                         style={{
@@ -276,7 +276,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                       </span>
                     </Form.Item>
                   </Col>
-                  <Col span={24} style={{ width: "100%" }}>
+                  <Col span={12}>
                     <Form.Item label="Address">
                       <span
                         style={{
@@ -290,7 +290,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                           fontSize: 16,
                         }}
                       >
-                        123 Main St, Area, City, Postcode, State
+                        123 Main St, City, Postcode, State
                       </span>
                     </Form.Item>
                   </Col>
@@ -374,76 +374,24 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Work Order Date">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      2023-09-27
-                    </span>
+                    <span>{/* Display value here */}</span>
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Work Order Issue By">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      Jason Ng
-                    </span>
+                    <span>{/* Display value here */}</span>
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
                 <Col span={8}>
                   <Form.Item label="Work Order No">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      WO36353
-                    </span>
+                    <span>{/* Display value here */}</span>
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Work Order Status">
-                    <span
-                      style={{
-                        background: theme["orange.3"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      Pending
-                    </span>
+                    <span>{/* Display value here */}</span>
                   </Form.Item>
                 </Col>
               </Row>

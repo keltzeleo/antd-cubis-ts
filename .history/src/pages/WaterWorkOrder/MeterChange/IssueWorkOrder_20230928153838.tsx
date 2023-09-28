@@ -376,7 +376,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   <Form.Item label="Work Order Date">
                     <span
                       style={{
-                        background: theme["cyan.2"],
+                        background: theme["shades.1"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,
@@ -394,7 +394,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   <Form.Item label="Work Order Issue By">
                     <span
                       style={{
-                        background: theme["cyan.2"],
+                        background: theme["shades.1"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,
@@ -414,7 +414,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   <Form.Item label="Work Order No">
                     <span
                       style={{
-                        background: theme["cyan.2"],
+                        background: theme["shades.1"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,
@@ -432,7 +432,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   <Form.Item label="Work Order Status">
                     <span
                       style={{
-                        background: theme["orange.3"],
+                        background: theme["shades.1"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,

@@ -367,89 +367,37 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
             >
               {/* Display-only fields */}
               <Row gutter={16}>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item label="Work Order Type">
                     <span>{/* Display value here */}</span>
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item label="Work Order Date">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      2023-09-27
-                    </span>
+                    <span>{/* Display value here */}</span>
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item label="Work Order Issue By">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      Jason Ng
-                    </span>
+                    <span>{/* Display value here */}</span>
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item label="Work Order No">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      WO36353
-                    </span>
+                    <span>{/* Display value here */}</span>
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item label="Work Order Status">
-                    <span
-                      style={{
-                        background: theme["orange.3"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      Pending
-                    </span>
+                    <span>{/* Display value here */}</span>
                   </Form.Item>
                 </Col>
               </Row>
               {/* Input fields */}
               <Row gutter={16}>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item
                     label="Schedule Start Date"
                     name="scheduleStartDate"
@@ -457,14 +405,14 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <DatePicker format="DD/MM/YYYY" />
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item label="Schedule End Date" name="scheduleEndDate">
                     <DatePicker format="DD/MM/YYYY" />
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item
                     label="Schedule Start Time"
                     name="scheduleStartTime"
@@ -472,14 +420,14 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item label="Work Order Remark" name="workOrderRemark">
                     <Input />
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item
                     label="Department In Charge"
                     name="departmentInCharge"
@@ -488,12 +436,12 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   </Form.Item>
                 </Col>
 
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item label="Meter Remark" name="meterRemark">
                     <Select>{/* Add options here */}</Select>
                   </Form.Item>
                 </Col>
-                <Col span={8}>
+                <Col span={10}>
                   <Form.Item label="Assign To" name="assignTo">
                     <Select>{/* Add options here */}</Select>
                   </Form.Item>
