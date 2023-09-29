@@ -79,7 +79,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
           color: "#fafafa",
         }}
       >
-        Issue New Work Order
+        Issue Work Order
       </h1>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         {/* Filtering Entry */}

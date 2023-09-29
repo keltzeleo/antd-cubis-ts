@@ -72,14 +72,14 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
     <div style={{ marginLeft: 32 }}>
       <h1
         style={{
-          marginLeft: -32,
-          paddingLeft: 24,
+          marginLeft: -16,
+          paddingLeft: 16,
           borderRadius: 32,
           backgroundColor: theme["colorPrimary"],
-          color: "#fafafa",
+          color: theme["colorTextBase"],
         }}
       >
-        Issue New Work Order
+        Issue Work Order
       </h1>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         {/* Filtering Entry */}

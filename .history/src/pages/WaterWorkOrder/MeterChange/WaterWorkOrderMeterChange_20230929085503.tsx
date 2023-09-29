@@ -55,7 +55,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
             style={{ width: "36px", paddingLeft: 4, marginRight: -3 }}
           />
         </div>{" "}
-        <div style={{ marginLeft: 8, color: theme["colorTextBase"] }}>
+        <div style={{ marginLeft: 8 }}>
           Water Work Order Management - Meter Change
         </div>
       </h1>
