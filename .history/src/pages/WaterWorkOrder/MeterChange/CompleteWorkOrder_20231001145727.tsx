@@ -614,7 +614,7 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
                         fontSize: 16,
                       }}
                     >
-                      01/09/2023
+                      29/09/2023
                     </span>
                   </Form.Item>
                 </Col>
@@ -660,7 +660,7 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
                   <Form.Item label="Work Order Status">
                     <span
                       style={{
-                        background: theme["cyan.2"],
+                        background: theme["orange.3"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,
@@ -670,70 +670,12 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
                         fontSize: 16,
                       }}
                     >
-                      Completed
+                      Pending
                     </span>
                   </Form.Item>
                 </Col>
               </Row>
               {/* Input fields */}
-              <Row gutter={16}>
-                <Col span={8}>
-                  <Form.Item label="Schedule Start Date">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      09/09/2023
-                    </span>{" "}
-                  </Form.Item>
-                </Col>
-
-                <Col span={8}>
-                  <Form.Item label="Schedule Start Time">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      10:15 AM{" "}
-                    </span>
-                  </Form.Item>
-                </Col>
-                <Col span={8}>
-                  <Form.Item label="Scehdule End Date">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      12/09/2023
-                    </span>
-                  </Form.Item>
-                </Col>
-              </Row>
-
               <Row gutter={24}>
                 <Col span={8}>
                   <Form.Item label="Performed Date" name="performedDate">
@@ -745,7 +687,7 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
                     <TimePicker
                       format="hh:mm A"
                       use12Hours
-                      style={{ width: "150px" }}
+                      style={{ width: "100%" }}
                       placeholder="Select time"
                     />{" "}
                   </Form.Item>
@@ -756,20 +698,6 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
                   </Form.Item>
                 </Col>
               </Row>
-              <Row gutter={16}>
-                <Col span={8}>
-                  <Form.Item label="Completed Date" name="completedDate">
-                    <DatePicker format="DD/MM/YYYY" />
-                  </Form.Item>
-                </Col>
-
-                <Col span={8} style={{ maxWidth: "250px" }}>
-                  <Form.Item label="Completed By" name="completedBy">
-                    <Select>{/* Add options here */}</Select>
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Col span={8}></Col>
               <Row gutter={16}>
                 <Col span={24}>
                   <Form.Item label="Work Order Remark" name="workOrderRemark">

@@ -695,25 +695,6 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
                     </span>{" "}
                   </Form.Item>
                 </Col>
-
-                <Col span={8}>
-                  <Form.Item label="Schedule Start Time">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      10:15 AM{" "}
-                    </span>
-                  </Form.Item>
-                </Col>
                 <Col span={8}>
                   <Form.Item label="Scehdule End Date">
                     <span
@@ -732,12 +713,36 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
                     </span>
                   </Form.Item>
                 </Col>
+                <Col span={8}>
+                  <Form.Item label="Schedule Start Time">
+                    <span
+                      style={{
+                        background: theme["cyan.2"],
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        paddingTop: 4,
+                        paddingBottom: 4,
+                        borderRadius: 8,
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      10:15 AM{" "}
+                    </span>
+                  </Form.Item>
+                </Col>
               </Row>
 
-              <Row gutter={24}>
+              <Row gutter={16}>
                 <Col span={8}>
                   <Form.Item label="Performed Date" name="performedDate">
                     <DatePicker format="DD/MM/YYYY" />
+                  </Form.Item>
+                </Col>
+
+                <Col span={8} style={{ maxWidth: "250px" }}>
+                  <Form.Item label="Performed by" name="performedBy">
+                    <Select>{/* Add options here */}</Select>
                   </Form.Item>
                 </Col>
                 <Col span={8}>
@@ -748,11 +753,6 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
                       style={{ width: "150px" }}
                       placeholder="Select time"
                     />{" "}
-                  </Form.Item>
-                </Col>
-                <Col span={8} style={{ maxWidth: "250px" }}>
-                  <Form.Item label="Performed by" name="performedBy">
-                    <Select>{/* Add options here */}</Select>
                   </Form.Item>
                 </Col>
               </Row>
