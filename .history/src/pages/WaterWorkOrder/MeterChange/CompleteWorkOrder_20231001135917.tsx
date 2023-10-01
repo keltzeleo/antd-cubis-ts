@@ -241,8 +241,8 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
     {
       key: "1",
       label: "Old Meter Information",
-      meterNumber: "m12345-2",
-      meterStatus: "Deactivated",
+      meterNumber: meterData.oldMeter.meterNumber,
+      meterStatus: meterData.oldMeter.meterStatus,
       reading: meterData.oldMeter.reading,
       readCode: meterData.oldMeter.readCode,
       consumption: meterData.oldMeter.consumption,
@@ -257,7 +257,7 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
       key: "2",
       label: "New Meter Information",
       meterNumber: meterData.newMeter.meterNumber,
-      meterStatus: "Active",
+      meterStatus: meterData.newMeter.meterStatus,
       reading: meterData.newMeter.reading,
       readCode: "N/A",
       consumption: "N/A",
@@ -569,6 +569,61 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
               dataSource={dataSource}
               pagination={false}
               bordered
+            />
+            <h2>Current Meter Information</h2>
+            <Table
+              dataSource={[
+                {
+                  key: "1",
+                  meterNo: "12345",
+                  meterStatus: "Active",
+                  lastControlReading: "5000",
+                  lastActualReading: "5200",
+                  lastReadCode: "A1",
+                  replacedMeterConsumption: "100",
+                  meterFaulty: true,
+                },
+                // Add more rows as needed
+              ]}
+              columns={[
+                {
+                  title: "Meter No",
+                  dataIndex: "meterNo",
+                  key: "meterNo",
+                },
+                {
+                  title: "Meter Status",
+                  dataIndex: "meterStatus",
+                  key: "meterStatus",
+                },
+                {
+                  title: "Last Control Reading",
+                  dataIndex: "lastControlReading",
+                  key: "lastControlReading",
+                },
+                {
+                  title: "Last Actual Reading",
+                  dataIndex: "lastActualReading",
+                  key: "lastActualReading",
+                },
+                {
+                  title: "Last Read Code",
+                  dataIndex: "lastReadCode",
+                  key: "lastReadCode",
+                },
+                {
+                  title: "Replaced Meter Consumption",
+                  dataIndex: "replacedMeterConsumption",
+                  key: "replacedMeterConsumption",
+                },
+                {
+                  title: "Meter Faulty",
+                  dataIndex: "meterFaulty",
+                  key: "meterFaulty",
+                  render: (value) => (value ? "Yes" : "No"),
+                },
+              ]}
+              pagination={false}
             />
             <h2 style={{ marginTop: 32 }}>Work Order Information</h2>
             <Form

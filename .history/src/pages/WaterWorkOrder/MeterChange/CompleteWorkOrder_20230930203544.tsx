@@ -1,7 +1,4 @@
-import {
-  CheckCircleTwoTone,
-  ExclamationCircleOutlined,
-} from "@ant-design/icons";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import {
   Alert,
   Avatar,
@@ -40,9 +37,6 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
   const [selectedWorkOrderType, setSelectedWorkOrderType] = useState("");
-  const [newMeterNo, setNewMeterNo] = useState("");
-  const [newMeterLocation, setNewMeterLocation] = useState("");
-  const [initialReading, setInitialReading] = useState("");
 
   // Sample data (New and Old Meter Data)
   const meterData = {
@@ -72,144 +66,49 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
       dataIndex: "label",
       key: "label",
       width: 200,
-      render: (text: string) => (
-        <strong style={{ color: theme["colorTextBase"] }}>{text}</strong>
-      ), // <-- This line makes the text bold
+      render: (text: string) => <strong>{text}</strong>, // <-- This line makes the text bold
     },
     {
       title: "Meter Number",
       dataIndex: "meterNumber",
       key: "meterNumber",
       width: 200,
-      render: (text: string, record: any) => {
-        if (record.label === "Old Meter Information") {
-          return (
-            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
-          );
-        } else if (record.key === "2") {
-          // existing logic for new meter
-          return (
-            <Input
-              defaultValue={text}
-              onChange={(e) => {
-                // existing logic
-              }}
-            />
-          );
-        } else {
-          return text;
-        }
-      },
     },
     {
       title: "Meter Status",
       dataIndex: "meterStatus",
       key: "meterStatus",
       width: 200,
-      render: (text: string, record: any) => {
-        if (record.label === "Old Meter Information") {
-          return (
-            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
-          );
-        }
-        return text;
-      },
     },
     {
       title: "Reading",
       dataIndex: "reading",
       key: "reading",
       width: 200,
-      render: (text: string, record: any) => {
-        if (record.label === "Old Meter Information") {
-          return (
-            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
-          );
-        } else if (record.key === "2") {
-          // If the row is for 'newMeter'
-          return (
-            <Input
-              defaultValue={text}
-              onChange={(e) => {
-                // Handle the change if required
-                // e.g., update the state or form values
-              }}
-            />
-          );
-        } else {
-          return text; // Display plain text for other rows (e.g., 'oldMeter')
-        }
-      },
     },
     {
       title: "Read Code",
       dataIndex: "readCode",
       key: "readCode",
       width: 200,
-      render: (text: string, record: any) => {
-        if (record.label === "Old Meter Information") {
-          return (
-            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
-          );
-        }
-        return text;
-      },
     },
     {
       title: "Consumption",
       dataIndex: "consumption",
       key: "consumption",
       width: 200,
-      render: (text: string, record: any) => {
-        if (record.label === "Old Meter Information") {
-          return (
-            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
-          );
-        }
-        return text;
-      },
     },
     {
       title: "Meter Faulty",
       dataIndex: "meterFaulty",
       key: "meterFaulty",
       width: 200,
-      render: (text: string, record: any) => {
-        if (record.label === "Old Meter Information") {
-          return (
-            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
-          );
-        }
-        return text;
-      },
     },
     {
       title: "Location",
       dataIndex: "location",
       key: "location",
       width: 200,
-      render: (text: string, record: any) => {
-        if (record.key === "2") {
-          // If the row is for 'newMeter'
-          return (
-            <Select
-              defaultValue={text}
-              style={{ width: 150 }}
-              onChange={(value: string) => {
-                // Handle the selection change if required
-                // e.g., update the state or form values
-              }}
-            >
-              <Option value="location01">Location 01</Option>
-              <Option value="location02">Location 02</Option>
-              <Option value="location03">Location 03</Option>
-              {/* ... Add more options if needed ... */}
-            </Select>
-          );
-        } else {
-          return text; // Display plain text for other rows
-        }
-      },
     },
     {
       title: "Brand",
@@ -241,8 +140,8 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
     {
       key: "1",
       label: "Old Meter Information",
-      meterNumber: "m12345-2",
-      meterStatus: "Deactivated",
+      meterNumber: meterData.oldMeter.meterNumber,
+      meterStatus: meterData.oldMeter.meterStatus,
       reading: meterData.oldMeter.reading,
       readCode: meterData.oldMeter.readCode,
       consumption: meterData.oldMeter.consumption,
@@ -257,7 +156,7 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
       key: "2",
       label: "New Meter Information",
       meterNumber: meterData.newMeter.meterNumber,
-      meterStatus: "Active",
+      meterStatus: meterData.newMeter.meterStatus,
       reading: meterData.newMeter.reading,
       readCode: "N/A",
       consumption: "N/A",
@@ -558,17 +457,68 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
           <Col span={18} style={{ marginLeft: 16, alignContent: "center" }}>
             {/* Function Tabs */}
             <h2>
-              <CheckCircleTwoTone
-                twoToneColor="#00a991"
-                style={{ fontSize: "20px" }}
-              />{" "}
-              <b>COMPLETED</b> Meter Information
+              Current <b>REPLACED</b> Meter Information
             </h2>
             <Table
               columns={columns}
               dataSource={dataSource}
               pagination={false}
               bordered
+            />
+            <h2>Current Meter Information</h2>
+            <Table
+              dataSource={[
+                {
+                  key: "1",
+                  meterNo: "12345",
+                  meterStatus: "Active",
+                  lastControlReading: "5000",
+                  lastActualReading: "5200",
+                  lastReadCode: "A1",
+                  replacedMeterConsumption: "100",
+                  meterFaulty: true,
+                },
+                // Add more rows as needed
+              ]}
+              columns={[
+                {
+                  title: "Meter No",
+                  dataIndex: "meterNo",
+                  key: "meterNo",
+                },
+                {
+                  title: "Meter Status",
+                  dataIndex: "meterStatus",
+                  key: "meterStatus",
+                },
+                {
+                  title: "Last Control Reading",
+                  dataIndex: "lastControlReading",
+                  key: "lastControlReading",
+                },
+                {
+                  title: "Last Actual Reading",
+                  dataIndex: "lastActualReading",
+                  key: "lastActualReading",
+                },
+                {
+                  title: "Last Read Code",
+                  dataIndex: "lastReadCode",
+                  key: "lastReadCode",
+                },
+                {
+                  title: "Replaced Meter Consumption",
+                  dataIndex: "replacedMeterConsumption",
+                  key: "replacedMeterConsumption",
+                },
+                {
+                  title: "Meter Faulty",
+                  dataIndex: "meterFaulty",
+                  key: "meterFaulty",
+                  render: (value) => (value ? "Yes" : "No"),
+                },
+              ]}
+              pagination={false}
             />
             <h2 style={{ marginTop: 32 }}>Work Order Information</h2>
             <Form
