@@ -652,7 +652,7 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
                         fontSize: 16,
                       }}
                     >
-                      WO{accountNumber}
+                      WO-{accountNumber}
                     </span>
                   </Form.Item>
                 </Col>

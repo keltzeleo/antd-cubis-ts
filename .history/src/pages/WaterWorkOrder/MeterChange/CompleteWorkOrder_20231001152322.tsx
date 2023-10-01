@@ -639,7 +639,7 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
               </Row>
               <Row gutter={16}>
                 <Col span={8}>
-                  <Form.Item label="Work Order Number">
+                  <Form.Item label="Work Order No">
                     <span
                       style={{
                         background: theme["cyan.2"],
@@ -652,7 +652,7 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
                         fontSize: 16,
                       }}
                     >
-                      WO{accountNumber}
+                      WO36353
                     </span>
                   </Form.Item>
                 </Col>

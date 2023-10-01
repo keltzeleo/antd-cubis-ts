@@ -323,7 +323,7 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
             <Form.Item
               label="Work Order Type"
               name="workOrderType"
-              rules={[{ required: true, message: "" }]}
+              rules={[{ required: true, message: "Missing Work Order Type" }]}
             >
               <WorkOrderTypeSelection
                 onSelect={(selectedWorkOrder, description) => {
@@ -368,8 +368,8 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
           <Col span={24}>
             {accountNumber.length === 0 && (
               <Alert
-                message="Work Order Number Required"
-                description="Please enter a valid Work Order Number to proceed."
+                message="Account Number Required"
+                description="Please enter a valid account number to proceed."
                 type="warning"
                 showIcon
                 icon={<ExclamationCircleOutlined />}
@@ -639,7 +639,7 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
               </Row>
               <Row gutter={16}>
                 <Col span={8}>
-                  <Form.Item label="Work Order Number">
+                  <Form.Item label="Work Order No">
                     <span
                       style={{
                         background: theme["cyan.2"],
@@ -652,7 +652,7 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
                         fontSize: 16,
                       }}
                     >
-                      WO{accountNumber}
+                      WO36353
                     </span>
                   </Form.Item>
                 </Col>
