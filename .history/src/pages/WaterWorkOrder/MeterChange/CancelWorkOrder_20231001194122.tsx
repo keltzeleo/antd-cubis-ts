@@ -144,7 +144,7 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
             {accountNumber.length === 0 && (
               <Alert
                 message="Work Order Number Required"
-                description="Please enter a valid Work Order Number to proceed."
+                description="Please enter a valid Work ORder Number to proceed."
                 type="warning"
                 showIcon
                 icon={<ExclamationCircleOutlined />}

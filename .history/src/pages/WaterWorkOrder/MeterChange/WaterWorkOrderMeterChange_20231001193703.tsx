@@ -45,7 +45,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
       <h1 style={{ display: "flex", alignItems: "center", marginLeft: 2 }}>
         <div
           style={{
-            backgroundColor: theme["cyan.2"],
+            backgroundColor: theme["cyan.6"],
             borderRadius: "50%",
             padding: "8px", // Optional: Add padding to control the spacing between the image and the background
           }}
