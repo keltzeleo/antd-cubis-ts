@@ -340,29 +340,19 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
               />{" "}
               Cancel Wok Order
             </h2>
-            <div
-              style={{
-                padding: " 16 16",
-                borderRadius: 8,
-                borderColor: theme["red.2"],
-                // border: "1px dashed #fbbbc2",
-                backgroundColor: theme["red.2"],
-              }}
-            >
-              <Form.Item label="Work Order Cancellation ">
-                <Select
-                  labelInValue
-                  placeholder="Please Select a Cancellation Reason"
-                  onChange={(option: SelectOption) =>
-                    setCancelWorkOrderStatus(option)
-                  }
-                >
-                  <Option value="OptionValue1">Cancel Reason - 01</Option>
-                  <Option value="OptionValue2">Cancel Reason - 02</Option>
-                  {/* Add more options as needed */}
-                </Select>
-              </Form.Item>
-            </div>
+            <Form.Item label="Cancel Work Order Reason">
+              <Select
+                labelInValue
+                placeholder="Please Select a Cancellation Reason"
+                onChange={(option: SelectOption) =>
+                  setCancelWorkOrderStatus(option)
+                }
+              >
+                <Option value="OptionValue1">Cancel Reason - 01</Option>
+                <Option value="OptionValue2">Cancel Reason - 02</Option>
+                {/* Add more options as needed */}
+              </Select>
+            </Form.Item>
             <h2>CURRENT Meter Information</h2>
             <Table
               dataSource={[

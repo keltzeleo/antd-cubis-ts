@@ -349,7 +349,7 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
                 backgroundColor: theme["red.2"],
               }}
             >
-              <Form.Item label="Work Order Cancellation ">
+              <Form.Item label="Cancel Work Order Reason">
                 <Select
                   labelInValue
                   placeholder="Please Select a Cancellation Reason"
