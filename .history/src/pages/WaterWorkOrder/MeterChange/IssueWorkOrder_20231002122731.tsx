@@ -329,7 +329,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
             {/* Function Tabs */}
             <h2>
               <PlusCircleTwoTone
-                twoToneColor={theme["orange.5"]}
+                twoToneColor={theme["volcano.5"]}
                 style={{ fontSize: 20 }}
               />{" "}
               CURRENT Meter Information
