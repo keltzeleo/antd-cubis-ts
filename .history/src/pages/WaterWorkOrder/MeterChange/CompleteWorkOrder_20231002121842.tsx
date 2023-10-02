@@ -111,9 +111,8 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
           return (
             <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
           );
-        } else if (record.key === "2") {
-          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
         }
+        return text;
       },
     },
     {
@@ -217,60 +216,24 @@ const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({ theme }) => {
       dataIndex: "brand",
       key: "brand",
       width: 200,
-      render: (text: string, record: any) => {
-        if (record.label === "Old Meter Information") {
-          return (
-            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
-          );
-        } else if (record.key === "2") {
-          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
-        }
-      },
     },
     {
       title: "Purchase Date",
       dataIndex: "purchaseDate",
       key: "purchaseDate",
       width: 200,
-      render: (text: string, record: any) => {
-        if (record.label === "Old Meter Information") {
-          return (
-            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
-          );
-        } else if (record.key === "2") {
-          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
-        }
-      },
     },
     {
       title: "Digit Dial Length",
       dataIndex: "digitDialLength",
       key: "digitDialLength",
       width: 200,
-      render: (text: string, record: any) => {
-        if (record.label === "Old Meter Information") {
-          return (
-            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
-          );
-        } else if (record.key === "2") {
-          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
-        }
-      },
     },
     {
       title: "Unit of Measurement",
       dataIndex: "uom",
       key: "uom",
       width: 200,
-      render: (text: string, record: any) => {
-        if (record.label === "Old Meter Information") {
-          return (
-            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
-          );
-        } else if (record.key === "2") {
-          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
-        }
-      },
     },
   ];
 
