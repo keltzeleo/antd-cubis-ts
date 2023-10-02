@@ -651,7 +651,7 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
               <Row gutter={16}>
                 <Col span={24}>
                   <Form.Item label="Work Order Remark" name="workOrderRemark">
-                    <TextArea rows={3} />{" "}
+                    <TextArea rows={4} />{" "}
                   </Form.Item>
                 </Col>
               </Row>
