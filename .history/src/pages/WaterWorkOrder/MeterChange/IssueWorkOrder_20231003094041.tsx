@@ -415,11 +415,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   title: "Meter Faulty",
                   dataIndex: "meterFaulty",
                   key: "meterFaulty",
-                  render: (value) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {value ? "Yes" : "No"}
-                    </strong>
-                  ),
+                  render: (value) => (value ? "Yes" : "No"),
                 },
               ]}
               pagination={false}

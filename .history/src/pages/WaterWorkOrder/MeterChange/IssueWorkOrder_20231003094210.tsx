@@ -417,7 +417,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   key: "meterFaulty",
                   render: (value) => (
                     <strong style={{ color: theme["colorTextBase"] }}>
-                      {value ? "Yes" : "No"}
+                      {value ? "Yes" : "No"},
                     </strong>
                   ),
                 },
