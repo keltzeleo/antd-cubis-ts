@@ -514,7 +514,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
                   <Form.Item label="Work Order Status">
                     <span
                       style={{
-                        background: theme["orange.3"],
+                        background: theme["orange.4"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,
