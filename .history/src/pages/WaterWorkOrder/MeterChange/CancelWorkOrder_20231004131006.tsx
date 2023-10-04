@@ -509,7 +509,7 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
                   <Form.Item label="Work Order Status">
                     <span
                       style={{
-                        background: theme["red.3"],
+                        background: theme["red.5"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,

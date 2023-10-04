@@ -337,7 +337,7 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
             <h2>
               <CloseCircleTwoTone
                 style={{ fontSize: "20" }}
-                twoToneColor={theme["red"]}
+                twoToneColor={theme["red.4"]}
               />{" "}
               Cancel Wok Order
             </h2>
@@ -509,7 +509,7 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
                   <Form.Item label="Work Order Status">
                     <span
                       style={{
-                        background: theme["red.3"],
+                        background: theme["red"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,

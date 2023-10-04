@@ -1,6 +1,6 @@
 import {
-  CloseCircleTwoTone,
   ExclamationCircleOutlined,
+  PlusCircleTwoTone,
 } from "@ant-design/icons";
 import {
   Alert,
@@ -8,12 +8,14 @@ import {
   Button,
   Checkbox,
   Col,
+  DatePicker,
   Form,
   Input,
   Row,
   Select,
   Space,
   Table,
+  TimePicker,
 } from "antd";
 import React, { useState } from "react";
 import RealType from "../../../customComponents/RealTimeTextDisplay/RealType";
@@ -21,20 +23,16 @@ import WorkOrderTypeSelection from "../../../customComponents/Select/WorkOrderTy
 
 const { Option } = Select;
 const { TextArea } = Input;
+
 interface Theme {
   [key: string]: string;
 }
 
-interface CancelWorkOrderProps {
+interface IssueWorkOrderProps {
   theme: Theme;
 }
 
-interface SelectOption {
-  value: string;
-  label: string | React.ReactNode;
-}
-
-const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
+const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({ theme }) => {
   const [workOrderType, setWorkOrderType] = useState("");
   const [selectedWorkOrder, setSelectedWorkOrder] = useState("");
   const [workOrderDescription, setWorkOrderDescription] = useState("");
@@ -43,8 +41,6 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
   const [selectedWorkOrderType, setSelectedWorkOrderType] = useState("");
-  const [cancelWorkOrderStatus, setCancelWorkOrderStatus] =
-    useState<SelectOption | null>(null);
 
   const handleSubmit = (values: any) => {
     // Handle form submission here, e.g., send data to the server
@@ -88,7 +84,7 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
           color: "#fafafa",
         }}
       >
-        Cancel Work Order
+        Issue New Work Order
       </h1>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         {/* Filtering Entry */}
@@ -113,8 +109,8 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
           <Col style={{ width: 260 }}>
             {/* Account Number */}
             <Form.Item
-              label="Work Order Number"
-              name="workOrderNumber"
+              label="Account Number"
+              name="accountNumber"
               rules={[{ required: true }]}
             >
               <Input
@@ -144,8 +140,8 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
           <Col span={24}>
             {accountNumber.length === 0 && (
               <Alert
-                message="Work Order Number Required"
-                description="Please enter a valid Work Order Number to proceed."
+                message="Account Number Required"
+                description="Please enter a valid account number to proceed."
                 type="warning"
                 showIcon
                 icon={<ExclamationCircleOutlined />}
@@ -331,40 +327,15 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
               </Form>
             </div>
           </Col>
-
           <Col span={18} style={{ marginLeft: 16, alignContent: "center" }}>
             {/* Function Tabs */}
             <h2>
-              <CloseCircleTwoTone
-                style={{ fontSize: "20" }}
-                twoToneColor={theme["red"]}
+              <PlusCircleTwoTone
+                twoToneColor={theme["orange"]}
+                style={{ fontSize: 20 }}
               />{" "}
-              Cancel Wok Order
+              CURRENT Meter Information
             </h2>
-            <div
-              style={{
-                padding: " 16 16",
-                borderRadius: 16,
-                borderColor: theme["red.2"],
-                // border: "1px dashed #fbbbc2",
-                backgroundColor: theme["red.2"],
-              }}
-            >
-              <Form.Item label="Work Order Cancellation Reason">
-                <Select
-                  labelInValue
-                  placeholder="Please Select a Cancellation Reason"
-                  onChange={(option: SelectOption) =>
-                    setCancelWorkOrderStatus(option)
-                  }
-                >
-                  <Option value="OptionValue1">Cancel Reason - 01</Option>
-                  <Option value="OptionValue2">Cancel Reason - 02</Option>
-                  {/* Add more options as needed */}
-                </Select>
-              </Form.Item>
-            </div>
-            <h2>CURRENT Meter Information</h2>
             <Table
               dataSource={[
                 {
@@ -384,37 +355,71 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
                   title: "Meter No",
                   dataIndex: "meterNo",
                   key: "meterNo",
+                  render: (text: string) => (
+                    <strong style={{ color: theme["colorTextBase"] }}>
+                      {text}
+                    </strong>
+                  ),
                 },
                 {
                   title: "Meter Status",
                   dataIndex: "meterStatus",
                   key: "meterStatus",
+                  render: (text: string) => (
+                    <strong style={{ color: theme["colorTextBase"] }}>
+                      {text}
+                    </strong>
+                  ),
                 },
                 {
                   title: "Last Control Reading",
                   dataIndex: "lastControlReading",
                   key: "lastControlReading",
+                  render: (text: string) => (
+                    <strong style={{ color: theme["colorTextBase"] }}>
+                      {text}
+                    </strong>
+                  ),
                 },
                 {
                   title: "Last Actual Reading",
                   dataIndex: "lastActualReading",
                   key: "lastActualReading",
+                  render: (text: string) => (
+                    <strong style={{ color: theme["colorTextBase"] }}>
+                      {text}
+                    </strong>
+                  ),
                 },
                 {
                   title: "Last Read Code",
                   dataIndex: "lastReadCode",
                   key: "lastReadCode",
+                  render: (text: string) => (
+                    <strong style={{ color: theme["colorTextBase"] }}>
+                      {text}
+                    </strong>
+                  ),
                 },
                 {
                   title: "Replaced Meter Consumption",
                   dataIndex: "replacedMeterConsumption",
                   key: "replacedMeterConsumption",
+                  render: (text: string) => (
+                    <strong style={{ color: theme["colorTextBase"] }}>
+                      {text}
+                    </strong>
+                  ),
                 },
                 {
                   title: "Meter Faulty",
                   dataIndex: "meterFaulty",
                   key: "meterFaulty",
-                  render: (value) => (value ? "Yes" : "No"),
+                  render: (value) => (
+                    <strong style={{ color: theme["colorTextBase"] }}>
+                      {value ? "Yes" : "No"}
+                    </strong>
+                  ),
                 },
               ]}
               pagination={false}
@@ -509,7 +514,7 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
                   <Form.Item label="Work Order Status">
                     <span
                       style={{
-                        background: theme["red.3"],
+                        background: theme["orange"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,
@@ -519,7 +524,7 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
                         fontSize: 16,
                       }}
                     >
-                      <span>{cancelWorkOrderStatus?.label}</span>
+                      Pending
                     </span>
                   </Form.Item>
                 </Col>
@@ -531,38 +536,12 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
                     label="Schedule Start Date"
                     name="scheduleStartDate"
                   >
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      09/09/2023
-                    </span>
+                    <DatePicker format="DD/MM/YYYY" />
                   </Form.Item>
                 </Col>
                 <Col span={8} style={{ width: "250px" }}>
                   <Form.Item label="Schedule End Date" name="scheduleEndDate">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      20/09/2023
-                    </span>
+                    <DatePicker format="DD/MM/YYYY" />
                   </Form.Item>
                 </Col>
                 <Col style={{ maxWidth: "220px" }}>
@@ -570,20 +549,13 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
                     label="Schedule Start Time"
                     name="scheduleStartTime"
                   >
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      10:50AM
-                    </span>
+                    <TimePicker
+                      format="hh:mm A"
+                      use12Hours
+                      minuteStep={5}
+                      style={{ width: "100%" }}
+                      placeholder="Select time"
+                    />{" "}
                   </Form.Item>
                 </Col>
               </Row>
@@ -594,57 +566,18 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
                     label="Department In Charge"
                     name="departmentInCharge"
                   >
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      Department 01
-                    </span>
+                    <Select>{/* Add options here */}</Select>
                   </Form.Item>
                 </Col>
 
                 <Col span={8}>
                   <Form.Item label="Meter Remark" name="meterRemark">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      [Water Remark]
-                    </span>
+                    <Select>{/* Add options here */}</Select>
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Assign To" name="assignTo">
-                    <span
-                      style={{
-                        background: theme["cyan.2"],
-                        paddingLeft: 16,
-                        paddingRight: 16,
-                        paddingTop: 4,
-                        paddingBottom: 4,
-                        borderRadius: 8,
-                        fontWeight: "bold",
-                        fontSize: 16,
-                      }}
-                    >
-                      Razak bin Osman
-                    </span>
+                    <Select>{/* Add options here */}</Select>
                   </Form.Item>
                 </Col>
               </Row>
@@ -711,7 +644,7 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
                                 }}
                               >
                                 <b>Generate/Print out</b> a single hard copy of
-                                the <b>Cancel Work Order Document.</b>{" "}
+                                the <b>Issue New Work Order Document.</b>{" "}
                               </span>
                             </div>
                           </Checkbox>
@@ -729,8 +662,8 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
                       Reset
                     </Button>
                     {/* <Button type="link" onClick={handleClearWorkOrderInfo}>
-                        Clear Work Order Information
-                      </Button> */}
+                      Clear Work Order Information
+                    </Button> */}
                     <Button type="primary" htmlType="submit">
                       Submit
                     </Button>
@@ -745,4 +678,4 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
   );
 };
 
-export default CancelWorkOrder;
+export default IssueWorkOrder;
