@@ -48,15 +48,16 @@ const WorkOrderTypeSelection: React.FC<WorkOrderSelectionProps> = ({
                 size={20}
                 curvature={0.43}
                 backgroundColor="transparent"
-                color={"colorText"}
+                color={theme["colorTextBase"]}
                 rotate={0}
                 borderType="dashed"
                 borderWidth={1}
                 borderColor={theme["cyan"]}
-                fontWeight={600}
-                character={workOrder.code}
+                fontWeight={700}
               />
-              <span style={{ marginLeft: "8px" }}>{workOrder.description}</span>
+              <span style={{ color: theme["colorTextBase"] }}>
+                {workOrder.code}
+              </span>
             </div>
           </div>
         </Option>

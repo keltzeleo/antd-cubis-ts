@@ -33,7 +33,7 @@ const SquircleBorder: React.FC<SquircleBorderProps> = ({
     height: `${size}px`,
     borderRadius: `${size * curvature}px`,
     backgroundColor,
-    fontSize: `${size}px`,
+    fontSize,
     color,
     display: "flex",
     justifyContent: "center",

@@ -45,7 +45,7 @@ const WorkOrderTypeSelection: React.FC<WorkOrderSelectionProps> = ({
           <div style={{ display: "flex", alignItems: "center" }}>
             <div style={{ display: "flex", alignItems: "center" }}>
               <SquircleBorder
-                size={20}
+                size={22}
                 curvature={0.43}
                 backgroundColor="transparent"
                 color={"colorText"}

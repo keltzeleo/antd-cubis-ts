@@ -37,23 +37,19 @@ const WorkOrderTypeSelection: React.FC<WorkOrderSelectionProps> = ({
       style={{ width: "100%" }}
     >
       {workOrderType.map((workOrder) => (
-        <Option
-          style={{ color: theme["colorTextBase"] }}
-          key={workOrder.code}
-          value={workOrder.code}
-        >
+        <Option style={{color={theme["colorTextBase"]}}} key={workOrder.code} value={workOrder.code}>
           <div style={{ display: "flex", alignItems: "center" }}>
             <div style={{ display: "flex", alignItems: "center" }}>
               <SquircleBorder
                 size={20}
                 curvature={0.43}
                 backgroundColor="transparent"
-                color={"colorText"}
+                color={theme["colorTextBase"]}
                 rotate={0}
                 borderType="dashed"
                 borderWidth={1}
                 borderColor={theme["cyan"]}
-                fontWeight={600}
+                fontWeight={700}
                 character={workOrder.code}
               />
               <span style={{ marginLeft: "8px" }}>{workOrder.description}</span>

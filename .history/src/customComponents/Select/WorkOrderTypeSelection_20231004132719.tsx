@@ -53,7 +53,7 @@ const WorkOrderTypeSelection: React.FC<WorkOrderSelectionProps> = ({
                 borderType="dashed"
                 borderWidth={1}
                 borderColor={theme["cyan"]}
-                fontWeight={600}
+                fontWeight={700}
                 character={workOrder.code}
               />
               <span style={{ marginLeft: "8px" }}>{workOrder.description}</span>

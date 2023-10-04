@@ -2,6 +2,7 @@
 
 import { Select } from "antd";
 import React from "react";
+import ReactDOMServer from "react-dom/server";
 import SquircleBorder from "../../customComponents/SquircleBorder/SquircleBorder";
 import { workOrderType } from "../../pages/WaterWorkOrder/MeterChange/workOrderType";
 
@@ -48,13 +49,17 @@ const WorkOrderTypeSelection: React.FC<WorkOrderSelectionProps> = ({
                 size={20}
                 curvature={0.43}
                 backgroundColor="transparent"
-                color={"colorText"}
+                color={theme["colorTextBase"]}
                 rotate={0}
                 borderType="dashed"
                 borderWidth={1}
                 borderColor={theme["cyan"]}
-                fontWeight={600}
-                character={workOrder.code}
+                fontWeight={700}
+                character={ReactDOMServer.renderToString(
+                  <span style={{ color: theme["colorTextBase"] }}>
+                    {workOrder.code}
+                  </span>
+                )}
               />
               <span style={{ marginLeft: "8px" }}>{workOrder.description}</span>
             </div>
