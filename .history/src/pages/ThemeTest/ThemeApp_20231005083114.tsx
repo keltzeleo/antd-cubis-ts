@@ -7,11 +7,11 @@ import MyForm from "../MyForm";
 import dark from "../../tokens/dark.json";
 import light from "../../tokens/light.json";
 // import EditableTable from "../LibraryMaintanance/EditableTable";
-import App from "../../App";
 import "../../App.css";
 import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
 import WaterBooksScheduler from "../Calendar/WaterBooksScheduler";
 import LoginCUBIS from "../LoginCUBIS";
+import MyFormDummy from "../MyFormDummy";
 import NapsWizard2 from "../NapsWizard/NapsWizard2";
 import WaterWorkOrderMeterChange from "../WaterWorkOrder/MeterChange/WaterWorkOrderMeterChange";
 interface Theme {
@@ -42,8 +42,7 @@ const ThemeApp: React.FC = () => {
       {/* <AppointmentUpdates theme={isDarkMode ? dark : light} /> */}
 
       <p></p>
-      {/* <MyFormDummy /> */}
-      <App />
+      <MyFormDummy />
       <div style={{ height: 100 }} />
       {/* <CancelWorkOrder theme={isDarkMode ? dark : light} />
       <div style={{ height: 100 }} />

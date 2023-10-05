@@ -61,7 +61,7 @@ const App: React.FC = () => {
               colorBgCollapsedButton: "#fff",
               colorTextCollapsedButtonHover: "#00a991",
               colorTextCollapsedButton: "rgba(0,0,0,0.45)",
-              colorMenuBackground: "#464a53",
+              colorMenuBackground: "#43474f",
               colorBgMenuItemCollapsedElevated: "rgba(0,0,0,0.85)",
               colorMenuItemDivider: "rgba(255,255,255,0.15)",
               colorBgMenuItemHover: "#00a991",
@@ -245,7 +245,7 @@ const App: React.FC = () => {
             {isResidential ? (
               <MyForm />
             ) : (
-              <WaterWorkOrderMeterChange theme={light} />
+              <WaterWorkOrderMeterChange theme={theme} />
             )}
           </PageContainer>
         </ProLayout>

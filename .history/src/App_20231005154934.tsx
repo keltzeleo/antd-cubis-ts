@@ -206,12 +206,17 @@ const App: React.FC = () => {
             }}
             avatar={{
               style: {
-                backgroundColor: "#00a991",
-                width: "48px",
-                height: "48px",
-                padding: "4px",
+                backgroundColor: "#5ec9ba",
+                width: "56px",
+                height: "54px",
+                paddingTop: "2px",
+                paddingBottom: "4px",
+                paddingLeft: "12px",
+                paddingRight: "2px",
               },
-              src: "./icons/icon_NewSupplyManagement.png",
+              // src: "./icons/icon_NewSupplyManagement.png",
+              src: "./icons/icon_WorkOrderManagement.png",
+
               alt: "Avatar",
             }}
             extraContent={[]}

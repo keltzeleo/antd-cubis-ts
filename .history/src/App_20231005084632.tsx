@@ -26,8 +26,7 @@ import defaultProps from "./_defaultProps";
 import "./styling/breadcrumb.css";
 
 import MyForm from "./pages/MyForm";
-// import MyFormDummy from "./pages/MyFormDummy";
-import WaterWorkOrderMeterChange from "./pages/WaterWorkOrder/MeterChange/WaterWorkOrderMeterChange";
+import MyFormDummy from "./pages/MyFormDummy";
 import light from "./tokens/light.json";
 
 const { Item } = Menu;
@@ -61,7 +60,7 @@ const App: React.FC = () => {
               colorBgCollapsedButton: "#fff",
               colorTextCollapsedButtonHover: "#00a991",
               colorTextCollapsedButton: "rgba(0,0,0,0.45)",
-              colorMenuBackground: "#464a53",
+              colorMenuBackground: "#43474f",
               colorBgMenuItemCollapsedElevated: "rgba(0,0,0,0.85)",
               colorMenuItemDivider: "rgba(255,255,255,0.15)",
               colorBgMenuItemHover: "#00a991",
@@ -81,7 +80,8 @@ const App: React.FC = () => {
             <div className="steady-alignment">
               <Avatar
                 size={32}
-                src="https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg"
+                // src="https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg"
+                src="https://res.cloudinary.com/tyappreg/image/upload/v1693442076/logoCUBIS05_jxwhds.png",
               />
               <span style={{ paddingLeft: 10 }} className="font-Mulish">
                 Good Morning 🌞John Huang. Usaha Tangga Kejayaan 🎉
@@ -242,11 +242,7 @@ const App: React.FC = () => {
             <div style={{ marginTop: "32px" }} />
 
             {/* Render the appropriate form based on the switch's value */}
-            {isResidential ? (
-              <MyForm />
-            ) : (
-              <WaterWorkOrderMeterChange theme={light} />
-            )}
+            {isResidential ? <MyForm /> : <MyFormDummy />}
           </PageContainer>
         </ProLayout>
       </div>

@@ -54,7 +54,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           <img
             src="./icons/icon_WorkOrderManagement.png"
             alt="Work Order"
-            style={{ width: "40px", paddingLeft: 5, marginRight: -3 }}
+            style={{ width: "38px", paddingLeft: 5, marginRight: -3 }}
           />
         </div>{" "}
         <div

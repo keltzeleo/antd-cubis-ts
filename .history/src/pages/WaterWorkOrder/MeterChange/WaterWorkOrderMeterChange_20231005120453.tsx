@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../../../App.css";
 import SpotlightButton from "../../../customComponents/SpotLightButton/SpotLightButton";
 import CancelWorkOrder from "../../WaterWorkOrder/MeterChange/CancelWorkOrder";
 import CompleteWorkOrder from "../../WaterWorkOrder/MeterChange/CompleteWorkOrder";
@@ -46,42 +45,27 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
       <h1 style={{ display: "flex", alignItems: "center", marginLeft: 2 }}>
         <div
           style={{
-            backgroundColor: theme["cyan.4"],
+            backgroundColor: theme["cyan.3"],
             borderRadius: "50%",
-            padding: "5px", // Optional: Add padding to control the spacing between the image and the background
+            padding: "8px", // Optional: Add padding to control the spacing between the image and the background
           }}
         >
           <img
             src="./icons/icon_WorkOrderManagement.png"
             alt="Work Order"
-            style={{ width: "40px", paddingLeft: 5, marginRight: -3 }}
+            style={{ width: "36px", paddingLeft: 4, marginRight: -3 }}
           />
         </div>{" "}
         <div
-          className="font-play-header"
           style={{
             marginLeft: 8,
             color: theme["colorText"],
             fontFamily: "Play",
-            marginTop: -20,
           }}
         >
           WATER WORK ORDER MANAGEMENT - "sync with work order type's selection"
         </div>
       </h1>
-      <span
-        className="font-play-header02"
-        style={{
-          background: "#d1e8e1",
-          padding: "4px 16px",
-          borderRadius: "8px",
-          fontWeight: "bold",
-          marginLeft: 56,
-          marginTop: -20,
-        }}
-      >
-        Issue New Work Order • NEW WATER SUPPLY
-      </span>
 
       <div
         style={{

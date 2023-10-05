@@ -166,7 +166,7 @@ const App: React.FC = () => {
                     style={{
                       background: "#d1e8e1",
                       padding: "4px 16px",
-                      borderRadius: "8px",
+                      borderRadius: "4px",
                     }}
                   >
                     New Request • NEW WATER SUPPLY

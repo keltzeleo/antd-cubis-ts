@@ -61,7 +61,7 @@ const App: React.FC = () => {
               colorBgCollapsedButton: "#fff",
               colorTextCollapsedButtonHover: "#00a991",
               colorTextCollapsedButton: "rgba(0,0,0,0.45)",
-              colorMenuBackground: "#464a53",
+              colorMenuBackground: "#43474f",
               colorBgMenuItemCollapsedElevated: "rgba(0,0,0,0.85)",
               colorMenuItemDivider: "rgba(255,255,255,0.15)",
               colorBgMenuItemHover: "#00a991",
@@ -242,11 +242,7 @@ const App: React.FC = () => {
             <div style={{ marginTop: "32px" }} />
 
             {/* Render the appropriate form based on the switch's value */}
-            {isResidential ? (
-              <MyForm />
-            ) : (
-              <WaterWorkOrderMeterChange theme={light} />
-            )}
+            {isResidential ? <MyForm /> : <WaterWorkOrderMeterChange />}
           </PageContainer>
         </ProLayout>
       </div>

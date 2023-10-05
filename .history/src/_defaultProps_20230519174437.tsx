@@ -7,8 +7,7 @@ import {
 
 const defaultProps = {
   title: "CUBIS by powercomp",
-  // logo: "https://res.cloudinary.com/tyappreg/image/upload/v1682262063/logoCUBIS_muwyol.svg",
-  logo: "https://res.cloudinary.com/tyappreg/image/upload/v1693442076/logoCUBIS05_jxwhds.png",
+  logo: "https://res.cloudinary.com/tyappreg/image/upload/v1682262063/logoCUBIS_muwyol.svg",
 
   route: {
     path: "/",

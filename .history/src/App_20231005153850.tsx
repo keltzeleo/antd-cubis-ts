@@ -206,7 +206,7 @@ const App: React.FC = () => {
             }}
             avatar={{
               style: {
-                backgroundColor: "#00a991",
+                backgroundColor: "#91dad0",
                 width: "48px",
                 height: "48px",
                 padding: "4px",
