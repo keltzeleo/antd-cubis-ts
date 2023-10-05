@@ -9813,6 +9813,7 @@ __metadata:
     react-draggable: ^4.4.5
     react-flags-select: ^2.2.3
     react-highlight-words: ^0.20.0
+    react-icons: ^4.11.0
     react-router-dom: ^6.11.2
     react-scripts: ^5.0.1
     react-select: ^5.7.3
@@ -24200,6 +24201,15 @@ __metadata:
   peerDependencies:
     react: ^0.14.0 || ^15.0.0 || ^16.0.0-0 || ^17.0.0-0 || ^18.0.0-0
   checksum: 6794b6fe409ee81390e342ccdb951696e06354d8591b4cac050a6d64dbc77dfc7bb636fee0aabcfda841e57778aa5108fe351e7c1dc27b28abedd36aec8141e7
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^4.11.0":
+  version: 4.11.0
+  resolution: "react-icons@npm:4.11.0"
+  peerDependencies:
+    react: "*"
+  checksum: 7b8b80bbe2dabcc54b6c2129b7761a04b19caebe24389adc7683478ef41212b9ca0b53c63abcc06b3c01b94c84855ec5142b4c357e19c4aaaad9a4db23a3c485
   languageName: node
   linkType: hard
 
