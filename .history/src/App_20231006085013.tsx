@@ -101,10 +101,7 @@ const App: React.FC<AppProps> = (theme) => {
                 size={36}
                 src="https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg"
               />
-              <span
-                style={{ paddingLeft: 10, color: token["colorText"] }}
-                className="font-Mulish"
-              >
+              <span style={{ paddingLeft: 10 }} className="font-Mulish">
                 Good Morning 🌞John Huang. Usaha Tangga Kejayaan 🎉
               </span>
             </div>
@@ -148,7 +145,7 @@ const App: React.FC<AppProps> = (theme) => {
                     style={{
                       color: "white",
                       borderRadius: "50%",
-                      backgroundColor: "#121c1c",
+                      backgroundColor: "#141b1c",
                       verticalAlign: "middle", // Adjust vertical alignment
                       lineHeight: "0", // Set line height to 0 to remove any extra spacing
                       fontSize: "24px",
@@ -172,9 +169,8 @@ const App: React.FC<AppProps> = (theme) => {
           <PageContainer
             fixedHeader
             style={{
-              width: "120%",
+              width: "100%",
               top: 20,
-              left: -10,
               zIndex: 2,
               backgroundColor: "transparent",
             }}
@@ -228,22 +224,8 @@ const App: React.FC<AppProps> = (theme) => {
                     path: "",
                     title: (
                       <>
-                        <GoldOutlined
-                          style={{
-                            color: "#666666",
-                            paddingLeft: "8px",
-                          }}
-                        />
-                        <span
-                          style={{
-                            color: "#666666",
-                            paddingLeft: "0px",
-                            paddingRight: "10px",
-                          }}
-                        >
-                          {" "}
-                          Dashboard{" "}
-                        </span>
+                        <GoldOutlined />
+                        <span> Dashboard </span>
                       </>
                     ),
 
@@ -251,50 +233,17 @@ const App: React.FC<AppProps> = (theme) => {
                   },
                   {
                     path: "",
-                    title: (
-                      <span
-                        style={{
-                          color: "#666666",
-                          paddingLeft: "10px",
-                          paddingRight: "10px",
-                        }}
-                      >
-                        {" "}
-                        breadcrumb 00{" "}
-                      </span>
-                    ),
+                    title: " New Request ",
                     className: "breadcrumb-item",
                   },
                   {
                     path: "",
-                    title: (
-                      <span
-                        style={{
-                          color: "#666666",
-                          paddingLeft: "10px",
-                          paddingRight: "10px",
-                        }}
-                      >
-                        {" "}
-                        breadcrumb 01{" "}
-                      </span>
-                    ),
+                    title: " Appointments Updates ",
                     className: "breadcrumb-item",
                   },
                   {
                     path: "",
-                    title: (
-                      <span
-                        style={{
-                          color: "#666666",
-                          paddingLeft: "10px",
-                          paddingRight: "10px",
-                        }}
-                      >
-                        {" "}
-                        breadcrumb 02{" "}
-                      </span>
-                    ),
+                    title: " Appointments Updates ",
                     className: "breadcrumb-item",
                   },
                 ],

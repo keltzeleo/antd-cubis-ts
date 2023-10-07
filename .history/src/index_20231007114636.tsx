@@ -29,7 +29,7 @@ function AppSwitcher() {
         {/* Toggle Switch */}
         <div
           className="toggle-container"
-          style={{ marginLeft: 100, color: "grey", zIndex: 4 }}
+          style={{ marginLeft: 100, color: "grey" }}
         >
           <label>
             <input

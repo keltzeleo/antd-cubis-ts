@@ -1,19 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import {
+  BellOutlined,
+  GlobalOutlined,
   GoldOutlined,
+  LogoutOutlined,
   QuestionCircleOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import { PageContainer, ProCard, ProLayout } from "@ant-design/pro-components";
 import {
   Avatar,
+  Badge,
+  Button,
   ConfigProvider,
+  Dropdown,
   FloatButton,
+  Input,
   Menu,
   Switch,
   Typography,
 } from "antd";
+import React, { useEffect, useState } from "react";
 
 import "./App.css";
 import defaultProps from "./_defaultProps";
@@ -22,21 +30,16 @@ import "./styling/breadcrumb.css";
 import MyForm from "./pages/MyForm";
 // import MyFormDummy from "./pages/MyFormDummy";
 import WaterWorkOrderMeterChange from "./pages/WaterWorkOrder/MeterChange/WaterWorkOrderMeterChange";
-import dark from "./tokens/dark.json";
 import light from "./tokens/light.json";
-
-interface Theme {
-  [key: string]: string;
-}
-
-interface AppProps {
-  theme: Theme;
-}
+import dark from "./tokens/dark.json";
 
 const { Item } = Menu;
 const { Title } = Typography;
 
-const App: React.FC<AppProps> = (theme) => {
+interface Theme {
+  [key: string]: string;
+
+const App: React.FC = () => {
   const [tagColor, setTagColor] = useState("green");
   const [tagIndication, setTagIndication] = useState("for Residential");
   const [isResidential, setIsResidential] = useState(true);
@@ -92,92 +95,117 @@ const App: React.FC<AppProps> = (theme) => {
           }}
           {...defaultProps}
         >
-          <div
-            style={{ backgroundColor: token["colorPrimaryBg"], color: "" }}
-            className="header-essentials"
-          >
+          <div style={{ background: "#fff" }} className="header-essentials">
             <div className="steady-alignment">
               <Avatar
-                size={36}
+                size={32}
                 src="https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg"
               />
-              <span
-                style={{ paddingLeft: 10, color: token["colorText"] }}
-                className="font-Mulish"
-              >
+              <span style={{ paddingLeft: 10 }} className="font-Mulish">
                 Good Morning 🌞John Huang. Usaha Tangga Kejayaan 🎉
               </span>
             </div>
             <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          marginRight: 32,
+          marginBottom: 20,
+          marginTop: 4,
+        }}
+      >
+        {/* <span style={{ marginRight: 10 }}>Light</span> */}
+        <Switch
+          checked={isDarkMode}
+          onChange={handleThemeChange}
+          unCheckedChildren={
+            <span
               style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-                marginRight: 32,
-                marginBottom: 0,
-                marginTop: 0,
+                color: "white",
+                borderRadius: "50%",
+                padding: 2,
+                backgroundColor: "#ffffff",
+                verticalAlign: "middle", // Adjust vertical alignment
+                lineHeight: "0", // Set line height to 0 to remove any extra spacing
+                fontSize: "18px",
+                display: "inline-block", // Display as inline block to control icon's position
+                marginTop: "-10px", // Add margin to control spacing
               }}
             >
-              {/* <span style={{ marginRight: 10 }}>Light</span> */}
-              <Switch
-                checked={isDarkMode}
-                onChange={handleThemeChange}
-                unCheckedChildren={
-                  <span
-                    style={{
-                      color: "white",
-                      borderRadius: "50%",
-                      padding: 2,
-                      backgroundColor: "#ffffff",
-                      verticalAlign: "middle", // Adjust vertical alignment
-                      lineHeight: "0", // Set line height to 0 to remove any extra spacing
-                      fontSize: "18px",
-                      display: "inline-block", // Display as inline block to control icon's position
-                      marginTop: "-10px", // Add margin to control spacing
-                    }}
-                  >
-                    <img
-                      src="https://res.cloudinary.com/tyappreg/image/upload/v1696508807/icon_sun_i1awlx.png"
-                      alt="Moon"
-                      style={{ width: "29px", height: "29px" }}
-                    />
-                  </span>
-                }
-                checkedChildren={
-                  <span
-                    style={{
-                      color: "white",
-                      borderRadius: "50%",
-                      backgroundColor: "#121c1c",
-                      verticalAlign: "middle", // Adjust vertical alignment
-                      lineHeight: "0", // Set line height to 0 to remove any extra spacing
-                      fontSize: "24px",
-                      display: "inline-block", // Display as inline block to control icon's position
-                      marginTop: "-2px",
-                      padding: "4px", // Add margin to control spacing
-                    }}
-                  >
-                    <img
-                      src="https://res.cloudinary.com/tyappreg/image/upload/v1696508808/icon_moon_f4ambw.png"
-                      alt="Moon"
-                      style={{ width: "24px", height: "24px" }}
-                    />
-                  </span>
-                }
+              <img
+                src="https://res.cloudinary.com/tyappreg/image/upload/v1696508807/icon_sun_i1awlx.png"
+                alt="Moon"
+                style={{ width: "29px", height: "29px" }}
               />
-              {/* <span style={{ marginLeft: 10 }}>Dark</span> */}
-            </div>
+            </span>
+          }
+          checkedChildren={
+            <span
+              style={{
+                color: "white",
+                borderRadius: "50%",
+                backgroundColor: "#141b1c",
+                verticalAlign: "middle", // Adjust vertical alignment
+                lineHeight: "0", // Set line height to 0 to remove any extra spacing
+                fontSize: "24px",
+                display: "inline-block", // Display as inline block to control icon's position
+                marginTop: "-2px",
+                padding: "4px", // Add margin to control spacing
+              }}
+            >
+              <img
+                src="https://res.cloudinary.com/tyappreg/image/upload/v1696508808/icon_moon_f4ambw.png"
+                alt="Moon"
+                style={{ width: "24px", height: "24px" }}
+              />
+            </span>
+          }
+        />
+        {/* <span style={{ marginLeft: 10 }}>Dark</span> */}
+      </div>
+            <Menu
+              className="steady-alignment"
+              mode="horizontal"
+              selectedKeys={["search"]}
+            >
+              <Item key="search">
+                <Input.Search
+                  placeholder="Search within the web application"
+                  bordered={true}
+                />
+              </Item>
+              <Item key="locale">
+                <Dropdown
+                  overlay={
+                    <Menu>
+                      <Menu.Item key="my">Bahasa</Menu.Item>
+                      <Menu.Item key="en">English</Menu.Item>
+                      <Menu.Item key="zh">中文</Menu.Item>
+                    </Menu>
+                  }
+                >
+                  <span>
+                    <GlobalOutlined style={{ marginRight: 4 }} /> Bahasa
+                  </span>
+                </Dropdown>
+              </Item>
+              <Item key="notification">
+                <Badge dot>
+                  <BellOutlined />
+                </Badge>
+              </Item>
+              <Item key="logout">
+                <Button icon={<LogoutOutlined />} size="small">
+                  Logout
+                </Button>
+              </Item>
+            </Menu>
           </div>
 
           <PageContainer
             fixedHeader
-            style={{
-              width: "120%",
-              top: 20,
-              left: -10,
-              zIndex: 2,
-              backgroundColor: "transparent",
-            }}
+            style={{ top: 20, zIndex: 1, background: "" }}
             header={{
               title: (
                 <>
@@ -213,7 +241,7 @@ const App: React.FC<AppProps> = (theme) => {
                   <span
                     className="font-play-header02"
                     style={{
-                      background: token["colorPrimaryBg"],
+                      background: "#d1e8e1",
                       padding: "4px 16px",
                       borderRadius: "8px",
                     }}
@@ -228,22 +256,8 @@ const App: React.FC<AppProps> = (theme) => {
                     path: "",
                     title: (
                       <>
-                        <GoldOutlined
-                          style={{
-                            color: "#666666",
-                            paddingLeft: "8px",
-                          }}
-                        />
-                        <span
-                          style={{
-                            color: "#666666",
-                            paddingLeft: "0px",
-                            paddingRight: "10px",
-                          }}
-                        >
-                          {" "}
-                          Dashboard{" "}
-                        </span>
+                        <GoldOutlined />
+                        <span> Dashboard </span>
                       </>
                     ),
 
@@ -251,50 +265,17 @@ const App: React.FC<AppProps> = (theme) => {
                   },
                   {
                     path: "",
-                    title: (
-                      <span
-                        style={{
-                          color: "#666666",
-                          paddingLeft: "10px",
-                          paddingRight: "10px",
-                        }}
-                      >
-                        {" "}
-                        breadcrumb 00{" "}
-                      </span>
-                    ),
+                    title: " New Request ",
                     className: "breadcrumb-item",
                   },
                   {
                     path: "",
-                    title: (
-                      <span
-                        style={{
-                          color: "#666666",
-                          paddingLeft: "10px",
-                          paddingRight: "10px",
-                        }}
-                      >
-                        {" "}
-                        breadcrumb 01{" "}
-                      </span>
-                    ),
+                    title: " Appointments Updates ",
                     className: "breadcrumb-item",
                   },
                   {
                     path: "",
-                    title: (
-                      <span
-                        style={{
-                          color: "#666666",
-                          paddingLeft: "10px",
-                          paddingRight: "10px",
-                        }}
-                      >
-                        {" "}
-                        breadcrumb 02{" "}
-                      </span>
-                    ),
+                    title: " Appointments Updates ",
                     className: "breadcrumb-item",
                   },
                 ],

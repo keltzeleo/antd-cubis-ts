@@ -102,7 +102,7 @@ const App: React.FC<AppProps> = (theme) => {
                 src="https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg"
               />
               <span
-                style={{ paddingLeft: 10, color: token["colorText"] }}
+                style={{ paddingLeft: 10, ciolor: token["colorText"] }}
                 className="font-Mulish"
               >
                 Good Morning 🌞John Huang. Usaha Tangga Kejayaan 🎉

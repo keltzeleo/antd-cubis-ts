@@ -98,7 +98,7 @@ const ThemeApp: React.FC = () => {
 
       <p></p>
       {/* <MyFormDummy /> */}
-      <App theme={isDarkMode ? dark : light} />
+      <App />
       <div style={{ height: 100 }} />
       {/* <CancelWorkOrder theme={isDarkMode ? dark : light} />
       <div style={{ height: 100 }} />

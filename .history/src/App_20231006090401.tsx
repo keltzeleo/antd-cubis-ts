@@ -101,10 +101,7 @@ const App: React.FC<AppProps> = (theme) => {
                 size={36}
                 src="https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg"
               />
-              <span
-                style={{ paddingLeft: 10, color: token["colorText"] }}
-                className="font-Mulish"
-              >
+              <span style={{ paddingLeft: 10 }} className="font-Mulish">
                 Good Morning 🌞John Huang. Usaha Tangga Kejayaan 🎉
               </span>
             </div>
@@ -148,7 +145,7 @@ const App: React.FC<AppProps> = (theme) => {
                     style={{
                       color: "white",
                       borderRadius: "50%",
-                      backgroundColor: "#121c1c",
+                      backgroundColor: "#121b1c",
                       verticalAlign: "middle", // Adjust vertical alignment
                       lineHeight: "0", // Set line height to 0 to remove any extra spacing
                       fontSize: "24px",

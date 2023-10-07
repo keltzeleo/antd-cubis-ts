@@ -27,10 +27,7 @@ function AppSwitcher() {
     <React.StrictMode>
       <div>
         {/* Toggle Switch */}
-        <div
-          className="toggle-container"
-          style={{ marginLeft: 100, color: "grey", zIndex: 4 }}
-        >
+        <div className="toggle-container" style={{ marginLeft: 100 }}>
           <label>
             <input
               type="checkbox"

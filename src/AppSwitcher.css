@@ -1,0 +1,15 @@
+/* AppSwitcher.css */
+.toggle-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px; /* Adjust the margin as needed */
+}
+
+/* Style the label or input if needed */
+.toggle-container label {
+  /* Your label styles here */
+}
+
+.toggle-container input {
+  /* Your input styles here */
+}
