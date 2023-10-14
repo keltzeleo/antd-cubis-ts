@@ -4,7 +4,7 @@ import App from "./App";
 import "./AppSwitcher.css"; // Import a CSS file for styling
 import ThemeApp from "./pages/ThemeTest/ThemeApp";
 // import light from "./tokens/light.json";
-import dark from "./tokens/dark.json";
+import dark from "./takens/dark.json";
 
 interface Theme {
   [key: string]: string;
