@@ -308,7 +308,7 @@ const App: React.FC<AppProps> = (theme) => {
                 padding: "4px",
               },
               src: "./icons/icon_NewSupplyManagement.png",
-              alt: "New Application System Icon",
+              alt: "Avatar",
             }}
             extraContent={[]}
           >

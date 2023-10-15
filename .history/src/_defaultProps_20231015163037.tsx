@@ -105,7 +105,7 @@ const defaultProps = {
     {
       icon: "./icons/icon_NewSupplyManagement.png",
       title: "New Application System (NAPS)",
-      desc: "Water supply in new location, plumber enquiries, e.t.c.",
+      desc: "Apply water supply in new location, plumber enquiries, e.t.c.",
       url: "https://ant.design",
     },
     {
@@ -116,15 +116,15 @@ const defaultProps = {
       target: "_blank",
     },
     {
-      icon: "./icons/icon_UserManagement.png",
-      title: "User Management",
-      desc: "Managing user permission and administration Right",
+      icon: "https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg",
+      title: "Pro Components",
+      desc: "专业级 UI 组件库",
       url: "https://procomponents.ant.design/",
     },
     {
-      icon: "./icons/icon_DepositManagement.png",
-      title: "Deposit Management",
-      desc: "Managing progress of Deposit Module",
+      icon: "https://img.alicdn.com/tfs/TB1zomHwxv1gK0jSZFFXXb0sXXa-200-200.png",
+      title: "umi",
+      desc: "插件化的企业级前端应用框架。",
       url: "https://umijs.org/zh-CN/docs",
     },
 

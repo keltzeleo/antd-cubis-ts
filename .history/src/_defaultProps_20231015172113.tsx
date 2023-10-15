@@ -105,7 +105,17 @@ const defaultProps = {
     {
       icon: "./icons/icon_NewSupplyManagement.png",
       title: "New Application System (NAPS)",
-      desc: "Water supply in new location, plumber enquiries, e.t.c.",
+      desc: (
+        <div
+          style={{
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          Apply water supply in new location, plumber enquiries, e.t.c.
+        </div>
+      ),
       url: "https://ant.design",
     },
     {
@@ -153,6 +163,26 @@ const defaultProps = {
       url: "https://d.umijs.org/zh-CN",
     },
   ],
+  const AppListDisplay = () => {
+    return (
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {appList.map((app, index) => (
+          <div key={index} style={appItemStyle}>
+            {/* Icon rendering, title rendering, etc... */}
+            <div>
+              {app.desc}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+  
+  const appItemStyle = {
+    width: '50%', // or whatever width you want each item to be
+    boxSizing: 'border-box',
+    padding: '10px',
+  };
 };
 
 export default defaultProps;

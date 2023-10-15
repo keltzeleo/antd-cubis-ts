@@ -4,6 +4,7 @@ import {
   SmileFilled,
   TabletFilled,
 } from "@ant-design/icons";
+import { Col, Row } from "antd";
 
 const defaultProps = {
   title: "CUBIS by Powercomp",
@@ -105,7 +106,7 @@ const defaultProps = {
     {
       icon: "./icons/icon_NewSupplyManagement.png",
       title: "New Application System (NAPS)",
-      desc: "Water supply in new location, plumber enquiries, e.t.c.",
+      desc: "Apply water supply in new location, plumber enquiries, e.t.c.",
       url: "https://ant.design",
     },
     {
@@ -153,6 +154,66 @@ const defaultProps = {
       url: "https://d.umijs.org/zh-CN",
     },
   ],
+
+  // Render appList in two columns
+  appListRenderer: () => {
+    const { appList } = defaultProps;
+
+    // Calculate the number of columns per row (2 columns)
+    const columnsPerRow = 2;
+
+    // Group appList items into rows with 2 columns each
+    const rows = [];
+    for (let i = 0; i < appList.length; i += columnsPerRow) {
+      const rowItems = appList.slice(i, i + columnsPerRow);
+      rows.push(rowItems);
+    }
+
+    return (
+      <div>
+        {rows.map((row, rowIndex) => (
+          <Row key={rowIndex} gutter={[16, 16]}>
+            {row.map((item, itemIndex) => (
+              <Col key={itemIndex} span={12}>
+                <div
+                  style={{
+                    padding: "8px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                  }}
+                >
+                  <img
+                    src={item.icon}
+                    alt={item.title}
+                    style={{ maxWidth: "100%", marginBottom: "8px" }}
+                  />
+                  <h3 style={{ fontSize: "16px", marginBottom: "8px" }}>
+                    {item.title}
+                  </h3>
+                  <p
+                    style={{
+                      whiteSpace: "normal",
+                      wordWrap: "break-word",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    {item.desc}
+                  </p>
+                  <a
+                    href={item.url}
+                    target={item.target || "_self"}
+                    style={{ color: "blue", textDecoration: "underline" }}
+                  >
+                    Learn More
+                  </a>
+                </div>
+              </Col>
+            ))}
+          </Row>
+        ))}
+      </div>
+    );
+  },
 };
 
 export default defaultProps;

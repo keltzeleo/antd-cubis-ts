@@ -105,7 +105,7 @@ const defaultProps = {
     {
       icon: "./icons/icon_NewSupplyManagement.png",
       title: "New Application System (NAPS)",
-      desc: "Water supply in new location, plumber enquiries, e.t.c.",
+      desc: "Apply water supply in new location, plumber enquiries, e.t.c.",
       url: "https://ant.design",
     },
     {

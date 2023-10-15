@@ -15,7 +15,7 @@ const defaultProps = {
     routes: [
       {
         path: "/welcome",
-        name: "Dashboard",
+        name: "欢迎",
         icon: <SmileFilled />,
         component: "./Welcome",
       },
@@ -103,28 +103,28 @@ const defaultProps = {
   },
   appList: [
     {
-      icon: "./icons/icon_NewSupplyManagement.png",
-      title: "New Application System (NAPS)",
-      desc: "Water supply in new location, plumber enquiries, e.t.c.",
+      icon: "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg",
+      title: "Ant Design",
+      desc: "杭州市较知名的 UI 设计语言",
       url: "https://ant.design",
     },
     {
-      icon: "./icons/icon_BillingManagement.png",
-      title: "Bill Management",
-      desc: "Module for handling various Billing Cases",
+      icon: "https://gw.alipayobjects.com/zos/antfincdn/FLrTNDvlna/antv.png",
+      title: "AntV",
+      desc: "蚂蚁集团全新一代数据可视化解决方案",
       url: "https://antv.vision/",
       target: "_blank",
     },
     {
-      icon: "./icons/icon_UserManagement.png",
-      title: "User Management",
-      desc: "Managing user permission and administration Right",
+      icon: "https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg",
+      title: "Pro Components",
+      desc: "专业级 UI 组件库",
       url: "https://procomponents.ant.design/",
     },
     {
-      icon: "./icons/icon_DepositManagement.png",
-      title: "Deposit Management",
-      desc: "Managing progress of Deposit Module",
+      icon: "https://img.alicdn.com/tfs/TB1zomHwxv1gK0jSZFFXXb0sXXa-200-200.png",
+      title: "umi",
+      desc: "插件化的企业级前端应用框架。",
       url: "https://umijs.org/zh-CN/docs",
     },
 
