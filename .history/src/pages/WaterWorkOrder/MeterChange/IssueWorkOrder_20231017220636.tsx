@@ -30,7 +30,6 @@ interface Theme {
 
 interface IssueWorkOrderProps {
   theme: Theme;
-  onClearSelectedWorkOrder: () => void;
 
   onSelectedWorkOrderChange: (value: string) => void; // Add this line
 }
@@ -74,6 +73,15 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
     });
   };
 
+  const handleOptionChange = (selectedWorkOrder, description) => {
+    if (selectedWorkOrder) {
+      setSelectedWorkOrder(description);
+      onSelectedWorkOrderChange(description);
+    } else {
+      onClearSelectedWorkOrder();
+    }
+  };
+
   const handleReset = () => {
     // Reset the form and clear the filter
     form.resetFields();
@@ -107,7 +115,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                 onSelect={(selectedWorkOrder, description) => {
                   console.log(
                     "Selected Work Order in child:",
-                    selectedWorkOrder
+                    handleOptionChange
                   );
                   onSelectedWorkOrderChange(description);
                   setSelectedWorkOrder(selectedWorkOrder);

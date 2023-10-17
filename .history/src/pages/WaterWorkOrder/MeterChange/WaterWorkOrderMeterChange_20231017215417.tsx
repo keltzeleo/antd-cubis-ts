@@ -25,10 +25,6 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
     setSelectedWorkOrderType(value);
   };
 
-  const handleClearSelectedWorkOrder = () => {
-    setSelectedWorkOrderType("");
-  };
-
   const handleButtonClick = (value: string) => {
     setSelectedItem(value);
     const matchingButtonData = spotlightButtonData.find(
@@ -37,8 +33,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
     if (matchingButtonData) {
       setActionLabel(matchingButtonData.label);
     }
-    // Clear out the selectedWorkOrderType when a new button is clicked
-    setSelectedWorkOrderType("");
+    // Add logic to set the orderTypeLabel based on other conditions, if required.
   };
 
   const spotlightButtonData = [
@@ -217,21 +212,18 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
       {selectedItem === "issueNewWorkOrder" && (
         <IssueWorkOrder
           theme={theme}
-          onClearSelectedWorkOrder={handleClearSelectedWorkOrder}
           onSelectedWorkOrderChange={handleSelectedWorkOrderChange}
         />
       )}
       {selectedItem === "completeWorkOrder" && (
         <CompleteWorkOrder
           theme={theme}
-          onClearSelectedWorkOrder={handleClearSelectedWorkOrder}
           onSelectedWorkOrderChange={handleSelectedWorkOrderChange}
         />
       )}
       {selectedItem === "cancelWorkOrder" && (
         <CancelWorkOrder
           theme={theme}
-          onClearSelectedWorkOrder={handleClearSelectedWorkOrder}
           onSelectedWorkOrderChange={handleSelectedWorkOrderChange}
         />
       )}{" "}

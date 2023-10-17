@@ -30,8 +30,6 @@ interface Theme {
 
 interface IssueWorkOrderProps {
   theme: Theme;
-  onClearSelectedWorkOrder: () => void;
-
   onSelectedWorkOrderChange: (value: string) => void; // Add this line
 }
 
@@ -72,6 +70,15 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
       meterRemark: undefined,
       assignTo: undefined,
     });
+  };
+
+  const handleOptionChange = (selectedWorkOrder, description) => {
+    if (selectedWorkOrder) {
+      setSelectedWorkOrder(description);
+      onSelectedWorkOrderChange(description);
+    } else {
+      onClearSelectedWorkOrder();
+    }
   };
 
   const handleReset = () => {

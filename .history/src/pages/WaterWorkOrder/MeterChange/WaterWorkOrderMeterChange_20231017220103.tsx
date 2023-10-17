@@ -37,8 +37,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
     if (matchingButtonData) {
       setActionLabel(matchingButtonData.label);
     }
-    // Clear out the selectedWorkOrderType when a new button is clicked
-    setSelectedWorkOrderType("");
+    // Add logic to set the orderTypeLabel based on other conditions, if required.
   };
 
   const spotlightButtonData = [

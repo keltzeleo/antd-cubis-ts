@@ -109,7 +109,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                     "Selected Work Order in child:",
                     selectedWorkOrder
                   );
-                  onSelectedWorkOrderChange(description);
+                  onSelectedWorkOrderChange(selectedWorkOrder);
                   setSelectedWorkOrder(selectedWorkOrder);
                   setWorkOrderDescription(description);
                 }}

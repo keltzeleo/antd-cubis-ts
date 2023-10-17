@@ -30,8 +30,6 @@ interface Theme {
 
 interface IssueWorkOrderProps {
   theme: Theme;
-  onClearSelectedWorkOrder: () => void;
-
   onSelectedWorkOrderChange: (value: string) => void; // Add this line
 }
 

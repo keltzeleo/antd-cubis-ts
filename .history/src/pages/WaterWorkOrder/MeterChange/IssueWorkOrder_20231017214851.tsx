@@ -30,8 +30,6 @@ interface Theme {
 
 interface IssueWorkOrderProps {
   theme: Theme;
-  onClearSelectedWorkOrder: () => void;
-
   onSelectedWorkOrderChange: (value: string) => void; // Add this line
 }
 
@@ -109,7 +107,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                     "Selected Work Order in child:",
                     selectedWorkOrder
                   );
-                  onSelectedWorkOrderChange(description);
+
                   setSelectedWorkOrder(selectedWorkOrder);
                   setWorkOrderDescription(description);
                 }}

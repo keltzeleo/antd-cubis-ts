@@ -1,6 +1,6 @@
 import {
+  CloseCircleTwoTone,
   ExclamationCircleOutlined,
-  PlusCircleTwoTone,
 } from "@ant-design/icons";
 import {
   Alert,
@@ -8,14 +8,12 @@ import {
   Button,
   Checkbox,
   Col,
-  DatePicker,
   Form,
   Input,
   Row,
   Select,
   Space,
   Table,
-  TimePicker,
 } from "antd";
 import React, { useState } from "react";
 import RealType from "../../../customComponents/RealTimeTextDisplay/RealType";
@@ -23,20 +21,25 @@ import WorkOrderTypeSelection from "../../../customComponents/Select/WorkOrderTy
 
 const { Option } = Select;
 const { TextArea } = Input;
-
 interface Theme {
   [key: string]: string;
 }
 
-interface IssueWorkOrderProps {
+interface CancelWorkOrderProps {
   theme: Theme;
   onClearSelectedWorkOrder: () => void;
 
   onSelectedWorkOrderChange: (value: string) => void; // Add this line
 }
 
-const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
+interface SelectOption {
+  value: string;
+  label: string | React.ReactNode;
+}
+
+const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({
   theme,
+  onClearSelectedWorkOrder,
   onSelectedWorkOrderChange,
 }) => {
   const [workOrderType, setWorkOrderType] = useState("");
@@ -47,6 +50,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
   const [selectedWorkOrderType, setSelectedWorkOrderType] = useState("");
+  const [cancelWorkOrderStatus, setCancelWorkOrderStatus] =
+    useState<SelectOption | null>(null);
 
   const handleSubmit = (values: any) => {
     // Handle form submission here, e.g., send data to the server
@@ -74,6 +79,15 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
     });
   };
 
+  const handleOptionChange = (selectedWorkOrder, description) => {
+    if (selectedWorkOrder) {
+      setSelectedWorkOrder(description);
+      onSelectedWorkOrderChange(description);
+    } else {
+      onClearSelectedWorkOrder();
+    }
+  };
+
   const handleReset = () => {
     // Reset the form and clear the filter
     form.resetFields();
@@ -90,7 +104,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
           color: "#fafafa",
         }}
       >
-        Issue New Work Order
+        Cancel Work Order
       </h1>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         {/* Filtering Entry */}
@@ -107,7 +121,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                 onSelect={(selectedWorkOrder, description) => {
                   console.log(
                     "Selected Work Order in child:",
-                    selectedWorkOrder
+                    handleOptionChange
                   );
                   onSelectedWorkOrderChange(description);
                   setSelectedWorkOrder(selectedWorkOrder);
@@ -120,8 +134,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
           <Col style={{ width: 260 }}>
             {/* Account Number */}
             <Form.Item
-              label="Account Number"
-              name="accountNumber"
+              label="Work Order Number"
+              name="workOrderNumber"
               rules={[{ required: true }]}
             >
               <Input
@@ -151,8 +165,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
           <Col span={24}>
             {accountNumber.length === 0 && (
               <Alert
-                message="Account Number Required"
-                description="Please enter a valid account number to proceed."
+                message="Work Order Number Required"
+                description="Please enter a valid Work Order Number to proceed."
                 type="warning"
                 showIcon
                 icon={<ExclamationCircleOutlined />}
@@ -338,15 +352,40 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
               </Form>
             </div>
           </Col>
+
           <Col span={18} style={{ marginLeft: 16, alignContent: "center" }}>
             {/* Function Tabs */}
             <h2>
-              <PlusCircleTwoTone
-                twoToneColor={theme["orange"]}
-                style={{ fontSize: 20 }}
+              <CloseCircleTwoTone
+                style={{ fontSize: "20" }}
+                twoToneColor={theme["red"]}
               />{" "}
-              CURRENT Meter Information
+              Cancel Wok Order
             </h2>
+            <div
+              style={{
+                padding: " 16 16",
+                borderRadius: 16,
+                borderColor: theme["red.2"],
+                // border: "1px dashed #fbbbc2",
+                backgroundColor: theme["red.2"],
+              }}
+            >
+              <Form.Item label="Work Order Cancellation Reason">
+                <Select
+                  labelInValue
+                  placeholder="Please Select a Cancellation Reason"
+                  onChange={(option: SelectOption) =>
+                    setCancelWorkOrderStatus(option)
+                  }
+                >
+                  <Option value="OptionValue1">Cancel Reason - 01</Option>
+                  <Option value="OptionValue2">Cancel Reason - 02</Option>
+                  {/* Add more options as needed */}
+                </Select>
+              </Form.Item>
+            </div>
+            <h2>CURRENT Meter Information</h2>
             <Table
               dataSource={[
                 {
@@ -366,71 +405,37 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                   title: "Meter No",
                   dataIndex: "meterNo",
                   key: "meterNo",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
                 },
                 {
                   title: "Meter Status",
                   dataIndex: "meterStatus",
                   key: "meterStatus",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
                 },
                 {
                   title: "Last Control Reading",
                   dataIndex: "lastControlReading",
                   key: "lastControlReading",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
                 },
                 {
                   title: "Last Actual Reading",
                   dataIndex: "lastActualReading",
                   key: "lastActualReading",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
                 },
                 {
                   title: "Last Read Code",
                   dataIndex: "lastReadCode",
                   key: "lastReadCode",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
                 },
                 {
                   title: "Replaced Meter Consumption",
                   dataIndex: "replacedMeterConsumption",
                   key: "replacedMeterConsumption",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
                 },
                 {
                   title: "Meter Faulty",
                   dataIndex: "meterFaulty",
                   key: "meterFaulty",
-                  render: (value) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {value ? "Yes" : "No"}
-                    </strong>
-                  ),
+                  render: (value) => (value ? "Yes" : "No"),
                 },
               ]}
               pagination={false}
@@ -525,7 +530,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                   <Form.Item label="Work Order Status">
                     <span
                       style={{
-                        background: theme["orange.3"],
+                        background: theme["red.3"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,
@@ -535,7 +540,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                         fontSize: 16,
                       }}
                     >
-                      Pending
+                      <span>{cancelWorkOrderStatus?.label}</span>
                     </span>
                   </Form.Item>
                 </Col>
@@ -547,12 +552,38 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                     label="Schedule Start Date"
                     name="scheduleStartDate"
                   >
-                    <DatePicker format="DD/MM/YYYY" />
+                    <span
+                      style={{
+                        background: theme["cyan.2"],
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        paddingTop: 4,
+                        paddingBottom: 4,
+                        borderRadius: 8,
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      09/09/2023
+                    </span>
                   </Form.Item>
                 </Col>
                 <Col span={8} style={{ width: "250px" }}>
                   <Form.Item label="Schedule End Date" name="scheduleEndDate">
-                    <DatePicker format="DD/MM/YYYY" />
+                    <span
+                      style={{
+                        background: theme["cyan.2"],
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        paddingTop: 4,
+                        paddingBottom: 4,
+                        borderRadius: 8,
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      20/09/2023
+                    </span>
                   </Form.Item>
                 </Col>
                 <Col style={{ maxWidth: "220px" }}>
@@ -560,13 +591,20 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                     label="Schedule Start Time"
                     name="scheduleStartTime"
                   >
-                    <TimePicker
-                      format="hh:mm A"
-                      use12Hours
-                      minuteStep={5}
-                      style={{ width: "100%" }}
-                      placeholder="Select time"
-                    />{" "}
+                    <span
+                      style={{
+                        background: theme["cyan.2"],
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        paddingTop: 4,
+                        paddingBottom: 4,
+                        borderRadius: 8,
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      10:50AM
+                    </span>
                   </Form.Item>
                 </Col>
               </Row>
@@ -577,18 +615,57 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                     label="Department In Charge"
                     name="departmentInCharge"
                   >
-                    <Select>{/* Add options here */}</Select>
+                    <span
+                      style={{
+                        background: theme["cyan.2"],
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        paddingTop: 4,
+                        paddingBottom: 4,
+                        borderRadius: 8,
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      Department 01
+                    </span>
                   </Form.Item>
                 </Col>
 
                 <Col span={8}>
                   <Form.Item label="Meter Remark" name="meterRemark">
-                    <Select>{/* Add options here */}</Select>
+                    <span
+                      style={{
+                        background: theme["cyan.2"],
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        paddingTop: 4,
+                        paddingBottom: 4,
+                        borderRadius: 8,
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      [Water Remark]
+                    </span>
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Assign To" name="assignTo">
-                    <Select>{/* Add options here */}</Select>
+                    <span
+                      style={{
+                        background: theme["cyan.2"],
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        paddingTop: 4,
+                        paddingBottom: 4,
+                        borderRadius: 8,
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      Razak bin Osman
+                    </span>
                   </Form.Item>
                 </Col>
               </Row>
@@ -655,7 +732,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                                 }}
                               >
                                 <b>Generate/Print out</b> a single hard copy of
-                                the <b>Issue New Work Order Document.</b>{" "}
+                                the <b>Cancel Work Order Document.</b>{" "}
                               </span>
                             </div>
                           </Checkbox>
@@ -673,8 +750,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                       Reset
                     </Button>
                     {/* <Button type="link" onClick={handleClearWorkOrderInfo}>
-                      Clear Work Order Information
-                    </Button> */}
+                        Clear Work Order Information
+                      </Button> */}
                     <Button type="primary" htmlType="submit">
                       Submit
                     </Button>
@@ -689,4 +766,4 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
   );
 };
 
-export default IssueWorkOrder;
+export default CancelWorkOrder;
