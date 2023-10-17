@@ -167,11 +167,11 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
       avatar={{
         style: {
           backgroundColor: "#00a991",
-          width: "48px",
+          width: "49px",
           height: "47px",
-          paddingLeft: "11px",
+          paddingLeft: "10px",
           paddingTop: "1px",
-          paddingBottom: "4px",
+          paddingBottom: "3px",
           paddingRight: "1px",
         },
         src: "./icons/icon_WorkOrderManagement.png",

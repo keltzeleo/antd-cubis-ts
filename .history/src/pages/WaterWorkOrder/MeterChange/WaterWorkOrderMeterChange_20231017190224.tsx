@@ -12,18 +12,17 @@ interface Theme {
 
 interface WaterWorkOrderMeterChangeProps {
   theme: Theme;
+  selectedWorkOrder: string;
+  setSelectedWorkOrder: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
   theme,
+  selectedWorkOrder,
 }) => {
   const [selectedItem, setSelectedItem] = useState("issueNewWorkOrder");
   const [actionLabel, setActionLabel] = useState("Issue New Work Order"); // For the "New Request"
   const [selectedWorkOrder, setSelectedWorkOrder] = useState("");
-
-  const handleSelectedWorkOrderChange = (value: string) => {
-    setSelectedWorkOrder(value);
-  };
 
   const handleButtonClick = (value: string) => {
     setSelectedItem(value);
@@ -69,7 +68,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
         title: (
           <>
             <span className="font-play-header" style={{ marginRight: "8px" }}>
-              Water Work Order Management{" "}
+              Water Work Order{" "}
             </span>
             {/* Replace the Tag component with a customized Switch */}
 
@@ -168,14 +167,11 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
         style: {
           backgroundColor: "#00a991",
           width: "48px",
-          height: "47px",
-          paddingLeft: "11px",
-          paddingTop: "1px",
-          paddingBottom: "4px",
-          paddingRight: "1px",
+          height: "48px",
+          padding: "4px",
         },
-        src: "./icons/icon_WorkOrderManagement.png",
-        alt: "Work Order Management Icon",
+        src: "./icons/icon_NewSupplyManagement.png",
+        alt: "New Application System Icon",
       }}
       extraContent={[]}
     >
@@ -212,19 +208,22 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
       {selectedItem === "issueNewWorkOrder" && (
         <IssueWorkOrder
           theme={theme}
-          onSelectedWorkOrderChange={handleSelectedWorkOrderChange}
+          selectedWorkOrder={selectedWorkOrder}
+          setSelectedWorkOrder={setSelectedWorkOrder}
         />
       )}
       {selectedItem === "completeWorkOrder" && (
         <CompleteWorkOrder
           theme={theme}
-          onSelectedWorkOrderChange={handleSelectedWorkOrderChange}
+          selectedWorkOrder={selectedWorkOrder}
+          setSelectedWorkOrder={setSelectedWorkOrder}
         />
       )}
       {selectedItem === "cancelWorkOrder" && (
         <CancelWorkOrder
           theme={theme}
-          onSelectedWorkOrderChange={handleSelectedWorkOrderChange}
+          selectedWorkOrder={selectedWorkOrder}
+          setSelectedWorkOrder={setSelectedWorkOrder}
         />
       )}{" "}
       {/* Add the rest of your component content */}

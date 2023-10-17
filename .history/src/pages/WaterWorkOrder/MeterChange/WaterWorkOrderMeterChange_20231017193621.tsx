@@ -168,7 +168,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
         style: {
           backgroundColor: "#00a991",
           width: "48px",
-          height: "47px",
+          height: "48px",
           paddingLeft: "11px",
           paddingTop: "1px",
           paddingBottom: "4px",

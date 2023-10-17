@@ -27,7 +27,6 @@ interface Theme {
 
 interface CancelWorkOrderProps {
   theme: Theme;
-  onSelectedWorkOrderChange: (value: string) => void; // Add this line
 }
 
 interface SelectOption {
@@ -35,10 +34,7 @@ interface SelectOption {
   label: string | React.ReactNode;
 }
 
-const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({
-  theme,
-  onSelectedWorkOrderChange,
-}) => {
+const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({ theme }) => {
   const [workOrderType, setWorkOrderType] = useState("");
   const [selectedWorkOrder, setSelectedWorkOrder] = useState("");
   const [workOrderDescription, setWorkOrderDescription] = useState("");
@@ -106,11 +102,10 @@ const CancelWorkOrder: React.FC<CancelWorkOrderProps> = ({
               rules={[{ required: true, message: "Missing Work Order Type" }]}
             >
               <WorkOrderTypeSelection
-                onSelect={(selectedWorkOrder, description) => {
-                  setSelectedWorkOrder(selectedWorkOrder);
-                  setWorkOrderDescription(description);
+                theme={theme}
+                onSelect={(selectedValue, description) => {
+                  setWorkOrderType(description); // Update the parent's state.
                 }}
-                theme={{ cyan: "#00a991" }}
               />
             </Form.Item>
           </Col>
