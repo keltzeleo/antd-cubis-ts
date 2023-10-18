@@ -22,7 +22,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
   const [selectedWorkOrderType, setSelectedWorkOrderType] = useState("");
 
   const handleSelectedWorkOrderChange = (value: string) => {
-    setSelectedWorkOrderType(value.toUpperCase());
+    setSelectedWorkOrderType(value.toUpperCase);
   };
 
   const handleClearSelectedWorkOrder = () => {
