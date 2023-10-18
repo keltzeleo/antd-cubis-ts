@@ -87,8 +87,9 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
               className="font-play-header02"
               style={{
                 background: theme["colorPrimaryBg"],
-                padding: "2px 16px",
+                padding: "4px 16px",
                 borderRadius: "8px",
+                marginTop: "3opx",
               }}
             >
               {actionLabel} • {selectedWorkOrderType}
