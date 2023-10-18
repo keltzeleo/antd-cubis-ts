@@ -338,11 +338,7 @@ const App: React.FC<AppProps> = (theme) => {
             <div style={{ marginTop: "32px" }} />
 
             {/* Render the appropriate form based on the switch's value */}
-            {isResidential ? (
-              <MyForm />
-            ) : (
-              <WaterWorkOrderMeterChange theme={token} />
-            )}
+            {isResidential ? <MyForm /> : <WaterWorkOrderMeterChange />}
           </PageContainer>
         </ProLayout>
       </div>

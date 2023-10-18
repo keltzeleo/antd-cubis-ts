@@ -341,7 +341,7 @@ const App: React.FC<AppProps> = (theme) => {
             {isResidential ? (
               <MyForm />
             ) : (
-              <WaterWorkOrderMeterChange theme={token} />
+              <WaterWorkOrderMeterChange theme={{ token }} />
             )}
           </PageContainer>
         </ProLayout>
