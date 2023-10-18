@@ -88,7 +88,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
           borderRadius: 32,
           backgroundColor: theme["colorPrimary"],
           color: "#fafafa",
-          fontFamily: "Book Antique",
+          fontFamily: "century",
           fontWeight: "bold",
         }}
       >

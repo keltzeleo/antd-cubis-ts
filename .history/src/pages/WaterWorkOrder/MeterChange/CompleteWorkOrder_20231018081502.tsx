@@ -1,6 +1,6 @@
 import {
+  CheckCircleTwoTone,
   ExclamationCircleOutlined,
-  PlusCircleTwoTone,
 } from "@ant-design/icons";
 import {
   Alert,
@@ -23,19 +23,18 @@ import WorkOrderTypeSelection from "../../../customComponents/Select/WorkOrderTy
 
 const { Option } = Select;
 const { TextArea } = Input;
-
 interface Theme {
   [key: string]: string;
 }
 
-interface IssueWorkOrderProps {
+interface CompleteWorkOrderProps {
   theme: Theme;
   onClearSelectedWorkOrder: () => void;
 
   onSelectedWorkOrderChange: (value: string) => void; // Add this line
 }
 
-const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
+const CompleteWorkOrder: React.FC<CompleteWorkOrderProps> = ({
   theme,
   onSelectedWorkOrderChange,
 }) => {
@@ -47,6 +46,279 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
   const [selectedWorkOrderType, setSelectedWorkOrderType] = useState("");
+  const [newMeterNo, setNewMeterNo] = useState("");
+  const [newMeterLocation, setNewMeterLocation] = useState("");
+  const [initialReading, setInitialReading] = useState("");
+
+  // Sample data (New and Old Meter Data)
+  const meterData = {
+    oldMeter: {
+      meterNumber: "[Old Meter No.]",
+      meterStatus: "[Old Meter Status]",
+      reading: "[Last Actual Reading]",
+      readCode: "[Last Read Code]",
+      consumption: "[Replaced Meter Cons.]",
+      meterFaulty: "[Meter Faulty Status]",
+    },
+    newMeter: {
+      meterNumber: "[New Meter Number]",
+      meterStatus: "[New Meter Status]",
+      reading: "[Initial Reading]",
+      location: "[New Meter Location]",
+      brand: "[Meter Brand]",
+      purchaseDate: "[Purchase Date]",
+      digitDialLength: "[Digit Dial Length]",
+      uom: "[UOM]",
+    },
+  };
+
+  const columns = [
+    {
+      title: "",
+      dataIndex: "label",
+      key: "label",
+      width: 200,
+      render: (text: string) => (
+        <strong style={{ color: theme["colorTextBase"] }}>{text}</strong>
+      ), // <-- This line makes the text bold
+    },
+    {
+      title: "Meter Number",
+      dataIndex: "meterNumber",
+      key: "meterNumber",
+      width: 200,
+      render: (text: string, record: any) => {
+        if (record.label === "Old Meter Information") {
+          return (
+            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
+          );
+        } else if (record.key === "2") {
+          // existing logic for new meter
+          return (
+            <Input
+              defaultValue={text}
+              onChange={(e) => {
+                // existing logic
+              }}
+            />
+          );
+        } else {
+          return text;
+        }
+      },
+    },
+    {
+      title: "Meter Status",
+      dataIndex: "meterStatus",
+      key: "meterStatus",
+      width: 200,
+      render: (text: string, record: any) => {
+        if (record.label === "Old Meter Information") {
+          return (
+            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
+          );
+        } else if (record.key === "2") {
+          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
+        }
+      },
+    },
+    {
+      title: "Reading",
+      dataIndex: "reading",
+      key: "reading",
+      width: 200,
+      render: (text: string, record: any) => {
+        if (record.label === "Old Meter Information") {
+          return (
+            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
+          );
+        } else if (record.key === "2") {
+          // If the row is for 'newMeter'
+          return (
+            <Input
+              defaultValue={text}
+              onChange={(e) => {
+                // Handle the change if required
+                // e.g., update the state or form values
+              }}
+            />
+          );
+        } else {
+          return text; // Display plain text for other rows (e.g., 'oldMeter')
+        }
+      },
+    },
+    {
+      title: "Read Code",
+      dataIndex: "readCode",
+      key: "readCode",
+      width: 200,
+      render: (text: string, record: any) => {
+        if (record.label === "Old Meter Information") {
+          return (
+            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
+          );
+        } else if (record.key === "2") {
+          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
+        }
+      },
+    },
+    {
+      title: "Consumption",
+      dataIndex: "consumption",
+      key: "consumption",
+      width: 200,
+      render: (text: string, record: any) => {
+        if (record.label === "Old Meter Information") {
+          return (
+            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
+          );
+        } else if (record.key === "2") {
+          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
+        }
+      },
+    },
+    {
+      title: "Meter Faulty",
+      dataIndex: "meterFaulty",
+      key: "meterFaulty",
+      width: 200,
+      render: (text: string, record: any) => {
+        if (record.label === "Old Meter Information") {
+          return (
+            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
+          );
+        } else if (record.key === "2") {
+          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
+        }
+      },
+    },
+    {
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+      width: 200,
+      render: (text: string, record: any) => {
+        if (record.label === "Old Meter Information") {
+          return (
+            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
+          );
+        } else if (record.key === "2") {
+          // If the row is for 'newMeter'
+          return (
+            <Select
+              defaultValue={text}
+              style={{ width: 150 }}
+              onChange={(value: string) => {
+                // Handle the selection change if required
+                // e.g., update the state or form values
+              }}
+            >
+              <Option value="location01">Location 01</Option>
+              <Option value="location02">Location 02</Option>
+              <Option value="location03">Location 03</Option>
+              {/* ... Add more options if needed ... */}
+            </Select>
+          );
+        } else {
+          return text; // Display plain text for other rows
+        }
+      },
+    },
+    {
+      title: "Brand",
+      dataIndex: "brand",
+      key: "brand",
+      width: 200,
+      render: (text: string, record: any) => {
+        if (record.label === "Old Meter Information") {
+          return (
+            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
+          );
+        } else if (record.key === "2") {
+          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
+        }
+      },
+    },
+    {
+      title: "Purchase Date",
+      dataIndex: "purchaseDate",
+      key: "purchaseDate",
+      width: 200,
+      render: (text: string, record: any) => {
+        if (record.label === "Old Meter Information") {
+          return (
+            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
+          );
+        } else if (record.key === "2") {
+          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
+        }
+      },
+    },
+    {
+      title: "Digit Dial Length",
+      dataIndex: "digitDialLength",
+      key: "digitDialLength",
+      width: 200,
+      render: (text: string, record: any) => {
+        if (record.label === "Old Meter Information") {
+          return (
+            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
+          );
+        } else if (record.key === "2") {
+          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
+        }
+      },
+    },
+    {
+      title: "Unit of Measurement",
+      dataIndex: "uom",
+      key: "uom",
+      width: 200,
+      render: (text: string, record: any) => {
+        if (record.label === "Old Meter Information") {
+          return (
+            <span style={{ color: theme["colorTextDisabled"] }}>{text}</span>
+          );
+        } else if (record.key === "2") {
+          return <span style={{ color: theme["colorTextBase"] }}>{text}</span>;
+        }
+      },
+    },
+  ];
+
+  const dataSource = [
+    {
+      key: "1",
+      label: "Old Meter Information",
+      meterNumber: "m12345-2",
+      meterStatus: "Deactivated",
+      reading: meterData.oldMeter.reading,
+      readCode: meterData.oldMeter.readCode,
+      consumption: meterData.oldMeter.consumption,
+      meterFaulty: meterData.oldMeter.meterFaulty,
+      location: "N/A",
+      brand: "N/A",
+      purchaseDate: "N/A",
+      digitDialLength: "N/A",
+      uom: "N/A",
+    },
+    {
+      key: "2",
+      label: "New Meter Information",
+      meterNumber: meterData.newMeter.meterNumber,
+      meterStatus: "Active",
+      reading: meterData.newMeter.reading,
+      readCode: "N/A",
+      consumption: "N/A",
+      meterFaulty: "N/A",
+      location: meterData.newMeter.location,
+      brand: meterData.newMeter.brand,
+      purchaseDate: meterData.newMeter.purchaseDate,
+      digitDialLength: meterData.newMeter.digitDialLength,
+      uom: meterData.newMeter.uom,
+    },
+  ];
 
   const handleSubmit = (values: any) => {
     // Handle form submission here, e.g., send data to the server
@@ -88,11 +360,11 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
           borderRadius: 32,
           backgroundColor: theme["colorPrimary"],
           color: "#fafafa",
-          fontFamily: "Book Antique",
+          fontFamily: "century",
           fontWeight: "bold",
         }}
       >
-        Issue New Work Order
+        Complete Work Order
       </h1>
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         {/* Filtering Entry */}
@@ -103,7 +375,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
             <Form.Item
               label="Work Order Type"
               name="workOrderType"
-              rules={[{ required: true, message: "Missing Work Order Type" }]}
+              rules={[{ required: true, message: "" }]}
             >
               <WorkOrderTypeSelection
                 onSelect={(selectedWorkOrder, description) => {
@@ -122,8 +394,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
           <Col style={{ width: 260 }}>
             {/* Account Number */}
             <Form.Item
-              label="Account Number"
-              name="accountNumber"
+              label="Work Order Number"
+              name="workOrderNumber"
               rules={[{ required: true }]}
             >
               <Input
@@ -153,8 +425,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
           <Col span={24}>
             {accountNumber.length === 0 && (
               <Alert
-                message="Account Number Required"
-                description="Please enter a valid account number to proceed."
+                message="Work Order Number Required"
+                description="Please enter a valid Work Order Number to proceed."
                 type="warning"
                 showIcon
                 icon={<ExclamationCircleOutlined />}
@@ -216,6 +488,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                           borderRadius: 8,
                           fontWeight: "bold",
                           fontSize: 16,
+                          color: theme["colorTextBase"],
                         }}
                       >
                         Active
@@ -343,99 +616,17 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
           <Col span={18} style={{ marginLeft: 16, alignContent: "center" }}>
             {/* Function Tabs */}
             <h2>
-              <PlusCircleTwoTone
-                twoToneColor={theme["orange"]}
-                style={{ fontSize: 20 }}
+              <CheckCircleTwoTone
+                twoToneColor={theme["lime"]}
+                style={{ fontSize: "20px" }}
               />{" "}
-              CURRENT Meter Information
+              <b>COMPLETED</b> Meter Information
             </h2>
             <Table
-              dataSource={[
-                {
-                  key: "1",
-                  meterNo: "12345",
-                  meterStatus: "Active",
-                  lastControlReading: "5000",
-                  lastActualReading: "5200",
-                  lastReadCode: "A1",
-                  replacedMeterConsumption: "100",
-                  meterFaulty: true,
-                },
-                // Add more rows as needed
-              ]}
-              columns={[
-                {
-                  title: "Meter No",
-                  dataIndex: "meterNo",
-                  key: "meterNo",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
-                },
-                {
-                  title: "Meter Status",
-                  dataIndex: "meterStatus",
-                  key: "meterStatus",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
-                },
-                {
-                  title: "Last Control Reading",
-                  dataIndex: "lastControlReading",
-                  key: "lastControlReading",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
-                },
-                {
-                  title: "Last Actual Reading",
-                  dataIndex: "lastActualReading",
-                  key: "lastActualReading",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
-                },
-                {
-                  title: "Last Read Code",
-                  dataIndex: "lastReadCode",
-                  key: "lastReadCode",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
-                },
-                {
-                  title: "Replaced Meter Consumption",
-                  dataIndex: "replacedMeterConsumption",
-                  key: "replacedMeterConsumption",
-                  render: (text: string) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {text}
-                    </strong>
-                  ),
-                },
-                {
-                  title: "Meter Faulty",
-                  dataIndex: "meterFaulty",
-                  key: "meterFaulty",
-                  render: (value) => (
-                    <strong style={{ color: theme["colorTextBase"] }}>
-                      {value ? "Yes" : "No"}
-                    </strong>
-                  ),
-                },
-              ]}
+              columns={columns}
+              dataSource={dataSource}
               pagination={false}
+              bordered
             />
             <h2 style={{ marginTop: 32 }}>Work Order Information</h2>
             <Form
@@ -481,7 +672,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                         fontSize: 16,
                       }}
                     >
-                      29/09/2023
+                      01/09/2023
                     </span>
                   </Form.Item>
                 </Col>
@@ -506,7 +697,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
               </Row>
               <Row gutter={16}>
                 <Col span={8}>
-                  <Form.Item label="Work Order No">
+                  <Form.Item label="Work Order Number">
                     <span
                       style={{
                         background: theme["cyan.2"],
@@ -519,7 +710,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                         fontSize: 16,
                       }}
                     >
-                      WO36353
+                      WO{accountNumber}
                     </span>
                   </Form.Item>
                 </Col>
@@ -527,7 +718,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                   <Form.Item label="Work Order Status">
                     <span
                       style={{
-                        background: theme["orange.3"],
+                        background: theme["lime.3"],
                         paddingLeft: 16,
                         paddingRight: 16,
                         paddingTop: 4,
@@ -537,41 +728,106 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                         fontSize: 16,
                       }}
                     >
-                      Pending
+                      Completed
                     </span>
                   </Form.Item>
                 </Col>
               </Row>
               {/* Input fields */}
               <Row gutter={16}>
-                <Col span={8} style={{ width: "250px" }}>
-                  <Form.Item
-                    label="Schedule Start Date"
-                    name="scheduleStartDate"
-                  >
+                <Col span={8}>
+                  <Form.Item label="Schedule Start Date">
+                    <span
+                      style={{
+                        background: theme["cyan.2"],
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        paddingTop: 4,
+                        paddingBottom: 4,
+                        borderRadius: 8,
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      09/09/2023
+                    </span>{" "}
+                  </Form.Item>
+                </Col>
+
+                <Col span={8}>
+                  <Form.Item label="Schedule Start Time">
+                    <span
+                      style={{
+                        background: theme["cyan.2"],
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        paddingTop: 4,
+                        paddingBottom: 4,
+                        borderRadius: 8,
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      10:15 AM{" "}
+                    </span>
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item label="Scehdule End Date">
+                    <span
+                      style={{
+                        background: theme["cyan.2"],
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        paddingTop: 4,
+                        paddingBottom: 4,
+                        borderRadius: 8,
+                        fontWeight: "bold",
+                        fontSize: 16,
+                      }}
+                    >
+                      12/09/2023
+                    </span>
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={24}>
+                <Col span={8}>
+                  <Form.Item label="Performed Date" name="performedDate">
                     <DatePicker format="DD/MM/YYYY" />
                   </Form.Item>
                 </Col>
-                <Col span={8} style={{ width: "250px" }}>
-                  <Form.Item label="Schedule End Date" name="scheduleEndDate">
-                    <DatePicker format="DD/MM/YYYY" />
-                  </Form.Item>
-                </Col>
-                <Col style={{ maxWidth: "220px" }}>
-                  <Form.Item
-                    label="Schedule Start Time"
-                    name="scheduleStartTime"
-                  >
+                <Col span={8}>
+                  <Form.Item label="Performed Time" name="performedTime">
                     <TimePicker
                       format="hh:mm A"
                       use12Hours
-                      minuteStep={5}
-                      style={{ width: "100%" }}
+                      style={{ width: "150px" }}
                       placeholder="Select time"
                     />{" "}
                   </Form.Item>
                 </Col>
+                <Col span={8} style={{ maxWidth: "250px" }}>
+                  <Form.Item label="Performed by" name="performedBy">
+                    <Select>{/* Add options here */}</Select>
+                  </Form.Item>
+                </Col>
               </Row>
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Form.Item label="Completed Date" name="completedDate">
+                    <DatePicker format="DD/MM/YYYY" />
+                  </Form.Item>
+                </Col>
+
+                <Col span={8} style={{ maxWidth: "250px" }}>
+                  <Form.Item label="Completed By" name="completedBy">
+                    <Select>{/* Add options here */}</Select>
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Col span={8}></Col>
 
               <Row gutter={16}>
                 <Col span={8}>
@@ -657,7 +913,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                                 }}
                               >
                                 <b>Generate/Print out</b> a single hard copy of
-                                the <b>Issue New Work Order Document.</b>{" "}
+                                the <b>Complete Work Order Document.</b>{" "}
                               </span>
                             </div>
                           </Checkbox>
@@ -691,4 +947,4 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
   );
 };
 
-export default IssueWorkOrder;
+export default CompleteWorkOrder;

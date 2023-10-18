@@ -88,8 +88,8 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
           borderRadius: 32,
           backgroundColor: theme["colorPrimary"],
           color: "#fafafa",
-          fontFamily: "Book Antique",
-          fontWeight: "bold",
+          fontFamily: "century",
+          fontWeight: "bolder",
         }}
       >
         Issue New Work Order

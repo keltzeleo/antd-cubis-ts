@@ -88,8 +88,6 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
           borderRadius: 32,
           backgroundColor: theme["colorPrimary"],
           color: "#fafafa",
-          fontFamily: "Book Antique",
-          fontWeight: "bold",
         }}
       >
         Issue New Work Order
@@ -654,6 +652,7 @@ const IssueWorkOrder: React.FC<IssueWorkOrderProps> = ({
                                 style={{
                                   flex: 1,
                                   color: theme["colorTextBase"],
+                                  fontFamily: "Play",
                                 }}
                               >
                                 <b>Generate/Print out</b> a single hard copy of
