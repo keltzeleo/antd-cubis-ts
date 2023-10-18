@@ -64,11 +64,10 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
     <PageContainer
       fixedHeader
       style={{
-        width: "100%",
+        width: "120%",
         top: 20,
         left: -10,
-        zIndex: 5,
-        paddingBottom: 10,
+        zIndex: 1005,
         backgroundColor: "transparent",
       }}
       header={{

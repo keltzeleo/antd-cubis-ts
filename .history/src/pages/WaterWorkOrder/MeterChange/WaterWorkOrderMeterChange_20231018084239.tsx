@@ -67,7 +67,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
         width: "100%",
         top: 20,
         left: -10,
-        zIndex: 5,
+        zIndex: 1005,
         paddingBottom: 10,
         backgroundColor: "transparent",
       }}
