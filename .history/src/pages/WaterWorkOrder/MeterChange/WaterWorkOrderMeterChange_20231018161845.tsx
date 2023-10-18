@@ -65,14 +65,11 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
       fixedHeader
       style={{
         width: "100%",
-        // top: 20,
+        top: 20,
         left: -10,
-        zIndex: 5,
+        zIndex: rn5,
         paddingBottom: 10,
         backgroundColor: "transparent",
-        // position: "-webkit-sticky" /* for Safari */,
-        // position: "sticky",
-        top: 20,
       }}
       header={{
         title: (
@@ -187,7 +184,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
         alt: "Work Order Management Icon",
       }}
       extraContent={[]}
-    >
+    >  </PageContainer>
       <div
         style={{
           // background: theme["colorPrimaryBg"],
@@ -196,7 +193,6 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           borderColor: "#fafafa",
           display: "flex",
           flexDirection: "row",
-          marginTop: -28,
         }}
       >
         <div
@@ -241,7 +237,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
         />
       )}{" "}
       {/* Add the rest of your component content */}
-    </PageContainer>
+  
   );
 };
 

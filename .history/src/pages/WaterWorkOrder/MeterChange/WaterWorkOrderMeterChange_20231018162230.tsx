@@ -70,9 +70,9 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
         zIndex: 5,
         paddingBottom: 10,
         backgroundColor: "transparent",
-        // position: "-webkit-sticky" /* for Safari */,
-        // position: "sticky",
-        top: 20,
+        position: "-webkit-sticky" /* for Safari */
+        position: "sticky",
+        top: 0,
       }}
       header={{
         title: (
@@ -196,7 +196,6 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           borderColor: "#fafafa",
           display: "flex",
           flexDirection: "row",
-          marginTop: -28,
         }}
       >
         <div
