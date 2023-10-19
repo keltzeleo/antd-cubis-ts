@@ -79,8 +79,8 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           alignItems: "center",
           padding: "12 16px",
           borderRadius: 8,
-          backgroundColor: `${theme["backgroundColor"]}10`, // Apply transparency to the background color
-          backdropFilter: "blur(15px)", // Apply the blur filter
+          backgroundColor: `${theme["transparent"]}10`, // Apply transparency to the background color
+          backdropFilter: "blur(10px)", // Apply the blur filter
           zIndex: 999,
         }}
       >
@@ -246,7 +246,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           borderColor: "#fafafa",
           display: "flex",
           flexDirection: "row",
-          marginTop: -16,
+          marginTop: -28,
         }}
       >
         <div

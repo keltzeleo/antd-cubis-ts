@@ -80,7 +80,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           padding: "12 16px",
           borderRadius: 8,
           backgroundColor: `${theme["backgroundColor"]}10`, // Apply transparency to the background color
-          backdropFilter: "blur(15px)", // Apply the blur filter
+          backdropFilter: "blur(10px)", // Apply the blur filter
           zIndex: 999,
         }}
       >

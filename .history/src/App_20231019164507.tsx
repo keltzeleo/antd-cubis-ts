@@ -185,7 +185,7 @@ const App: React.FC<AppProps> = (theme) => {
               left: -10,
               zIndex: 2,
               backgroundColor: "transparent",
-              // backdropFilter: "blur(10px)", // Apply the blur filter
+              backdropFilter: "blur(10px)", // Apply the blur filter
             }}
             header={{
               title: (
