@@ -57,7 +57,7 @@ const App: React.FC<AppProps> = (theme) => {
   };
 
   const handleThemeChange = () => {
-    setToken(isDarkMode ? { ...light } : { ...dark });
+    setToken(isDarkMode ? { ...dark } : { ...light });
 
     setIsDarkMode(!isDarkMode);
   };

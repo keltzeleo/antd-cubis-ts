@@ -41,7 +41,7 @@ const App: React.FC<AppProps> = (theme) => {
   const [tagIndication, setTagIndication] = useState("for Residential");
   const [isResidential, setIsResidential] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [token, setToken] = useState<Theme>(light);
+  const [token, setToken] = useState<Theme>(dark);
 
   useEffect(() => {
     document.body.style.backgroundColor = token.colorBgBase;
@@ -57,7 +57,7 @@ const App: React.FC<AppProps> = (theme) => {
   };
 
   const handleThemeChange = () => {
-    setToken(isDarkMode ? { ...light } : { ...dark });
+    setToken(isDarkMode ? { ...dark } : { ...light });
 
     setIsDarkMode(!isDarkMode);
   };
@@ -145,9 +145,9 @@ const App: React.FC<AppProps> = (theme) => {
                     }}
                   >
                     <img
-                      src="https://res.cloudinary.com/tyappreg/image/upload/v1696508807/icon_sun_i1awlx.png"
-                      alt="Sun"
-                      style={{ width: "29px", height: "29px" }}
+                      src="https://res.cloudinary.com/tyappreg/image/upload/v1696508808/icon_moon_f4ambw.png"
+                      alt="Moon"
+                      style={{ width: "24px", height: "24px" }}
                     />
                   </span>
                 }
@@ -166,9 +166,9 @@ const App: React.FC<AppProps> = (theme) => {
                     }}
                   >
                     <img
-                      src="https://res.cloudinary.com/tyappreg/image/upload/v1696508808/icon_moon_f4ambw.png"
-                      alt="Moon"
-                      style={{ width: "24px", height: "24px" }}
+                      src="https://res.cloudinary.com/tyappreg/image/upload/v1696508807/icon_sun_i1awlx.png"
+                      alt="Sun"
+                      style={{ width: "29px", height: "29px" }}
                     />
                   </span>
                 }

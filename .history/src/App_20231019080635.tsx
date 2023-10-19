@@ -41,7 +41,7 @@ const App: React.FC<AppProps> = (theme) => {
   const [tagIndication, setTagIndication] = useState("for Residential");
   const [isResidential, setIsResidential] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [token, setToken] = useState<Theme>(light);
+  const [token, setToken] = useState<Theme>(dark);
 
   useEffect(() => {
     document.body.style.backgroundColor = token.colorBgBase;
@@ -59,7 +59,7 @@ const App: React.FC<AppProps> = (theme) => {
   const handleThemeChange = () => {
     setToken(isDarkMode ? { ...light } : { ...dark });
 
-    setIsDarkMode(!isDarkMode);
+    setIsDarkMode(isDarkMode);
   };
 
   return (

@@ -93,11 +93,7 @@ const App: React.FC<AppProps> = (theme) => {
           {...defaultProps}
         >
           <div
-            style={{
-              marginTop: 10,
-              backgroundColor: token["colorPrimaryBg"],
-              color: "",
-            }}
+            style={{ backgroundColor: token["colorPrimaryBg"], color: "" }}
             className="header-essentials"
           >
             <div className="steady-alignment">

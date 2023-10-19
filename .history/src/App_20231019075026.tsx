@@ -94,7 +94,7 @@ const App: React.FC<AppProps> = (theme) => {
         >
           <div
             style={{
-              marginTop: 10,
+              marginTop: 20,
               backgroundColor: token["colorPrimaryBg"],
               color: "",
             }}

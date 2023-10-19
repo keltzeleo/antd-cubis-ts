@@ -57,7 +57,7 @@ const App: React.FC<AppProps> = (theme) => {
   };
 
   const handleThemeChange = () => {
-    setToken(isDarkMode ? { ...light } : { ...dark });
+    setToken(isDarkMode ? { ...dark } : { ...light });
 
     setIsDarkMode(!isDarkMode);
   };
@@ -95,7 +95,7 @@ const App: React.FC<AppProps> = (theme) => {
           <div
             style={{
               marginTop: 10,
-              backgroundColor: token["colorPrimaryBg"],
+              backgroundColor: dark["colorPrimaryBg"],
               color: "",
             }}
             className="header-essentials"
