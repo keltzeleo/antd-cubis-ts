@@ -131,19 +131,19 @@ const defaultProps = {
     {
       icon: "./icons/icon_WorkOrderManagement.png",
       title: "Work Order Management",
-      desc: "Assigning Work Order Cases",
+      desc: "Assigning Work Order to Respective Department",
       url: "https://qiankun.umijs.org/",
     },
     {
-      icon: "./icons/icon_ReportEnquiry.png",
-      title: "Report Enquiry",
-      desc: "Generate Report Documents",
+      icon: "https://gw.alipayobjects.com/zos/rmsportal/XuVpGqBFxXplzvLjJBZB.svg",
+      title: "语雀",
+      desc: "知识创作与分享工具",
       url: "https://www.yuque.com/",
     },
     {
-      icon: "./icons/icon_TableMaintenance.png",
-      title: "Table Maintenance ",
-      desc: "Add, Edit, Delete for Table & Data",
+      icon: "https://gw.alipayobjects.com/zos/rmsportal/LFooOLwmxGLsltmUjTAP.svg",
+      title: "Kitchen ",
+      desc: "Sketch 工具集",
       url: "https://kitchen.alipay.com/",
     },
     {

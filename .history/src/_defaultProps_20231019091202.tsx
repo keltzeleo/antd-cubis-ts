@@ -137,13 +137,13 @@ const defaultProps = {
     {
       icon: "./icons/icon_ReportEnquiry.png",
       title: "Report Enquiry",
-      desc: "Generate Report Documents",
+      desc: "Generate Report Dcouments",
       url: "https://www.yuque.com/",
     },
     {
-      icon: "./icons/icon_TableMaintenance.png",
-      title: "Table Maintenance ",
-      desc: "Add, Edit, Delete for Table & Data",
+      icon: "https://gw.alipayobjects.com/zos/rmsportal/LFooOLwmxGLsltmUjTAP.svg",
+      title: "Kitchen ",
+      desc: "Sketch 工具集",
       url: "https://kitchen.alipay.com/",
     },
     {
