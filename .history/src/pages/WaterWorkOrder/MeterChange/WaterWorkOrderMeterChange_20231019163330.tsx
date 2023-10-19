@@ -195,9 +195,9 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
                   width: "48px",
                   height: "48px",
                   borderRadius: "50%",
-                  paddingLeft: "8px",
-                  paddingTop: "4px",
-                  paddingBottom: "0px",
+                  paddingLeft: "9px",
+                  paddingTop: "2px",
+                  paddingBottom: "2px",
                   paddingRight: "0px",
                 }}
                 src="./icons/icon_WorkOrderManagement.png"

@@ -62,14 +62,141 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
   ];
 
   return (
-    <PageContainer>
+    <PageContainer
+      fixedHeader
+      style={{
+        width: "100%",
+        // position: "-webkit-sticky" /* for Safari */,
+        // position: "sticky",
+        // top: 20,
+        left: -10,
+        zIndex: 5,
+        paddingBottom: 10,
+        backgroundColor: "transparent",
+        // position: "-webkit-sticky" /* for Safari */,
+        // position: "sticky",
+        top: 20,
+      }}
+      header={{
+        title: (
+          <>
+            <span className="font-play-header" style={{ marginRight: "8px" }}>
+              Water Work Order Management{" "}
+            </span>
+            {/* Replace the Tag component with a customized Switch */}
+
+            <br />
+            <span
+              className="font-play-header02"
+              style={{
+                background: theme["colorPrimaryBg"],
+                padding: "2px 16px",
+                borderRadius: "8px",
+              }}
+            >
+              {actionLabel} • {selectedWorkOrderType}
+            </span>
+          </>
+        ),
+        breadcrumb: {
+          items: [
+            {
+              path: "",
+              title: (
+                <>
+                  <GoldOutlined
+                    style={{
+                      color: "#666666",
+                      paddingLeft: "8px",
+                    }}
+                  />
+                  <span
+                    style={{
+                      color: "#666666",
+                      paddingLeft: "0px",
+                      paddingRight: "10px",
+                    }}
+                  >
+                    {" "}
+                    Dashboard{" "}
+                  </span>
+                </>
+              ),
+
+              className: "breadcrumb-item",
+            },
+            {
+              path: "",
+              title: (
+                <span
+                  style={{
+                    color: "#666666",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                  }}
+                >
+                  {" "}
+                  breadcrumb 00{" "}
+                </span>
+              ),
+              className: "breadcrumb-item",
+            },
+            {
+              path: "",
+              title: (
+                <span
+                  style={{
+                    color: "#666666",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                  }}
+                >
+                  {" "}
+                  breadcrumb 01{" "}
+                </span>
+              ),
+              className: "breadcrumb-item",
+            },
+            {
+              path: "",
+              title: (
+                <span
+                  style={{
+                    color: "#666666",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                  }}
+                >
+                  {" "}
+                  breadcrumb 02{" "}
+                </span>
+              ),
+              className: "breadcrumb-item",
+            },
+          ],
+        },
+      }}
+      avatar={{
+        style: {
+          backgroundColor: "#00a991",
+          width: "48px",
+          height: "47px",
+          paddingLeft: "11px",
+          paddingTop: "1px",
+          paddingBottom: "4px",
+          paddingRight: "1px",
+        },
+        src: "./icons/icon_WorkOrderManagement.png",
+        alt: "Work Order Management Icon",
+      }}
+      extraContent={[]}
+    >
       <div
         style={{
           position: "sticky",
           top: 0,
           left: 0,
           right: 0,
-          width: "100%",
           marginLeft: -16,
           marginRight: -16,
           marginBottom: -16,
@@ -78,7 +205,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           alignItems: "center",
           padding: "12 16px",
           borderRadius: 8,
-          backgroundColor: `${theme["white"]}80`, // Apply transparency to the background color
+          backgroundColor: `${theme["cyan.3"]}50`, // Apply transparency to the background color
           backdropFilter: "blur(10px)", // Apply the blur filter
           zIndex: 999,
         }}
@@ -98,24 +225,11 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
               <span
                 style={{
                   color: "#666666",
-                  paddingLeft: "8px",
+                  paddingLeft: "0px",
                   paddingRight: "10px",
-                  fontSize: 14,
                 }}
               >
                 Dashboard
-              </span>
-            </div>
-            <div>
-              <span
-                style={{
-                  color: "#666666",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                  fontSize: 14,
-                }}
-              >
-                /
               </span>
             </div>
             <div className="breadcrumb-item">
@@ -129,49 +243,23 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
                 breadcrumb 00
               </span>
             </div>
-            <div>
-              <span
-                style={{
-                  color: "#666666",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                  fontSize: 14,
-                }}
-              >
-                /
-              </span>
-            </div>
             <div className="breadcrumb-item">
               <span
                 style={{
                   color: "#666666",
                   paddingLeft: "10px",
                   paddingRight: "10px",
-                  fontSize: 14,
                 }}
               >
                 breadcrumb 01
               </span>
             </div>
-            <div>
-              <span
-                style={{
-                  color: "#666666",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                  fontSize: 14,
-                }}
-              >
-                /
-              </span>
-            </div>
             <div className="breadcrumb-item">
               <span
                 style={{
                   color: "#666666",
                   paddingLeft: "10px",
                   paddingRight: "10px",
-                  fontSize: 14,
                 }}
               >
                 breadcrumb 02
@@ -184,7 +272,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              marginTop: "8px",
+              marginTop: "16px",
             }}
           >
             {/* Avatar */}
@@ -192,12 +280,12 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
               <img
                 style={{
                   backgroundColor: "#00a991",
-                  width: "48px",
-                  height: "48px",
+                  width: "42px",
+                  height: "42px",
                   borderRadius: "50%",
-                  paddingLeft: "8px",
-                  paddingTop: "4px",
-                  paddingBottom: "0px",
+                  paddingLeft: "9px",
+                  paddingTop: "2px",
+                  paddingBottom: "5px",
                   paddingRight: "0px",
                 }}
                 src="./icons/icon_WorkOrderManagement.png"
@@ -207,25 +295,16 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
 
             {/* Title */}
             <div className="title-container" style={{ marginLeft: "16px" }}>
-              <span
-                className="font-play-header"
-                style={{
-                  marginRight: "8px",
-                  fontWeight: "bold",
-                }}
-              >
+              <span className="font-play-header" style={{ marginRight: "8px" }}>
                 Water Work Order Management
               </span>
               <br />
-              <div style={{ height: 4 }}></div>
               <span
                 className="font-play-header02"
                 style={{
                   background: theme["colorPrimaryBg"],
-                  padding: "1px 16px",
+                  padding: "2px 16px",
                   borderRadius: "8px",
-                  fontWeight: "bold",
-                  top: 8,
                 }}
               >
                 {actionLabel} • {selectedWorkOrderType}
@@ -234,7 +313,6 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           </div>
         </div>
       </div>
-      <div style={{ height: 48 }}></div>
       <div
         style={{
           // background: theme["colorPrimaryBg"],

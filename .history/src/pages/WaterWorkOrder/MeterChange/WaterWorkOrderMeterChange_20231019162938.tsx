@@ -69,7 +69,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           top: 0,
           left: 0,
           right: 0,
-          width: "100%",
+          width: "100vh",
           marginLeft: -16,
           marginRight: -16,
           marginBottom: -16,
@@ -184,7 +184,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              marginTop: "8px",
+              marginTop: "16px",
             }}
           >
             {/* Avatar */}
@@ -192,12 +192,12 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
               <img
                 style={{
                   backgroundColor: "#00a991",
-                  width: "48px",
-                  height: "48px",
+                  width: "42px",
+                  height: "42px",
                   borderRadius: "50%",
-                  paddingLeft: "8px",
-                  paddingTop: "4px",
-                  paddingBottom: "0px",
+                  paddingLeft: "9px",
+                  paddingTop: "2px",
+                  paddingBottom: "5px",
                   paddingRight: "0px",
                 }}
                 src="./icons/icon_WorkOrderManagement.png"
