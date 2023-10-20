@@ -198,6 +198,8 @@ const App: React.FC<AppProps> = (theme) => {
                     className="font-play-header"
                     style={{
                       marginRight: "8px",
+                      backdropFilter: "blur(10px)",
+                      backgroundColor: "rgba(255, 255, 255, 0.7)",
                     }}
                   >
                     NEW APPLICATION SYSTEM

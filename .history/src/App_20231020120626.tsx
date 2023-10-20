@@ -188,7 +188,8 @@ const App: React.FC<AppProps> = (theme) => {
               top: 20,
               left: -10,
               zIndex: 2,
-              backgroundColor: "transparent",
+              // backdropFilter: "blur(10px)", // Apply the blur filter
+              backgroundColor: "rgba(255, 255, 255, 0.7)", // Semi-transparent white background
               // backdropFilter: "blur(10px)", // Apply the blur filter
             }}
             header={{
@@ -196,9 +197,7 @@ const App: React.FC<AppProps> = (theme) => {
                 <>
                   <span
                     className="font-play-header"
-                    style={{
-                      marginRight: "8px",
-                    }}
+                    style={{ marginRight: "8px" }}
                   >
                     NEW APPLICATION SYSTEM
                   </span>

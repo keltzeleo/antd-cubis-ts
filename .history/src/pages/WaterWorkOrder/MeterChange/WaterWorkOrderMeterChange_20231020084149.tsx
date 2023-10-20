@@ -1,4 +1,5 @@
 import { GoldOutlined } from "@ant-design/icons";
+import { PageContainer } from "@ant-design/pro-components";
 import React, { useState } from "react";
 import "../../../App.css";
 
@@ -61,7 +62,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
   ];
 
   return (
-    <div>
+    <PageContainer>
       <div
         style={{
           position: "sticky",
@@ -69,7 +70,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           left: 0,
           right: 0,
           width: "120%",
-          height: 132,
+          height: 120,
           marginLeft: -16,
           marginRight: -16,
           marginBottom: -16,
@@ -83,7 +84,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           zIndex: 88,
         }}
       >
-        <div className="header-container" style={{ marginLeft: 30 }}>
+        <div className="header-container">
           {/* Breadcrumb */}
           <div
             className="breadcrumb-container"
@@ -109,9 +110,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
             <div>
               <span
                 style={{
-                  // color: "#666666",
-                  color: theme["colorText"],
-
+                  color: "#666666",
                   paddingLeft: "10px",
                   paddingRight: "10px",
                   fontSize: 14,
@@ -124,7 +123,6 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
               <span
                 style={{
                   color: "#666666",
-
                   paddingLeft: "10px",
                   paddingRight: "10px",
                   fontSize: 14,
@@ -161,9 +159,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
             <div>
               <span
                 style={{
-                  // color: "#666666",
-                  color: theme["colorText"],
-
+                  color: "#666666",
                   paddingLeft: "10px",
                   paddingRight: "10px",
                   fontSize: 14,
@@ -297,7 +293,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
         />
       )}{" "}
       {/* Add the rest of your component content */}
-    </div>
+    </PageContainer>
   );
 };
 

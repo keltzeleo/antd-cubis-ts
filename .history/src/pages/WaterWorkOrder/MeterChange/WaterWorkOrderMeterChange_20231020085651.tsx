@@ -79,11 +79,11 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           padding: "12 16px",
           borderRadius: 8,
           backgroundColor: `${theme["backgroundColor"]}10`, // Apply transparency to the background color
-          backdropFilter: "blur(23px)", // Apply the blur filter
+          backdropFilter: "blur(13px)", // Apply the blur filter
           zIndex: 88,
         }}
       >
-        <div className="header-container" style={{ marginLeft: 30 }}>
+        <div className="header-container">
           {/* Breadcrumb */}
           <div
             className="breadcrumb-container"

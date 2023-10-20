@@ -42,7 +42,7 @@ const App: React.FC<AppProps> = (theme) => {
   const [isResidential, setIsResidential] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [token, setToken] = useState<Theme>(light);
-  const [collapsed, setCollapsed] = useState(true); // Track the sider's collapse state
+  const [collapsed, setCollapsed] = useState(false); // Track the sider's collapse state
 
   useEffect(() => {
     document.body.style.backgroundColor = token.colorBgBase;
@@ -67,10 +67,10 @@ const App: React.FC<AppProps> = (theme) => {
     <ConfigProvider theme={{ token }}>
       <div>
         <ProLayout
-          siderWidth={264}
-          defaultCollapsed
-          breakpoint={false}
-          // onCollapse={(newCollapsedStatus) => setCollapsed(newCollapsedStatus)}
+          siderWidth={80}
+          // collapsible
+          // collapsed={80}
+          onCollapse={(newCollapsedStatus) => setCollapsed(newCollapsedStatus)}
           layout="side"
           token={{
             colorBgAppListIconHover: "#00a991",
@@ -96,6 +96,8 @@ const App: React.FC<AppProps> = (theme) => {
           }}
           {...defaultProps}
         >
+          <button onClick={() => setCollapsed(!collapsed)}>Toggle Sider</button>
+
           <div
             style={{
               marginTop: 10,
@@ -196,9 +198,7 @@ const App: React.FC<AppProps> = (theme) => {
                 <>
                   <span
                     className="font-play-header"
-                    style={{
-                      marginRight: "8px",
-                    }}
+                    style={{ marginRight: "8px" }}
                   >
                     NEW APPLICATION SYSTEM
                   </span>

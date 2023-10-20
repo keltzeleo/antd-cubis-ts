@@ -42,7 +42,7 @@ const App: React.FC<AppProps> = (theme) => {
   const [isResidential, setIsResidential] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [token, setToken] = useState<Theme>(light);
-  const [collapsed, setCollapsed] = useState(true); // Track the sider's collapse state
+  const [collapsed, setCollapsed] = useState(true); // Add collapsed state
 
   useEffect(() => {
     document.body.style.backgroundColor = token.colorBgBase;
@@ -63,15 +63,18 @@ const App: React.FC<AppProps> = (theme) => {
     setIsDarkMode(!isDarkMode);
   };
 
+  // Callback to handle the collapse state change
+  const handleCollapse = (collapsed: boolean) => {
+    setCollapsed(collapsed);
+  };
+
   return (
     <ConfigProvider theme={{ token }}>
       <div>
         <ProLayout
           siderWidth={264}
-          defaultCollapsed
-          breakpoint={false}
-          // onCollapse={(newCollapsedStatus) => setCollapsed(newCollapsedStatus)}
-          layout="side"
+          collapsed // Pass the collapsed state
+          onCollapse={264} // Pass the collapse callback
           token={{
             colorBgAppListIconHover: "#00a991",
             colorTextAppListIconHover: "rgba(255,255,255,0.95)",
@@ -196,9 +199,7 @@ const App: React.FC<AppProps> = (theme) => {
                 <>
                   <span
                     className="font-play-header"
-                    style={{
-                      marginRight: "8px",
-                    }}
+                    style={{ marginRight: "8px" }}
                   >
                     NEW APPLICATION SYSTEM
                   </span>

@@ -83,7 +83,7 @@ const WaterWorkOrderMeterChange: React.FC<WaterWorkOrderMeterChangeProps> = ({
           zIndex: 88,
         }}
       >
-        <div className="header-container" style={{ marginLeft: 30 }}>
+        <div className="header-container" style={{ left: 30 }}>
           {/* Breadcrumb */}
           <div
             className="breadcrumb-container"

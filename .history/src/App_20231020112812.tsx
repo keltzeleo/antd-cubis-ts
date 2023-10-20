@@ -69,8 +69,6 @@ const App: React.FC<AppProps> = (theme) => {
         <ProLayout
           siderWidth={264}
           defaultCollapsed
-          breakpoint={false}
-          // onCollapse={(newCollapsedStatus) => setCollapsed(newCollapsedStatus)}
           layout="side"
           token={{
             colorBgAppListIconHover: "#00a991",
@@ -196,9 +194,7 @@ const App: React.FC<AppProps> = (theme) => {
                 <>
                   <span
                     className="font-play-header"
-                    style={{
-                      marginRight: "8px",
-                    }}
+                    style={{ marginRight: "8px" }}
                   >
                     NEW APPLICATION SYSTEM
                   </span>
