@@ -95,9 +95,7 @@ const App: React.FC<AppProps> = (theme) => {
             },
           }}
           headerContentRender={() => (
-            <div
-              style={{ display: "flex", alignItems: "center", zIndex: 9999 }}
-            >
+            <div style={{ display: "flex", alignItems: "center" }}>
               {/* Other header content you might want */}
               {/* <span style={{ marginRight: 10 }}>Light</span> */}
               <Switch
