@@ -18,22 +18,6 @@ import RealType from '../../../customComponents/RealTimeTextDisplay/RealType';
 const { Option } = Select;
 const { TextArea } = Input;
 
-export interface DataSourceType {
-  id: React.Key;
-  key: string;
-  eventGroup: string;
-  taxCode: string;
-  taxRate: string;
-  eventItem: string;
-  eventItemDescription: string;
-  itemQuantity: string;
-  itemChargeRate: string;
-  itemAmount: string;
-  governmentServiceChargeRate: string;
-  governmentServiceChargeAmount: string;
-  children?: DataSourceType[];
-}
-
 interface Theme {
   [key: string]: string;
 }
@@ -47,8 +31,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [selectedWorkOrder, setSelectedWorkOrder] = useState('');
   const [workOrderDescription, setWorkOrderDescription] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
-  const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
-
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
@@ -179,12 +161,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     },
   ];
 
-  const handleDelete = (id: React.Key) => {
-    setDataSource((prevData) => prevData.filter((item) => item.id !== id));
-    message.success('Entry deleted successfully!');
-  };
-
-  const mockData: DataSourceType[] = [
+  const mockData = [
     {
       id: 446738504,
       key: '1',

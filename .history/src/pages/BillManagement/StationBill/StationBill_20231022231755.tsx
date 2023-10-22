@@ -1,38 +1,11 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import EditableProTable, { ProColumns } from '@ant-design/pro-table';
-import {
-  Alert,
-  Button,
-  Col,
-  Form,
-  Input,
-  Popconfirm,
-  Row,
-  Select,
-  message,
-} from 'antd';
+import { Alert, Button, Col, Form, Input, Row, Select } from 'antd';
 import React, { useState } from 'react';
-
 import RealType from '../../../customComponents/RealTimeTextDisplay/RealType';
 
 const { Option } = Select;
 const { TextArea } = Input;
-
-export interface DataSourceType {
-  id: React.Key;
-  key: string;
-  eventGroup: string;
-  taxCode: string;
-  taxRate: string;
-  eventItem: string;
-  eventItemDescription: string;
-  itemQuantity: string;
-  itemChargeRate: string;
-  itemAmount: string;
-  governmentServiceChargeRate: string;
-  governmentServiceChargeAmount: string;
-  children?: DataSourceType[];
-}
 
 interface Theme {
   [key: string]: string;
@@ -47,8 +20,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [selectedWorkOrder, setSelectedWorkOrder] = useState('');
   const [workOrderDescription, setWorkOrderDescription] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
-  const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
-
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
@@ -56,8 +27,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
 
   // Define columns for EditableProTable
   const columns: ProColumns<{
-    id: React.Key;
-
     key: string;
     eventGroup: string;
     taxCode: string;
@@ -70,13 +39,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     governmentServiceChargeRate: string;
     governmentServiceChargeAmount: string;
   }>[] = [
-    {
-      title: 'No.',
-      dataIndex: 'no',
-      key: 'no',
-      valueType: 'indexBorder',
-      width: '20',
-    },
     {
       title: 'Event Group',
       dataIndex: 'eventGroup',
@@ -127,66 +89,10 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: 'Government Service Charge Amount',
       dataIndex: 'governmentServiceChargeAmount',
     },
-    {
-      title: (
-        <div
-          style={{
-            fontWeight: 'bold',
-            height: '120%',
-            width: 'auto',
-            overflow: 'hidden',
-            background: 'rgba(92, 110, 113, 0.1)', // Semi-transparent overlay color for the blur effect
-            zIndex: 1,
-            borderRadius: '4px',
-            padding: '16px 16px',
-            right: 0,
-            top: 0,
-            left: 0,
-            margin: '-12 -8 -12 -8', // Ensure the overlay is behind the content
-            backdropFilter: 'blur(14px)', // Use backdrop-filter for modern browsers that support it
-          }}
-        >
-          &nbsp; Actions &nbsp;&nbsp;&nbsp;&nbsp;{' '}
-        </div>
-      ),
-      valueType: 'option',
-      fixed: 'right',
-      width: '138',
-      render: (text: any, record: DataSourceType, _, action) => (
-        <span>
-          <a
-            key="editable"
-            onClick={() => {
-              action?.startEditable?.(record.id);
-            }}
-          >
-            &nbsp;&nbsp;编辑 &nbsp;&nbsp;
-          </a>
-
-          <Popconfirm
-            title="Are you sure you want to delete this entry?"
-            onConfirm={() => {
-              handleDelete(record.id);
-            }}
-            onCancel={() => message.info('Delete canceled')}
-            okText="Yes"
-            cancelText="No"
-          >
-            <a key="delete">&nbsp;删除 &nbsp;&nbsp;&nbsp;</a>
-          </Popconfirm>
-        </span>
-      ),
-    },
   ];
 
-  const handleDelete = (id: React.Key) => {
-    setDataSource((prevData) => prevData.filter((item) => item.id !== id));
-    message.success('Entry deleted successfully!');
-  };
-
-  const mockData: DataSourceType[] = [
+  const mockData = [
     {
-      id: 446738504,
       key: '1',
       eventGroup: 'Group 1',
       taxCode: 'TC001',
@@ -200,7 +106,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       governmentServiceChargeAmount: '$5',
     },
     {
-      id: 444738504,
       key: '2',
       eventGroup: 'Group 2',
       taxCode: 'TC002',

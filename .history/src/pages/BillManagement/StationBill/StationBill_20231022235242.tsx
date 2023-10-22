@@ -184,7 +184,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     message.success('Entry deleted successfully!');
   };
 
-  const mockData: DataSourceType[] = [
+  const defaultData: DataSourceType[] = [
     {
       id: 446738504,
       key: '1',

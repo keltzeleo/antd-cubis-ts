@@ -1,38 +1,11 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import EditableProTable, { ProColumns } from '@ant-design/pro-table';
-import {
-  Alert,
-  Button,
-  Col,
-  Form,
-  Input,
-  Popconfirm,
-  Row,
-  Select,
-  message,
-} from 'antd';
+import { Alert, Button, Col, Form, Input, Row, Select } from 'antd';
 import React, { useState } from 'react';
-
 import RealType from '../../../customComponents/RealTimeTextDisplay/RealType';
 
 const { Option } = Select;
 const { TextArea } = Input;
-
-export interface DataSourceType {
-  id: React.Key;
-  key: string;
-  eventGroup: string;
-  taxCode: string;
-  taxRate: string;
-  eventItem: string;
-  eventItemDescription: string;
-  itemQuantity: string;
-  itemChargeRate: string;
-  itemAmount: string;
-  governmentServiceChargeRate: string;
-  governmentServiceChargeAmount: string;
-  children?: DataSourceType[];
-}
 
 interface Theme {
   [key: string]: string;
@@ -47,8 +20,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [selectedWorkOrder, setSelectedWorkOrder] = useState('');
   const [workOrderDescription, setWorkOrderDescription] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
-  const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
-
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
@@ -56,8 +27,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
 
   // Define columns for EditableProTable
   const columns: ProColumns<{
-    id: React.Key;
-
     key: string;
     eventGroup: string;
     taxCode: string;
@@ -71,122 +40,59 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     governmentServiceChargeAmount: string;
   }>[] = [
     {
-      title: 'No.',
-      dataIndex: 'no',
-      key: 'no',
-      valueType: 'indexBorder',
-      width: '20',
-    },
-    {
       title: 'Event Group',
       dataIndex: 'eventGroup',
+      key: 'eventGroup',
     },
     {
       title: 'Tax Code',
       dataIndex: 'taxCode',
+      key: 'taxCode',
     },
     {
       title: 'Tax Rate %',
       dataIndex: 'taxRate',
+      key: 'taxRate',
     },
     {
       title: 'Event Item',
       dataIndex: 'eventItem',
+      key: 'eventItem',
     },
     {
       title: 'Event Item Description',
       dataIndex: 'eventItemDescription',
+      key: 'eventItemDescription',
     },
     {
       title: 'Item Quantity',
       dataIndex: 'itemQuantity',
-      render: (text, record) => {
-        return (
-          <Form.Item
-            name={['itemQuantity', record.key]} // Use a unique key for each item
-            initialValue={text}
-          >
-            <Input />
-          </Form.Item>
-        );
-      },
+      key: 'itemQuantity',
     },
     {
       title: 'Item Charge Rate',
       dataIndex: 'itemChargeRate',
+      key: 'itemChargeRate',
     },
     {
       title: 'Item Amount',
       dataIndex: 'itemAmount',
+      key: 'itemAmount',
     },
     {
       title: 'Government Service Charge %',
       dataIndex: 'governmentServiceChargeRate',
+      key: 'governmentServiceChargeRate',
     },
     {
       title: 'Government Service Charge Amount',
       dataIndex: 'governmentServiceChargeAmount',
-    },
-    {
-      title: (
-        <div
-          style={{
-            fontWeight: 'bold',
-            height: '120%',
-            width: 'auto',
-            overflow: 'hidden',
-            background: 'rgba(92, 110, 113, 0.1)', // Semi-transparent overlay color for the blur effect
-            zIndex: 1,
-            borderRadius: '4px',
-            padding: '16px 16px',
-            right: 0,
-            top: 0,
-            left: 0,
-            margin: '-12 -8 -12 -8', // Ensure the overlay is behind the content
-            backdropFilter: 'blur(14px)', // Use backdrop-filter for modern browsers that support it
-          }}
-        >
-          &nbsp; Actions &nbsp;&nbsp;&nbsp;&nbsp;{' '}
-        </div>
-      ),
-      valueType: 'option',
-      fixed: 'right',
-      width: '138',
-      render: (text: any, record: DataSourceType, _, action) => (
-        <span>
-          <a
-            key="editable"
-            onClick={() => {
-              action?.startEditable?.(record.id);
-            }}
-          >
-            &nbsp;&nbsp;编辑 &nbsp;&nbsp;
-          </a>
-
-          <Popconfirm
-            title="Are you sure you want to delete this entry?"
-            onConfirm={() => {
-              handleDelete(record.id);
-            }}
-            onCancel={() => message.info('Delete canceled')}
-            okText="Yes"
-            cancelText="No"
-          >
-            <a key="delete">&nbsp;删除 &nbsp;&nbsp;&nbsp;</a>
-          </Popconfirm>
-        </span>
-      ),
+      key: 'governmentServiceChargeAmount',
     },
   ];
 
-  const handleDelete = (id: React.Key) => {
-    setDataSource((prevData) => prevData.filter((item) => item.id !== id));
-    message.success('Entry deleted successfully!');
-  };
-
-  const mockData: DataSourceType[] = [
+  const mockData = [
     {
-      id: 446738504,
       key: '1',
       eventGroup: 'Group 1',
       taxCode: 'TC001',
@@ -200,7 +106,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       governmentServiceChargeAmount: '$5',
     },
     {
-      id: 444738504,
       key: '2',
       eventGroup: 'Group 2',
       taxCode: 'TC002',
@@ -216,15 +121,30 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     // Add more mock data as needed
   ];
 
-  const handleFormChange = (changedValues: any, allValues: any) => {
-    // Handle changes in form values here
-    // You may update your state with the new values
-  };
-
   const handleSubmit = (values: any) => {
     // Handle form submission here, e.g., send data to the server
     console.log('Form values:', values);
     // Add logic to apply the filter and fetch data here
+  };
+
+  const handleEmailCheckboxChange = (checked: boolean) => {
+    setSendViaEmailSMS(checked);
+  };
+
+  const handlePrintCheckboxChange = (checked: boolean) => {
+    setPrintForm(checked);
+  };
+
+  const handleClearWorkOrderInfo = () => {
+    form.setFieldsValue({
+      scheduleStartDate: undefined,
+      scheduleEndDate: undefined,
+      scheduleStartTime: undefined,
+      workOrderRemark: undefined,
+      departmentInCharge: undefined,
+      meterRemark: undefined,
+      assignTo: undefined,
+    });
   };
 
   const handleReset = () => {
