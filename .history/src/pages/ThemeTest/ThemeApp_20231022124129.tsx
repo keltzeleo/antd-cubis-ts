@@ -10,7 +10,7 @@ import light from "../../tokens/light.json";
 // import App from "../../App";
 import "../../App.css";
 import AppointmentUpdates from "../AppointmentUpdates/AppointmentUpdates";
-import BillManagement from "../BillManagement/BillManagement";
+import StationBill from "../BillManagement/StationBill";
 import WaterBooksScheduler from "../Calendar/WaterBooksScheduler";
 import LoginCUBIS from "../LoginCUBIS";
 import NapsWizard2 from "../NapsWizard/NapsWizard2";
@@ -101,7 +101,7 @@ const ThemeApp: React.FC = () => {
       {/* <MyFormDummy /> */}
       {/* <App theme={isDarkMode ? dark : light} /> */}
       <div style={{ height: 100 }} />
-      <BillManagement theme={isDarkMode ? dark : light} />
+      <StationBill theme={isDarkMode ? dark : light} />
       <div style={{ height: 100 }} />
 
       {/* <CancelWorkOrder theme={isDarkMode ? dark : light} />
