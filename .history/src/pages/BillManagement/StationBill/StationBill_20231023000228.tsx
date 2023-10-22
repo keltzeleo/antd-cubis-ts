@@ -20,6 +20,7 @@ const { TextArea } = Input;
 
 export interface DataSourceType {
   id: React.Key;
+  key: string;
   eventGroup: string;
   taxCode: string;
   taxRate: string;
@@ -57,6 +58,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const columns: ProColumns<{
     id: React.Key;
 
+    key: string;
     eventGroup: string;
     taxCode: string;
     taxRate: string;
@@ -101,7 +103,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       render: (text, record) => {
         return (
           <Form.Item
-            name={['itemQuantity', record.id]} // Use a unique key for each item
+            name={['itemQuantity', record.key]} // Use a unique key for each item
             initialValue={text}
           >
             <Input />
@@ -185,6 +187,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const mockData: DataSourceType[] = [
     {
       id: 446738504,
+      key: '1',
       eventGroup: 'Group 1',
       taxCode: 'TC001',
       taxRate: '10%',
@@ -198,6 +201,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     },
     {
       id: 444738504,
+      key: '2',
       eventGroup: 'Group 2',
       taxCode: 'TC002',
       taxRate: '8%',

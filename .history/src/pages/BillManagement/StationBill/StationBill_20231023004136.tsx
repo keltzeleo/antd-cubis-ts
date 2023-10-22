@@ -101,7 +101,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       render: (text, record) => {
         return (
           <Form.Item
-            name={['itemQuantity', record.id]} // Use a unique key for each item
+            name={['itemQuantity', record.key]} // Use a unique key for each item
             initialValue={text}
           >
             <Input />
