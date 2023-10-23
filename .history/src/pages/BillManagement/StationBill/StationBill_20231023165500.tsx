@@ -7,6 +7,7 @@ import {
   Col,
   Form,
   Input,
+  InputNumber,
   Popconfirm,
   Row,
   Select,
@@ -198,7 +199,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Charge Rate",
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
-      valueType: "digit",
       render: (text, record) => {
         // Format itemChargeRate with 2 decimal places
         const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
@@ -211,32 +211,44 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       },
     },
     {
-      title: "Item Amount",
-      key: "itemAmount",
-      dataIndex: "itemAmount",
+      title: "Item Charge Rate",
+      key: "itemChargeRate",
+      dataIndex: "itemChargeRate",
       render: (text, record) => {
-        // Ensure itemQuantity is a valid number
-        const itemQuantity =
-          typeof record.itemQuantity === "number" ? record.itemQuantity : 0;
-
-        // Parse itemChargeRate as a string, or default to an empty string if undefined or not a valid number
+        // Ensure itemChargeRate is a valid number
         const itemChargeRate =
           typeof record.itemChargeRate === "number"
-            ? record.itemChargeRate.toString()
-            : typeof record.itemChargeRate === "string"
-            ? record.itemChargeRate
-            : "";
-
-        // Calculate itemAmount as itemQuantity * itemChargeRate (as a string) and format it with 2 decimal places
-        const itemAmount = (itemQuantity * parseFloat(itemChargeRate)).toFixed(
-          2
-        );
+            ? record.itemChargeRate.toFixed(2)
+            : "0.00";
 
         return (
           <span style={{ color: theme.colorText }}>
-            {`RM ${itemAmount}`}{" "}
-            {/* Ensure itemAmount is displayed as a string with 2 decimal places */}
+            {`RM ${itemChargeRate}`}
           </span>
+        );
+      },
+      // Specify the render in edit mode
+      renderEdit: (text, record, index) => {
+        return (
+          <Form.Item
+            name={["dataSource", index, "itemChargeRate"]}
+            initialValue={record.itemChargeRate}
+            rules={[
+              {
+                type: "number",
+                min: 0,
+                transform: (value) => {
+                  // Ensure the value is rounded to 2 decimal places
+                  return parseFloat(value).toFixed(2);
+                },
+              },
+            ]}
+          >
+            <InputNumber
+              step={0.01} // Allow increments/decrements of 0.01
+              precision={2} // Display up to 2 decimal places
+            />
+          </Form.Item>
         );
       },
       readonly: true,

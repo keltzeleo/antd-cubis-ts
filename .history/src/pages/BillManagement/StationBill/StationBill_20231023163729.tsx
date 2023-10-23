@@ -57,8 +57,8 @@ const mockData: DataSourceType[] = [
     taxRate: 10,
     eventItem: "01 - Bil A",
     itemQuantity: 5,
-    itemChargeRate: 20.1,
-    itemAmount: 5 * 20.1,
+    itemChargeRate: 20.0,
+    itemAmount: 5 * 20.0,
     governmentServiceChargeRate: "5",
     governmentServiceChargeAmount: "5",
   },
@@ -198,50 +198,39 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Charge Rate",
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
-      valueType: "digit",
-      render: (text, record) => {
-        // Format itemChargeRate with 2 decimal places
-        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
-
-        return (
-          <span style={{ color: theme.colorText }}>
-            {`RM ${formattedChargeRate}`}
-          </span>
-        );
-      },
+      render: (text, record) => (
+        <span style={{ color: theme.colorText }}>
+          RM{" "}
+          {record.itemChargeRate !== undefined
+            ? record.itemChargeRate.toFixed(2)
+            : ""}
+        </span>
+      ),
     },
     {
       title: "Item Amount",
       key: "itemAmount",
       dataIndex: "itemAmount",
       render: (text, record) => {
-        // Ensure itemQuantity is a valid number
-        const itemQuantity =
-          typeof record.itemQuantity === "number" ? record.itemQuantity : 0;
+        // Convert itemChargeRate to a string and then parse it as a float
+        const itemChargeRate = parseFloat(String(record.itemChargeRate));
 
-        // Parse itemChargeRate as a string, or default to an empty string if undefined or not a valid number
-        const itemChargeRate =
-          typeof record.itemChargeRate === "number"
-            ? record.itemChargeRate.toString()
-            : typeof record.itemChargeRate === "string"
-            ? record.itemChargeRate
-            : "";
+        if (!isNaN(itemChargeRate)) {
+          const itemQuantity = record.itemQuantity || 0;
+          const itemAmount = itemChargeRate * itemQuantity;
 
-        // Calculate itemAmount as itemQuantity * itemChargeRate (as a string) and format it with 2 decimal places
-        const itemAmount = (itemQuantity * parseFloat(itemChargeRate)).toFixed(
-          2
-        );
-
-        return (
-          <span style={{ color: theme.colorText }}>
-            {`RM ${itemAmount}`}{" "}
-            {/* Ensure itemAmount is displayed as a string with 2 decimal places */}
-          </span>
-        );
+          return (
+            <span style={{ color: theme.colorText }}>
+              RM {itemAmount.toFixed(2)}
+            </span>
+          );
+        } else {
+          // Handle the case where itemChargeRate is not a valid number
+          return <span style={{ color: theme.colorText }}>Invalid Rate</span>;
+        }
       },
       readonly: true,
     },
-
     {
       title: "Government Service Charge %",
       key: "governmentServiceChargeRate",

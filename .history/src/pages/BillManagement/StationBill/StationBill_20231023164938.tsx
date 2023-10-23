@@ -198,7 +198,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Charge Rate",
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
-      valueType: "digit",
       render: (text, record) => {
         // Format itemChargeRate with 2 decimal places
         const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
@@ -219,18 +218,14 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
         const itemQuantity =
           typeof record.itemQuantity === "number" ? record.itemQuantity : 0;
 
-        // Parse itemChargeRate as a string, or default to an empty string if undefined or not a valid number
+        // Parse itemChargeRate as a float, or default to 0 if undefined or not a valid number
         const itemChargeRate =
           typeof record.itemChargeRate === "number"
-            ? record.itemChargeRate.toString()
-            : typeof record.itemChargeRate === "string"
             ? record.itemChargeRate
-            : "";
+            : parseFloat(record.itemChargeRate || "0");
 
-        // Calculate itemAmount as itemQuantity * itemChargeRate (as a string) and format it with 2 decimal places
-        const itemAmount = (itemQuantity * parseFloat(itemChargeRate)).toFixed(
-          2
-        );
+        // Calculate itemAmount as itemQuantity * itemChargeRate and format it with 2 decimal places
+        const itemAmount = (itemQuantity * itemChargeRate).toFixed(2);
 
         return (
           <span style={{ color: theme.colorText }}>
@@ -241,7 +236,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       },
       readonly: true,
     },
-
     {
       title: "Government Service Charge %",
       key: "governmentServiceChargeRate",

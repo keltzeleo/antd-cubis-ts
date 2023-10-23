@@ -199,6 +199,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
       valueType: "digit",
+      precision: 2,
       render: (text, record) => {
         // Format itemChargeRate with 2 decimal places
         const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);

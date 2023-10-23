@@ -198,7 +198,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Charge Rate",
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
-      valueType: "digit",
       render: (text, record) => {
         // Format itemChargeRate with 2 decimal places
         const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
@@ -215,33 +214,20 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       key: "itemAmount",
       dataIndex: "itemAmount",
       render: (text, record) => {
-        // Ensure itemQuantity is a valid number
+        // Ensure itemQuantity and itemChargeRate are valid numbers
         const itemQuantity =
           typeof record.itemQuantity === "number" ? record.itemQuantity : 0;
+        const itemChargeRate = parseFloat(record.itemChargeRate) || 0; // Parse the input as a float
 
-        // Parse itemChargeRate as a string, or default to an empty string if undefined or not a valid number
-        const itemChargeRate =
-          typeof record.itemChargeRate === "number"
-            ? record.itemChargeRate.toString()
-            : typeof record.itemChargeRate === "string"
-            ? record.itemChargeRate
-            : "";
-
-        // Calculate itemAmount as itemQuantity * itemChargeRate (as a string) and format it with 2 decimal places
-        const itemAmount = (itemQuantity * parseFloat(itemChargeRate)).toFixed(
-          2
-        );
+        // Calculate itemAmount as itemQuantity * itemChargeRate
+        const itemAmount = (itemQuantity * itemChargeRate).toFixed(2);
 
         return (
-          <span style={{ color: theme.colorText }}>
-            {`RM ${itemAmount}`}{" "}
-            {/* Ensure itemAmount is displayed as a string with 2 decimal places */}
-          </span>
+          <span style={{ color: theme.colorText }}>{`RM ${itemAmount}`}</span>
         );
       },
       readonly: true,
     },
-
     {
       title: "Government Service Charge %",
       key: "governmentServiceChargeRate",

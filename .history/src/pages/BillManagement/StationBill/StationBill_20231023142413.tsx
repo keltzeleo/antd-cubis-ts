@@ -39,11 +39,12 @@ export interface DataSourceType {
   id: React.Key;
   eventGroup?: string;
   taxCode?: string;
-  taxRate?: number;
+  taxRate?: string;
   eventItem?: string;
-  itemQuantity?: number | undefined;
-  itemChargeRate?: number | undefined;
-  itemAmount?: number;
+  eventItemDescription?: string;
+  itemQuantity?: string;
+  itemChargeRate?: string;
+  itemAmount?: string;
   governmentServiceChargeRate?: string;
   governmentServiceChargeAmount?: string;
   children?: DataSourceType[];
@@ -51,50 +52,33 @@ export interface DataSourceType {
 
 const mockData: DataSourceType[] = [
   {
-    id: 446888504,
-    eventGroup: "eventGroup01",
+    id: 446738504,
+    eventGroup: "Group 1",
     taxCode: "TC001",
-    taxRate: 10,
-    eventItem: "01 - Bil A",
-    itemQuantity: 5,
-    itemChargeRate: 20.1,
-    itemAmount: 5 * 20.1,
+    taxRate: "10%",
+    eventItem: "Item 1",
+    eventItemDescription: "Description 1",
+    itemQuantity: "5",
+    itemChargeRate: "20",
+    itemAmount: "100",
     governmentServiceChargeRate: "5",
     governmentServiceChargeAmount: "5",
   },
   {
     id: 444738504,
-    eventGroup: "eventGroup02",
+    eventGroup: "Group 2",
     taxCode: "TC002",
-    taxRate: 8,
-    eventItem: "02 - Bill B",
-    itemQuantity: 3,
-    itemChargeRate: 15.0,
-    itemAmount: 3 * 15.0,
+    taxRate: "8%",
+    eventItem: "Item 2",
+    eventItemDescription: "Description 2",
+    itemQuantity: "3",
+    itemChargeRate: "15",
+    itemAmount: "45",
     governmentServiceChargeRate: "3",
     governmentServiceChargeAmount: "1.35",
   },
   // Add more mock data as needed
 ];
-
-mockData.forEach((item) => {
-  const quantity =
-    typeof item.itemQuantity === "number"
-      ? item.itemQuantity
-      : parseFloat(item.itemQuantity || "");
-  const chargeRate =
-    typeof item.itemChargeRate === "number"
-      ? item.itemChargeRate
-      : parseFloat(item.itemChargeRate || "");
-
-  if (!isNaN(quantity) && !isNaN(chargeRate)) {
-    item.itemAmount = quantity * chargeRate;
-  } else {
-    // Handle the case where itemQuantity or itemChargeRate is not a number
-    // You can set a default value or handle it based on your requirements
-    item.itemAmount = NaN; // Or any other suitable default value
-  }
-});
 
 const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [workOrderType, setWorkOrderType] = useState("");
@@ -136,7 +120,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
           status: "Success",
         },
         eventGroup03: {
-          text: "eventGroup03",
+          text: "eventGroup02",
           status: "Success",
         },
       },
@@ -154,34 +138,27 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       dataIndex: "taxRate",
       readonly: true,
       render: (text, record) => (
-        <span style={{ color: theme.colorText }}>
-          {record.taxRate !== undefined
-            ? (typeof record.taxRate === "number"
-                ? record.taxRate.toFixed(2)
-                : parseFloat(record.taxRate).toFixed(2)) + " %"
-            : ""}
-        </span>
+        <span style={{ color: theme.colorText }}>{record.taxRate}</span>
       ),
     },
-
     {
       title: "Event Item",
-      key: "eventItem",
+      key: "event Item",
       dataIndex: "eventItem",
       valueType: "select",
       valueEnum: {
         all: { text: "Please select an event group", status: "Default" },
         eventItem01: {
-          text: "01 - Bill A",
-          // status: "Default",
+          text: "eventCode01+eventItemDescription01",
+          status: "Success",
         },
         eventItem02: {
-          text: "02 - Bill B",
-          // status: "Default",
+          text: "eventItem02+eventItemDescription02",
+          status: "Success",
         },
         eventItem03: {
-          text: "03 - Bill C",
-          // status: "Default",
+          text: "eventGroup03+eventItemDescription03",
+          status: "Success",
         },
       },
     },
@@ -198,50 +175,20 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Charge Rate",
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
-      valueType: "digit",
-      render: (text, record) => {
-        // Format itemChargeRate with 2 decimal places
-        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
-
-        return (
-          <span style={{ color: theme.colorText }}>
-            {`RM ${formattedChargeRate}`}
-          </span>
-        );
-      },
+      render: (text, record) => (
+        <span style={{ color: theme.colorText }}>
+          RM {record.itemChargeRate}
+        </span>
+      ),
     },
     {
       title: "Item Amount",
       key: "itemAmount",
       dataIndex: "itemAmount",
-      render: (text, record) => {
-        // Ensure itemQuantity is a valid number
-        const itemQuantity =
-          typeof record.itemQuantity === "number" ? record.itemQuantity : 0;
-
-        // Parse itemChargeRate as a string, or default to an empty string if undefined or not a valid number
-        const itemChargeRate =
-          typeof record.itemChargeRate === "number"
-            ? record.itemChargeRate.toString()
-            : typeof record.itemChargeRate === "string"
-            ? record.itemChargeRate
-            : "";
-
-        // Calculate itemAmount as itemQuantity * itemChargeRate (as a string) and format it with 2 decimal places
-        const itemAmount = (itemQuantity * parseFloat(itemChargeRate)).toFixed(
-          2
-        );
-
-        return (
-          <span style={{ color: theme.colorText }}>
-            {`RM ${itemAmount}`}{" "}
-            {/* Ensure itemAmount is displayed as a string with 2 decimal places */}
-          </span>
-        );
-      },
-      readonly: true,
+      render: (text, record) => (
+        <span style={{ color: theme.colorText }}>RM {record.itemAmount}</span>
+      ),
     },
-
     {
       title: "Government Service Charge %",
       key: "governmentServiceChargeRate",
@@ -328,17 +275,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     data: DataSourceType,
     row: DataSourceType
   ) => {
-    // Find the index of the edited record in the dataSource
-    const recordIndex = dataSource.findIndex((item) => item.id === rowKey);
-
-    if (recordIndex > -1) {
-      // Update the dataSource with the new data
-      const updatedDataSource = [...dataSource];
-      updatedDataSource[recordIndex] = { ...data };
-
-      setDataSource(updatedDataSource);
-    }
-
     await waitTime(2000);
     console.log(rowKey, data, row);
   };
@@ -433,10 +369,9 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
           additionalText={accountNumber}
         />
         {/* Customer Information (Left) and Function Tabs (Right) */}
-        {/* Customer Information (Left) and Function Tabs (Right) */}
-        <Row style={{ paddingLeft: 16, marginTop: 16 }}>
-          <Col style={{ flex: "0 0 420px", paddingRight: "16px" }}>
-            {/* Account Information */}
+        <div style={{ display: 'flex' }}>
+  {/* Left Fixed Column */}
+   <div style={{ flex: '0 0 420px', paddingRight: '16px' }}>            {/* Account Information */}
             <h2>Account Information</h2>
             <div
               style={{
@@ -698,7 +633,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                       </span>
                     </Form.Item>
                   </Col>
-                  <Col span={12}>
+                  <div >
                     <Form.Item label="GST Relief">
                       <span
                         style={{
@@ -715,16 +650,17 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                         [yes]
                       </span>
                     </Form.Item>
-                  </Col>
-                </Row>
+            
               </Form>
             </div>
-          </Col>
-          <Col style={{ flex: "1", paddingRight: "16px" }}>
+            </div>  
+{/* Right Fluid Column */}
+<div style={{ flex: '1', paddingLeft: '16px' }}>
             <h2>Station Bill List</h2>
             <EditableProTable<DataSourceType>
               rowKey="id"
               options={{ setting: true }}
+              tableLayout="auto" // Set tableLayout to "auto"
               scroll={{ x: "max-content" }}
               search={false}
               headerTitle={
@@ -736,7 +672,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                   Station Bill List
                 </span>
               }
-              dataSource={dataSource}
+              dataSource={mockData}
               maxLength={5}
               recordCreatorProps={
                 position !== "hidden"
@@ -767,8 +703,8 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                 },
               }}
             />
-          </Col>
-        </Row>
+</div>
+</div>
         {/* Editable Pro Table */}
       </Form>
     </div>

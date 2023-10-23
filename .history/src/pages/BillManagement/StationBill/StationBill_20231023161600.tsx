@@ -57,8 +57,8 @@ const mockData: DataSourceType[] = [
     taxRate: 10,
     eventItem: "01 - Bil A",
     itemQuantity: 5,
-    itemChargeRate: 20.1,
-    itemAmount: 5 * 20.1,
+    itemChargeRate: 20.0,
+    itemAmount: 5 * 20.0,
     governmentServiceChargeRate: "5",
     governmentServiceChargeAmount: "5",
   },
@@ -198,48 +198,25 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Charge Rate",
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
-      valueType: "digit",
-      render: (text, record) => {
-        // Format itemChargeRate with 2 decimal places
-        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
-
-        return (
-          <span style={{ color: theme.colorText }}>
-            {`RM ${formattedChargeRate}`}
-          </span>
-        );
-      },
+      render: (text, record) => (
+        <span style={{ color: theme.colorText }}>
+          RM{" "}
+          {record.itemChargeRate !== undefined
+            ? record.itemChargeRate.toFixed(2)
+            : ""}
+        </span>
+      ),
     },
+
     {
       title: "Item Amount",
       key: "itemAmount",
       dataIndex: "itemAmount",
-      render: (text, record) => {
-        // Ensure itemQuantity is a valid number
-        const itemQuantity =
-          typeof record.itemQuantity === "number" ? record.itemQuantity : 0;
-
-        // Parse itemChargeRate as a string, or default to an empty string if undefined or not a valid number
-        const itemChargeRate =
-          typeof record.itemChargeRate === "number"
-            ? record.itemChargeRate.toString()
-            : typeof record.itemChargeRate === "string"
-            ? record.itemChargeRate
-            : "";
-
-        // Calculate itemAmount as itemQuantity * itemChargeRate (as a string) and format it with 2 decimal places
-        const itemAmount = (itemQuantity * parseFloat(itemChargeRate)).toFixed(
-          2
-        );
-
-        return (
-          <span style={{ color: theme.colorText }}>
-            {`RM ${itemAmount}`}{" "}
-            {/* Ensure itemAmount is displayed as a string with 2 decimal places */}
-          </span>
-        );
-      },
-      readonly: true,
+      render: (text, record) => (
+        <span style={{ color: theme.colorText }}>
+          RM {isNaN(record.itemAmount) ? "N/A" : record.itemAmount.toFixed(2)}
+        </span>
+      ),
     },
 
     {

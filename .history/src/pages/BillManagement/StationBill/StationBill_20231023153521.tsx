@@ -41,9 +41,9 @@ export interface DataSourceType {
   taxCode?: string;
   taxRate?: number;
   eventItem?: string;
-  itemQuantity?: number | undefined;
-  itemChargeRate?: number | undefined;
-  itemAmount?: number;
+  itemQuantity?: number;
+  itemChargeRate?: number;
+  itemAmount?: string;
   governmentServiceChargeRate?: string;
   governmentServiceChargeAmount?: string;
   children?: DataSourceType[];
@@ -56,9 +56,8 @@ const mockData: DataSourceType[] = [
     taxCode: "TC001",
     taxRate: 10,
     eventItem: "01 - Bil A",
-    itemQuantity: 5,
-    itemChargeRate: 20.1,
-    itemAmount: 5 * 20.1,
+    itemQuantity: "5",
+    itemChargeRate: 20.5,
     governmentServiceChargeRate: "5",
     governmentServiceChargeAmount: "5",
   },
@@ -68,32 +67,19 @@ const mockData: DataSourceType[] = [
     taxCode: "TC002",
     taxRate: 8,
     eventItem: "02 - Bill B",
-    itemQuantity: 3,
-    itemChargeRate: 15.0,
-    itemAmount: 3 * 15.0,
+    itemQuantity: "3",
+    itemChargeRate: 15,
     governmentServiceChargeRate: "3",
     governmentServiceChargeAmount: "1.35",
   },
   // Add more mock data as needed
 ];
 
+// Calculate itemAmount based on itemQuantity and itemChargeRate
 mockData.forEach((item) => {
-  const quantity =
-    typeof item.itemQuantity === "number"
-      ? item.itemQuantity
-      : parseFloat(item.itemQuantity || "");
-  const chargeRate =
-    typeof item.itemChargeRate === "number"
-      ? item.itemChargeRate
-      : parseFloat(item.itemChargeRate || "");
-
-  if (!isNaN(quantity) && !isNaN(chargeRate)) {
-    item.itemAmount = quantity * chargeRate;
-  } else {
-    // Handle the case where itemQuantity or itemChargeRate is not a number
-    // You can set a default value or handle it based on your requirements
-    item.itemAmount = NaN; // Or any other suitable default value
-  }
+  const quantity = parseFloat(item.itemQuantity || "0");
+  const rate = parseFloat(item.itemChargeRate || "0");
+  item.itemAmount = (quantity * rate).toFixed(2);
 });
 
 const StationBill: React.FC<StationBillProps> = ({ theme }) => {
@@ -198,50 +184,22 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Charge Rate",
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
-      valueType: "digit",
-      render: (text, record) => {
-        // Format itemChargeRate with 2 decimal places
-        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
-
-        return (
-          <span style={{ color: theme.colorText }}>
-            {`RM ${formattedChargeRate}`}
-          </span>
-        );
-      },
+      render: (text, record) => (
+        <span style={{ color: theme.colorText }}>
+          RM {record.itemChargeRate.toFixed(2)}
+        </span>
+      ),
     },
     {
       title: "Item Amount",
       key: "itemAmount",
       dataIndex: "itemAmount",
-      render: (text, record) => {
-        // Ensure itemQuantity is a valid number
-        const itemQuantity =
-          typeof record.itemQuantity === "number" ? record.itemQuantity : 0;
-
-        // Parse itemChargeRate as a string, or default to an empty string if undefined or not a valid number
-        const itemChargeRate =
-          typeof record.itemChargeRate === "number"
-            ? record.itemChargeRate.toString()
-            : typeof record.itemChargeRate === "string"
-            ? record.itemChargeRate
-            : "";
-
-        // Calculate itemAmount as itemQuantity * itemChargeRate (as a string) and format it with 2 decimal places
-        const itemAmount = (itemQuantity * parseFloat(itemChargeRate)).toFixed(
-          2
-        );
-
-        return (
-          <span style={{ color: theme.colorText }}>
-            {`RM ${itemAmount}`}{" "}
-            {/* Ensure itemAmount is displayed as a string with 2 decimal places */}
-          </span>
-        );
-      },
-      readonly: true,
+      render: (text, record) => (
+        <span style={{ color: theme.colorText }}>
+          RM {record.itemAmount || "0.00"}
+        </span>
+      ),
     },
-
     {
       title: "Government Service Charge %",
       key: "governmentServiceChargeRate",

@@ -201,7 +201,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       valueType: "digit",
       render: (text, record) => {
         // Format itemChargeRate with 2 decimal places
-        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
+        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(3);
 
         return (
           <span style={{ color: theme.colorText }}>
