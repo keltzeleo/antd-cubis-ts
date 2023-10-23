@@ -37,16 +37,16 @@ const waitTime = (time: number = 100) => {
 
 export interface DataSourceType {
   id: React.Key;
-  eventGroup?: string;
-  taxCode?: string;
-  taxRate?: string;
-  eventItem?: string;
-  eventItemDescription?: string;
-  itemQuantity?: string;
-  itemChargeRate?: string;
-  itemAmount?: string;
-  governmentServiceChargeRate?: string;
-  governmentServiceChargeAmount?: string;
+  eventGroup: string;
+  taxCode: string;
+  taxRate: string;
+  eventItem: string;
+  // eventItemDescription: string;
+  itemQuantity: string;
+  itemChargeRate: string;
+  itemAmount: string;
+  governmentServiceChargeRate: string;
+  governmentServiceChargeAmount: string;
   children?: DataSourceType[];
 }
 

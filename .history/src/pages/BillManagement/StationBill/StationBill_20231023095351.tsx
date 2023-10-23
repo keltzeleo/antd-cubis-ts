@@ -1,6 +1,5 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import type { ProColumns } from "@ant-design/pro-components";
-import { EditableProTable } from "@ant-design/pro-components";
+import EditableProTable, { ProColumns } from "@ant-design/pro-table";
 import {
   Alert,
   Button,
@@ -12,7 +11,7 @@ import {
   Select,
   message,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import RealType from "../../../customComponents/RealTimeTextDisplay/RealType";
 
@@ -37,16 +36,16 @@ const waitTime = (time: number = 100) => {
 
 export interface DataSourceType {
   id: React.Key;
-  eventGroup?: string;
-  taxCode?: string;
-  taxRate?: string;
-  eventItem?: string;
-  eventItemDescription?: string;
-  itemQuantity?: string;
-  itemChargeRate?: string;
-  itemAmount?: string;
-  governmentServiceChargeRate?: string;
-  governmentServiceChargeAmount?: string;
+  eventGroup: string;
+  taxCode: string;
+  taxRate: string;
+  eventItem: string;
+  eventItemDescription: string;
+  itemQuantity: string;
+  itemChargeRate: string;
+  itemAmount: string;
+  governmentServiceChargeRate: string;
+  governmentServiceChargeAmount: string;
   children?: DataSourceType[];
 }
 
@@ -261,10 +260,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     },
   ];
 
-  useEffect(() => {
-    setDataSource(mockData);
-  }, []);
-
   const handleDelete = (id: React.Key) => {
     setDataSource((prevData) => prevData.filter((item) => item.id !== id));
     message.success("Entry deleted successfully!");
@@ -370,7 +365,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
         />
         {/* Customer Information (Left) and Function Tabs (Right) */}
         {/* Customer Information (Left) and Function Tabs (Right) */}
-        <Row style={{ paddingLeft: 16, marginTop: 16 }}>
+        <Row gutter={16} style={{ paddingLeft: 16, marginTop: 16 }}>
           <Col style={{ width: 420 }}>
             {/* Account Information */}
             <h2>Account Information</h2>
@@ -657,12 +652,15 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             </div>
           </Col>
           <Col span={18} style={{ marginLeft: 16, alignContent: "center" }}>
-            <h2>Station Bill List</h2>
+            <h2>Bill Information</h2>
             <EditableProTable<DataSourceType>
-              rowKey="id"
+              columns={columns}
+              dataSource={mockData}
               options={{ setting: true }}
               scroll={{ x: "max-content" }}
+              rowKey="id"
               search={false}
+              dateFormatter="string"
               headerTitle={
                 <span
                   style={{
@@ -672,20 +670,8 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                   Station Bill List
                 </span>
               }
-              dataSource={mockData}
-              maxLength={5}
-              recordCreatorProps={
-                position !== "hidden"
-                  ? {
-                      position: "bottom",
-                      record: { id: (Math.random() * 1000000).toFixed(0) },
-                    }
-                  : false
-              }
-              columns={columns}
-              dateFormatter="string"
               value={dataSource}
-              onChange={setDataSource}
+              // onChange={setDataSource}
               editable={{
                 type: "multiple",
                 editableKeys,
