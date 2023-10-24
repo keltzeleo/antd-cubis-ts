@@ -7,6 +7,7 @@ import {
   Col,
   Form,
   Input,
+  InputNumber,
   Popconfirm,
   Row,
   Select,
@@ -199,60 +200,34 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Charge Rate (RM)",
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
-      valueType: (item) => ({
-        type: "money",
+      valueType: {
+        type: "money" as const, // Use "as const" to specify the literal type
         locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
-      }),
-      fieldProps: (form, config) => {
-        return {
-          style: { width: "auto" },
-          step: 0.01,
-          precision: 2,
-          // formatter: (value) => `RM ${Number(value).toFixed(2)}`,
-          // parser: (value) => value.replace(/^RM\s?/, "").replace(/,/g, ""),
-          // onBlur: (e) => {
-          //   let value = e.target.value;
-          //   value = value.replace(/^RM\s?/, "").replace(/,/g, ""); // Remove RM and commas
-          //   e.target.value = Number(value).toFixed(2); // Format with 2 decimal places
-          // },
-          rules: [
-            { required: true, message: "This field is mandatory!" },
-            {
-              validator: (_: any, value: any) =>
-                value === 0 || value === "0"
-                  ? Promise.reject(new Error("Value cannot be zero"))
-                  : Promise.resolve(),
-              message: "Value cannot be zero",
-            },
-            {
-              pattern: /^\d+(\.\d{1,2})?$/,
-              message:
-                "Only numerical values with up to two decimals are allowed",
-            },
-          ],
-        };
-      },
-      render: (text, record) => {
-        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
-        return (
-          <span
-            style={{ color: theme.colorText }}
-          >{`RM ${formattedChargeRate}`}</span>
-        );
+        step: "0.01",
+        precision: 2,
+        initialValue: 0, // You can set the initial value here
+        render: (text: any, record: DataSourceType) => {
+          const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
+
+          // Custom rendering with "Up" and "Down" buttons
+          return (
+            <InputNumber
+              value={parseFloat(formattedChargeRate)}
+              step={0.01}
+              precision={2}
+              onChange={(value) => {
+                // Handle value change here and update your data source
+              }}
+            />
+          );
+        },
       },
     },
+
     {
       title: "Item Amount (RM)",
       key: "itemAmount",
       dataIndex: "itemAmount",
-      valueType: (item) => ({
-        type: "money",
-        locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
-      }),
       render: (text, record) => {
         // Ensure itemQuantity is a valid number
         const itemQuantity =

@@ -247,12 +247,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Amount (RM)",
       key: "itemAmount",
       dataIndex: "itemAmount",
-      valueType: (item) => ({
-        type: "money",
-        locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
-      }),
       render: (text, record) => {
         // Ensure itemQuantity is a valid number
         const itemQuantity =
@@ -282,7 +276,30 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
           </span>
         );
       },
-      readonly: true,
+      editable: true, // Make the column editable
+      fieldProps: (form, config, record) => {
+        // Override the field value with the calculated itemAmount in edit mode
+        if (config.mode === "edit") {
+          const itemQuantity = form.getFieldValue(
+            ["itemQuantity"],
+            record.itemQuantity
+          );
+          const itemChargeRate = form.getFieldValue(
+            ["itemChargeRate"],
+            record.itemChargeRate
+          );
+          const itemAmount = (
+            parseFloat(itemQuantity || 0) * parseFloat(itemChargeRate || 0)
+          ).toFixed(2);
+
+          form.setFieldsValue({ itemAmount });
+        }
+
+        return {
+          style: { width: "auto" },
+          // ...other fieldProps options (if any)
+        };
+      },
     },
 
     {

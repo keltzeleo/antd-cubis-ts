@@ -199,37 +199,28 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Charge Rate (RM)",
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
-      valueType: (item) => ({
-        type: "money",
-        locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
-      }),
+      valueType: "money",
       fieldProps: (form, config) => {
         return {
           style: { width: "auto" },
           step: 0.01,
-          precision: 2,
-          // formatter: (value) => `RM ${Number(value).toFixed(2)}`,
-          // parser: (value) => value.replace(/^RM\s?/, "").replace(/,/g, ""),
-          // onBlur: (e) => {
-          //   let value = e.target.value;
-          //   value = value.replace(/^RM\s?/, "").replace(/,/g, ""); // Remove RM and commas
-          //   e.target.value = Number(value).toFixed(2); // Format with 2 decimal places
-          // },
+          precision: 3,
+          formatter: (value: any) =>
+            `RM ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+          parser: (value: any) => value.replace(/\$\s?|(,*)/g, ""),
           rules: [
             { required: true, message: "This field is mandatory!" },
             {
-              validator: (_: any, value: any) =>
-                value === 0 || value === "0"
+              validator: (_, value) =>
+                value === 0
                   ? Promise.reject(new Error("Value cannot be zero"))
                   : Promise.resolve(),
               message: "Value cannot be zero",
             },
             {
-              pattern: /^\d+(\.\d{1,2})?$/,
+              pattern: /^\d+(\.\d+)?$/,
               message:
-                "Only numerical values with up to two decimals are allowed",
+                "Only numerical values with optional decimals are allowed",
             },
           ],
         };
@@ -247,12 +238,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Amount (RM)",
       key: "itemAmount",
       dataIndex: "itemAmount",
-      valueType: (item) => ({
-        type: "money",
-        locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
-      }),
       render: (text, record) => {
         // Ensure itemQuantity is a valid number
         const itemQuantity =

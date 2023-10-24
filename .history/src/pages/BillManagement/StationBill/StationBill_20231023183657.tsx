@@ -1,6 +1,6 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import type { ProColumns } from "@ant-design/pro-components";
-import { EditableProTable } from "@ant-design/pro-components";
+import { EditableProTable, ProFormDigit } from "@ant-design/pro-components";
 import {
   Alert,
   Button,
@@ -42,7 +42,7 @@ export interface DataSourceType {
   taxRate?: number;
   eventItem?: string;
   itemQuantity?: number | undefined;
-  itemChargeRate?: number;
+  itemChargeRate?: number | undefined;
   itemAmount?: number;
   governmentServiceChargeRate?: string;
   governmentServiceChargeAmount?: string;
@@ -190,7 +190,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Quantity",
       key: "itemQuantity",
       dataIndex: "itemQuantity",
-      valueType: "digit",
       render: (text, record) => (
         <span style={{ color: theme.colorText }}>{record.itemQuantity}</span>
       ),
@@ -199,47 +198,30 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Charge Rate (RM)",
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
-      valueType: (item) => ({
-        type: "money",
-        locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
-      }),
-      fieldProps: (form, config) => {
-        return {
-          style: { width: "auto" },
-          step: 0.01,
-          precision: 2,
-          // formatter: (value) => `RM ${Number(value).toFixed(2)}`,
-          // parser: (value) => value.replace(/^RM\s?/, "").replace(/,/g, ""),
-          // onBlur: (e) => {
-          //   let value = e.target.value;
-          //   value = value.replace(/^RM\s?/, "").replace(/,/g, ""); // Remove RM and commas
-          //   e.target.value = Number(value).toFixed(2); // Format with 2 decimal places
-          // },
-          rules: [
-            { required: true, message: "This field is mandatory!" },
-            {
-              validator: (_: any, value: any) =>
-                value === 0 || value === "0"
-                  ? Promise.reject(new Error("Value cannot be zero"))
-                  : Promise.resolve(),
-              message: "Value cannot be zero",
-            },
-            {
-              pattern: /^\d+(\.\d{1,2})?$/,
-              message:
-                "Only numerical values with up to two decimals are allowed",
-            },
-          ],
+      valueType: "digit",
+
+      renderFormItem: (text, { record }) => {
+        // Customize the form item for itemChargeRate
+        const fieldProps = {
+          step: 0.01, // Adjust the step for decimal places
+          precision: 2, // Set the precision for 2 decimal places
         };
-      },
-      render: (text, record) => {
-        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
+
         return (
-          <span
-            style={{ color: theme.colorText }}
-          >{`RM ${formattedChargeRate}`}</span>
+          <span style={{ marginInline: 10 }}>
+            <ProFormDigit fieldProps={fieldProps} />
+          </span>
+        );
+      },
+
+      render: (text, record) => {
+        // Format itemChargeRate with 2 decimal places
+        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
+
+        return (
+          <span style={{ color: theme.colorText }}>
+            {`RM ${formattedChargeRate}`}
+          </span>
         );
       },
     },
@@ -247,20 +229,10 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Amount (RM)",
       key: "itemAmount",
       dataIndex: "itemAmount",
-      valueType: (item) => ({
-        type: "money",
-        locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
-      }),
       render: (text, record) => {
         // Ensure itemQuantity is a valid number
         const itemQuantity =
-          typeof record.itemQuantity === "number"
-            ? record.itemQuantity.toString()
-            : typeof record.itemQuantity === "string"
-            ? record.itemQuantity
-            : "";
+          typeof record.itemQuantity === "number" ? record.itemQuantity : 0;
 
         // Parse itemChargeRate as a string, or default to an empty string if undefined or not a valid number
         const itemChargeRate =
@@ -271,9 +243,9 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             : "";
 
         // Calculate itemAmount as itemQuantity * itemChargeRate (as a string) and format it with 2 decimal places
-        const itemAmount = (
-          parseFloat(itemQuantity) * parseFloat(itemChargeRate)
-        ).toFixed(2);
+        const itemAmount = (itemQuantity * parseFloat(itemChargeRate)).toFixed(
+          2
+        );
 
         return (
           <span style={{ color: theme.colorText }}>

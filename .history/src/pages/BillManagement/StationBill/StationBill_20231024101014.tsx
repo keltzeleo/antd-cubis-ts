@@ -199,60 +199,26 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Charge Rate (RM)",
       key: "itemChargeRate",
       dataIndex: "itemChargeRate",
-      valueType: (item) => ({
-        type: "money",
-        locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
-      }),
-      fieldProps: (form, config) => {
-        return {
-          style: { width: "auto" },
-          step: 0.01,
-          precision: 2,
-          // formatter: (value) => `RM ${Number(value).toFixed(2)}`,
-          // parser: (value) => value.replace(/^RM\s?/, "").replace(/,/g, ""),
-          // onBlur: (e) => {
-          //   let value = e.target.value;
-          //   value = value.replace(/^RM\s?/, "").replace(/,/g, ""); // Remove RM and commas
-          //   e.target.value = Number(value).toFixed(2); // Format with 2 decimal places
-          // },
-          rules: [
-            { required: true, message: "This field is mandatory!" },
-            {
-              validator: (_: any, value: any) =>
-                value === 0 || value === "0"
-                  ? Promise.reject(new Error("Value cannot be zero"))
-                  : Promise.resolve(),
-              message: "Value cannot be zero",
-            },
-            {
-              pattern: /^\d+(\.\d{1,2})?$/,
-              message:
-                "Only numerical values with up to two decimals are allowed",
-            },
-          ],
-        };
-      },
-      render: (text, record) => {
-        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
-        return (
-          <span
-            style={{ color: theme.colorText }}
-          >{`RM ${formattedChargeRate}`}</span>
-        );
-      },
+      valueType: {
+        type: "money",            // Specifies the data type
+        locale: "ms-MY",          // Specifies the locale (Malaysian)
+        step: "0.01",             // Defines the step for numeric inputs
+        precision: 2,             // Specifies the number of decimal places
+        initialValue: 0,          // Sets the initial value
+        render: (text, record) => {
+          // Custom rendering logic here
+          const formattedValue = /* Format the value as needed */
+          return (
+            <span>{formattedValue}</span>
+          );
+        },
+      }
     },
+
     {
       title: "Item Amount (RM)",
       key: "itemAmount",
       dataIndex: "itemAmount",
-      valueType: (item) => ({
-        type: "money",
-        locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
-      }),
       render: (text, record) => {
         // Ensure itemQuantity is a valid number
         const itemQuantity =

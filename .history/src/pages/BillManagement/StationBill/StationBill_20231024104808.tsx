@@ -220,7 +220,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
           rules: [
             { required: true, message: "This field is mandatory!" },
             {
-              validator: (_: any, value: any) =>
+              validator: (_, value) =>
                 value === 0 || value === "0"
                   ? Promise.reject(new Error("Value cannot be zero"))
                   : Promise.resolve(),
@@ -247,12 +247,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Amount (RM)",
       key: "itemAmount",
       dataIndex: "itemAmount",
-      valueType: (item) => ({
-        type: "money",
-        locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
-      }),
       render: (text, record) => {
         // Ensure itemQuantity is a valid number
         const itemQuantity =

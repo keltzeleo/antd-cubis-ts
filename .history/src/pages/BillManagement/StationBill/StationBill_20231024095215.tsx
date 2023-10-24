@@ -202,44 +202,30 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       valueType: (item) => ({
         type: "money",
         locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
+        step: "0.01",
+        precision: item.decimalPlaces || 2, // Use a property like 'decimalPlaces' from the 'item' to determine precision
       }),
-      fieldProps: (form, config) => {
-        return {
-          style: { width: "auto" },
-          step: 0.01,
-          precision: 2,
-          // formatter: (value) => `RM ${Number(value).toFixed(2)}`,
-          // parser: (value) => value.replace(/^RM\s?/, "").replace(/,/g, ""),
-          // onBlur: (e) => {
-          //   let value = e.target.value;
-          //   value = value.replace(/^RM\s?/, "").replace(/,/g, ""); // Remove RM and commas
-          //   e.target.value = Number(value).toFixed(2); // Format with 2 decimal places
-          // },
-          rules: [
-            { required: true, message: "This field is mandatory!" },
-            {
-              validator: (_: any, value: any) =>
-                value === 0 || value === "0"
-                  ? Promise.reject(new Error("Value cannot be zero"))
-                  : Promise.resolve(),
-              message: "Value cannot be zero",
-            },
-            {
-              pattern: /^\d+(\.\d{1,2})?$/,
-              message:
-                "Only numerical values with up to two decimals are allowed",
-            },
-          ],
-        };
+      renderFormItem: (text, { record }) => {
+        return (
+          <ProFormMoney
+            style={{ left: 100 }}
+            fieldProps={{ step: "0.01" }}
+            initialValue={record?.itemChargeRate || 0}
+            locale="ms-MY"
+          />
+        );
       },
       render: (text, record) => {
-        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(2);
+        // Format itemChargeRate with the determined precision
+        const precision = record.decimalPlaces || 2; // Use the same property to determine precision
+        const formattedChargeRate = (record.itemChargeRate || 0).toFixed(
+          precision
+        );
+
         return (
-          <span
-            style={{ color: theme.colorText }}
-          >{`RM ${formattedChargeRate}`}</span>
+          <span style={{ color: theme.colorText }}>
+            {`RM ${formattedChargeRate}`}
+          </span>
         );
       },
     },
@@ -247,12 +233,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       title: "Item Amount (RM)",
       key: "itemAmount",
       dataIndex: "itemAmount",
-      valueType: (item) => ({
-        type: "money",
-        locale: "ms-MY",
-        // step: 0.01,
-        // precision: 3,
-      }),
       render: (text, record) => {
         // Ensure itemQuantity is a valid number
         const itemQuantity =
