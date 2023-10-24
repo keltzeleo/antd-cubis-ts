@@ -184,9 +184,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
           // status: "Default",
         },
       },
-      render: (text, record) => (
-        <span style={{ color: theme.colorText }}>{record.eventItem}</span>
-      ),
     },
 
     {

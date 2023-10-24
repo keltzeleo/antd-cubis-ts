@@ -173,7 +173,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
         all: { text: "Please select an event group", status: "Default" },
         eventItem01: {
           text: "01 - Bill A",
-          status: "Default",
+          // status: "Default",
         },
         eventItem02: {
           text: "02 - Bill B",
@@ -184,9 +184,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
           // status: "Default",
         },
       },
-      render: (text, record) => (
-        <span style={{ color: theme.colorText }}>{record.eventItem}</span>
-      ),
     },
 
     {
@@ -316,7 +313,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             height: "120%",
             width: "auto",
             overflow: "hidden",
-            background: "rgba(92, 110, 113, 0.05)", // Semi-transparent overlay color for the blur effect
+            background: "rgba(92, 110, 113, 0.1)", // Semi-transparent overlay color for the blur effect
             zIndex: 1,
             borderRadius: "4px",
             padding: "16px 16px",
@@ -324,7 +321,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             top: 0,
             left: 0,
             margin: "-12 -8 -12 -8", // Ensure the overlay is behind the content
-            backdropFilter: "blur(px)", // Use backdrop-filter for modern browsers that support it
+            backdropFilter: "blur(14px)", // Use backdrop-filter for modern browsers that support it
           }}
         >
           &nbsp; Actions &nbsp;&nbsp;&nbsp;&nbsp;{" "}
