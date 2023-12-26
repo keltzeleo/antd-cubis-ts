@@ -2,17 +2,17 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import type { ProColumns } from "@ant-design/pro-components";
 import { EditableProTable } from "@ant-design/pro-components";
 import {
-  Alert,
-  Button,
-  Col,
-  Form,
-  Input,
-  Popconfirm,
-  Row,
-  Select,
-  message,
+Alert,
+Button,
+Col,
+Form,
+Input,
+Popconfirm,
+Row,
+Select,
+message,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import React,{ useEffect,useState } from "react";
 import RealType from "../../../customComponents/RealTimeTextDisplay/RealType";
 
 const { Option } = Select;
@@ -862,7 +862,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               style={{
                 marginTop: 16,
                 padding: "10px", // Add some padding inside the border
-                border: "1px solid #38a890", // Change as per your color preference
+                border: "1px solid #9adacf", // Change as per your color preference
                 backgroundColor: "#fafafa", // Change as per your color preference
                 borderRadius: "4px", // Optional: for rounded corners
               }}
@@ -904,6 +904,10 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
           </Col>
         </Row>
       </Form>
+      
+          </Form>
+        </Col>
+      </Row>
     </div>
   );
 };

@@ -856,54 +856,43 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                 },
               }}
             />
-
-            {/* Start of Total Summary Section */}
-            <div
-              style={{
-                marginTop: 16,
-                padding: "10px", // Add some padding inside the border
-                border: "1px solid #38a890", // Change as per your color preference
-                backgroundColor: "#fafafa", // Change as per your color preference
-                borderRadius: "4px", // Optional: for rounded corners
-              }}
-            >
-              {" "}
-              <h2>Total Summary Amount</h2>
-              <Row gutter={16}>
-                <Col span={8}>
-                  <Form.Item label="Total Bill Amount">
-                    <Input
-                      disabled
-                      value={`RM ${totalBillAmount.toFixed(2)}`}
-                      style={{ fontWeight: "bold" }} // Make font bold
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={8}>
-                  <Form.Item label="Total Tax Amount">
-                    <Input
-                      disabled
-                      value={`RM ${totalTaxAmount.toFixed(2)}`}
-                      style={{ fontWeight: "bold" }} // Make font bold
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={8}>
-                  <Form.Item label="Total Government Service Charge Amount">
-                    <Input
-                      disabled
-                      value={`RM ${totalGovernmentServiceChargeAmount.toFixed(
-                        2
-                      )}`}
-                      style={{ fontWeight: "bold" }} // Make font bold
-                    />
-                  </Form.Item>
-                </Col>
-              </Row>
-            </div>
           </Col>
         </Row>
       </Form>
+      {/* Total Summary Section */}
+      <Row
+        style={{
+          paddingLeft: 16,
+          marginTop: 16,
+          borderTop: "1px solid #ccc",
+          paddingTop: 16,
+        }}
+      >
+        <Col span={8}>
+          <h3>Total Bill Amount</h3>
+          <Input
+            disabled
+            value={totalBillAmount.toFixed(2)}
+            style={{ width: "100%" }}
+          />
+        </Col>
+        <Col span={8}>
+          <h3>Total Tax Amount</h3>
+          <Input
+            disabled
+            value={totalTaxAmount.toFixed(2)}
+            style={{ width: "100%" }}
+          />
+        </Col>
+        <Col span={8}>
+          <h3>Total Government Service Charge Amount</h3>
+          <Input
+            disabled
+            value={totalGovernmentServiceChargeAmount.toFixed(2)}
+            style={{ width: "100%" }}
+          />
+        </Col>
+      </Row>
     </div>
   );
 };

@@ -904,6 +904,45 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
           </Col>
         </Row>
       </Form>
+      {/* Total Summary Section */}
+      <Row style={{ marginTop: 16 }}>
+        <Col
+          style={{
+            flex: "1",
+            paddingRight: "16px",
+            width: "70%", // Match the width of the Station Bill List
+            minWidth: "550px", // Match the minimum width
+          }}
+        >
+          <Form layout="horizontal">
+            <h2>Total Summary</h2>
+            <Form.Item
+              label="Total Bill Amount"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+            >
+              <Input disabled value={totalBillAmount.toFixed(2)} />
+            </Form.Item>
+            <Form.Item
+              label="Total Tax Amount"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+            >
+              <Input disabled value={totalTaxAmount.toFixed(2)} />
+            </Form.Item>
+            <Form.Item
+              label="Total Government Service Charge Amount"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+            >
+              <Input
+                disabled
+                value={totalGovernmentServiceChargeAmount.toFixed(2)}
+              />
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
     </div>
   );
 };

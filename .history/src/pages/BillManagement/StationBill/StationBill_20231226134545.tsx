@@ -863,7 +863,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                 marginTop: 16,
                 padding: "10px", // Add some padding inside the border
                 border: "1px solid #38a890", // Change as per your color preference
-                backgroundColor: "#fafafa", // Change as per your color preference
+                backgroundColor: "#def4ef", // Change as per your color preference
                 borderRadius: "4px", // Optional: for rounded corners
               }}
             >
@@ -875,17 +875,12 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                     <Input
                       disabled
                       value={`RM ${totalBillAmount.toFixed(2)}`}
-                      style={{ fontWeight: "bold" }} // Make font bold
                     />
                   </Form.Item>
                 </Col>
                 <Col span={8}>
                   <Form.Item label="Total Tax Amount">
-                    <Input
-                      disabled
-                      value={`RM ${totalTaxAmount.toFixed(2)}`}
-                      style={{ fontWeight: "bold" }} // Make font bold
-                    />
+                    <Input disabled value={`RM ${totalTaxAmount.toFixed(2)}`} />
                   </Form.Item>
                 </Col>
                 <Col span={8}>
@@ -895,7 +890,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                       value={`RM ${totalGovernmentServiceChargeAmount.toFixed(
                         2
                       )}`}
-                      style={{ fontWeight: "bold" }} // Make font bold
                     />
                   </Form.Item>
                 </Col>
@@ -904,6 +898,45 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
           </Col>
         </Row>
       </Form>
+      {/* Total Summary Section */}
+      <Row style={{ marginTop: 16 }}>
+        <Col
+          style={{
+            flex: "1",
+            paddingRight: "16px",
+            width: "70%", // Match the width of the Station Bill List
+            minWidth: "550px", // Match the minimum width
+          }}
+        >
+          <Form layout="horizontal">
+            <h2>Total Summary</h2>
+            <Form.Item
+              label="Total Bill Amount"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+            >
+              <Input disabled value={totalBillAmount.toFixed(2)} />
+            </Form.Item>
+            <Form.Item
+              label="Total Tax Amount"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+            >
+              <Input disabled value={totalTaxAmount.toFixed(2)} />
+            </Form.Item>
+            <Form.Item
+              label="Total Government Service Charge Amount"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+            >
+              <Input
+                disabled
+                value={totalGovernmentServiceChargeAmount.toFixed(2)}
+              />
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
     </div>
   );
 };
