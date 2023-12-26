@@ -26,6 +26,11 @@ interface StationBillProps {
   theme: Theme;
 }
 
+// Utility function for account number validation
+const isValidAccountNumber = (number) => {
+  return /^\d{10}$/.test(number); // Example: Validate as a 10-digit number
+};
+
 const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -861,11 +866,9 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             <div
               style={{
                 marginTop: 16,
-                marginLeft: 16,
-                marginRight: 16,
                 padding: "10px", // Add some padding inside the border
                 border: "1px solid #38a890", // Change as per your color preference
-                backgroundColor: theme["colorBgContainer"], // Change as per your color preference
+                backgroundColor: "#fafafa", // Change as per your color preference
                 borderRadius: "4px", // Optional: for rounded corners
               }}
             >
@@ -873,12 +876,10 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               <h2>Total Summary Amount</h2>
               <Row gutter={16}>
                 <Col span={8}>
-                  <Form.Item label="Total Government Service Charge Amount">
+                  <Form.Item label="Total Bill Amount">
                     <Input
                       disabled
-                      value={`RM ${totalGovernmentServiceChargeAmount.toFixed(
-                        2
-                      )}`}
+                      value={`RM ${totalBillAmount.toFixed(2)}`}
                       style={{ fontWeight: "bold" }} // Make font bold
                     />
                   </Form.Item>
@@ -893,15 +894,13 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                   </Form.Item>
                 </Col>
                 <Col span={8}>
-                  {" "}
-                  <Form.Item label="Total Bill Amount">
+                  <Form.Item label="Total Government Service Charge Amount">
                     <Input
                       disabled
-                      value={`RM ${totalBillAmount.toFixed(2)}`}
-                      style={{
-                        background: theme["cyan.2"],
-                        fontWeight: "bold",
-                      }} // Make font bold
+                      value={`RM ${totalGovernmentServiceChargeAmount.toFixed(
+                        2
+                      )}`}
+                      style={{ fontWeight: "bold" }} // Make font bold
                     />
                   </Form.Item>
                 </Col>

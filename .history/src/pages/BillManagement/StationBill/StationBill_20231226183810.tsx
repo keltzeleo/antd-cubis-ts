@@ -861,11 +861,9 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             <div
               style={{
                 marginTop: 16,
-                marginLeft: 16,
-                marginRight: 16,
                 padding: "10px", // Add some padding inside the border
                 border: "1px solid #38a890", // Change as per your color preference
-                backgroundColor: theme["colorBgContainer"], // Change as per your color preference
+                backgroundColor: "#fafafa", // Change as per your color preference
                 borderRadius: "4px", // Optional: for rounded corners
               }}
             >
@@ -898,10 +896,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                     <Input
                       disabled
                       value={`RM ${totalBillAmount.toFixed(2)}`}
-                      style={{
-                        background: theme["cyan.2"],
-                        fontWeight: "bold",
-                      }} // Make font bold
+                      style={{ fontWeight: "bold" }} // Make font bold
                     />
                   </Form.Item>
                 </Col>

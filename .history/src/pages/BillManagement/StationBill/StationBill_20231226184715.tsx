@@ -861,8 +861,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             <div
               style={{
                 marginTop: 16,
-                marginLeft: 16,
-                marginRight: 16,
                 padding: "10px", // Add some padding inside the border
                 border: "1px solid #38a890", // Change as per your color preference
                 backgroundColor: theme["colorBgContainer"], // Change as per your color preference
@@ -899,7 +897,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                       disabled
                       value={`RM ${totalBillAmount.toFixed(2)}`}
                       style={{
-                        background: theme["cyan.2"],
+                        background: theme["cyan.3"],
                         fontWeight: "bold",
                       }} // Make font bold
                     />
