@@ -86,15 +86,6 @@ mockData.forEach((item) => {
       ? item.itemChargeRate
       : parseFloat(item.itemChargeRate || "");
 
-  // Calculate government service charge amount
-  const governmentServiceChargeRate = parseFloat(
-    item.governmentServiceChargeRate || "0"
-  );
-  item.governmentServiceChargeAmount = (
-    (governmentServiceChargeRate / 100) *
-    (item.itemAmount || 0)
-  ).toFixed(2);
-
   if (!isNaN(quantity) && !isNaN(chargeRate)) {
     item.itemAmount = quantity * chargeRate;
   } else {
@@ -312,7 +303,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       dataIndex: "governmentServiceChargeAmount",
       render: (text, record) => (
         <span style={{ color: theme.colorText }}>
-          RM {record.governmentServiceChargeAmount}
+          RM {record.governmentServiceChargeRate} * {record.itemAmount}
         </span>
       ),
     },
@@ -828,29 +819,21 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               footer={() => (
                 <div
                   style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
                     padding: "10px",
+                    textAlign: "right",
+                    background: "#f7f7f7",
                   }}
                 >
-                  <div style={{ textAlign: "right" }}>
-                    <div>
-                      <strong>Total Government Service Charge Amount:</strong>
-                    </div>
-                    <div>
-                      <strong>Total Tax Amount:</strong>
-                    </div>
-                    <div>
-                      <strong>Total Bill Amount (after tax):</strong>
-                    </div>
-                  </div>
-                  <div style={{ width: "150px", textAlign: "right" }}>
-                    <div>
-                      RM {totalGovernmentServiceChargeAmount.toFixed(2)}
-                    </div>
-                    <div>RM {totalTaxAmount.toFixed(2)}</div>
-                    <div>RM {totalBillAmount.toFixed(2)}</div>
-                  </div>
+                  <span>
+                    Total Government Service Charge: RM{" "}
+                    {totalGovernmentServiceChargeAmount.toFixed(2)}
+                  </span>
+                  <br />
+                  <span>Total Tax Amount: RM {totalTaxAmount.toFixed(2)}</span>
+                  <br />
+                  <span>
+                    Total Bill Amount: RM {totalBillAmount.toFixed(2)}
+                  </span>
                 </div>
               )}
               headerTitle={
@@ -894,7 +877,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               }}
             />
 
-            {/* Start of Total Summary Section
+            {/* Start of Total Summary Section */}
             <div
               style={{
                 marginTop: 16,
@@ -931,7 +914,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                 </Col>
                 <Col span={8}>
                   {" "}
-                  <Form.Item label="Total Bill Amount (after Tax)">
+                  <Form.Item label="Total Bill Amount">
                     <Input
                       disabled
                       value={`RM ${totalBillAmount.toFixed(2)}`}
@@ -943,7 +926,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                   </Form.Item>
                 </Col>
               </Row>
-            </div> */}
+            </div>
           </Col>
         </Row>
       </Form>

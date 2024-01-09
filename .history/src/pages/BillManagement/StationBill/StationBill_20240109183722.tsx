@@ -312,7 +312,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       dataIndex: "governmentServiceChargeAmount",
       render: (text, record) => (
         <span style={{ color: theme.colorText }}>
-          RM {record.governmentServiceChargeAmount}
+          RM {record.governmentServiceChargeRate} * {record.itemAmount}
         </span>
       ),
     },

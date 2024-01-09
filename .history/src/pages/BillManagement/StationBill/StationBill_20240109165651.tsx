@@ -86,15 +86,6 @@ mockData.forEach((item) => {
       ? item.itemChargeRate
       : parseFloat(item.itemChargeRate || "");
 
-  // Calculate government service charge amount
-  const governmentServiceChargeRate = parseFloat(
-    item.governmentServiceChargeRate || "0"
-  );
-  item.governmentServiceChargeAmount = (
-    (governmentServiceChargeRate / 100) *
-    (item.itemAmount || 0)
-  ).toFixed(2);
-
   if (!isNaN(quantity) && !isNaN(chargeRate)) {
     item.itemAmount = quantity * chargeRate;
   } else {
@@ -312,7 +303,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       dataIndex: "governmentServiceChargeAmount",
       render: (text, record) => (
         <span style={{ color: theme.colorText }}>
-          RM {record.governmentServiceChargeAmount}
+          RM {record.governmentServiceChargeRate} * {record.itemAmount}
         </span>
       ),
     },
@@ -841,7 +832,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                       <strong>Total Tax Amount:</strong>
                     </div>
                     <div>
-                      <strong>Total Bill Amount (after tax):</strong>
+                      <strong>Total Bill Amount:</strong>
                     </div>
                   </div>
                   <div style={{ width: "150px", textAlign: "right" }}>
@@ -894,7 +885,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               }}
             />
 
-            {/* Start of Total Summary Section
+            {/* Start of Total Summary Section */}
             <div
               style={{
                 marginTop: 16,
@@ -907,7 +898,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               }}
             >
               {" "}
-              <h3>Total Summary Amount</h3>
+              {/* <h3>Total Summary Amount</h3>
               <Row gutter={16}>
                 <Col span={8}>
                   <Form.Item label="Total Government Service Charge Amount">
@@ -931,7 +922,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                 </Col>
                 <Col span={8}>
                   {" "}
-                  <Form.Item label="Total Bill Amount (after Tax)">
+                  <Form.Item label="Total Bill Amount">
                     <Input
                       disabled
                       value={`RM ${totalBillAmount.toFixed(2)}`}
@@ -942,8 +933,8 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                     />
                   </Form.Item>
                 </Col>
-              </Row>
-            </div> */}
+              </Row> */}
+            </div>
           </Col>
         </Row>
       </Form>

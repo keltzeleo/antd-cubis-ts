@@ -86,15 +86,6 @@ mockData.forEach((item) => {
       ? item.itemChargeRate
       : parseFloat(item.itemChargeRate || "");
 
-  // Calculate government service charge amount
-  const governmentServiceChargeRate = parseFloat(
-    item.governmentServiceChargeRate || "0"
-  );
-  item.governmentServiceChargeAmount = (
-    (governmentServiceChargeRate / 100) *
-    (item.itemAmount || 0)
-  ).toFixed(2);
-
   if (!isNaN(quantity) && !isNaN(chargeRate)) {
     item.itemAmount = quantity * chargeRate;
   } else {
@@ -312,7 +303,10 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       dataIndex: "governmentServiceChargeAmount",
       render: (text, record) => (
         <span style={{ color: theme.colorText }}>
-          RM {record.governmentServiceChargeAmount}
+          const calculatedCharge =
+          (parseFloat(record.governmentServiceChargeRate || "0") / 100) *
+          (record.itemAmount || 0); return{" "}
+          <span>{`[RM ${calculatedCharge.toFixed(2)}]`}</span>;{" "}
         </span>
       ),
     },
