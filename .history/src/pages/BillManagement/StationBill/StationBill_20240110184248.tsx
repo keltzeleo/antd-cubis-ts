@@ -118,33 +118,27 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const ACCOUNT_NUMBER_MAX_LENGTH = 10;
   const initialPlaceholder = "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH);
 
-  const [inputValue, setInputValue] = useState(
-    "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH)
-  );
+  const [inputValue, setInputValue] = useState("");
 
   const handleAccountNumberChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    let inputVal = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
-
-    if (inputVal.length > ACCOUNT_NUMBER_MAX_LENGTH) {
-      inputVal = inputVal.substring(0, ACCOUNT_NUMBER_MAX_LENGTH); // Limit the length
+    const inputVal = e.target.value.replace(/\D/g, ""); // Keep only digits
+    if (inputVal.length <= ACCOUNT_NUMBER_MAX_LENGTH) {
+      setAccountNumber(inputVal);
     }
-
-    setAccountNumber(inputVal); // Update the state with the numeric value
-
-    // Calculate how many dots should be displayed
-    const dotsCount = ACCOUNT_NUMBER_MAX_LENGTH - inputVal.length;
-    const dots = "•".repeat(dotsCount);
-
-    // Directly update the input field's value
-    e.target.value = inputVal + dots;
   };
 
   useEffect(() => {
-    // Initialize with all dots
+    // Initialize inputValue with 9 dots
     setInputValue("•".repeat(ACCOUNT_NUMBER_MAX_LENGTH));
   }, []);
+
+  useEffect(() => {
+    // Update inputValue to show account number with remaining dots
+    const filledValue = accountNumber.padEnd(ACCOUNT_NUMBER_MAX_LENGTH, "•");
+    setInputValue(filledValue);
+  }, [accountNumber]);
 
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
@@ -531,7 +525,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             >
               <Input
                 type="text"
-                value={accountNumber}
+                value={inputValue}
                 onChange={handleAccountNumberChange}
                 placeholder={initialPlaceholder}
               />

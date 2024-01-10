@@ -118,33 +118,14 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const ACCOUNT_NUMBER_MAX_LENGTH = 10;
   const initialPlaceholder = "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH);
 
-  const [inputValue, setInputValue] = useState(
-    "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH)
-  );
+  const [inputValue, setInputValue] = useState("");
 
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    let inputVal = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
-
-    if (inputVal.length > ACCOUNT_NUMBER_MAX_LENGTH) {
-      inputVal = inputVal.substring(0, ACCOUNT_NUMBER_MAX_LENGTH); // Limit the length
-    }
-
-    setAccountNumber(inputVal); // Update the state with the numeric value
-
-    // Calculate how many dots should be displayed
-    const dotsCount = ACCOUNT_NUMBER_MAX_LENGTH - inputVal.length;
-    const dots = "•".repeat(dotsCount);
-
-    // Directly update the input field's value
-    e.target.value = inputVal + dots;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value.slice(0, 10).replace(/\D/g, "");
+    setInputValue(newValue);
   };
 
-  useEffect(() => {
-    // Initialize with all dots
-    setInputValue("•".repeat(ACCOUNT_NUMBER_MAX_LENGTH));
-  }, []);
+  const placeholderDots = "•".repeat(10 - inputValue.length);
 
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
@@ -158,13 +139,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     }
     return isValid;
   };
-
-  const getAccountInfoStyle = () => ({
-    backgroundColor: accountNumber
-      ? theme["colorPrimary"]
-      : theme["colorDisabled"],
-    color: accountNumber ? "#fafafa" : "#ccc",
-  });
 
   const handleSaveBillEvent = async (
     rowKey: React.Key[],
@@ -533,7 +507,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                 type="text"
                 value={accountNumber}
                 onChange={handleAccountNumberChange}
-                placeholder={initialPlaceholder}
+                placeholder={dotsToShow}
               />
             </Form.Item>
           </Col>

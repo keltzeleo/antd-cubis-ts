@@ -114,37 +114,21 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [position, setPosition] = useState<"top" | "bottom" | "hidden">(
     "bottom"
   );
-
-  const ACCOUNT_NUMBER_MAX_LENGTH = 10;
-  const initialPlaceholder = "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH);
-
-  const [inputValue, setInputValue] = useState(
-    "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH)
-  );
+  const placeholderLength = 10;
+  const initialPlaceholder = "•".repeat(placeholderLength);
+  const [maskedInputCount, setMaskedInputCount] = useState(initialPlaceholder);
 
   const handleAccountNumberChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    let inputVal = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
+    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Keep only digits
+    setAccountNumber(sanitizedValue);
 
-    if (inputVal.length > ACCOUNT_NUMBER_MAX_LENGTH) {
-      inputVal = inputVal.substring(0, ACCOUNT_NUMBER_MAX_LENGTH); // Limit the length
-    }
-
-    setAccountNumber(inputVal); // Update the state with the numeric value
-
-    // Calculate how many dots should be displayed
-    const dotsCount = ACCOUNT_NUMBER_MAX_LENGTH - inputVal.length;
-    const dots = "•".repeat(dotsCount);
-
-    // Directly update the input field's value
-    e.target.value = inputVal + dots;
+    // Calculate the number of dots to display
+    const remainingDots = placeholderLength - sanitizedValue.length;
+    const newPlaceholder = "•".repeat(Math.max(remainingDots, 0));
+    setMaskedInputCount(newPlaceholder);
   };
-
-  useEffect(() => {
-    // Initialize with all dots
-    setInputValue("•".repeat(ACCOUNT_NUMBER_MAX_LENGTH));
-  }, []);
 
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
@@ -533,7 +517,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                 type="text"
                 value={accountNumber}
                 onChange={handleAccountNumberChange}
-                placeholder={initialPlaceholder}
+                placeholder={maskedInputCount}
               />
             </Form.Item>
           </Col>

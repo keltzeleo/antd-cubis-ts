@@ -104,6 +104,52 @@ mockData.forEach((item) => {
   }
 });
 
+interface CustomInputProps {
+  placeholderLength?: number;
+  onChange: (value: string) => void;
+}
+
+const CustomInput: React.FC<CustomInputProps> = ({
+  placeholderLength = 10,
+  onChange,
+}) => {
+  const placeholder = "•".repeat(placeholderLength);
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setInputValue(value);
+    onChange(value); // Propagate change to parent component
+
+    const newVisiblePlaceholder = placeholder.substring(value.length);
+    setVisiblePlaceholder(newVisiblePlaceholder);
+  };
+
+  const [visiblePlaceholder, setVisiblePlaceholder] =
+    useState<string>(placeholder);
+
+  return (
+    <div style={{ position: "relative" }}>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        style={{ position: "absolute", zIndex: 2, background: "transparent" }}
+      />
+      <span
+        style={{
+          position: "absolute",
+          zIndex: 1,
+          color: "#aaa",
+          pointerEvents: "none",
+        }}
+      >
+        {visiblePlaceholder}
+      </span>
+    </div>
+  );
+};
+
 const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [workOrderType, setWorkOrderType] = useState("");
   const [selectedWorkOrder, setSelectedWorkOrder] = useState("");
@@ -114,38 +160,20 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [position, setPosition] = useState<"top" | "bottom" | "hidden">(
     "bottom"
   );
-
-  const ACCOUNT_NUMBER_MAX_LENGTH = 10;
-  const initialPlaceholder = "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH);
-
-  const [inputValue, setInputValue] = useState(
-    "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH)
-  );
+  const placeholderLength = 10; // Set the desired length for the account number
+  const initialPlaceholder = "•".repeat(placeholderLength);
+  const [maskedInputCount, setMaskedInputCount] = useState(initialPlaceholder);
 
   const handleAccountNumberChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    let inputVal = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
+    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Keep only digits
+    setAccountNumber(sanitizedValue);
 
-    if (inputVal.length > ACCOUNT_NUMBER_MAX_LENGTH) {
-      inputVal = inputVal.substring(0, ACCOUNT_NUMBER_MAX_LENGTH); // Limit the length
-    }
-
-    setAccountNumber(inputVal); // Update the state with the numeric value
-
-    // Calculate how many dots should be displayed
-    const dotsCount = ACCOUNT_NUMBER_MAX_LENGTH - inputVal.length;
-    const dots = "•".repeat(dotsCount);
-
-    // Directly update the input field's value
-    e.target.value = inputVal + dots;
+    // Update the masked input count (placeholder)
+    const newMaskedCount = initialPlaceholder.substring(sanitizedValue.length);
+    setMaskedInputCount(newMaskedCount);
   };
-
-  useEffect(() => {
-    // Initialize with all dots
-    setInputValue("•".repeat(ACCOUNT_NUMBER_MAX_LENGTH));
-  }, []);
-
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
@@ -529,12 +557,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               name="accountNumber"
               rules={[{ required: true }]}
             >
-              <Input
-                type="text"
-                value={accountNumber}
-                onChange={handleAccountNumberChange}
-                placeholder={initialPlaceholder}
-              />
+              <CustomInput onChange={handleAccountNumberChange} />
             </Form.Item>
           </Col>
           <Col span={12}>
