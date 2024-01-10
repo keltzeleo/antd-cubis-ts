@@ -114,22 +114,27 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [position, setPosition] = useState<"top" | "bottom" | "hidden">(
     "bottom"
   );
-  const [inputDigits, setInputDigits] = useState<string>("");
-  const initialMaskedInputCount = Array(10).fill("•").join("");
-  const [dynamicPlaceholder, setDynamicPlaceholder] = useState(
-    initialMaskedInputCount
-  );
+const AccountNumberInput = () => {
+  const accountNumberLength = 20; // Set the length of the account number here
+  const initialMaskedDisplay = '•'.repeat(accountNumberLength);
+  const [inputValue, setInputValue] = useState('');
+  const [maskedInputDisplay, setMaskedInputDisplay] = useState(initialMaskedDisplay);
 
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-    setInputDigits(sanitizedValue);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value.slice(0, accountNumberLength);
+    setInputValue(newValue);
 
-    // Update dynamic placeholder based on the length of the input value
-    setDynamicPlaceholder(
-      initialMaskedInputCount.substring(sanitizedValue.length)
-    );
+    // Update the masked input display
+    const newMaskedDisplay = newValue.padEnd(accountNumberLength, '•');
+    setMaskedInputDisplay(newMaskedDisplay);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+
+    if ((e.key < '0' || e.key > '9') && !allowedKeys.includes(e.key)) {
+      e.preventDefault();
+    }
   };
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
@@ -514,12 +519,13 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               name="accountNumber"
               rules={[{ required: true }]}
             >
-              <Input
-                type="text"
-                value={inputDigits} // Use the sanitized input value here
-                onChange={handleAccountNumberChange}
-                placeholder={dynamicPlaceholder} // Use the dynamic placeholder here
-              />
+               <input 
+        type="text" 
+        value={inputValue} 
+        onChange={handleInputChange} 
+        onKeyDown={handleKeyDown}
+        placeholder={maskedInputDisplay}
+      />
             </Form.Item>
           </Col>
           <Col span={12}>

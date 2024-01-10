@@ -114,23 +114,12 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [position, setPosition] = useState<"top" | "bottom" | "hidden">(
     "bottom"
   );
-  const [inputDigits, setInputDigits] = useState<string>("");
+  const [inputDigits, setInputDigits] = useState(Array(10).fill("•").join("")); // Initialize with 10 dots
   const initialMaskedInputCount = Array(10).fill("•").join("");
-  const [dynamicPlaceholder, setDynamicPlaceholder] = useState(
+
+  const [maskedInputCount, setMaskedInputCount] = useState(
     initialMaskedInputCount
   );
-
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-    setInputDigits(sanitizedValue);
-
-    // Update dynamic placeholder based on the length of the input value
-    setDynamicPlaceholder(
-      initialMaskedInputCount.substring(sanitizedValue.length)
-    );
-  };
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
@@ -143,6 +132,17 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     }
     return isValid;
   };
+
+  const handleAccountNumberChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+    setInputDigits(
+      sanitizedValue.padEnd(10, "•") // Pad the input with dots if less than 10 digits
+    );
+  };
+
+  const displayedValue = inputDigits.padEnd(10, ".");
 
   const getAccountInfoStyle = () => ({
     backgroundColor: accountNumber
@@ -516,9 +516,9 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             >
               <Input
                 type="text"
-                value={inputDigits} // Use the sanitized input value here
+                value={maskedInputCount}
                 onChange={handleAccountNumberChange}
-                placeholder={dynamicPlaceholder} // Use the dynamic placeholder here
+                // placeholder={"••••••••••"}
               />
             </Form.Item>
           </Col>

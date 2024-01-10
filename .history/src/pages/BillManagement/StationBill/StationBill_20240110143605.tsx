@@ -114,23 +114,8 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [position, setPosition] = useState<"top" | "bottom" | "hidden">(
     "bottom"
   );
-  const [inputDigits, setInputDigits] = useState<string>("");
-  const initialMaskedInputCount = Array(10).fill("•").join("");
-  const [dynamicPlaceholder, setDynamicPlaceholder] = useState(
-    initialMaskedInputCount
-  );
-
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-    setInputDigits(sanitizedValue);
-
-    // Update dynamic placeholder based on the length of the input value
-    setDynamicPlaceholder(
-      initialMaskedInputCount.substring(sanitizedValue.length)
-    );
-  };
+  const [inputDigits, setInputDigits] = useState("");
+  const maskedInputCountPlaceholder = Array(10).fill("•").join("");
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
@@ -143,6 +128,16 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     }
     return isValid;
   };
+
+  const handleAccountNumberChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+    const newInputDigits = sanitizedValue.slice(0, 10); // Limit to 10 digits
+    setInputDigits(newInputDigits);
+  };
+
+  const displayedValue = inputDigits.padEnd(10, ".");
 
   const getAccountInfoStyle = () => ({
     backgroundColor: accountNumber
@@ -516,9 +511,9 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             >
               <Input
                 type="text"
-                value={inputDigits} // Use the sanitized input value here
+                value={displayedValue}
                 onChange={handleAccountNumberChange}
-                placeholder={dynamicPlaceholder} // Use the dynamic placeholder here
+                placeholder={maskedInputCountPlaceholder}
               />
             </Form.Item>
           </Col>

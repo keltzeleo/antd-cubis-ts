@@ -116,7 +116,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   );
   const [inputDigits, setInputDigits] = useState<string>("");
   const initialMaskedInputCount = Array(10).fill("•").join("");
-  const [dynamicPlaceholder, setDynamicPlaceholder] = useState(
+  const [maskedInputCount, setMaskedInputCount] = useState<string>(
     initialMaskedInputCount
   );
 
@@ -126,10 +126,12 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     const sanitizedValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
     setInputDigits(sanitizedValue);
 
-    // Update dynamic placeholder based on the length of the input value
-    setDynamicPlaceholder(
-      initialMaskedInputCount.substring(sanitizedValue.length)
+    // Update masked input count based on the length of the input value
+    let updatedMaskedInputCount = initialMaskedInputCount.substring(
+      0,
+      10 - sanitizedValue.length
     );
+    setMaskedInputCount(sanitizedValue + updatedMaskedInputCount);
   };
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
@@ -516,9 +518,9 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             >
               <Input
                 type="text"
-                value={inputDigits} // Use the sanitized input value here
+                value={maskedInputCount}
                 onChange={handleAccountNumberChange}
-                placeholder={dynamicPlaceholder} // Use the dynamic placeholder here
+                // placeholder={"••••••••••"}
               />
             </Form.Item>
           </Col>

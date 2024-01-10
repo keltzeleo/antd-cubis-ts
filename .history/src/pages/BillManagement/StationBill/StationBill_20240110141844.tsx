@@ -108,29 +108,14 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [workOrderType, setWorkOrderType] = useState("");
   const [selectedWorkOrder, setSelectedWorkOrder] = useState("");
   const [workOrderDescription, setWorkOrderDescription] = useState("");
-  const [accountNumber, setAccountNumber] = useState("");
+  const [accountNumber, setAccountNumber] = useState(
+    Array(10).fill("•").join("")
+  ); // Initial dots
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
   const [position, setPosition] = useState<"top" | "bottom" | "hidden">(
     "bottom"
   );
-  const [inputDigits, setInputDigits] = useState<string>("");
-  const initialMaskedInputCount = Array(10).fill("•").join("");
-  const [dynamicPlaceholder, setDynamicPlaceholder] = useState(
-    initialMaskedInputCount
-  );
-
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-    setInputDigits(sanitizedValue);
-
-    // Update dynamic placeholder based on the length of the input value
-    setDynamicPlaceholder(
-      initialMaskedInputCount.substring(sanitizedValue.length)
-    );
-  };
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
@@ -142,6 +127,14 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       message.error("Invalid account number. Please enter a 10-digit number.");
     }
     return isValid;
+  };
+
+  const handleAccountNumberChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+    const newValue = sanitizedValue.padEnd(10, "."); // Pad with dots up to 10 characters
+    setAccountNumber(newValue);
   };
 
   const getAccountInfoStyle = () => ({
@@ -515,10 +508,24 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               rules={[{ required: true }]}
             >
               <Input
-                type="text"
-                value={inputDigits} // Use the sanitized input value here
+                maxLength={10}
+                type="number"
+                value={accountNumber}
                 onChange={handleAccountNumberChange}
-                placeholder={dynamicPlaceholder} // Use the dynamic placeholder here
+                onKeyDown={(e) => {
+                  // Allow only numeric keys and navigation keys
+                  const allowedKeys = [
+                    "Backspace",
+                    "Delete",
+                    "ArrowLeft",
+                    "ArrowRight",
+                    "Tab",
+                    ...Array(10).keys(),
+                  ];
+                  if (!allowedKeys.includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </Form.Item>
           </Col>
@@ -569,7 +576,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               minWidth: isAccountInfoFullWidth ? "100%" : "30%", // Minimum width for "Account Information"
             }}
           >
-            <div>
+            <div style={getAccountInfoStyle()}>
               {/* Account Information */}
               <h2>Account Information</h2>
               <div
