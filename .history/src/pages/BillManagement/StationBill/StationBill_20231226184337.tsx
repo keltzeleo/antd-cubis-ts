@@ -86,15 +86,6 @@ mockData.forEach((item) => {
       ? item.itemChargeRate
       : parseFloat(item.itemChargeRate || "");
 
-  // Calculate government service charge amount
-  const governmentServiceChargeRate = parseFloat(
-    item.governmentServiceChargeRate || "0"
-  );
-  item.governmentServiceChargeAmount = (
-    (governmentServiceChargeRate / 100) *
-    (item.itemAmount || 0)
-  ).toFixed(2);
-
   if (!isNaN(quantity) && !isNaN(chargeRate)) {
     item.itemAmount = quantity * chargeRate;
   } else {
@@ -114,71 +105,10 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [position, setPosition] = useState<"top" | "bottom" | "hidden">(
     "bottom"
   );
-
-  const ACCOUNT_NUMBER_MAX_LENGTH = 10;
-  const initialPlaceholder = "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH);
-
-  const [inputValue, setInputValue] = useState(
-    "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH)
-  );
-
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    let inputVal = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
-
-    if (inputVal.length > ACCOUNT_NUMBER_MAX_LENGTH) {
-      inputVal = inputVal.substring(0, ACCOUNT_NUMBER_MAX_LENGTH); // Limit the length
-    }
-
-    setAccountNumber(inputVal); // Update the state with the numeric value
-
-    // Calculate how many dots should be displayed
-    const dotsCount = ACCOUNT_NUMBER_MAX_LENGTH - inputVal.length;
-    const dots = "•".repeat(dotsCount);
-
-    // Directly update the input field's value
-    e.target.value = inputVal + dots;
-  };
-
-  useEffect(() => {
-    // Initialize with all dots
-    setInputValue("•".repeat(ACCOUNT_NUMBER_MAX_LENGTH));
-  }, []);
-
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
   const [selectedWorkOrderType, setSelectedWorkOrderType] = useState("");
-
-  const validateAccountNumber = (accountNum: string) => {
-    const isValid = /^[0-9]{10}$/.test(accountNum); // Example: 10-digit number validation
-    if (!isValid) {
-      message.error("Invalid account number. Please enter a 10-digit number.");
-    }
-    return isValid;
-  };
-
-  const getAccountInfoStyle = () => ({
-    backgroundColor: accountNumber
-      ? theme["colorPrimary"]
-      : theme["colorDisabled"],
-    color: accountNumber ? "#fafafa" : "#ccc",
-  });
-
-  const handleSaveBillEvent = async (
-    rowKey: React.Key[],
-    data: DataSourceType,
-    row: DataSourceType
-  ) => {
-    try {
-      // Logic to save bill event
-      await waitTime(2000);
-      console.log(rowKey, data, row);
-    } catch (error) {
-      message.error("Error saving bill event. Please try again.");
-    }
-  };
 
   // Define columns for EditableProTable
   const columns: ProColumns<DataSourceType>[] = [
@@ -373,7 +303,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       dataIndex: "governmentServiceChargeAmount",
       render: (text, record) => (
         <span style={{ color: theme.colorText }}>
-          RM {record.governmentServiceChargeAmount}
+          RM {record.governmentServiceChargeRate} * {record.itemAmount}
         </span>
       ),
     },
@@ -532,8 +462,11 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               <Input
                 type="text"
                 value={accountNumber}
-                onChange={handleAccountNumberChange}
-                placeholder={initialPlaceholder}
+                onChange={(e) => {
+                  // Use a regular expression to remove non-digit characters
+                  const sanitizedValue = e.target.value.replace(/\D/g, "");
+                  setAccountNumber(sanitizedValue);
+                }}
               />
             </Form.Item>
           </Col>
@@ -584,290 +517,288 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               minWidth: isAccountInfoFullWidth ? "100%" : "30%", // Minimum width for "Account Information"
             }}
           >
-            <div>
-              {/* Account Information */}
-              <h2>Account Information</h2>
-              <div
-                style={{
-                  height: "auto",
-                  bottom: 0,
-                  overflowY: "scroll",
-                  border: "1px solid #ccc",
-                  padding: 24,
-                  borderRadius: 16,
-                  textAlign: "left",
-                }}
-              >
-                <Form layout="vertical">
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Form.Item label="Branch">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          Branch 01
-                        </span>
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item label="Account Status">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          Active
-                        </span>
-                      </Form.Item>
-                    </Col>
-                  </Row>
+            {/* Account Information */}
+            <h2>Account Information</h2>
+            <div
+              style={{
+                height: "auto",
+                bottom: 0,
+                overflowY: "scroll",
+                border: "1px solid #ccc",
+                padding: 24,
+                borderRadius: 16,
+                textAlign: "left",
+              }}
+            >
+              <Form layout="vertical">
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item label="Branch">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Branch 01
+                      </span>
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="Account Status">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Active
+                      </span>
+                    </Form.Item>
+                  </Col>
+                </Row>
 
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Form.Item label="Name">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          John Doe
-                        </span>
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item label="D.O.B">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          22/02/2000
-                        </span>
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Form.Item label="Consumer Type">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          Individual
-                        </span>
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item label="Tariff">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          Residential
-                        </span>
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Form.Item label="Book No">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          12345
-                        </span>
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item label="Account Type">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          Regular
-                        </span>
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Form.Item label="Current Deposit">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          RM160.00
-                        </span>
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item label="Last Deposit Revision">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          [sample]
-                        </span>
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Form.Item label="Deposit Type">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          Type 01{" "}
-                        </span>
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item label="Addtional Deposit">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          [sample]
-                        </span>
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Row gutter={16}>
-                    <Col span={12}>
-                      <Form.Item label="Current Arrears">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          RM60.00
-                        </span>
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item label="GST Relief">
-                        <span
-                          style={{
-                            background: theme["cyan.3"],
-                            paddingLeft: 16,
-                            paddingRight: 16,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                            borderRadius: 8,
-                            fontWeight: "bold",
-                            fontSize: 16,
-                          }}
-                        >
-                          [yes]
-                        </span>
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                </Form>
-              </div>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item label="Name">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        John Doe
+                      </span>
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="D.O.B">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        22/02/2000
+                      </span>
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item label="Consumer Type">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Individual
+                      </span>
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="Tariff">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Residential
+                      </span>
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item label="Book No">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        12345
+                      </span>
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="Account Type">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Regular
+                      </span>
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item label="Current Deposit">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        RM160.00
+                      </span>
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="Last Deposit Revision">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        [sample]
+                      </span>
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item label="Deposit Type">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        Type 01{" "}
+                      </span>
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="Addtional Deposit">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        [sample]
+                      </span>
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item label="Current Arrears">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        RM60.00
+                      </span>
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="GST Relief">
+                      <span
+                        style={{
+                          background: theme["cyan.3"],
+                          paddingLeft: 16,
+                          paddingRight: 16,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                          borderRadius: 8,
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        [yes]
+                      </span>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
             </div>
           </Col>
 
@@ -885,34 +816,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               options={{ setting: true }}
               scroll={{ x: "max-content" }}
               search={false}
-              footer={() => (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    padding: "10px",
-                  }}
-                >
-                  <div style={{ textAlign: "right" }}>
-                    <div>
-                      <strong>Total Government Service Charge Amount:</strong>
-                    </div>
-                    <div>
-                      <strong>Total Tax Amount:</strong>
-                    </div>
-                    <div>
-                      <strong>Total Bill Amount (after tax):</strong>
-                    </div>
-                  </div>
-                  <div style={{ width: "150px", textAlign: "right" }}>
-                    <div>
-                      RM {totalGovernmentServiceChargeAmount.toFixed(2)}
-                    </div>
-                    <div>RM {totalTaxAmount.toFixed(2)}</div>
-                    <div>RM {totalBillAmount.toFixed(2)}</div>
-                  </div>
-                </div>
-              )}
               headerTitle={
                 <span
                   style={{
@@ -954,20 +857,18 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               }}
             />
 
-            {/* Start of Total Summary Section
+            {/* Start of Total Summary Section */}
             <div
               style={{
                 marginTop: 16,
-                marginLeft: 16,
-                marginRight: 16,
                 padding: "10px", // Add some padding inside the border
                 border: "1px solid #38a890", // Change as per your color preference
-                backgroundColor: theme["colorBgContainer"], // Change as per your color preference
+                backgroundColor: "#fafafa", // Change as per your color preference
                 borderRadius: "4px", // Optional: for rounded corners
               }}
             >
               {" "}
-              <h3>Total Summary Amount</h3>
+              <h2>Total Summary Amount</h2>
               <Row gutter={16}>
                 <Col span={8}>
                   <Form.Item label="Total Government Service Charge Amount">
@@ -991,19 +892,19 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                 </Col>
                 <Col span={8}>
                   {" "}
-                  <Form.Item label="Total Bill Amount (after Tax)">
+                  <Form.Item label="Total Bill Amount">
                     <Input
                       disabled
                       value={`RM ${totalBillAmount.toFixed(2)}`}
                       style={{
-                        background: theme["cyan.2"],
+                        background: theme["cyan.3"],
                         fontWeight: "bold",
                       }} // Make font bold
                     />
                   </Form.Item>
                 </Col>
               </Row>
-            </div> */}
+            </div>
           </Col>
         </Row>
       </Form>

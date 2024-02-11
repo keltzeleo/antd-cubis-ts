@@ -108,44 +108,14 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [workOrderType, setWorkOrderType] = useState("");
   const [selectedWorkOrder, setSelectedWorkOrder] = useState("");
   const [workOrderDescription, setWorkOrderDescription] = useState("");
-  const [accountNumber, setAccountNumber] = useState("");
+  const [accountNumber, setAccountNumber] = useState(
+    Array(10).fill("•").join("")
+  ); // Initial dots
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [dataSource, setDataSource] = useState<readonly DataSourceType[]>([]);
   const [position, setPosition] = useState<"top" | "bottom" | "hidden">(
     "bottom"
   );
-
-  const ACCOUNT_NUMBER_MAX_LENGTH = 10;
-  const initialPlaceholder = "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH);
-
-  const [inputValue, setInputValue] = useState(
-    "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH)
-  );
-
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    let inputVal = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
-
-    if (inputVal.length > ACCOUNT_NUMBER_MAX_LENGTH) {
-      inputVal = inputVal.substring(0, ACCOUNT_NUMBER_MAX_LENGTH); // Limit the length
-    }
-
-    setAccountNumber(inputVal); // Update the state with the numeric value
-
-    // Calculate how many dots should be displayed
-    const dotsCount = ACCOUNT_NUMBER_MAX_LENGTH - inputVal.length;
-    const dots = "•".repeat(dotsCount);
-
-    // Directly update the input field's value
-    e.target.value = inputVal + dots;
-  };
-
-  useEffect(() => {
-    // Initialize with all dots
-    setInputValue("•".repeat(ACCOUNT_NUMBER_MAX_LENGTH));
-  }, []);
-
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
@@ -157,6 +127,14 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
       message.error("Invalid account number. Please enter a 10-digit number.");
     }
     return isValid;
+  };
+
+  const handleAccountNumberChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+    const newValue = sanitizedValue.padEnd(10, "."); // Pad with dots up to 10 characters
+    setAccountNumber(newValue);
   };
 
   const getAccountInfoStyle = () => ({
@@ -530,10 +508,24 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               rules={[{ required: true }]}
             >
               <Input
-                type="text"
+                maxLength={10}
+                type="number"
                 value={accountNumber}
                 onChange={handleAccountNumberChange}
-                placeholder={initialPlaceholder}
+                onKeyDown={(e) => {
+                  // Allow only numeric keys and navigation keys
+                  const allowedKeys = [
+                    "Backspace",
+                    "Delete",
+                    "ArrowLeft",
+                    "ArrowRight",
+                    "Tab",
+                    ...Array(10).keys(),
+                  ];
+                  if (!allowedKeys.includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </Form.Item>
           </Col>
@@ -584,7 +576,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               minWidth: isAccountInfoFullWidth ? "100%" : "30%", // Minimum width for "Account Information"
             }}
           >
-            <div>
+            <div style={getAccountInfoStyle()}>
               {/* Account Information */}
               <h2>Account Information</h2>
               <div

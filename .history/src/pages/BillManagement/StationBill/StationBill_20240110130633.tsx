@@ -114,49 +114,25 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [position, setPosition] = useState<"top" | "bottom" | "hidden">(
     "bottom"
   );
-
-  const ACCOUNT_NUMBER_MAX_LENGTH = 10;
-  const initialPlaceholder = "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH);
-
-  const [inputValue, setInputValue] = useState(
-    "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH)
-  );
-
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    let inputVal = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
-
-    if (inputVal.length > ACCOUNT_NUMBER_MAX_LENGTH) {
-      inputVal = inputVal.substring(0, ACCOUNT_NUMBER_MAX_LENGTH); // Limit the length
-    }
-
-    setAccountNumber(inputVal); // Update the state with the numeric value
-
-    // Calculate how many dots should be displayed
-    const dotsCount = ACCOUNT_NUMBER_MAX_LENGTH - inputVal.length;
-    const dots = "•".repeat(dotsCount);
-
-    // Directly update the input field's value
-    e.target.value = inputVal + dots;
-  };
-
-  useEffect(() => {
-    // Initialize with all dots
-    setInputValue("•".repeat(ACCOUNT_NUMBER_MAX_LENGTH));
-  }, []);
-
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
   const [selectedWorkOrderType, setSelectedWorkOrderType] = useState("");
 
-  const validateAccountNumber = (accountNum: string) => {
+  const validateAccountNumber = (accountNum) => {
     const isValid = /^[0-9]{10}$/.test(accountNum); // Example: 10-digit number validation
     if (!isValid) {
       message.error("Invalid account number. Please enter a 10-digit number.");
     }
     return isValid;
+  };
+
+  const handleAccountNumberChange = (e) => {
+    const sanitizedValue = e.target.value.replace(/\D/g, "");
+    if (validateAccountNumber(sanitizedValue)) {
+      setAccountNumber(sanitizedValue);
+      // Add additional logic for fetching account information here
+    }
   };
 
   const getAccountInfoStyle = () => ({
@@ -166,11 +142,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
     color: accountNumber ? "#fafafa" : "#ccc",
   });
 
-  const handleSaveBillEvent = async (
-    rowKey: React.Key[],
-    data: DataSourceType,
-    row: DataSourceType
-  ) => {
+  const handleSaveBillEvent = async (rowKey, data, row) => {
     try {
       // Logic to save bill event
       await waitTime(2000);
@@ -533,7 +505,6 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                 type="text"
                 value={accountNumber}
                 onChange={handleAccountNumberChange}
-                placeholder={initialPlaceholder}
               />
             </Form.Item>
           </Col>
@@ -584,7 +555,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               minWidth: isAccountInfoFullWidth ? "100%" : "30%", // Minimum width for "Account Information"
             }}
           >
-            <div>
+            <div style={getAccountInfoStyle()}>
               {/* Account Information */}
               <h2>Account Information</h2>
               <div
@@ -941,10 +912,11 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
                 editableKeys,
                 onChange: setEditableRowKeys,
                 actionRender: (row, config, dom) => [dom.save, dom.cancel],
-                onSave: async (rowKey, data, row) => {
-                  await waitTime(2000);
-                  console.log(rowKey, data, row);
-                },
+                // onSave: async (rowKey, data, row) => {
+                //   await waitTime(2000);
+                //   console.log(rowKey, data, row);
+                // },
+                onSave: handleSaveBillEvent,
                 onCancel: async (rowKey, data) => {
                   console.log(rowKey, data);
                 },

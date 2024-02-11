@@ -2,17 +2,17 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import type { ProColumns } from "@ant-design/pro-components";
 import { EditableProTable } from "@ant-design/pro-components";
 import {
-  Alert,
-  Button,
-  Col,
-  Form,
-  Input,
-  Popconfirm,
-  Row,
-  Select,
-  message,
+Alert,
+Button,
+Col,
+Form,
+Input,
+Popconfirm,
+Row,
+Select,
+message,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import React,{ useEffect,useState } from "react";
 import RealType from "../../../customComponents/RealTimeTextDisplay/RealType";
 
 const { Option } = Select;
@@ -118,28 +118,24 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const ACCOUNT_NUMBER_MAX_LENGTH = 10;
   const initialPlaceholder = "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH);
 
-  const [inputValue, setInputValue] = useState(
-    "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH)
-  );
+const [inputValue, setInputValue] = useState('•'.repeat(ACCOUNT_NUMBER_MAX_LENGTH));
 
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    let inputVal = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
+const handleAccountNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  let inputVal = e.target.value;
+  // Remove non-digit characters
+  inputVal = inputVal.replace(/\D/g, "");
 
-    if (inputVal.length > ACCOUNT_NUMBER_MAX_LENGTH) {
-      inputVal = inputVal.substring(0, ACCOUNT_NUMBER_MAX_LENGTH); // Limit the length
-    }
+  // Limit the length of inputVal
+  if (inputVal.length > ACCOUNT_NUMBER_MAX_LENGTH) {
+    inputVal = inputVal.substring(0, ACCOUNT_NUMBER_MAX_LENGTH);
+  }
 
-    setAccountNumber(inputVal); // Update the state with the numeric value
+  // Replace the dots with the input value
+  const updatedValue = inputVal.padEnd(ACCOUNT_NUMBER_MAX_LENGTH, "•");
+  setInputValue(updatedValue);
+  setAccountNumber(inputVal); // Store only the numeric part
+};
 
-    // Calculate how many dots should be displayed
-    const dotsCount = ACCOUNT_NUMBER_MAX_LENGTH - inputVal.length;
-    const dots = "•".repeat(dotsCount);
-
-    // Directly update the input field's value
-    e.target.value = inputVal + dots;
-  };
 
   useEffect(() => {
     // Initialize with all dots
@@ -531,7 +527,7 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             >
               <Input
                 type="text"
-                value={accountNumber}
+                value={inputValue}
                 onChange={handleAccountNumberChange}
                 placeholder={initialPlaceholder}
               />

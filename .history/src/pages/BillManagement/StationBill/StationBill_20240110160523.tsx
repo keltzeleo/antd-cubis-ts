@@ -114,38 +114,28 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [position, setPosition] = useState<"top" | "bottom" | "hidden">(
     "bottom"
   );
+const AccountNumberInput = () => {
+  const accountNumberLength = 20; // Set the length of the account number here
+  const initialMaskedDisplay = '•'.repeat(accountNumberLength);
+  const [inputValue, setInputValue] = useState('');
+  const [maskedInputDisplay, setMaskedInputDisplay] = useState(initialMaskedDisplay);
 
-  const ACCOUNT_NUMBER_MAX_LENGTH = 10;
-  const initialPlaceholder = "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value.slice(0, accountNumberLength);
+    setInputValue(newValue);
 
-  const [inputValue, setInputValue] = useState(
-    "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH)
-  );
-
-  const handleAccountNumberChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    let inputVal = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
-
-    if (inputVal.length > ACCOUNT_NUMBER_MAX_LENGTH) {
-      inputVal = inputVal.substring(0, ACCOUNT_NUMBER_MAX_LENGTH); // Limit the length
-    }
-
-    setAccountNumber(inputVal); // Update the state with the numeric value
-
-    // Calculate how many dots should be displayed
-    const dotsCount = ACCOUNT_NUMBER_MAX_LENGTH - inputVal.length;
-    const dots = "•".repeat(dotsCount);
-
-    // Directly update the input field's value
-    e.target.value = inputVal + dots;
+    // Update the masked input display
+    const newMaskedDisplay = newValue.padEnd(accountNumberLength, '•');
+    setMaskedInputDisplay(newMaskedDisplay);
   };
 
-  useEffect(() => {
-    // Initialize with all dots
-    setInputValue("•".repeat(ACCOUNT_NUMBER_MAX_LENGTH));
-  }, []);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
 
+    if ((e.key < '0' || e.key > '9') && !allowedKeys.includes(e.key)) {
+      e.preventDefault();
+    }
+  };
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
@@ -529,12 +519,13 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
               name="accountNumber"
               rules={[{ required: true }]}
             >
-              <Input
-                type="text"
-                value={accountNumber}
-                onChange={handleAccountNumberChange}
-                placeholder={initialPlaceholder}
-              />
+               <input 
+        type="text" 
+        value={inputValue} 
+        onChange={handleInputChange} 
+        onKeyDown={handleKeyDown}
+        placeholder={maskedInputDisplay}
+      />
             </Form.Item>
           </Col>
           <Col span={12}>

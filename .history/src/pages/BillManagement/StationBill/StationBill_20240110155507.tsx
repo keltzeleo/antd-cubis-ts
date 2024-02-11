@@ -114,38 +114,25 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
   const [position, setPosition] = useState<"top" | "bottom" | "hidden">(
     "bottom"
   );
-
-  const ACCOUNT_NUMBER_MAX_LENGTH = 10;
-  const initialPlaceholder = "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH);
-
-  const [inputValue, setInputValue] = useState(
-    "•".repeat(ACCOUNT_NUMBER_MAX_LENGTH)
+  const [inputDigits, setInputDigits] = useState<string>("");
+  const initialMaskedInputCount = Array(10).fill("•").join("");
+  const [maskedInputCount, setMaskedInputCount] = useState<string>(
+    initialMaskedInputCount
   );
 
   const handleAccountNumberChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    let inputVal = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
+    const sanitizedValue = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+    setInputDigits(sanitizedValue);
 
-    if (inputVal.length > ACCOUNT_NUMBER_MAX_LENGTH) {
-      inputVal = inputVal.substring(0, ACCOUNT_NUMBER_MAX_LENGTH); // Limit the length
-    }
-
-    setAccountNumber(inputVal); // Update the state with the numeric value
-
-    // Calculate how many dots should be displayed
-    const dotsCount = ACCOUNT_NUMBER_MAX_LENGTH - inputVal.length;
-    const dots = "•".repeat(dotsCount);
-
-    // Directly update the input field's value
-    e.target.value = inputVal + dots;
+    // Update masked input count based on the length of the input value
+    let updatedMaskedInputCount = initialMaskedInputCount.substring(
+      0,
+      10 - sanitizedValue.length
+    );
+    setMaskedInputCount(sanitizedValue + updatedMaskedInputCount);
   };
-
-  useEffect(() => {
-    // Initialize with all dots
-    setInputValue("•".repeat(ACCOUNT_NUMBER_MAX_LENGTH));
-  }, []);
-
   const [form] = Form.useForm();
   const [sendViaEmailSMS, setSendViaEmailSMS] = useState(false);
   const [printForm, setPrintForm] = useState(false);
@@ -531,9 +518,9 @@ const StationBill: React.FC<StationBillProps> = ({ theme }) => {
             >
               <Input
                 type="text"
-                value={accountNumber}
+                value={maskedInputCount}
                 onChange={handleAccountNumberChange}
-                placeholder={initialPlaceholder}
+                placeholder={initialMaskedInputCount} // You can remove this if you like
               />
             </Form.Item>
           </Col>
